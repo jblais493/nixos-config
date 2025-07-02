@@ -1,0 +1,70 @@
+#+title: Joshua Blais' Nix Configuration
+
+This is a literate file using [[https://orgmode.org/][org-mode]] to [[https://orgmode.org/manual/Extracting-Source-Code.html][tangle]] all code blocks to various Nix files across the configuration. I am used to one, massive, partially organized file (see my Emacs Configuration), so this seemed natural: Documentation and configuration all in one file? How nice.
+
+* Introduction
+NixOS is what I would refer to as "the endgame of system management". I have used various distributions of Linux in the past, and while I have no grips with the likes of Debian, Fedora, or Arch, I have always forgotten configuration settings in the past, or had breaking changes on each and every distro. NixOS offers the bleeding edge with the stable, allowing easy rollbacks of any issues, allowing me to  continue on with work and then fix things at a later date. This is increasingly important as I host various projects and services for a broader audience and cannot deal with any downtime.
+
+What makes this possible is:
+- NixOS
+- Home-manager
+- deploy-rs
+- nixos-anywhere
+
+* Hosts
+** Theologica
+*** README.md
+#+begin_src markdown :tangle hosts/theologica/README.md
+# Theologica
+
+My daily driver machine, a Lenovo T14s gen 3 laptop.
+
+## Specifications
+- Model: Lenovo T14s Gen 3
+- Purpose: Daily development and writing work
+- Desktop: Hyprland
+#+end_src
+
+** King
+*** README.md
+#+begin_src markdown :tangle hosts/king/README.md
+# King
+
+My testing machine, a Lenovo T430 laptop.
+
+## Specifications
+- Model: Lenovo T430
+- Purpose: Testing configurations before deploying to main machine
+- Desktop: Hyprland (testing)
+#+end_src
+** Empirica
+** Alexandria
+** Empire
+** Citadel
+* Modules
+** Development
+** Desktop
+***
+** Server
+** Services
+*** calibre.nix
+*** syncthing.nix
+*** homepage.nix
+*** pihole.nix
+*** jellyfin.nix
+*** plex.nix
+*** nextcloud.nix
+*** audiobookshelf.nix
+*** lidarr.nix
+*** radarr.nix
+*** prowlarr.nix
+*** qbittorrent.nix
+*** gluetun.nix
+***
+
+** Shared
+** Media
+*** Media
+*** Visual
+* Overlays
+* flake.nix
