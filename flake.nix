@@ -14,9 +14,14 @@
       url = "github:serokell/deploy-rs";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, deploy-rs, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, deploy-rs, agenix, ... }@inputs: {
     nixosConfigurations = {
       # Laptop hosts
       theologica = nixpkgs.lib.nixosSystem {
@@ -24,6 +29,7 @@
         specialArgs = { inherit inputs; };
         modules = [
           ./hosts/theologica/configuration.nix
+          agenix.nixosModules.default
           ./modules/shared
           ./modules/desktop
           ./modules/cli-tui
@@ -37,6 +43,7 @@
         specialArgs = { inherit inputs; };
         modules = [
           ./hosts/king/configuration.nix
+          agenix.nixosModules.default
           ./modules/shared
           ./modules/desktop
           ./modules/cli-tui
