@@ -3,13 +3,16 @@
 This is a literate file using [[https://orgmode.org/][org-mode]] to [[https://orgmode.org/manual/Extracting-Source-Code.html][tangle]] all code blocks to various Nix files across the configuration. I am used to one, massive, partially organized file (see my Emacs Configuration), so this seemed natural: Documentation and configuration all in one file? How nice.
 
 * Introduction
-NixOS is what I would refer to as "the endgame of system management". I have used various distributions of Linux in the past, and while I have no grips with the likes of Debian, Fedora, or Arch, I have always forgotten configuration settings in the past, or had breaking changes on each and every distro. NixOS offers the bleeding edge with the stable, allowing easy rollbacks of any issues, allowing me to  continue on with work and then fix things at a later date. This is increasingly important as I host various projects and services for a broader audience and cannot deal with any downtime.
+NixOS is what I would refer to as "the endgame of system management". I have used various distributions of Linux in the past, and while I have no gripes with the likes of Debian, Fedora, or Arch, I have always forgotten configuration settings in the past, or had breaking changes on each and every distro. NixOS offers the bleeding edge with the stable, allowing easy rollbacks of any issues, allowing me to  continue on with work and then fix things at a later date. This is increasingly important as I host various projects and services for a broader audience and cannot deal with any downtime.
 
 What makes this possible is:
 - NixOS
 - Home-manager
 - deploy-rs
 - nixos-anywhere
+- org-mode (this document)
+
+With this one document, my *entire computing landscape is declared*. This is the power of Nix.
 
 * Hosts
 ** Theologica
@@ -38,7 +41,26 @@ My testing machine, a Lenovo T430 laptop.
 - Desktop: Hyprland (testing)
 #+end_src
 ** Empirica
+*** README.md
+#+begin_src markdown :tangle hosts/empirica/README.md
+# Empirica
+
+Mini PC running all self-hosted services
+
+## Specifications
+- Model: Lenovo M910Q
+- Purpose: Hosting all my home server stack
+- Headless NixOS Server
+#+end_src
 ** Alexandria
+*** README.md
+#+begin_src markdown :tangle hosts/alexandria/README.md
+# Alexandria
+
+Hetzner server database host
+
+## Specifications
+#+end_src
 ** Empire
 ** Citadel
 * Modules
@@ -117,12 +139,8 @@ My testing machine, a Lenovo T430 laptop.
   ];
 }
 #+end_src
-*** eza.nix
-*** yazi.nix
-*** bat.nix
 *** tmux.nix
 *** zsh.nix
-*** lazygit.nix
 *** podman.nix
 ** Desktop
 *** hyprland.nix
