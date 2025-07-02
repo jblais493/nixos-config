@@ -43,28 +43,179 @@ My testing machine, a Lenovo T430 laptop.
 ** Citadel
 * Modules
 ** Development
-** Desktop
+** CLI/TUI
+*** nvim.nix
+*** git.nix
 ***
+** Desktop
+*** hyprland.nix
+#+begin_src nix :tangle modules/desktop/hyprland.nix
+
+#+end_src
+*** rofi.nix
+Wofi on wayland
+#+begin_src nix :tangle modules/desktop/wofi.nix
+
+#+end_src
+*** kitty.nix
+#+begin_src nix :tangle modules/desktop/kitty.nix
+
+#+end_src
 ** Server
 ** Services
 *** calibre.nix
+#+begin_src nix :tangle modules/services/calibre.nix
+
+#+end_src
 *** syncthing.nix
+#+begin_src nix :tangle modules/services/syncthing.nix
+
+#+end_src
 *** homepage.nix
+#+begin_src nix :tangle modules/services/homepage.nix
+
+#+end_src
 *** pihole.nix
+#+begin_src nix :tangle modules/services/pihole.nix
+
+#+end_src
 *** jellyfin.nix
+#+begin_src nix :tangle modules/services/jellyfin.nix
+
+#+end_src
 *** plex.nix
+#+begin_src nix :tangle modules/services/plex.nix
+
+#+end_src
 *** nextcloud.nix
+#+begin_src nix :tangle modules/services/nextcloud.nix
+
+#+end_src
 *** audiobookshelf.nix
+#+begin_src nix :tangle modules/services/audiobookshelf.nix
+
+#+end_src
 *** lidarr.nix
+#+begin_src nix :tangle modules/services/lidarr.nix
+
+#+end_src
 *** radarr.nix
+#+begin_src nix :tangle modules/services/radarr.nix
+
+#+end_src
 *** prowlarr.nix
+#+begin_src nix :tangle modules/services/prowlarr.nix
+
+#+end_src
 *** qbittorrent.nix
+#+begin_src nix :tangle modules/services/qbittorrent.nix
+
+#+end_src
 *** gluetun.nix
-***
+#+begin_src nix :tangle modules/services/gluetun.nix
+
+#+end_src
 
 ** Shared
+** Security
+*** fail2ban.nix
 ** Media
-*** Media
-*** Visual
+*** music.nix
+#+begin_src nix :tangle modules/media/music.nix
+
+#+end_src
+*** video.nix
+#+begin_src nix :tangle modules/media/video.nix
+
+#+end_src
+*** pdf.nix
+#+begin_src nix :tangle modules/media/pdf.nix
+
+#+end_src
 * Overlays
 * flake.nix
+#+begin_src nix :tangle flake.nix
+{
+  description = "Joshua Blais' NixOS Configuration";
+
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.05";
+
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    deploy-rs = {
+      url = "github:serokell/deploy-rs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
+
+  outputs = { self, nixpkgs, home-manager, deploy-rs, ... }@inputs: {
+    nixosConfigurations = {
+      # Laptop hosts
+      theologica = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./hosts/theologica/configuration.nix
+          ./modules/shared
+          ./modules/desktop
+          ./modules/cli-tui
+          ./modules/development
+          ./modules/media
+        ];
+      };
+
+      king = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./hosts/king/configuration.nix
+          ./modules/shared
+          ./modules/desktop
+          ./modules/cli-tui
+          ./modules/development
+        ];
+      };
+
+      # Server hosts
+      alexandria = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./hosts/alexandria/configuration.nix
+          ./modules/shared
+          ./modules/server
+          ./modules/services
+          ./modules/security
+        ];
+      };
+
+      empire = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./hosts/empire/configuration.nix
+          ./modules/shared
+          ./modules/server
+          ./modules/security
+        ];
+      };
+    };
+
+    # Deploy-rs configuration for remote deployment
+    deploy.nodes = {
+      alexandria = {
+        hostname = "alexandria.your-domain.com";
+        profiles.system = {
+          user = "root";
+          path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.alexandria;
+        };
+      };
+    };
+  };
+}
+#+end_src
