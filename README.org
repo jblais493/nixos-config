@@ -44,9 +44,86 @@ My testing machine, a Lenovo T430 laptop.
 * Modules
 ** Development
 ** CLI/TUI
+*** default.nix
+#+begin_src nix :tangle modules/cli-tui/default.nix
+{ config, pkgs, ... }:
+
+{
+  imports = [
+    ./git.nix
+    ./nvim.nix
+    ./zsh.nix
+    ./tmux.nix
+  ];
+
+  # Tools that don't need configuration - just install them
+  environment.systemPackages = with pkgs; [
+    # File management
+    eza              # Better ls
+    yazi             # Terminal file manager
+    bat              # Better cat
+    fd               # Better find
+    ripgrep-all      # Better grep
+    fzf              # Fuzzy finder
+
+    # Git tools
+    lazygit          # Git TUI
+
+    # System tools
+    btop             # Better top
+    trash-cli        # Safe rm
+    tldr             # Simplified man pages
+    fastfetch        # System info
+
+    # Development containers
+    podman           # Container runtime
+    podman-compose   # Docker-compose for podman
+  ];
+
+  # Enable podman
+  virtualisation.podman = {
+    enable = true;
+    dockerCompat = true;  # Create docker alias
+    defaultNetwork.settings.dns_enabled = true;
+  };
+}
+#+end_src
 *** nvim.nix
 *** git.nix
-***
+#+begin_src nix :tangle modules/cli-tui/git.nix
+{ config, pkgs, ... }:
+
+{
+  programs.git = {
+    enable = true;
+    config = {
+      init.defaultBranch = "main";
+      user = {
+        name = "Joshua Blais";
+        email = "josh@joshblais.com";
+      };
+      core = {
+        editor = "nvim";
+        autocrlf = "input";
+      };
+      pull.rebase = true;
+      push.autoSetupRemote = true;
+    };
+  };
+
+  # Install git in system packages too
+  environment.systemPackages = with pkgs; [
+    git
+  ];
+}
+#+end_src
+*** eza.nix
+*** yazi.nix
+*** bat.nix
+*** tmux.nix
+*** zsh.nix
+*** lazygit.nix
+*** podman.nix
 ** Desktop
 *** hyprland.nix
 #+begin_src nix :tangle modules/desktop/hyprland.nix
@@ -142,7 +219,7 @@ The workflow for adding a secret is as follows:
 3. Rekey existing secrets if you added new machines: agenix -r
 4. Deploy: Your NixOS systems will automatically decrypt the secrets they have keys for
 
-You can retrieve Machine SSH keys by running ~cat /etc/ssh/ssh_host_ed25519_key.pub~ in any Linux machine with ssh enabled
+You can retrieve Machine SSH keys by running ~cat /etc/ssh/ssh_host_ed25519_key.pub~ in any Linux machine with ssh enabled.
 ** secrets.nix
 #+begin_src nix :tangle secrets/secrets.nix
 let
