@@ -142,7 +142,7 @@ The workflow for adding a secret is as follows:
 3. Rekey existing secrets if you added new machines: agenix -r
 4. Deploy: Your NixOS systems will automatically decrypt the secrets they have keys for
 
-You can retrieve Machine SSH keys by running ~ls -la /etc/ssh/~ in any Linux machine with ssh enabled
+You can retrieve Machine SSH keys by running ~cat /etc/ssh/ssh_host_ed25519_key.pub~ in any Linux machine with ssh enabled
 ** secrets.nix
 #+begin_src nix :tangle secrets/secrets.nix
 let
