@@ -11,20 +11,20 @@
   # Let home-manager manage itself
   programs.home-manager.enable = true;
 
-  # Use XDG config files instead of home.file for better compatibility
+  # Use XDG config files with hardcoded paths
   xdg.configFile = {
-    "doom".source = "${config.home.homeDirectory}/nixos-config/dotfiles/doom";
-    "tmux".source = "${config.home.homeDirectory}/nixos-config/dotfiles/tmux";
-    "hypr".source = "${config.home.homeDirectory}/nixos-config/dotfiles/hypr";
-    "waybar".source = "${config.home.homeDirectory}/nixos-config/dotfiles/waybar";
-    "swaync".source = "${config.home.homeDirectory}/nixos-config/dotfiles/swaync";
-    "wofi".source = "${config.home.homeDirectory}/nixos-config/dotfiles/wofi";
-    "nvim".source = "${config.home.homeDirectory}/nixos-config/dotfiles/nvim";
-    "zathura".source = "${config.home.homeDirectory}/nixos-config/dotfiles/zathura";
+    "doom".source = "/home/joshua/nixos-config/dotfiles/doom";
+    "tmux".source = "/home/joshua/nixos-config/dotfiles/tmux";
+    "hypr".source = "/home/joshua/nixos-config/dotfiles/hypr";
+    "waybar".source = "/home/joshua/nixos-config/dotfiles/waybar";
+    "swaync".source = "/home/joshua/nixos-config/dotfiles/swaync";
+    "wofi".source = "/home/joshua/nixos-config/dotfiles/wofi";
+    "nvim".source = "/home/joshua/nixos-config/dotfiles/nvim";
+    "zathura".source = "/home/joshua/nixos-config/dotfiles/zathura";
   };
 
   # Handle the root-level files separately
   home.file = {
-    ".tmux.conf".source = "${config.home.homeDirectory}/nixos-config/dotfiles/tmux.conf";
+    ".tmux.conf".source = "/home/joshua/nixos-config/dotfiles/tmux.conf";
   };
 }
