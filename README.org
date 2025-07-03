@@ -141,6 +141,15 @@ Hetzner server database host
 ## Specifications
 #+end_src
 ** Empire
+*** README.md
+#+begin_src markdown :tangle hosts/empire/README.md
+# Empire
+
+Hetzner server running all containers currently -
+
+TODO: migrate all services to nixOS.
+## Specifications
+#+end_src
 ** Citadel
 * Modules
 ** Home-manager
