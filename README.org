@@ -175,7 +175,6 @@ I use [[https://github.com/nix-community/home-manager][home-manager]] to manage 
   ];
 }
 #+end_src
-*** tmux.nix
 *** zsh.nix
 ** Development
 *** doom.nix
@@ -240,7 +239,25 @@ I use [[https://github.com/nix-community/home-manager][home-manager]] to manage 
   };
 }
 #+end_src
+*** tmux.nix
+#+begin_src nix :tangle modules/cli-tui/tmux.nix
+{ config, pkgs, ... }:
+
+{
+  # System-level tmux installation
+  environment.systemPackages = with pkgs; [
+    tmux
+  ];
+
+  # Home-manager will handle the config via symlink
+  programs.tmux.enable = true;
+}
+#+end_src
 *** podman.nix
+#+begin_src nix :tangle modules/cli-tui/podman.nix
+
+#+end_src
+
 ** Desktop
 *** hyprland.nix (system module)
 #+begin_src nix :tangle modules/desktop/hyprland.nix
@@ -278,11 +295,22 @@ I use [[https://github.com/nix-community/home-manager][home-manager]] to manage 
 *** rofi.nix
 Wofi on wayland
 #+begin_src nix :tangle modules/desktop/wofi.nix
-
+{ config, pkgs, ... }:
+{
+  environment.systemPackages = with pkgs; [
+    wofi
+  ];
+}
 #+end_src
 *** kitty.nix
 #+begin_src nix :tangle modules/desktop/kitty.nix
+{ config, pkgs, ... }:
 
+{
+  environment.systemPackages = with pkgs; [
+    kitty
+  ];
+}
 #+end_src
 ** Server
 ** Services
