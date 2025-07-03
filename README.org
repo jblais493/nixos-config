@@ -6,23 +6,25 @@
 *Disclaimer:* I have no idea what I am doing, so take all of this with a grain (massive boulder) of salt.
 #+END_QUOTE
 
-This is a literate file using [[https://orgmode.org/][org-mode]] to [[https://orgmode.org/manual/Extracting-Source-Code.html][tangle]] all code blocks to various *.nix files across the configuration. I am used to one, massive (partially) organized file (see my [[https://github.com/jblais493/nixos-config/blob/master/dotfiles/doom/config.org][Emacs Configuration]]), so this seemed natural: Documentation and configuration all in one file? How nice.
-
-What this ends up being is, quite literally, the *One File to Rule Them All*.
 
 * Introduction
-NixOS is what I would refer to as "the endgame of systems management". I have used various distributions of Linux in the past, and while I have no gripes with the likes of Debian, Fedora, or Arch, I have always forgotten configuration settings in the past, struggled to maintain multiple machines without drift, or had breaking changes on each and every distro.
+This is a literate file using [[https://orgmode.org/][org-mode]] to [[https://orgmode.org/manual/Extracting-Source-Code.html][tangle]] all code blocks to various *.nix files across the configuration. I am used to one, massive (partially) organized file (see my [[https://github.com/jblais493/nixos-config/blob/master/dotfiles/doom/config.org][Emacs Configuration]]), so this seemed natural: Documentation and configuration all in one file? How nice.
 
-NixOS offers the bleeding edge with the stable, allowing easy rollbacks of any issues, allowing me to  continue on with work and then fix things at a later date. This is increasingly important as I host various projects and services for a broader audience and cannot deal with any downtime.
+What this ends up being is, quite literally, the *One File to Rule Them All*: My *entire computing landscape is declared* right where you are looking. This is the power of Nix.
+
+[[https://nixos.org/][NixOS]] is what I would refer to as "the endgame of systems management". I have used various distributions of Linux in the past, and while I have no gripes with the likes of Debian, Fedora, or Arch, I have always forgotten configuration settings in the past, struggled to maintain multiple machines without drift, or had breaking changes on each and every distro.
+
+NixOS offers the bleeding edge with the stable, allowing easy rollbacks of any issues, allowing me to  continue on with work and then fix things at a later date if I have a breaking change. This is increasingly important as I host various projects and services for a broader audience and cannot deal with any downtime.
 
 What makes this possible is:
-- NixOS
-- Home-manager
-- deploy-rs
-- nixos-anywhere
-- org-mode (this document)
+- [[https://nixos.org/][NixOS]]
+- [[https://github.com/nix-community/home-manager][home-manager]]
+- [[https://github.com/serokell/deploy-rs][deploy-rs]]
+- [[https://github.com/nix-community/nixos-anywhere][nixos-anywhere]]
+- [[https://orgmode.org/][org-mode]] (this document)
 
-With this one document, my *entire computing landscape is declared*. This is the power of Nix.
+Excited yet? Let us begin...
+
 * Dotfiles
 This directory contains all dotfiles for the programs and tooling I use. I use home-manager just to symlink these configurations to the correct locations, but not to manage the files.
 #+begin_src bash
