@@ -304,6 +304,46 @@ Hetzner server database host
 
 ## Specifications
 #+end_src
+*** configuration.nix
+#+begin_src nix :tangle hosts/alexandria/configuration.nix
+{ config, pkgs, inputs, ... }:
+{
+  imports = [
+    ./hardware-configuration.nix
+    ../../modules/security
+    ../../modules/services
+  ];
+
+  networking.hostName = "alexandria";
+
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+  boot.loader.grub = {
+    enable = true;
+    devices = [ "/dev/sda" ];
+  };
+
+  users.users.joshua = {
+    isNormalUser = true;
+    description = "Joshua Blais";
+    group = "joshua";
+    extraGroups = [ "networkmanager" "wheel" ];
+  };
+
+  users.groups.joshua = {};
+
+  time.timeZone = "America/Edmonton";
+  i18n.defaultLocale = "en_CA.UTF-8";
+
+  environment.systemPackages = with pkgs; [
+    vim
+    git
+  ];
+
+  system.stateVersion = "24.11";
+}
+#+end_src
+
 *** hardware-configuration.nix
 #+begin_src nix :tangle hosts/alexandria/hardware-configuration.nix
 # This is a placeholder hardware configuration
@@ -328,7 +368,6 @@ Hetzner server database host
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
 #+end_src
-
 ** Empire
 *** README.md
 #+begin_src markdown :tangle hosts/empire/README.md
