@@ -22,6 +22,6 @@
     ".config/wofi".source = ../../dotfiles/wofi;
     ".config/nvim".source = ../../dotfiles/nvim;
     ".config/zathura".source = ../../dotfiles/zathura;
-    ".tmux.conf".source = ../../dotfiles/tmux.conf;
+    ".tmux.conf".source = ../../dotfiles/tmux/tmux.conf;
   };
 }
