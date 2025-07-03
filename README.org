@@ -1,6 +1,12 @@
 #+title: Joshua Blais' Nix Configuration
 
+[[https://nixos.org][https://img.shields.io/badge/NixOS-24.05-blue.svg?style=flat-square&logo=NixOS&logoColor=white]]
+
 This is a literate file using [[https://orgmode.org/][org-mode]] to [[https://orgmode.org/manual/Extracting-Source-Code.html][tangle]] all code blocks to various Nix files across the configuration. I am used to one, massive, partially organized file (see my Emacs Configuration), so this seemed natural: Documentation and configuration all in one file? How nice.
+
+#+begin_quote
+
+#+end_quote
 
 * Introduction
 NixOS is what I would refer to as "the endgame of system management". I have used various distributions of Linux in the past, and while I have no gripes with the likes of Debian, Fedora, or Arch, I have always forgotten configuration settings in the past, or had breaking changes on each and every distro. NixOS offers the bleeding edge with the stable, allowing easy rollbacks of any issues, allowing me to  continue on with work and then fix things at a later date. This is increasingly important as I host various projects and services for a broader audience and cannot deal with any downtime.
