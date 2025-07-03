@@ -249,10 +249,6 @@ I use [[https://github.com/nix-community/home-manager][home-manager]] to manage 
 #+begin_src nix :tangle modules/development/default.nix
 { config, pkgs, ... }:
 {
-  imports = [
-    ./zsh.nix
-    # Add ./nvim.nix and ./tmux.nix when you create them
-  ];
 
   # CLI/TUI tools
   environment.systemPackages = with pkgs; [

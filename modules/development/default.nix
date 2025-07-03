@@ -1,9 +1,5 @@
 { config, pkgs, ... }:
 {
-  imports = [
-    ./zsh.nix
-    # Add ./nvim.nix and ./tmux.nix when you create them
-  ];
 
   # CLI/TUI tools
   environment.systemPackages = with pkgs; [
