@@ -2,16 +2,14 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/desktop      # This imports the desktop/default.nix
     ../../modules/cli-tui
-    ../../modules/development
-    ../../modules/media
     ../../modules/home-manager
     ../../modules/security
+    ../../modules/services
     # ... other imports
   ];
 
   # Host-specific configuration
-  networking.hostName = "theologica";
+  networking.hostName = "empirica";
   # ... rest of your host config
 }

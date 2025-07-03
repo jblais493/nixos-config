@@ -72,11 +72,12 @@ This declares all imported modules and specific tweaks to the Theologica host:
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/shared
     ../../modules/desktop      # This imports the desktop/default.nix
     ../../modules/cli-tui
     ../../modules/development
     ../../modules/media
+    ../../modules/home-manager
+    ../../modules/security
     # ... other imports
   ];
 
@@ -109,6 +110,26 @@ Mini PC running all self-hosted services
 - Model: Lenovo M910Q
 - Purpose: Hosting all my home server stack
 - Headless NixOS Server
+#+end_src
+*** configuration.nix
+Empirica runs all my [[https://joshblais.com/posts/selfhosting/][selfhosted services to get me free from subscriptions]]
+
+#+begin_src nix :tangle hosts/empirica/configuration.nix
+{ config, pkgs, inputs, ... }:
+{
+  imports = [
+    ./hardware-configuration.nix
+    ../../modules/cli-tui
+    ../../modules/home-manager
+    ../../modules/security
+    ../../modules/services
+    # ... other imports
+  ];
+
+  # Host-specific configuration
+  networking.hostName = "empirica";
+  # ... rest of your host config
+}
 #+end_src
 ** Alexandria
 *** README.md
