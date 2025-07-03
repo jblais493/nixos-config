@@ -65,6 +65,26 @@ My daily driver machine, a Lenovo T14s gen 3 laptop.
 - Purpose: Daily development and writing work
 - Desktop: Hyprland
 #+end_src
+*** configuration.nix
+This declares all imported modules and specific tweaks to the Theologica host:
+#+begin_src nix :tangle hosts/theologica/configuration.nix
+{ config, pkgs, inputs, ... }:
+{
+  imports = [
+    ./hardware-configuration.nix
+    ../../modules/shared
+    ../../modules/desktop      # This imports the desktop/default.nix
+    ../../modules/cli-tui
+    ../../modules/development
+    ../../modules/media
+    # ... other imports
+  ];
+
+  # Host-specific configuration
+  networking.hostName = "theologica";
+  # ... rest of your host config
+}
+#+end_src
 
 ** King
 *** README.md
@@ -259,6 +279,20 @@ I use [[https://github.com/nix-community/home-manager][home-manager]] to manage 
 #+end_src
 
 ** Desktop
+*** default.nix
+This declares all desktop modules for importing to desktop/laptops
+#+begin_src nix :tangle modules/desktop/default.nix
+{ config, pkgs, ... }:
+{
+  imports = [
+    ./hyprland.nix
+    ./kmonad.nix
+    ./kitty.nix
+    ./wofi.nix
+    # Add any other desktop modules here
+  ];
+}
+#+end_src
 *** hyprland.nix (system module)
 #+begin_src nix :tangle modules/desktop/hyprland.nix
 { config, pkgs, ... }:
@@ -310,6 +344,26 @@ Wofi on wayland
   environment.systemPackages = with pkgs; [
     kitty
   ];
+}
+#+end_src
+*** kmonad.nix
+#+begin_src nix :tangle modules/desktop/kmonad.nix
+{ config, pkgs, ... }:
+{
+  environment.systemPackages = with pkgs; [
+    kmonad
+  ];
+
+  # Setup Kmonad
+  boot.kernelModules = [ "uinput" ];
+
+  services.udev.extraRules = ''
+    # KMonad user access to /dev/uinput
+    KERNEL=="uinput", MODE="0660", GROUP="input", TAG+="uaccess"
+  '';
+
+  # Add your user to the input group
+  users.users.joshua.extraGroups = [ "input" ];
 }
 #+end_src
 ** Server
