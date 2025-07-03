@@ -209,15 +209,19 @@ I use [[https://github.com/nix-community/home-manager][home-manager]] to manage 
 *** default.nix
 #+begin_src nix :tangle modules/home-manager/default.nix
 { config, pkgs, inputs, ... }:
-
 {
+  imports = [
+    ./git.nix
+  ];
+
   home.username = "joshua";
   home.homeDirectory = "/home/joshua";
-  home.stateVersion = "25.05";
+  home.stateVersion = "24.11";
 
   # Let home-manager manage itself
   programs.home-manager.enable = true;
 
+  # Symlink dotfiles
   home.file.".config/doom".source = config.lib.file.mkOutOfStoreSymlink
     "${config.home.homeDirectory}/nixos-config/dotfiles/doom";
 
@@ -240,7 +244,28 @@ I use [[https://github.com/nix-community/home-manager][home-manager]] to manage 
     "${config.home.homeDirectory}/nixos-config/dotfiles/swaync";
 
   home.file.".config/wofi".source = config.lib.file.mkOutOfStoreSymlink
-      "${config.home.homeDirectory}/nixos-config/dotfiles/wofi";
+    "${config.home.homeDirectory}/nixos-config/dotfiles/wofi";
+}
+#+end_src
+*** git.nix
+#+begin_src nix :tangle modules/home-manager/git.nix
+{ config, pkgs, ... }:
+{
+  programs.git = {
+    enable = true;
+    userName = "Joshua Blais";
+    userEmail = "josh@joshblais.com";
+
+    extraConfig = {
+      init.defaultBranch = "main";
+      core = {
+        editor = "nvim";
+        autocrlf = "input";
+      };
+      pull.rebase = true;
+      push.autoSetupRemote = true;
+    };
+  };
 }
 #+end_src
 
@@ -295,7 +320,6 @@ I use [[https://github.com/nix-community/home-manager][home-manager]] to manage 
 
 {
   imports = [
-    ./git.nix
     ./nvim.nix
     ./zsh.nix
     ./tmux.nix
@@ -331,34 +355,6 @@ I use [[https://github.com/nix-community/home-manager][home-manager]] to manage 
     dockerCompat = true;  # Create docker alias
     defaultNetwork.settings.dns_enabled = true;
   };
-}
-#+end_src
-*** git.nix
-#+begin_src nix :tangle modules/cli-tui/git.nix
-{ config, pkgs, ... }:
-
-{
-  programs.git = {
-    enable = true;
-    config = {
-      init.defaultBranch = "main";
-      user = {
-        name = "Joshua Blais";
-        email = "josh@joshblais.com";
-      };
-      core = {
-        editor = "nvim";
-        autocrlf = "input";
-      };
-      pull.rebase = true;
-      push.autoSetupRemote = true;
-    };
-  };
-
-  # Install git in system packages too
-  environment.systemPackages = with pkgs; [
-    git
-  ];
 }
 #+end_src
 *** tmux.nix

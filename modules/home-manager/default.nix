@@ -1,13 +1,17 @@
 { config, pkgs, inputs, ... }:
-
 {
+  imports = [
+    ./git.nix
+  ];
+
   home.username = "joshua";
   home.homeDirectory = "/home/joshua";
-  home.stateVersion = "25.05";
+  home.stateVersion = "24.11";
 
   # Let home-manager manage itself
   programs.home-manager.enable = true;
 
+  # Symlink dotfiles
   home.file.".config/doom".source = config.lib.file.mkOutOfStoreSymlink
     "${config.home.homeDirectory}/nixos-config/dotfiles/doom";
 
@@ -30,5 +34,5 @@
     "${config.home.homeDirectory}/nixos-config/dotfiles/swaync";
 
   home.file.".config/wofi".source = config.lib.file.mkOutOfStoreSymlink
-      "${config.home.homeDirectory}/nixos-config/dotfiles/wofi";
+    "${config.home.homeDirectory}/nixos-config/dotfiles/wofi";
 }
