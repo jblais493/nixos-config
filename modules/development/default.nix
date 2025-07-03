@@ -1,7 +1,6 @@
 { config, pkgs, ... }:
 {
   imports = [
-    ./git.nix
     ./zsh.nix
     # Add ./nvim.nix and ./tmux.nix when you create them
   ];
