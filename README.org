@@ -24,6 +24,73 @@ What makes this possible is:
 - [[https://orgmode.org/][org-mode]] (this document)
 
 Excited yet? Let us begin...
+** Setting this all up
+*** Local Installation (Laptops/Desktops)
+1. Obtain [[https://nixos.org/download/][installation media for nixOS]].
+2. Flash .iso to flash drive using ~dd~ or similar tool:
+   #+begin_src bash
+   dd if=nixos-minimal-xx.xx.iso of=/dev/sdX bs=4M status=progress
+   #+end_src
+3. Boot up installer and connect to internet
+4. Partition your drives (example for UEFI systems):
+   #+begin_src bash
+   # Create partitions
+   parted /dev/nvme0n1 -- mklabel gpt
+   parted /dev/nvme0n1 -- mkpart primary 512MiB -8GiB
+   parted /dev/nvme0n1 -- mkpart primary linux-swap -8GiB 100%
+   parted /dev/nvme0n1 -- mkpart ESP fat32 1MiB 512MiB
+   parted /dev/nvme0n1 -- set 3 esp on
+
+   # Format partitions
+   mkfs.ext4 -L nixos /dev/nvme0n1p1
+   mkswap -L swap /dev/nvme0n1p2
+   mkfs.fat -F 32 -n boot /dev/nvme0n1p3
+
+   # Mount filesystems
+   mount /dev/disk/by-label/nixos /mnt
+   mkdir -p /mnt/boot
+   mount /dev/disk/by-label/boot /mnt/boot
+   swapon /dev/nvme0n1p2
+   #+end_src
+5. Generate hardware configuration:
+   #+begin_src bash
+   nixos-generate-config --root /mnt
+   #+end_src
+6. Clone this repository:
+   #+begin_src bash
+   cd /mnt/home
+   git clone https://github.com/jblais493/nixos-config.git
+   #+end_src
+7. Copy the generated hardware configuration:
+   #+begin_src bash
+   cp /mnt/etc/nixos/hardware-configuration.nix /mnt/home/nixos-config/hosts/YOUR_HOST/
+   #+end_src
+8. Edit the host configuration to match your setup:
+   #+begin_src bash
+   # Edit hostname and any host-specific settings
+   nano /mnt/home/nixos-config/hosts/YOUR_HOST/configuration.nix
+   #+end_src
+9. Test the configuration:
+   #+begin_src bash
+   cd /mnt/home/nixos-config
+   nix flake check
+   #+end_src
+10. Install NixOS:
+    #+begin_src bash
+    nixos-install --flake .#YOUR_HOST
+    #+end_src
+11. Reboot and enjoy your declarative system!
+
+*** Installation on VPS/headless servers
+For automated server deployments, I made a [[https://github.com/jblais493/nix-anywhere][repo for that]] using nixos-anywhere.
+
+Quick server setup:
+#+begin_src bash
+# Install nixos-anywhere
+nix run github:nix-community/nixos-anywhere -- \
+  --flake .#YOUR_SERVER_HOST \
+  root@your-server-ip
+#+end_src
 
 * Dotfiles
 This directory contains all dotfiles for the programs and tooling I use. I previously used [[https://www.gnu.org/software/stow/][Stow]] to organize all these config files, but now use home-manager's ~mkOutOfStoreSymlink~ to sym link and keep these files organized within this one config - simplification is beautiful. See the section on the home-manager module below.
