@@ -1,6 +1,6 @@
 #+title: Joshua Blais' Nix Configuration
 
-[[https://nixos.org][https://img.shields.io/badge/NixOS-25.05-blue.svg?style=flat-square&logo=NixOS&logoColor=white]]
+[[https://nixos.org][https://img.shields.io/badge/NixOS-unstable-blue.svg?style=flat-square&logo=NixOS&logoColor=white]]
 
 #+BEGIN_QUOTE
 *Disclaimer:* I have no idea what I am doing, so take all of this with a grain (massive boulder) of salt.
