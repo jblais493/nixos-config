@@ -2,14 +2,10 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/desktop
-    ../../modules/cli-tui
-    ../../modules/development
-    ../../modules/media
     ../../modules/security
   ];
 
-  networking.hostName = "king";
+  networking.hostName = "empire";
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -30,5 +26,10 @@
   time.timeZone = "America/Edmonton";
   i18n.defaultLocale = "en_CA.UTF-8";
 
-  system.stateVersion = "25.05";
-}
+  environment.systemPackages = with pkgs; [
+    vim
+    git
+  ];
+
+  system.stateVersion = "24.11";
+}}
