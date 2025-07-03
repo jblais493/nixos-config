@@ -216,18 +216,15 @@ I use [[https://github.com/nix-community/home-manager][home-manager]] to manage 
 
   home.username = "joshua";
   home.homeDirectory = "/home/joshua";
-  home.stateVersion = "24.11";
+  home.stateVersion = "25.05";
 
   # Let home-manager manage itself
   programs.home-manager.enable = true;
 
-  # Symlink dotfiles using the correct function
+  # Symlink dotfiles (removing +STORE for now)
   home.file = {
     ".config/doom".source = config.lib.file.mkOutOfStoreSymlink
       "${config.home.homeDirectory}/nixos-config/dotfiles/doom";
-
-    ".config/+STORE".source = config.lib.file.mkOutOfStoreSymlink
-      "${config.home.homeDirectory}/nixos-config/dotfiles/+STORE";
 
     ".tmux.conf".source = config.lib.file.mkOutOfStoreSymlink
       "${config.home.homeDirectory}/nixos-config/dotfiles/tmux.conf";
