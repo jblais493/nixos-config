@@ -11,7 +11,6 @@
 
     # Video tools
     ffmpeg
-    youtube-dl
     yt-dlp
   ];
 }
