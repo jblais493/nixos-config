@@ -476,6 +476,7 @@ I use [[https://github.com/nix-community/home-manager][home-manager]] to manage 
     fd               # Better find
     ripgrep-all      # Better grep
     fzf              # Fuzzy finder
+    neovim
 
     # Git tools
     lazygit          # Git TUI
@@ -512,7 +513,6 @@ I use [[https://github.com/nix-community/home-manager][home-manager]] to manage 
 
 {
   imports = [
-    ./nvim.nix
     ./zsh.nix
     ./tmux.nix
   ];

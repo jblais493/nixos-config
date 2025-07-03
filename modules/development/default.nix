@@ -10,6 +10,7 @@
     fd               # Better find
     ripgrep-all      # Better grep
     fzf              # Fuzzy finder
+    neovim
 
     # Git tools
     lazygit          # Git TUI
