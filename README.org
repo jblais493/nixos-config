@@ -181,7 +181,7 @@ TODO: migrate all services to nixOS.
 ** Citadel
 * Modules
 ** Home-manager
-I use [[https://github.com/nix-community/home-manager][home-manager]] to manage all dotfiles that require customization.
+I use [[https://github.com/nix-community/home-manager][home-manager]] to manage all dotfiles that require customization. I don't agree with rewriting my configs when you can just symlink them using ~mkOutOfStoreSymlink~
 *** default.nix
 #+begin_src nix :tangle modules/home-manager/default.nix
 { config, pkgs, inputs, ... }:
