@@ -1,9 +1,5 @@
 { config, lib, pkgs, inputs, ... }:
 
-let
-  # Get the directory where this flake is located
-  dotfilesDir = "${config.home.homeDirectory}/nixos-config/dotfiles";
-in
 {
   imports = [
     ./git.nix
@@ -16,16 +12,16 @@ in
   # Let home-manager manage itself
   programs.home-manager.enable = true;
 
-  # Use the file attribute with string paths (this should work reliably)
+  # Use relative paths from the flake root
   home.file = {
-    ".config/doom".source = "${dotfilesDir}/doom";
-    ".config/tmux".source = "${dotfilesDir}/tmux";
-    ".config/hypr".source = "${dotfilesDir}/hypr";
-    ".config/waybar".source = "${dotfilesDir}/waybar";
-    ".config/swaync".source = "${dotfilesDir}/swaync";
-    ".config/wofi".source = "${dotfilesDir}/wofi";
-    ".config/nvim".source = "${dotfilesDir}/nvim";
-    ".config/zathura".source = "${dotfilesDir}/zathura";
-    ".tmux.conf".source = "${dotfilesDir}/tmux.conf";
+    ".config/doom".source = ../../dotfiles/doom;
+    ".config/tmux".source = ../../dotfiles/tmux;
+    ".config/hypr".source = ../../dotfiles/hypr;
+    ".config/waybar".source = ../../dotfiles/waybar;
+    ".config/swaync".source = ../../dotfiles/swaync;
+    ".config/wofi".source = ../../dotfiles/wofi;
+    ".config/nvim".source = ../../dotfiles/nvim;
+    ".config/zathura".source = ../../dotfiles/zathura;
+    ".tmux.conf".source = ../../dotfiles/tmux.conf;
   };
 }

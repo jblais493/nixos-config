@@ -448,6 +448,7 @@ I use [[https://github.com/nix-community/home-manager][home-manager]] to manage 
 *** default.nix
 #+begin_src nix :tangle modules/home-manager/default.nix
 { config, lib, pkgs, inputs, ... }:
+
 {
   imports = [
     ./git.nix
@@ -460,21 +461,17 @@ I use [[https://github.com/nix-community/home-manager][home-manager]] to manage 
   # Let home-manager manage itself
   programs.home-manager.enable = true;
 
-  # Use XDG config files with hardcoded paths
-  xdg.configFile = {
-    "doom".source = "/home/joshua/nixos-config/dotfiles/doom";
-    "tmux".source = "/home/joshua/nixos-config/dotfiles/tmux";
-    "hypr".source = "/home/joshua/nixos-config/dotfiles/hypr";
-    "waybar".source = "/home/joshua/nixos-config/dotfiles/waybar";
-    "swaync".source = "/home/joshua/nixos-config/dotfiles/swaync";
-    "wofi".source = "/home/joshua/nixos-config/dotfiles/wofi";
-    "nvim".source = "/home/joshua/nixos-config/dotfiles/nvim";
-    "zathura".source = "/home/joshua/nixos-config/dotfiles/zathura";
-  };
-
-  # Handle the root-level files separately
+  # Use relative paths from the flake root
   home.file = {
-    ".tmux.conf".source = "/home/joshua/nixos-config/dotfiles/tmux.conf";
+    ".config/doom".source = ../../dotfiles/doom;
+    ".config/tmux".source = ../../dotfiles/tmux;
+    ".config/hypr".source = ../../dotfiles/hypr;
+    ".config/waybar".source = ../../dotfiles/waybar;
+    ".config/swaync".source = ../../dotfiles/swaync;
+    ".config/wofi".source = ../../dotfiles/wofi;
+    ".config/nvim".source = ../../dotfiles/nvim;
+    ".config/zathura".source = ../../dotfiles/zathura;
+    ".tmux.conf".source = ../../dotfiles/tmux.conf;
   };
 }
 #+end_src
