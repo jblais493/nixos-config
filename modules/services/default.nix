@@ -194,15 +194,5 @@ in
       allowedTCPPorts = [ 3000 8080 13378 ];
       allowedUDPPorts = [ 53 ];
     };
-
-    # Create container directories
-    systemd.tmpfiles.rules = mkAfter [
-      "d '/home/${cfg.user}/containers' 0755 ${cfg.user} users - -"
-      "d '/home/${cfg.user}/containers/audiobookshelf/config' 0755 ${cfg.user} users - -"
-      "d '/home/${cfg.user}/containers/audiobookshelf/metadata' 0755 ${cfg.user} users - -"
-      "d '/home/${cfg.user}/containers/homepage/config' 0755 ${cfg.user} users - -"
-      "d '/home/${cfg.user}/containers/pihole/etc-pihole' 0755 ${cfg.user} users - -"
-      "d '/home/${cfg.user}/containers/pihole/etc-dnsmasq.d' 0755 ${cfg.user} users - -"
-    ];
   };
 }
