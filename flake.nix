@@ -30,10 +30,6 @@
         modules = [
           ./hosts/theologica/configuration.nix
           agenix.nixosModules.default
-          ./modules/desktop
-          ./modules/cli-tui
-          ./modules/development
-          ./modules/media
 
           # Add home-manager
           home-manager.nixosModules.home-manager
@@ -52,9 +48,6 @@
         modules = [
           ./hosts/king/configuration.nix
           agenix.nixosModules.default
-          ./modules/desktop
-          ./modules/cli-tui
-          ./modules/development
 
           # Add home-manager
           home-manager.nixosModules.home-manager
@@ -74,9 +67,6 @@
         modules = [
           ./hosts/alexandria/configuration.nix
           agenix.nixosModules.default
-          ./modules/server
-          ./modules/services
-          ./modules/security
         ];
       };
 
@@ -86,8 +76,6 @@
         modules = [
           ./hosts/empire/configuration.nix
           agenix.nixosModules.default
-          ./modules/server
-          ./modules/security
         ];
       };
     };
