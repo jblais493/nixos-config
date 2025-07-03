@@ -211,10 +211,6 @@ I use [[https://github.com/nix-community/home-manager][home-manager]] to manage 
 { config, pkgs, inputs, ... }:
 
 {
-  imports = [
-    ./git.nix
-  ];
-
   home.username = "joshua";
   home.homeDirectory = "/home/joshua";
   home.stateVersion = "25.05";
@@ -248,35 +244,6 @@ I use [[https://github.com/nix-community/home-manager][home-manager]] to manage 
 }
 #+end_src
 
-*** git.nix
-#+begin_src nix :tangle modules/cli-tui/git.nix
-{ config, pkgs, ... }:
-
-{
-  programs.git = {
-    enable = true;
-    config = {
-      init.defaultBranch = "main";
-      user = {
-        name = "Joshua Blais";
-        email = "josh@joshblais.com";
-      };
-      core = {
-        editor = "nvim";
-        autocrlf = "input";
-      };
-      pull.rebase = true;
-      push.autoSetupRemote = true;
-    };
-  };
-
-  # Install git in system packages too
-  environment.systemPackages = with pkgs; [
-    git
-  ];
-}
-#+end_src
-*** zsh.nix
 ** Development
 *** doom.nix
 #+begin_src nix :tangle modules/development/doom.nix
@@ -340,6 +307,34 @@ I use [[https://github.com/nix-community/home-manager][home-manager]] to manage 
   };
 }
 #+end_src
+*** git.nix
+#+begin_src nix :tangle modules/cli-tui/git.nix
+{ config, pkgs, ... }:
+
+{
+  programs.git = {
+    enable = true;
+    config = {
+      init.defaultBranch = "main";
+      user = {
+        name = "Joshua Blais";
+        email = "josh@joshblais.com";
+      };
+      core = {
+        editor = "nvim";
+        autocrlf = "input";
+      };
+      pull.rebase = true;
+      push.autoSetupRemote = true;
+    };
+  };
+
+  # Install git in system packages too
+  environment.systemPackages = with pkgs; [
+    git
+  ];
+}
+#+end_src
 *** tmux.nix
 #+begin_src nix :tangle modules/cli-tui/tmux.nix
 { config, pkgs, ... }:
@@ -371,6 +366,9 @@ I use [[https://github.com/nix-community/home-manager][home-manager]] to manage 
   # Home-manager will handle the config via symlink
   programs.nvim.enable = true;
 }
+#+end_src
+*** zsh.nix
+#+begin_src nix :tangle modules/cli-tui/zsh.nix
 #+end_src
 
 ** Desktop
