@@ -26,7 +26,8 @@ What makes this possible is:
 Excited yet? Let us begin...
 
 * Dotfiles
-This directory contains all dotfiles for the programs and tooling I use. I use home-manager just to symlink these configurations to the correct locations, but not to manage the files.
+This directory contains all dotfiles for the programs and tooling I use. I previously used [[https://www.gnu.org/software/stow/][Stow]] to organize all these config files, but now use home-manager's ~mkOutOfStoreSymlink~ to sym link and keep these files organized within this one config - simplification is beautiful. See the section on the home-manager module below.
+
 #+begin_src bash
 ❯ tree -d -L 2
 ├── doom
@@ -103,6 +104,28 @@ My testing machine, a Lenovo T430 laptop.
 - Model: Lenovo T430
 - Purpose: Testing configurations before deploying to main machine
 - Desktop: Hyprland (testing)
+#+end_src
+
+*** configuration.nix
+This declares all imported modules and specific tweaks to the King host:
+#+begin_src nix :tangle hosts/king/configuration.nix
+{ config, pkgs, inputs, ... }:
+{
+  imports = [
+    ./hardware-configuration.nix
+    ../../modules/desktop      # This imports the desktop/default.nix
+    ../../modules/cli-tui
+    ../../modules/development
+    ../../modules/media
+    ../../modules/home-manager
+    ../../modules/security
+    # ... other imports
+  ];
+
+  # Host-specific configuration
+  networking.hostName = "king";
+  # ... rest of your host config
+}
 #+end_src
 ** Empirica
 *** README.md
