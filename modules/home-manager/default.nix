@@ -1,4 +1,9 @@
 { config, lib, pkgs, inputs, ... }:
+
+let
+  # Get the directory where this flake is located
+  dotfilesDir = "${config.home.homeDirectory}/nixos-config/dotfiles";
+in
 {
   imports = [
     ./git.nix
@@ -11,20 +16,16 @@
   # Let home-manager manage itself
   programs.home-manager.enable = true;
 
-  # Use XDG config files with hardcoded paths
-  xdg.configFile = {
-    "doom".source = "/home/joshua/nixos-config/dotfiles/doom";
-    "tmux".source = "/home/joshua/nixos-config/dotfiles/tmux";
-    "hypr".source = "/home/joshua/nixos-config/dotfiles/hypr";
-    "waybar".source = "/home/joshua/nixos-config/dotfiles/waybar";
-    "swaync".source = "/home/joshua/nixos-config/dotfiles/swaync";
-    "wofi".source = "/home/joshua/nixos-config/dotfiles/wofi";
-    "nvim".source = "/home/joshua/nixos-config/dotfiles/nvim";
-    "zathura".source = "/home/joshua/nixos-config/dotfiles/zathura";
-  };
-
-  # Handle the root-level files separately
+  # Use the file attribute with string paths (this should work reliably)
   home.file = {
-    ".tmux.conf".source = "/home/joshua/nixos-config/dotfiles/tmux.conf";
+    ".config/doom".source = "${dotfilesDir}/doom";
+    ".config/tmux".source = "${dotfilesDir}/tmux";
+    ".config/hypr".source = "${dotfilesDir}/hypr";
+    ".config/waybar".source = "${dotfilesDir}/waybar";
+    ".config/swaync".source = "${dotfilesDir}/swaync";
+    ".config/wofi".source = "${dotfilesDir}/wofi";
+    ".config/nvim".source = "${dotfilesDir}/nvim";
+    ".config/zathura".source = "${dotfilesDir}/zathura";
+    ".tmux.conf".source = "${dotfilesDir}/tmux.conf";
   };
 }

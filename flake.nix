@@ -32,13 +32,13 @@
           agenix.nixosModules.default
 
           # Add home-manager
-          # home-manager.nixosModules.home-manager
-          # {
-          #   home-manager.useGlobalPkgs = true;
-          #   home-manager.useUserPackages = true;
-          #   home-manager.users.joshua = import ./modules/home-manager;
-          #   home-manager.extraSpecialArgs = { inherit inputs; };
-          # }
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.joshua = import ./modules/home-manager;
+            home-manager.extraSpecialArgs = { inherit inputs; };
+          }
         ];
       };
 
@@ -50,13 +50,13 @@
           agenix.nixosModules.default
 
           # # Add home-manager
-          # home-manager.nixosModules.home-manager
-          # {
-          #   home-manager.useGlobalPkgs = true;
-          #   home-manager.useUserPackages = true;
-          #   home-manager.users.joshua = import ./modules/home-manager;
-          #   home-manager.extraSpecialArgs = { inherit inputs; };
-          # }
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.joshua = import ./modules/home-manager;
+            home-manager.extraSpecialArgs = { inherit inputs; };
+          }
         ];
       };
 
