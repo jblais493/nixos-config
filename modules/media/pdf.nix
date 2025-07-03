@@ -4,7 +4,7 @@
     # PDF viewers
     zathura
     evince
-    okular
+    kdePackages.okular
 
     # PDF tools
     poppler_utils
