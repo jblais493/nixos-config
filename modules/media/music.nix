@@ -8,7 +8,6 @@
 
     # Audio tools
     audacity
-    lmms
 
     # Audio codecs
     ffmpeg
