@@ -29,7 +29,6 @@
   # Security packages
   environment.systemPackages = with pkgs; [
     fail2ban
-    ufw
     gnupg
     age
   ];
