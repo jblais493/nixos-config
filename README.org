@@ -371,7 +371,6 @@ I use [[https://github.com/nix-community/home-manager][home-manager]] to manage 
   # Home-manager will handle the config via symlink
   programs.nvim.enable = true;
 }
-
 #+end_src
 
 ** Desktop
