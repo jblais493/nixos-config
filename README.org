@@ -110,12 +110,7 @@ I use [[https://github.com/nix-community/home-manager][home-manager]] to manage 
 
 {
   imports = [
-    ./tmux.nix
     ./git.nix
-    ./nvim.nix
-    ./zsh.nix
-    ./doom.nix
-    ./hyprland.nix
   ];
 
   home.username = "joshua";
@@ -124,59 +119,19 @@ I use [[https://github.com/nix-community/home-manager][home-manager]] to manage 
 
   # Let home-manager manage itself
   programs.home-manager.enable = true;
-}
-#+end_src
-*** doom.nix
-#+begin_src nix :tangle modules/home-manager/doom.nix
-{ config, pkgs, ... }:
 
-{
-  # Install Emacs
-  home.packages = with pkgs; [
-    emacs
-    # Doom Emacs dependencies
-    git
-    ripgrep
-    fd
-    imagemagick
-    texliveFull  # For LaTeX support
-    sqlite       # For org-roam
-  ];
-
-  # Symlink your entire Doom Emacs configuration
   home.file.".config/doom".source = config.lib.file.mkOutOfStoreSymlink
     "${config.home.homeDirectory}/nixos-config/dotfiles/doom";
 
-  # Also symlink the +STORE directory if Doom uses it
   home.file.".config/+STORE".source = config.lib.file.mkOutOfStoreSymlink
     "${config.home.homeDirectory}/nixos-config/dotfiles/+STORE";
-}
-#+end_src
 
-*** tmux.nix
-#+begin_src nix :tangle modules/home-manager/tmux.nix
-{ config, pkgs, ... }:
-
-{
-  # Install tmux
-  home.packages = with pkgs; [ tmux ];
-
-  # Create symlink to your dotfile using mkOutOfStoreSymlink
   home.file.".tmux.conf".source = config.lib.file.mkOutOfStoreSymlink
     "${config.home.homeDirectory}/nixos-config/dotfiles/tmux.conf";
 
-  # Also symlink your tmux plugins directory if needed
   home.file.".config/tmux".source = config.lib.file.mkOutOfStoreSymlink
     "${config.home.homeDirectory}/nixos-config/dotfiles/tmux";
-}
-#+end_src
 
-*** hyprland.nix (home-manager module)
-#+begin_src nix :tangle modules/home-manager/hyprland.nix
-{ config, pkgs, ... }:
-
-{
-  # Just symlink your configs for live editing
   home.file.".config/hypr".source = config.lib.file.mkOutOfStoreSymlink
     "${config.home.homeDirectory}/nixos-config/dotfiles/hypr";
 
@@ -190,6 +145,7 @@ I use [[https://github.com/nix-community/home-manager][home-manager]] to manage 
       "${config.home.homeDirectory}/nixos-config/dotfiles/wofi";
 }
 #+end_src
+
 *** nvim.nix
 *** git.nix
 #+begin_src nix :tangle modules/cli-tui/git.nix
@@ -222,6 +178,23 @@ I use [[https://github.com/nix-community/home-manager][home-manager]] to manage 
 *** tmux.nix
 *** zsh.nix
 ** Development
+*** doom.nix
+#+begin_src nix :tangle modules/development/doom.nix
+{ config, pkgs, ... }:
+
+{
+  # Install Emacs
+  home.packages = with pkgs; [
+    emacs
+    # Doom Emacs dependencies
+    git
+    ripgrep
+    fd
+    imagemagick
+    texliveFull  # For LaTeX support
+    sqlite       # For org-roam
+  ];
+#+end_src
 ** CLI/TUI
 *** default.nix
 #+begin_src nix :tangle modules/cli-tui/default.nix
