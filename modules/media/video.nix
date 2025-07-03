@@ -6,8 +6,8 @@
     vlc
 
     # Video editing
-    kdenlive
     obs-studio
+    shotcut
 
     # Video tools
     ffmpeg
