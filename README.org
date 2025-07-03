@@ -248,7 +248,6 @@ I use [[https://github.com/nix-community/home-manager][home-manager]] to manage 
 }
 #+end_src
 
-*** nvim.nix
 *** git.nix
 #+begin_src nix :tangle modules/cli-tui/git.nix
 { config, pkgs, ... }:
@@ -357,6 +356,21 @@ I use [[https://github.com/nix-community/home-manager][home-manager]] to manage 
 #+end_src
 *** podman.nix
 #+begin_src nix :tangle modules/cli-tui/podman.nix
+
+#+end_src
+*** nvim.nix
+#+begin_src nix :tangle modules/cli-tui/nvim.nix
+{ config, pkgs, ... }:
+
+{
+  # System-level tmux installation
+  environment.systemPackages = with pkgs; [
+    nvim
+  ];
+
+  # Home-manager will handle the config via symlink
+  programs.nvim.enable = true;
+}
 
 #+end_src
 
