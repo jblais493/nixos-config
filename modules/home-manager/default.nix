@@ -11,30 +11,30 @@
   # Let home-manager manage itself
   programs.home-manager.enable = true;
 
-  # Symlink dotfiles using lib.file.mkOutOfStoreSymlink
+  # Symlink dotfiles using the correct function
   home.file = {
-    ".config/doom".source = lib.file.mkOutOfStoreSymlink
+    ".config/doom".source = config.lib.file.mkOutOfStoreSymlink
       "${config.home.homeDirectory}/nixos-config/dotfiles/doom";
 
-    ".config/+STORE".source = lib.file.mkOutOfStoreSymlink
+    ".config/+STORE".source = config.lib.file.mkOutOfStoreSymlink
       "${config.home.homeDirectory}/nixos-config/dotfiles/+STORE";
 
-    ".tmux.conf".source = lib.file.mkOutOfStoreSymlink
+    ".tmux.conf".source = config.lib.file.mkOutOfStoreSymlink
       "${config.home.homeDirectory}/nixos-config/dotfiles/tmux.conf";
 
-    ".config/tmux".source = lib.file.mkOutOfStoreSymlink
+    ".config/tmux".source = config.lib.file.mkOutOfStoreSymlink
       "${config.home.homeDirectory}/nixos-config/dotfiles/tmux";
 
-    ".config/hypr".source = lib.file.mkOutOfStoreSymlink
+    ".config/hypr".source = config.lib.file.mkOutOfStoreSymlink
       "${config.home.homeDirectory}/nixos-config/dotfiles/hypr";
 
-    ".config/waybar".source = lib.file.mkOutOfStoreSymlink
+    ".config/waybar".source = config.lib.file.mkOutOfStoreSymlink
       "${config.home.homeDirectory}/nixos-config/dotfiles/waybar";
 
-    ".config/swaync".source = lib.file.mkOutOfStoreSymlink
+    ".config/swaync".source = config.lib.file.mkOutOfStoreSymlink
       "${config.home.homeDirectory}/nixos-config/dotfiles/swaync";
 
-    ".config/wofi".source = lib.file.mkOutOfStoreSymlink
+    ".config/wofi".source = config.lib.file.mkOutOfStoreSymlink
       "${config.home.homeDirectory}/nixos-config/dotfiles/wofi";
   };
 }
