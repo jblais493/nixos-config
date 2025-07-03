@@ -82,7 +82,6 @@ This declares all imported modules and specific tweaks to the Theologica host:
     ../../modules/cli-tui
     ../../modules/development
     ../../modules/media
-    ../../modules/home-manager
     ../../modules/security
     # ... other imports
   ];
@@ -141,7 +140,6 @@ This declares all imported modules and specific tweaks to the King host:
     ../../modules/cli-tui
     ../../modules/development
     ../../modules/media
-    ../../modules/home-manager
     ../../modules/security
     # ... other imports
   ];
@@ -172,7 +170,6 @@ Empirica runs all my [[https://joshblais.com/posts/selfhosting/][selfhosted serv
   imports = [
     ./hardware-configuration.nix
     ../../modules/cli-tui
-    ../../modules/home-manager
     ../../modules/security
     ../../modules/services
     # ... other imports

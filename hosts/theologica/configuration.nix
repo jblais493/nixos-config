@@ -6,7 +6,6 @@
     ../../modules/cli-tui
     ../../modules/development
     ../../modules/media
-    ../../modules/home-manager
     ../../modules/security
     # ... other imports
   ];
