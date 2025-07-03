@@ -1,5 +1,6 @@
-# TODO
-
-environment.systemPackages = [
-  pkgs.keychain
-];
+{ config, pkgs, ... }:
+{
+  environment.systemPackages = with pkgs; [
+    keychain
+  ];
+}

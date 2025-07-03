@@ -748,11 +748,12 @@ in
 *** fail2ban.nix
 *** keychain.nix
 #+begin_src nix :tangle modules/security/keychain.nix
-# TODO
-
-environment.systemPackages = [
-  pkgs.keychain
-];
+{ config, pkgs, ... }:
+{
+  environment.systemPackages = with pkgs; [
+    keychain
+  ];
+}
 #+end_src
 ** Media
 *** default.nix
