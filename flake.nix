@@ -30,7 +30,6 @@
         modules = [
           ./hosts/theologica/configuration.nix
           agenix.nixosModules.default
-          ./modules/shared
           ./modules/desktop
           ./modules/cli-tui
           ./modules/development
@@ -53,7 +52,6 @@
         modules = [
           ./hosts/king/configuration.nix
           agenix.nixosModules.default
-          ./modules/shared
           ./modules/desktop
           ./modules/cli-tui
           ./modules/development
@@ -76,7 +74,6 @@
         modules = [
           ./hosts/alexandria/configuration.nix
           agenix.nixosModules.default
-          ./modules/shared
           ./modules/server
           ./modules/services
           ./modules/security
@@ -89,7 +86,6 @@
         modules = [
           ./hosts/empire/configuration.nix
           agenix.nixosModules.default
-          ./modules/shared
           ./modules/server
           ./modules/security
         ];
