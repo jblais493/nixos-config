@@ -64,6 +64,79 @@ Hetzner server database host
 ** Empire
 ** Citadel
 * Modules
+** Home-manager
+I use [[https://github.com/nix-community/home-manager][home-manager]] to manage all dotfiles that require customization.
+*** default.nix
+#+begin_src nix :tangle modules/home-manager/default.nix
+{ config, pkgs, inputs, ... }:
+
+{
+  imports = [
+    ./tmux.nix
+    ./git.nix
+    ./nvim.nix
+    ./zsh.nix
+  ];
+
+  home.username = "joshua";
+  home.homeDirectory = "/home/joshua";
+  home.stateVersion = "24.11";
+
+  # Let home-manager manage itself
+  programs.home-manager.enable = true;
+}
+#+end_src
+
+*** tmux.nix
+#+begin_src nix :tangle modules/home-manager/tmux.nix
+{ config, pkgs, ... }:
+
+{
+  # Install tmux
+  home.packages = with pkgs; [ tmux ];
+
+  # Create symlink to your dotfile using mkOutOfStoreSymlink
+  home.file.".tmux.conf".source = config.lib.file.mkOutOfStoreSymlink
+    "${config.home.homeDirectory}/nixos-config/dotfiles/tmux.conf";
+
+  # Also symlink your tmux plugins directory if needed
+  home.file.".config/tmux".source = config.lib.file.mkOutOfStoreSymlink
+    "${config.home.homeDirectory}/nixos-config/dotfiles/tmux";
+}
+#+end_src
+
+*** home.nix
+*** nvim.nix
+*** git.nix
+#+begin_src nix :tangle modules/cli-tui/git.nix
+{ config, pkgs, ... }:
+
+{
+  programs.git = {
+    enable = true;
+    config = {
+      init.defaultBranch = "main";
+      user = {
+        name = "Joshua Blais";
+        email = "josh@joshblais.com";
+      };
+      core = {
+        editor = "nvim";
+        autocrlf = "input";
+      };
+      pull.rebase = true;
+      push.autoSetupRemote = true;
+    };
+  };
+
+  # Install git in system packages too
+  environment.systemPackages = with pkgs; [
+    git
+  ];
+}
+#+end_src
+*** tmux.nix
+*** zsh.nix
 ** Development
 ** CLI/TUI
 *** default.nix
@@ -110,37 +183,6 @@ Hetzner server database host
   };
 }
 #+end_src
-*** nvim.nix
-*** git.nix
-#+begin_src nix :tangle modules/cli-tui/git.nix
-{ config, pkgs, ... }:
-
-{
-  programs.git = {
-    enable = true;
-    config = {
-      init.defaultBranch = "main";
-      user = {
-        name = "Joshua Blais";
-        email = "josh@joshblais.com";
-      };
-      core = {
-        editor = "nvim";
-        autocrlf = "input";
-      };
-      pull.rebase = true;
-      push.autoSetupRemote = true;
-    };
-  };
-
-  # Install git in system packages too
-  environment.systemPackages = with pkgs; [
-    git
-  ];
-}
-#+end_src
-*** tmux.nix
-*** zsh.nix
 *** podman.nix
 ** Desktop
 *** hyprland.nix
@@ -302,6 +344,15 @@ in
           ./modules/cli-tui
           ./modules/development
           ./modules/media
+
+          # Add home-manager
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.joshua = import ./modules/home-manager;
+            home-manager.extraSpecialArgs = { inherit inputs; };
+          }
         ];
       };
 
@@ -315,15 +366,25 @@ in
           ./modules/desktop
           ./modules/cli-tui
           ./modules/development
+
+          # Add home-manager
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.joshua = import ./modules/home-manager;
+            home-manager.extraSpecialArgs = { inherit inputs; };
+          }
         ];
       };
 
-      # Server hosts
+      # Server hosts (no home-manager needed)
       alexandria = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
         modules = [
           ./hosts/alexandria/configuration.nix
+          agenix.nixosModules.default
           ./modules/shared
           ./modules/server
           ./modules/services
@@ -336,6 +397,7 @@ in
         specialArgs = { inherit inputs; };
         modules = [
           ./hosts/empire/configuration.nix
+          agenix.nixosModules.default
           ./modules/shared
           ./modules/server
           ./modules/security

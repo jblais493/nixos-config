@@ -35,6 +35,15 @@
           ./modules/cli-tui
           ./modules/development
           ./modules/media
+
+          # Add home-manager
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.joshua = import ./modules/home-manager;
+            home-manager.extraSpecialArgs = { inherit inputs; };
+          }
         ];
       };
 
@@ -48,15 +57,25 @@
           ./modules/desktop
           ./modules/cli-tui
           ./modules/development
+
+          # Add home-manager
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.joshua = import ./modules/home-manager;
+            home-manager.extraSpecialArgs = { inherit inputs; };
+          }
         ];
       };
 
-      # Server hosts
+      # Server hosts (no home-manager needed)
       alexandria = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
         modules = [
           ./hosts/alexandria/configuration.nix
+          agenix.nixosModules.default
           ./modules/shared
           ./modules/server
           ./modules/services
@@ -69,6 +88,7 @@
         specialArgs = { inherit inputs; };
         modules = [
           ./hosts/empire/configuration.nix
+          agenix.nixosModules.default
           ./modules/shared
           ./modules/server
           ./modules/security
