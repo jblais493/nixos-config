@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# key: ins
+# name: insert
+# condition: t
+# --
+INSERT INTO ${1:table} (${2:columns})
+VALUES (${3:values})
+${4:RETURNING ${5:*}}${0:;}

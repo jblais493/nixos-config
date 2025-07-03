@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: Contractor Payment with GST
+# key: ctr
+# --
+`(format-time-string "%Y/%m/%d")` * ${1:Contractor Name}
+    ; ${2:Payment description}
+    Assets:Bank:Checking                   CAD -${3:Total}
+    Expenses:Contractor_Payments           CAD ${4:Base}
+    Liabilities:GST_Payable                CAD ${5:Tax}
+$0

@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: SQL Block
+# key: cbs
+# --
+
+#+BEGIN_SRC sql :tangle "../../../src/migrations/$1"
+$0
+#+END_SRC

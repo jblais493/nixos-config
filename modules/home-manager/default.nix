@@ -6,6 +6,8 @@
     ./git.nix
     ./nvim.nix
     ./zsh.nix
+    ./doom.nix
+    ./hyprland.nix
   ];
 
   home.username = "joshua";

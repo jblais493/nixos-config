@@ -1,0 +1,102 @@
+# -*- mode: snippet -*-
+# name: daily
+# key: daily
+# --
+
+#+title: `(file-name-base (buffer-file-name))`
+
+* Metrics
+** Sleep Quality: /10
+- Time to bed: :
+- Wake time: :
+- Total hours:
+- Quality notes:
+** Health Tracking
+*** Water - 0/3500mL
+*** Nutrition
+**** [ ] Protein shake
+**** Meals:
+  + [ ] Breakfast:
+  + [ ] Lunch:
+  + [ ] Shake:
+  + [ ] Dinner:
+  + Snacks:
+    +
+*** Movement
+- [ ] Cardio
+- [ ] Strength
+
+* Morning Foundation [0/7]
+** [ ] Wake up, drink water, cold water on face, teeth
+** [ ] [[https://traditionalcatholicprayers.com/2019/10/05/morning-prayers/][Morning Prayer]] and scripture
+** [ ] Morning Movement (Cardio, bodyweight, yoga)
+** [ ] Shower, Groom, & Dressed
+** [ ] Vitamins, Magnesium, Vitamin D
+** [ ] Review day's battle plan
+** [ ] System update
+** [ ] Financial/Systems Check
+
+* Work
+
+
+** Outreach target: [0/100]
+** Calls completed: [0/20]
+** Revenue generated: $
+** Key wins:
+
+
+* Family Focus
+** Quality Time Minutes: 
+** Meaningful Interactions:
+*** With Aurelia:
+    -
+*** With everyone:
+    -
+
+* Faith
+** [ ] Daily Mass
+** [ ] Rosary
+** [ ] Spiritual Reading
+** Hours [0/9]
+*** [ ] [[https://universalis.com/today.htm][About Today]]
+*** [ ] [[https://universalis.com/mass.htm][Mass]]
+*** [ ] [[https://universalis.com/readings.htm][Office of Readings]]
+*** [ ] [[https://universalis.com/lauds.htm][Lauds]]
+*** [ ] [[https://universalis.com/terce.htm][Terce]]
+*** [ ] [[https://universalis.com/sext.htm][Sext]]
+*** [ ] [[https://universalis.com/none.htm][None]]
+*** [ ] [[https://universalis.com/vespers.htm][Vespers]]
+*** [ ] [[https://universalis.com/compline.htm][Compline]]
+
+* Learning
+** [ ] Language
+
+* Evening Review
+** Victories
+- What went exceptionally well:
+
+** Growth Areas
+- What could improve:
+
+** Gratitude
+- Three things, ideas, people etc. I'm grateful for:
+  1.
+  2.
+  3.
+
+** Evening Routine
+*** Tomorrow's Preparation [/]
+- [ ] Setup tomorrows journal file
+- [ ] Post priorities from [[file:~/org/projects.org][projects.org]] file
+- [ ] Set clothes out for morning
+*** [ ] Evening stretching
+*** [ ] Evening Groom
+*** [ ] [[https://traditionalcatholicprayers.com/2019/10/03/evening-prayers/][Evening Prayer]]
+
+* Daily Reflection
+** Focus Score [0-10]:
+** Energy Level [0-10]:
+** Most Impactful Moment:
+** Key Lesson:
+
+* Notes & Insights

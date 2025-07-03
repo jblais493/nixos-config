@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: Credit Card Payment
+# key: ccp
+# --
+`(format-time-string "%Y/%m/%d")` * Payment from Chequing
+    ; Payment to credit card
+    Liabilities:Credit_Card                CAD -${1:Amount}
+    Assets:Bank:Checking                   CAD ${1:Amount}
+$0

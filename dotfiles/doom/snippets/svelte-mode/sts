@@ -1,0 +1,21 @@
+# -*- mode: snippet -*-
+# name: Svelte Component with TypeScript
+# key: sts
+# --
+<script lang="ts">
+	// Props
+	export let ${1:prop}: ${2:string} = ${3:defaultValue};
+
+	// Local state
+	let ${4:variable}: ${5:type} = ${6:initialValue};
+
+	$0
+</script>
+
+<main>
+
+</main>
+
+<style>
+
+</style>

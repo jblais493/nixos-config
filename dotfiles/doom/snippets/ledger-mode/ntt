@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: New Transaction (Double Entry)
+# key: ntt
+# --
+`(format-time-string "%Y/%m/%d")` * ${1:Payee}
+    ; ${2:Description}
+    ${3:Expenses:${4:Category}}                      ${5:CAD} ${6:Amount}
+    Assets:Bank:Checking
+$0

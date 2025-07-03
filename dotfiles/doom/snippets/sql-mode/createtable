@@ -1,0 +1,7 @@
+# key: ct
+# name: create table
+# --
+CREATE TABLE ${1:table_name} (
+    ${2:id} ${3:SERIAL PRIMARY KEY},
+    ${4:column_name} ${5:data_type} ${6:constraints}
+)${0:;}

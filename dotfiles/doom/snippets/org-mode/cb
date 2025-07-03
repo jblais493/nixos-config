@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: Org Source Block
+# key: cb
+# --
+#+BEGIN_SRC ${1:$$(yas-choose-value '("go" "bash" "elisp" "python" "sql"))} ${2::tangle ${3:"../../../src/$4"}}
+$0
+#+END_SRC

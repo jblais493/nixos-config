@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: fb yes
+# key: fby
+# condition: t
+# --
+
+yes it is.

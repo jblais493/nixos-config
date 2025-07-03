@@ -1,0 +1,14 @@
+# key: rfce
+# name: React Functional Component
+# contributor: Joshua Blais <josh@joshblais.com>
+# --
+import React from 'react';
+
+function ${1:Name}() {
+  //${2: Documentation for $1}
+    return (
+        <div>$1</div>
+    );
+}
+
+export default $1

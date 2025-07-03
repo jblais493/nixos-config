@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: if err != nil
+# key: eif
+# --
+if err != nil {
+	${1:return ${2:nil, }err}
+}
+$0

@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: Go Block
+# key: cbg
+# --
+#+BEGIN_SRC go :tangle "../../../src/$1"
+$0
+#+END_SRC

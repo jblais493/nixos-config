@@ -1,0 +1,126 @@
+# Controls for my Doom emacs
+
+I have used doom emacs as a way to get up and running with emacs
+
+A Doom emacs base configuration which I use as my OS everywhere. Note some controls are customized with my own lisp functions.
+
+* Controls
+
+|------------------------+---------------+---------------------------------------|
+| Category               | Hotkey        | Function                              |
+|------------------------+---------------+---------------------------------------|
+| Navigation             | Ctrl tab      | Next tab (centaur tabs)               |
+|                        | Ctrl shft tab | Previous tab (centaur tabs)           |
+|                        | Ctrl shft tab | Previous tab (centaur tabs)           |
+|                        | Ctrl arrows   | Move between windows                  |
+|                        | Alt x         | Meta X emacs commands (legendary)     |
+|                        | SPC ,         | Switch to buffer                      |
+|                        | SPC .         | Find files                            |
+|                        | SPC SPC       | Find file in project                  |
+|                        | SPC /         | Search project                        |
+|                        | SPC <         | Switch buffer                         |
+|                        | SPC d         | Dirvish in current directory          |
+|                        | SPC x         | Scratch buffer                        |
+|------------------------+---------------+---------------------------------------|
+| Bookmarking            | SPC b m       | bookmark current buffer               |
+|                        | SPC b P       | save current bookmarks                |
+|                        | SPC b M       | delete bookmark                       |
+|                        | SPC ret       | jump to bookmarks                     |
+|------------------------+---------------+---------------------------------------|
+| Buffers                | SPC b N       | New empty buffer                      |
+|                        | SPC b n       | Next buffer                           |
+|                        | SPC b p       | Previous buffer                       |
+|                        | SPC b i       | Intreactive buffer - show all buffers |
+|                        |               |                                       |
+|------------------------+---------------+---------------------------------------|
+| Windows                | SPC w d       | Kill window                           |
+|                        |               |                                       |
+|------------------------+---------------+---------------------------------------|
+| Workspaces             | SPC tab n     | New workspace                         |
+|                        | SPC tab N     | New named workspace                   |
+|                        | SPC tab .     | switch workspace                      |
+|                        | SPC tab d     | delete workspace                      |
+|                        | SPC tab l     | loads workspace                       |
+|                        | SPC tab r     | rename workspace                      |
+|------------------------+---------------+---------------------------------------|
+| Files                  | SPC f c       | Copy file                             |
+|                        | SPC f d       | Find directory                        |
+|------------------------+---------------+---------------------------------------|
+| Media                  | SPC e e       | Opens elfeed                          |
+|                        | SPC e u       | Elfeed update                         |
+|                        | SPC e w       | EWW browser                           |
+|                        | SPC e p       | Opens pass buffer                     |
+|                        | SPC e v       | Opens video elfeed                    |
+|                        | SPC e l       | Opens Elpher (gopher/gemini browser)  |
+|                        | SPC m d       | Play music directory                  |
+|                        | SPC m h       | shuffle                               |
+|------------------------+---------------+---------------------------------------|
+| Magit                  | SPC g z       | Quick stage/commit/push               |
+|                        | SPC g g       | Magit status                          |
+|                        | SPC g p       | Pull                                  |
+|                        | SPC g t       | Git time machine                      |
+|------------------------+---------------+---------------------------------------|
+| Search/Replace/ripgrep | SPC s s       | Goto line/word                        |
+|                        | SPC s p       | Search Project                        |
+|                        | SPC s d       | Search current directory              |
+|                        | SPC s r       | Search and replace                    |
+|                        | SPC s i       | Go to symbol                          |
+|                        |               |                                       |
+|------------------------+---------------+---------------------------------------|
+| Editing                | Alt d         | Deletes after cursor                  |
+|                        | Alt backspace | Deletes before cursor                 |
+|                        | SPC i s       | Insert snippet                        |
+|                        | SPC t z       | Writeroom mode                        |
+|                        | SPC t b       | Big mode (presentations)              |
+|                        |               |                                       |
+|------------------------+---------------+---------------------------------------|
+| Projects               | SPC p a       | Add new project                       |
+|                        | SPC p d       | Remove from known projects            |
+|                        | SPC p f       | Find file in project                  |
+|                        |               |                                       |
+
+* Org Mode
+
+|----------+-------------+-----------------------------------|
+| Category | Hotkey      | Function                          |
+|----------+-------------+-----------------------------------|
+| Org mode | Ctrl Shft c | Open capture buffer               |
+|          | SPC m t     | Change org state (TODO/DONE/etc.) |
+|          | Ctrl c d    | Moves task to done.org            |
+|          | Ctrl c TAB  | Insert image inline               |
+|----------+-------------+-----------------------------------|
+
+*** Org Capture Templates (Ctrl+Shift+c)
+
+The capture buffer provides quick capture options for various types of content:
+
+| Template | Type      | Destination File       | Description                                    |
+|----------|-----------|------------------------|------------------------------------------------|
+| t        | Todo      | ~/org/todo.org         | Tasks and todos for action                     |
+| e        | Event     | ~/org/calendar.org     | Scheduled events (appointments, meetings, etc.)|
+| d        | Deadline  | ~/org/calendar.org     | Tasks with specific deadlines                  |
+| p        | Project   | ~/org/projects.org     | Project-related information and tasks          |
+| i        | Idea      | ~/org/ideas.org        | Capture ideas and inspirations                 |
+| c        | Contact   | ~/org/contacts.org     | Contact information                            |
+| n        | Note      | ~/org/notes.org        | General notes and information                  |
+
+* Modes
+** Org mode
+- TAB - Fold/unfold headings
+- Shift+TAB - Cycle through folding states
+- C-c C-c - Evaluate code blocks, toggle checkboxes
+- C-c C-t - Cycle TODO states
+- C-c C-s - Schedule item
+- C-c C-d - Set deadline
+** Web mode
+- C-c C-n - New element
+- C-c C-f - Toggle folding
+- C-c C-i - Indent region
+- C-c C-e - Edit element
+- z o - open code fold
+- z c - close code fold
+** REST client mode
+** SQL mode
+
+** Evaluate sexp
+- SPC-u C-x C-e - evaluates and outputs math

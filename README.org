@@ -76,6 +76,8 @@ I use [[https://github.com/nix-community/home-manager][home-manager]] to manage 
     ./git.nix
     ./nvim.nix
     ./zsh.nix
+    ./doom.nix
+    ./hyprland.nix
   ];
 
   home.username = "joshua";
@@ -84,6 +86,32 @@ I use [[https://github.com/nix-community/home-manager][home-manager]] to manage 
 
   # Let home-manager manage itself
   programs.home-manager.enable = true;
+}
+#+end_src
+*** doom.nix
+#+begin_src nix :tangle modules/home-manager/doom.nix
+{ config, pkgs, ... }:
+
+{
+  # Install Emacs
+  home.packages = with pkgs; [
+    emacs
+    # Doom Emacs dependencies
+    git
+    ripgrep
+    fd
+    imagemagick
+    texliveFull  # For LaTeX support
+    sqlite       # For org-roam
+  ];
+
+  # Symlink your entire Doom Emacs configuration
+  home.file.".config/doom".source = config.lib.file.mkOutOfStoreSymlink
+    "${config.home.homeDirectory}/nixos-config/dotfiles/doom";
+
+  # Also symlink the +STORE directory if Doom uses it
+  home.file.".config/+STORE".source = config.lib.file.mkOutOfStoreSymlink
+    "${config.home.homeDirectory}/nixos-config/dotfiles/+STORE";
 }
 #+end_src
 
@@ -105,7 +133,25 @@ I use [[https://github.com/nix-community/home-manager][home-manager]] to manage 
 }
 #+end_src
 
-*** home.nix
+*** hyprland.nix (home-manager module)
+#+begin_src nix :tangle modules/home-manager/hyprland.nix
+{ config, pkgs, ... }:
+
+{
+  # Just symlink your configs for live editing
+  home.file.".config/hypr".source = config.lib.file.mkOutOfStoreSymlink
+    "${config.home.homeDirectory}/nixos-config/dotfiles/hypr";
+
+  home.file.".config/waybar".source = config.lib.file.mkOutOfStoreSymlink
+    "${config.home.homeDirectory}/nixos-config/dotfiles/waybar";
+
+  home.file.".config/swaync".source = config.lib.file.mkOutOfStoreSymlink
+    "${config.home.homeDirectory}/nixos-config/dotfiles/swaync";
+
+  home.file.".config/wofi".source = config.lib.file.mkOutOfStoreSymlink
+      "${config.home.homeDirectory}/nixos-config/dotfiles/wofi";
+}
+#+end_src
 *** nvim.nix
 *** git.nix
 #+begin_src nix :tangle modules/cli-tui/git.nix
@@ -185,10 +231,39 @@ I use [[https://github.com/nix-community/home-manager][home-manager]] to manage 
 #+end_src
 *** podman.nix
 ** Desktop
-*** hyprland.nix
+*** hyprland.nix (system module)
 #+begin_src nix :tangle modules/desktop/hyprland.nix
+{ config, pkgs, ... }:
 
+{
+  # Enable Hyprland at system level
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true;
+  };
+
+  # Install Hyprland ecosystem packages
+  environment.systemPackages = with pkgs; [
+    waybar
+    wofi
+    kitty
+    swww
+    grim
+    slurp
+    wl-clipboard
+    hyprlock
+    hypridle
+    hyprpicker
+    hyprutils
+    hyprsunset
+    wlsunset
+    hyprwayland-scanner
+    swaynotificationcenter
+    polkit_gnome # for authentication flows
+  ];
+}
 #+end_src
+
 *** rofi.nix
 Wofi on wayland
 #+begin_src nix :tangle modules/desktop/wofi.nix

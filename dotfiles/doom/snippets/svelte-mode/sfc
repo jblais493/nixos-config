@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# name: Svelte Component
+# key: sfc
+# --
+<script${1: context="module"}>
+	$2
+</script>
+
+<script>
+	$3
+</script>
+
+<main>
+	$0
+</main>
+
+<style>
+	$4
+</style>

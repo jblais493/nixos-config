@@ -1,0 +1,7 @@
+# key: sel
+# name: select
+# --
+SELECT ${1:*}
+FROM ${2:table}
+${3:WHERE ${4:condition}}
+${0:;}

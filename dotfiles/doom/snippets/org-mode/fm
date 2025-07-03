@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: frontmatter
+# key: fm
+# condition: t
+# --
+#+TITLE: `(file-name-base (buffer-file-name))`
+#+DATE: 2025-01-03T04:00:54-08:00
+#+DRAFT: true
+#+TAGS: $1
+
+$0t
