@@ -7,5 +7,5 @@
   ];
 
   # Home-manager will handle the config via symlink
-  programs.nvim.enable = true;
+  programs.neovim.enable = true;
 }
