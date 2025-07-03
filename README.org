@@ -82,7 +82,7 @@ Excited yet? Let us begin...
 11. Reboot and enjoy your declarative system!
 
 *** Installation on VPS/headless servers
-For automated server deployments, I made a [[https://github.com/jblais493/nix-anywhere][repo for that]] using nixos-anywhere.
+For automated server deployments, use [[https://nix-community.github.io/nixos-anywhere/quickstart.html][nixos-anywhere]].
 
 Quick server setup:
 #+begin_src bash
