@@ -20,6 +20,37 @@ What makes this possible is:
 - org-mode (this document)
 
 With this one document, my *entire computing landscape is declared*. This is the power of Nix.
+* Dotfiles
+This directory contains all dotfiles for the programs and tooling I use. I use home-manager just to symlink these configurations to the correct locations, but not to manage the files.
+#+begin_src bash
+❯ tree -d -L 2
+├── doom
+│   ├── lisp
+│   ├── private
+│   ├── snippets
+│   ├── templates
+│   └── themes
+├── hypr
+├── kitty
+├── mpd
+│   └── playlists
+├── nvim
+│   ├── lua
+│   ├── scripts
+│   └── snippets
+├── +STORE
+│   └── dictionary
+├── swaync
+│   └── styles
+├── tmux
+│   └── tmux
+├── waybar
+│   ├── modules
+│   └── scripts
+├── wofi
+├── zathura
+└── zsh
+#+end_src
 
 * Hosts
 ** Theologica
@@ -497,6 +528,14 @@ in
 ** Shared
 ** Security
 *** fail2ban.nix
+*** keychain.nix
+#+begin_src nix :tangle modules/security/keychain.nix
+# TODO
+
+environment.systemPackages = [
+  pkgs.keychain
+];
+#+end_src
 ** Media
 *** music.nix
 #+begin_src nix :tangle modules/media/music.nix

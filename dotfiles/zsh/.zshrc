@@ -23,12 +23,7 @@ export PATH=$PATH:~/.config/scripts/Dotfiles
 export ZSH="/home/joshua/.oh-my-zsh"
 export EDITOR="nvim"
 export PATH="$HOME/.tmux/plugins/tmuxifier/bin:$PATH"
-#
-# Which plugins would you like to load?
-# Standard plugins can be found in ~/.oh-my-zsh/plugins/*
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
+
 plugins=(
   git
   fzf-tab
@@ -127,30 +122,6 @@ ssh_fzf() {
     fi
 }
 
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='nvim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# ssh
-# export SSH_KEY_PATH="~/.ssh/rsa_id"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-
-# autosuggestions
-#source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-
 # path for GO
 export PATH="$PATH:$HOME/go/bin"
 
@@ -159,7 +130,6 @@ alias cat="bat"
 alias cl="clear"
 alias ls="eza -l --icons"
 alias la="eza -TL 2 --icons"
-alias nb="newsboat"
 alias lg="lazygit"
 alias ld="lazydocker"
 alias py="python"
@@ -167,29 +137,25 @@ alias td="termdown"
 
 # Aliases 2024
 alias dnf="sudo dnf"
-# alias dnfupdate ="sudo dnf update && flatpak update"
 alias p="sudo pacman"
 alias ytd='yt-dlp'
 alias src="source ~/.zshrc"
 alias sshl="ssh_fzf"
 
 # Navigation
-alias oo="cd ~/Vaults"
-alias bills="nvim ~/Vaults/Personal/bills.md"
 alias godir="cd ~/go/src/github.com/jblais493/"
 alias photos="cd ~/Photos"
-alias f="nautilus . &"
-alias revere="cd /mnt/nomad/TrueNAS/Revere"
-alias revereb="cd /mnt/nomad/TrueNAS/Revere/Revere\ LATEST/Brokerage"
-alias commer="cd /mnt/nomad/TrueNAS/Revere/Revere\ LATEST/Brokerage/Alberta/Edmonton/Deals/2024Commercial"
-alias sellers="cd /mnt/nomad/TrueNAS/Revere/Revere\ LATEST/Brokerage/Alberta/Edmonton/Deals/2024/Sellers"
-alias buyers="cd ~/Revere/Revere\ LATEST/Brokerage/Alberta/Edmonton/Deals/2024/Buyers"
-alias revsys="cd /mnt/nomad/TrueNAS/Revere/Revere\ LATEST/Systems"
+alias f="thunar . &"
+alias revere="cd ~/Revere"
+alias revereb="cd ~/Revere/Revere\ LATEST/Brokerage"
+alias commer="cd ~/Revere/Revere\ LATEST/Brokerage/Alberta/Edmonton/Deals/2025/Commercial"
+alias sellers="cd ~/Revere/Revere\ LATEST/Brokerage/Alberta/Edmonton/Deals/2025/Sellers"
+alias buyers="cd ~/Revere/Revere\ LATEST/Brokerage/Alberta/Edmonton/Deals/2025/Buyers"
+alias revsys="cd ~/Revere/Revere\ LATEST/Systems"
 alias nas="cd /mnt/nomad/TrueNAS"
 alias media="cd /mnt/nomad/TrueNAS/media"
-alias music="cd ~/Music"
+alias music="cd ~/MusicOrganized"
 alias movies="cd /mnt/nomad/TrueNAS/media/Movies"
-alias mountain="cd /mnt/nomad/TrueNAS/Writing/Books/Mountain"
 alias library="cd /mnt/nomad/TrueNAS/Library"
 alias mpray="nvim ~/Vaults/Personal/Prayers/Morning\ Prayers.md"
 alias epray="nvim ~/Vaults/Personal/Prayers/Evening\ Prayers.md"
@@ -198,7 +164,6 @@ alias epray="nvim ~/Vaults/Personal/Prayers/Evening\ Prayers.md"
 alias w2pdf="wkhtmltopdf"
 alias devwork="~/.config/scripts/devwork.sh"
 alias f2p="~/.config/scripts/file_2_phone.sh"
-alias twi="py ~/.config/scripts/tweet_cli.py"
 alias dlp="nvim ~/.config/scripts/dlphone"
 alias eopn="~/.config/scripts/manage_encrypted_drives eopn"
 alias ecls="~/.config/scripts/manage_encrypted_drives ecls"
@@ -222,11 +187,6 @@ alias buyercalc="cd ~/Revere/Systems/Programs/Calculators && python BuyerCommiss
 alias record="arecord -f cd output.wav"
 alias anime="~/.config/scripts/ani-cli/ani-cli"
 alias brodirs="mkdir 'Brokerage Documents' 'Offer' 'Conveyancing' 'Payout' 'Posts'"
-# alias newpost="gimp /mnt/TrueNAS/Revere/Revere\ LATEST/Marketing/POSTS/Templates/2022\ IG\ Template\ NEW\ LISTING.xcf"
-# alias soldpost="gimp /mnt/TrueNAS/Revere/Revere\ LATEST/Marketing/POSTS/Templates/2022\ IG\ Template\ SOLD.xcf"
-# alias openhouse="gimp /mnt/TrueNAS/Revere/Revere\ LATEST/Marketing/POSTS/Templates/2022\ IG\ Template\ OPEN\ HOUSE.xcf"
-alias acct="libreoffice /mnt/nomad/TrueNAS/Revere/Revere\ LATEST/Accounting/2022/Revere\ Bookkeeping\ 2022.ods"
-alias convey="nvim /mnt/nomad/TrueNAS/Revere/Revere\ LATEST/Brokerage/CONVEYANCING/Information\ for\ Conveyancing/Lawyers/Lawyer\ Contact\ Information"
 alias twit="gimp /mnt/Logos/TrueNAS/Personal/Twitter.xcf"
 alias strip="mogrify -strip"
 
@@ -251,14 +211,14 @@ alias stopvpn="sudo systemctl stop wg-quick@wg0"
 
 # Payouts
 alias letterhead="cd /mnt/nomad/TrueNAS/Revere/Revere\ LATEST/Logos\ and\ Assets/Letterhead/2022/"
-alias eftinfo="gimp /mnt/nomad/TrueNAS/Revere/Revere\ LATEST/Logos\ and\ Assets/Letterhead/2022/Paid\ by\ EFT.xcf"
+alias eftinfo="gimp ~Revere/Revere\ LATEST/Logos\ and\ Assets/Letterhead/2022/Paid\ by\ EFT.xcf"
 alias invoice="gimp ~/Revere/Logos\ and\ Assets/Letterhead/2022/Invoice\ Template.xcf"
+alias cinst="gimp ~/Revere/Systems/Conveyancing/Templates/Conveyancing\ Instructions\ Template.xcf"
 alias cominv="gimp ~/Revere/Logos\ and\ Assets/Letterhead/2022/Commission\ Invoice\ Template.xcf"
 alias cashback="gimp ~/Revere/Logos\ and\ Assets/Letterhead/2022/Cashback\ Template.xcf"
 alias payout="gimp ~/Revere/Systems/Templates/Invoicing\ Templates/Paystub\ Template.xcf"
 alias payoutCody="gimp ~/Revere/Brokerage/Alberta/Edmonton/Agents/Paystubs/Paystub\ -\ Cody\ Serediak.xcf"
 alias payoutSeth="gimp ~/Revere/Brokerage/Alberta/Edmonton/Agents/Paystubs/Paystub\ -\ Seth\ Macdonald.xcf"
-alias cinst="gimp ~/Revere/Systems/Conveyancing/Templates/Conveyancing\ Instructions\ Template.xcf"
 
 # Tmux commands
 alias kat="tmux kill-server"
@@ -268,22 +228,13 @@ alias tsf="tmux source-file ~/.tmux.conf"
 alias tk="tmux kill-session -a"
 
 # config files
-alias ezsh="nvim ~/.zshrc"
-alias envim="cd ~/.config/nvim && nvim"
-alias ehyp="cd ~/.config/hypr && nvim"
-alias qutebrowser="cd ~/.config/qutebrowser"
-alias shell="cd ~/.config/shell"
 alias scripts="cd ~/.config/scripts"
-alias books="cd ~/.config/scripts/bookmarks"
 alias kmon="kmonad ~/.config/kmonad/config.kbd &"
 
 # Development
 alias work="arttime --nolearn -a eye -t 'For I consider that the sufferings of this present time are not worth comparing with the glory that is going to be revealed to us - Romans 8:18' -g 4h"
-alias ci='~/.config/scripts/todotimer ci'
-alias co='~/.config/scripts/todotimer co'
 alias search-email='~/.config/scripts/email_search'
 alias blogdeploy="~/.config/scripts/Development/blogdeploy.sh"
-alias post2="python ~/.config/scripts/post.py"
 
 # Docker commands migrated to podman
 alias docker compose="podman compose"
@@ -306,13 +257,8 @@ alias ttw="go-task tailwindcss"
 ## Go documentation
 alias gdoc="stdsym | fzf --preview 'go doc {}' | xargs go doc"
 
-# Task Management
+# Management
 alias ff="fastfetch"
-alias tt="~/.config/scripts/rank_tasks.sh"
-alias ta="~/.config/scripts/add_task.sh"
-alias te="~/.config/scripts/edit_task.sh"
-alias tc="~/.config/scripts/add_contact.sh"
-alias rem="remind ~/.reminders/reminders.rem"
 alias ytmp3="~/.config/scripts/Media/ytmp3.sh"
 alias aa="python ~/.config/scripts/Media/albumartwork.py"
 alias mpdupdate="~/.config/scripts/Media/mpdupdate.sh"
@@ -323,22 +269,6 @@ bindkey -M viins 'kj' vi-cmd-mode
 function cd {
     builtin cd "$@" && ls -F
     }
-
-# Import colorscheme from 'wal' asynchronously
-# &   # Run the process in the background.
-# ( ) # Hide shell job control messages.
-# (cat ~/.cache/wal/sequences &)
-
-# Alternative (blocks terminal for 0-3ms)
-# cat ~/.cache/wal/sequences
-
-# To add support for TTYs this line can be optionally added.
-# source ~/.cache/wal/colors-tty.sh
-# source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
 
 eval $(thefuck --alias)
 SAVEHIST=1000  # Save most-recent 1000 lines
@@ -395,3 +325,10 @@ hugo() {
 
 # Add in direnv hook
 eval "$(direnv hook zsh)"
+
+# Use keychain to manage ssh-agent
+eval $(keychain --eval --agents ssh empire.key 2>/dev/null)
+# Add key manually since keychain has trouble with it
+if ! ssh-add -l 2>/dev/null | grep -q "empire beginning ssh key"; then
+  ssh-add ~/.ssh/empire.key
+fi
