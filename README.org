@@ -245,6 +245,37 @@ I use [[https://github.com/nix-community/home-manager][home-manager]] to manage 
 #+end_src
 
 ** Development
+*** default.nix
+#+begin_src nix :tangle modules/development/default.nix
+{ config, pkgs, ... }:
+{
+  imports = [
+    ./git.nix
+    ./zsh.nix
+    # Add ./nvim.nix and ./tmux.nix when you create them
+  ];
+
+  # CLI/TUI tools
+  environment.systemPackages = with pkgs; [
+    # File management
+    eza              # Better ls
+    yazi             # Terminal file manager
+    bat              # Better cat
+    fd               # Better find
+    ripgrep-all      # Better grep
+    fzf              # Fuzzy finder
+
+    # Git tools
+    lazygit          # Git TUI
+
+    # System tools
+    btop             # Better top
+    trash-cli        # Safe rm
+    tldr             # Simplified man pages
+    fastfetch        # System info
+  ];
+}
+#+end_src
 *** doom.nix
 #+begin_src nix :tangle modules/development/doom.nix
 { config, pkgs, ... }:
@@ -369,6 +400,24 @@ I use [[https://github.com/nix-community/home-manager][home-manager]] to manage 
 #+end_src
 *** zsh.nix
 #+begin_src nix :tangle modules/cli-tui/zsh.nix
+{ config, pkgs, ... }:
+{
+  # Enable zsh programs
+  programs.zsh.enable = true;
+
+  # Set zsh as default shell for user
+  users.users.joshua = {
+    shell = pkgs.zsh;
+  };
+
+  # Install zsh and plugins (config managed via dotfiles)
+  environment.systemPackages = with pkgs; [
+    zsh
+    oh-my-zsh
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+  ];
+}
 #+end_src
 
 ** Desktop
@@ -684,6 +733,36 @@ environment.systemPackages = [
 ];
 #+end_src
 ** Media
+*** default.nix
+#+begin_src nix :tangle modules/media/default.nix
+{ config, pkgs, ... }:
+{
+  imports = [
+    ./music.nix
+    ./video.nix
+    ./pdf.nix
+  ];
+
+  # Common media packages
+  environment.systemPackages = with pkgs; [
+    # Image viewers
+    feh
+    imv
+
+    # Media players
+    mpv
+    vlc
+
+    # Audio tools
+    pavucontrol
+    alsa-utils
+
+    # Document viewers
+    zathura
+    evince
+  ];
+}
+#+end_src
 *** music.nix
 #+begin_src nix :tangle modules/media/music.nix
 
