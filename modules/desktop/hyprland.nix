@@ -11,7 +11,6 @@
   environment.systemPackages = with pkgs; [
     waybar
     wofi
-    kitty
     swww
     grim
     slurp

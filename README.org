@@ -425,7 +425,6 @@ This declares all desktop modules for importing to desktop/laptops
     ./hyprland.nix
     ./kmonad.nix
     ./kitty.nix
-    ./wofi.nix
     # Add any other desktop modules here
   ];
 }
@@ -445,7 +444,6 @@ This declares all desktop modules for importing to desktop/laptops
   environment.systemPackages = with pkgs; [
     waybar
     wofi
-    kitty
     swww
     grim
     slurp
@@ -463,16 +461,6 @@ This declares all desktop modules for importing to desktop/laptops
 }
 #+end_src
 
-*** rofi.nix
-Wofi on wayland
-#+begin_src nix :tangle modules/desktop/wofi.nix
-{ config, pkgs, ... }:
-{
-  environment.systemPackages = with pkgs; [
-    wofi
-  ];
-}
-#+end_src
 *** kitty.nix
 #+begin_src nix :tangle modules/desktop/kitty.nix
 { config, pkgs, ... }:
@@ -764,11 +752,43 @@ environment.systemPackages = [
 #+end_src
 *** video.nix
 #+begin_src nix :tangle modules/media/video.nix
+{ config, pkgs, ... }:
+{
+  environment.systemPackages = with pkgs; [
+    # Video players
+    mpv
+    vlc
 
+    # Video editing
+    kdenlive
+    obs-studio
+
+    # Video tools
+    ffmpeg
+    youtube-dl
+    yt-dlp
+  ];
+}
 #+end_src
 *** pdf.nix
 #+begin_src nix :tangle modules/media/pdf.nix
+{ config, pkgs, ... }:
+{
+  environment.systemPackages = with pkgs; [
+    # PDF viewers
+    zathura
+    evince
+    okular
 
+    # PDF tools
+    poppler_utils
+    pdftk
+
+    # Document conversion
+    pandoc
+    texlive.combined.scheme-full
+  ];
+}
 #+end_src
 * Overlays
 * Secrets
