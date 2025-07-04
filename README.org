@@ -739,7 +739,9 @@ This declares all desktop modules for importing to desktop/laptops
     ./kitty.nix
     ./fonts.nix
     ./audio.nix
-    # Add any other desktop modules here
+    ./bluetooth.nix
+    ./printing.nix
+    ./networking.nix
   ];
 }
 #+end_src
@@ -855,6 +857,43 @@ This declares all desktop modules for importing to desktop/laptops
     pavucontrol
     playerctl
     wireplumber
+  ];
+}
+#+end_src
+*** bluetooth.nix
+#+begin_src nix :tangle modules/desktop/bluetooth.nix
+{ config, pkgs, ... }:
+{
+  # Enable Bluetooth
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
+
+  environment.systemPackages = with pkgs; [
+    bluez
+    blueman
+    bluez-tools
+  ];
+}
+#+end_src
+*** printing.nix
+#+begin_src nix :tangle modules/desktop/printing.nix
+{ config, pkgs, ... }:
+{
+  # Enable CUPS for printing
+  services.printing.enable = true;
+}
+#+end_src
+*** networking.nix
+#+begin_src nix :tangle modules/desktop/networking.nix
+{ config, pkgs, ... }:
+{
+  # Enable NetworkManager
+  networking.networkmanager.enable = true;
+
+  # Packages
+  environment.systemPackages = with pkgs; [
+    networkmanager
+    networkmanagerapplet
   ];
 }
 #+end_src

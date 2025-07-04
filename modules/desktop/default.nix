@@ -6,6 +6,8 @@
     ./kitty.nix
     ./fonts.nix
     ./audio.nix
-    # Add any other desktop modules here
+    ./bluetooth.nix
+    ./printing.nix
+    ./networking.nix
   ];
 }
