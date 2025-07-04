@@ -15,16 +15,19 @@
 
   # Boot configuration for encrypted setup
   boot.loader.grub = {
-  enable = true;
-  device = "/dev/sda"; # Install GRUB to MBR
-  enableCryptodisk = true; # Enable LUKS support in GRUB
+    enable = true;
+    device = "/dev/sda"; # Install GRUB to MBR
+    enableCryptodisk = true; # Enable LUKS support in GRUB
+    # Explicitly disable mirrored boots to avoid conflicts
+    mirroredBoots = [ ];
   };
 
+  # Explicitly configure LUKS device
   boot.initrd.luks.devices = {
     crypted = {
-    device = "/dev/disk/by-partlabel/luks";
-    allowDiscards = true;
-    preLVM = true;
+      device = "/dev/disk/by-partlabel/luks";
+      allowDiscards = true;
+      preLVM = true;
     };
   };
 
@@ -35,28 +38,28 @@
     fileSystems = [ "/" ];
   };
 
-  # Enable periodic snapshots with btrbk
-  services.btrbk.instances.btrbk = {
-    onCalendar = "daily";
-    settings = {
-      timestamp_format = "long";
-      preserve_day_of_week = "monday";
+  # Comment out btrbk for now to avoid issues
+  # services.btrbk.instances.btrbk = {
+  #   onCalendar = "daily";
+  #   settings = {
+  #     timestamp_format = "long";
+  #     preserve_day_of_week = "monday";
 
-      volume."/" = {
-        target = "/snapshots";
-        subvolume = {
-          "home" = {
-            snapshot_preserve_min = "2d";
-            snapshot_preserve = "14d 8w 12m";
-          };
-          "persist" = {
-            snapshot_preserve_min = "2d";
-            snapshot_preserve = "14d 8w 12m";
-          };
-        };
-      };
-    };
-  };
+  #     volume."/" = {
+  #       target = "/snapshots";
+  #       subvolume = {
+  #         "home" = {
+  #           snapshot_preserve_min = "2d";
+  #           snapshot_preserve = "14d 8w 12m";
+  #         };
+  #         "persist" = {
+  #           snapshot_preserve_min = "2d";
+  #           snapshot_preserve = "14d 8w 12m";
+  #         };
+  #       };
+  #     };
+  #   };
+  # };
 
   # Enable SSH immediately
   services.openssh = {
