@@ -73,7 +73,7 @@
           ./hosts/axios/configuration.nix
           agenix.nixosModules.default
 
-          # # Add home-manager
+          # Add home-manager
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
