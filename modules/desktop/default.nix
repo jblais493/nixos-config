@@ -10,5 +10,6 @@
     ./printing.nix
     ./browsers.nix
     ./applications.nix
+    ./display-manager.nix
   ];
 }

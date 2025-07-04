@@ -27,25 +27,27 @@
     fileSystems = [ "/" ];
   };
 
-  services.openssh = {
-    enable = true;
-    settings = {
-      PermitRootLogin = "yes";
-      PasswordAuthentication = false;
-    };
+# SSH configuration
+services.openssh = {
+  enable = true;
+  settings = {
+    PermitRootLogin = "no";  # Change this to "no" for security
+    PasswordAuthentication = true;  # Enable password auth temporarily
   };
+};
 
   networking.firewall.allowedTCPPorts = [ 22 ];
 
-  users.users.joshua = {
-    isNormalUser = true;
-    description = "Joshua Blais";
-    group = "joshua";
-    extraGroups = [ "networkmanager" "wheel" ];
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICCWNto66rFbOvb1VDEDuZYdwHQPfKM7+EjpnHvs3eRr joshua@joshuablais.com"
-    ];
-  };
+users.users.joshua = {
+  isNormalUser = true;
+  description = "Joshua Blais";
+  group = "joshua";
+  extraGroups = [ "networkmanager" "wheel" ];
+  password = "temppassword";  # Remove this after setting up agenix
+  openssh.authorizedKeys.keys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICCWNto66rFbOvb1VDEDuZYdwHQPfKM7+EjpnHvs3eRr joshua@joshuablais.com"
+  ];
+};
 
   users.groups.joshua = {};
 

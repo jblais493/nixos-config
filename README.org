@@ -353,25 +353,27 @@ This declares all imported modules and specific tweaks to the King host:
     fileSystems = [ "/" ];
   };
 
-  services.openssh = {
-    enable = true;
-    settings = {
-      PermitRootLogin = "yes";
-      PasswordAuthentication = false;
-    };
+# SSH configuration
+services.openssh = {
+  enable = true;
+  settings = {
+    PermitRootLogin = "no";  # Change this to "no" for security
+    PasswordAuthentication = true;  # Enable password auth temporarily
   };
+};
 
   networking.firewall.allowedTCPPorts = [ 22 ];
 
-  users.users.joshua = {
-    isNormalUser = true;
-    description = "Joshua Blais";
-    group = "joshua";
-    extraGroups = [ "networkmanager" "wheel" ];
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICCWNto66rFbOvb1VDEDuZYdwHQPfKM7+EjpnHvs3eRr joshua@joshuablais.com"
-    ];
-  };
+users.users.joshua = {
+  isNormalUser = true;
+  description = "Joshua Blais";
+  group = "joshua";
+  extraGroups = [ "networkmanager" "wheel" ];
+  password = "temppassword";  # Remove this after setting up agenix
+  openssh.authorizedKeys.keys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICCWNto66rFbOvb1VDEDuZYdwHQPfKM7+EjpnHvs3eRr joshua@joshuablais.com"
+  ];
+};
 
   users.groups.joshua = {};
 
@@ -991,6 +993,7 @@ This declares all desktop modules for importing to desktop/laptops
     ./printing.nix
     ./browsers.nix
     ./applications.nix
+    ./display-manager.nix
   ];
 }
 #+end_src
@@ -1196,6 +1199,19 @@ This declares all desktop modules for importing to desktop/laptops
   # Enable flatpak
   services.flatpak.enable = true;
 }
+#+end_src
+*** display-manager.nix
+#+begin_src nix :tangle modules/desktop/display-manager.nix
+{ config, pkgs, ... }:
+{
+  # Enable GDM display manager
+  services.xserver = {
+    enable = true;
+    displayManager.gdm = {
+      enable = true;
+      wayland = true;
+    };
+  };
 #+end_src
 ** Shared
 *** default.nix
