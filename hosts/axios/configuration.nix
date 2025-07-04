@@ -29,9 +29,6 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
-  # Select internationalisation properties.
-  i18n.defaultLocale = "en_CA.UTF-8";
-
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
