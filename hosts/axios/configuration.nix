@@ -34,7 +34,6 @@
     settings = {
       timestamp_format = "long";
       preserve_day_of_week = "monday";
-      preserve_day_of_month = "1";
 
       volume."/" = {
         target = "/snapshots";
