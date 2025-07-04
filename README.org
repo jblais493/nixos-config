@@ -447,7 +447,7 @@ This declares all imported modules and specific tweaks to the King host:
 }
 
 #+end_src
-*** disk-config.nix
+*** disk-configuration.nix
 #+begin_src nix :tangle hosts/axios/disk-configuration.nix
 {
   disko.devices = {
@@ -1752,7 +1752,7 @@ in
         specialArgs = { inherit inputs; };
         modules = [
           ./hosts/axios/configuration.nix
-          ./hosts/axios/disk-config.nix
+          ./hosts/axios/disk-configuration.nix
           disko.nixosModules.disko
           agenix.nixosModules.default
 
