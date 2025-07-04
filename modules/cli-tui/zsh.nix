@@ -15,5 +15,6 @@
     zsh-autosuggestions
     zsh-syntax-highlighting
     starship
+    thefuck
   ];
 }

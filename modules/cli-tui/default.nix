@@ -10,6 +10,7 @@
   environment.systemPackages = with pkgs; [
     # Basic CLIs
     eza              # Better ls
+    zoxide           # Better cd
     yazi             # Terminal file manager
     bat              # Better cat
     fd               # Better find

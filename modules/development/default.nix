@@ -17,5 +17,6 @@
     libtool
     gnumake
     nixd  # Nix LSP
+    direnv
   ];
 }

@@ -832,6 +832,7 @@ This configures extensions and settings in firefox
     libtool
     gnumake
     nixd  # Nix LSP
+    direnv
   ];
 }
 #+end_src
@@ -874,6 +875,7 @@ This configures extensions and settings in firefox
   environment.systemPackages = with pkgs; [
     # Basic CLIs
     eza              # Better ls
+    zoxide           # Better cd
     yazi             # Terminal file manager
     bat              # Better cat
     fd               # Better find
@@ -919,6 +921,7 @@ This configures extensions and settings in firefox
   # System-level tmux installation
   environment.systemPackages = with pkgs; [
     tmux
+    tmuxifier
   ];
 
   # Home-manager will handle the config via symlink
@@ -948,6 +951,7 @@ This configures extensions and settings in firefox
     zsh-autosuggestions
     zsh-syntax-highlighting
     starship
+    thefuck
   ];
 }
 #+end_src
