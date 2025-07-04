@@ -988,21 +988,37 @@ This configures extensions and settings in firefox
 #+begin_src nix :tangle modules/cli-tui/zsh.nix
 { config, pkgs, ... }:
 {
-  # Enable zsh programs
-  programs.zsh.enable = true;
+  # Enable zsh with built-in configuration
+  programs.zsh = {
+    enable = true;
+    ohMyZsh = {
+      enable = true;
+      plugins = [ "git" "sudo" "history" "fzf" ];
+      theme = "robbyrussell";  # or any theme you prefer
+    };
+    autosuggestions.enable = true;
+    syntaxHighlighting.enable = true;
 
-  # Set zsh as default shell for user
-  users.users.joshua = {
-    shell = pkgs.zsh;
+    # Enable fzf integration
+    enableFzfIntegration = true;
+
+    # Optional: Add some aliases
+    shellAliases = {
+      ll = "ls -l";
+      la = "ls -la";
+      grep = "grep --color=auto";
+    };
   };
 
-  # Install zsh and plugins (config managed via dotfiles)
+  # Set zsh as default shell for user
+  users.users.joshua.shell = pkgs.zsh;
+
+  # Install additional tools (remove the zsh plugins from here)
   environment.systemPackages = with pkgs; [
-    zsh
-    oh-my-zsh
-    zsh-autosuggestions
-    zsh-syntax-highlighting
-    starship
+    starship  # Modern prompt
+    fzf       # Fuzzy finder (needed for fzf integration)
+    fd        # Better find (used by fzf)
+    ripgrep   # Better grep (used by fzf)
   ];
 }
 #+end_src
