@@ -14,7 +14,7 @@
 
     # Theme tools
     lxappearance    # GTK theme selector
-    qt5ct          # Qt theme configuration
+    libsForQt5.qt5ct          # Qt theme configuration
     kvantum        # Qt theme engine
   ];
 
