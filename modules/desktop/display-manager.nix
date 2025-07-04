@@ -8,3 +8,4 @@
       wayland = true;
     };
   };
+};
