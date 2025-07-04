@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 {
   # Enable GDM display manager
-  services.displayManager = {
+  services = {
     enable = true;
     displayManager.gdm = {
       enable = true;

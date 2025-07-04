@@ -1205,7 +1205,7 @@ This declares all desktop modules for importing to desktop/laptops
 { config, pkgs, ... }:
 {
   # Enable GDM display manager
-  services.displayManager = {
+  services = {
     enable = true;
     displayManager.gdm = {
       enable = true;
