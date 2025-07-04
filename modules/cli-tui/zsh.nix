@@ -6,13 +6,13 @@
     ohMyZsh = {
       enable = true;
       plugins = [ "git" "sudo" "history" "fzf" ];
-      theme = "robbyrussell";  # or any theme you prefer
+      theme = "robbyrussell";
     };
     autosuggestions.enable = true;
     syntaxHighlighting.enable = true;
 
-    # Enable fzf integration
-    enableFzfIntegration = true;
+    # Remove this line - it doesn't exist
+    # enableFzfIntegration = true;
 
     # Optional: Add some aliases
     shellAliases = {
@@ -25,10 +25,10 @@
   # Set zsh as default shell for user
   users.users.joshua.shell = pkgs.zsh;
 
-  # Install additional tools (remove the zsh plugins from here)
+  # Install additional tools
   environment.systemPackages = with pkgs; [
     starship  # Modern prompt
-    fzf       # Fuzzy finder (needed for fzf integration)
+    fzf       # Fuzzy finder
     fd        # Better find (used by fzf)
     ripgrep   # Better grep (used by fzf)
   ];
