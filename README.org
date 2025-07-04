@@ -760,7 +760,7 @@ This configures extensions and settings in firefox
         violentmonkey
         wayback-machine
         leechblock-ng
-        nord-theme
+        kristofferhagen-nord-theme
         sideberry
       ];
 

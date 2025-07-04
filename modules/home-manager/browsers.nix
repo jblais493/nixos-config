@@ -17,7 +17,7 @@
         violentmonkey
         wayback-machine
         leechblock-ng
-        nord-theme
+        kristofferhagen-nord-theme
         sideberry
       ];
 
