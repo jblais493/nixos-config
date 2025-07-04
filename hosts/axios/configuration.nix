@@ -8,7 +8,6 @@
     ../../modules/cli-tui
     ../../modules/development
     ../../modules/media
-    ../../modules/security
   ];
 
   networking.hostName = "axios";
