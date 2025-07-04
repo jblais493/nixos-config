@@ -17,7 +17,6 @@
     vlc
 
     # Audio tools
-    pavucontrol
     alsa-utils
 
     # Document viewers

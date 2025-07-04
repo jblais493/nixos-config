@@ -738,6 +738,7 @@ This declares all desktop modules for importing to desktop/laptops
     ./kmonad.nix
     ./kitty.nix
     ./fonts.nix
+    ./audio.nix
     # Add any other desktop modules here
   ];
 }
@@ -827,6 +828,34 @@ This declares all desktop modules for importing to desktop/laptops
       };
     };
   };
+}
+#+end_src
+*** audio.nix
+#+begin_src nix :tangle modules/desktop/audio.nix
+{ config, pkgs, ... }:
+{
+  # Disable PulseAudio in favor of PipeWire
+  hardware.pulseaudio.enable = false;
+
+  # Enable real-time audio support
+  security.rtkit.enable = true;
+
+  # PipeWire configuration
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    # Uncomment if you need JACK support
+    # jack.enable = true;
+  };
+
+  # Audio packages
+  environment.systemPackages = with pkgs; [
+    pavucontrol
+    playerctl
+    wireplumber
+  ];
 }
 #+end_src
 ** Server
@@ -1104,7 +1133,6 @@ in
     vlc
 
     # Audio tools
-    pavucontrol
     alsa-utils
 
     # Document viewers
