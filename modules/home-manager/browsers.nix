@@ -2,12 +2,12 @@
 {
   programs.firefox = {
     enable = true;
-
     profiles.default = {
       name = "Default";
       isDefault = true;
 
-      extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+      # Updated extension syntax
+      extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
         ublock-origin
         tridactyl
         don-t-fuck-with-paste
@@ -42,19 +42,23 @@
         "browser.sessionstore.privacy_level" = 2;
       };
 
-      bookmarks = [
-        {
-          name = "Toolbar";
-          toolbar = true;
-          bookmarks = [
-            {
-              name = "NixOS Manual";
-              url = "https://nixos.org/manual/nixos/stable/";
-            }
-            # Add your bookmarks here
-          ];
-        }
-      ];
+      # Updated bookmarks syntax
+      bookmarks = {
+        force = true;
+        settings = [
+          {
+            name = "Toolbar";
+            toolbar = true;
+            bookmarks = [
+              {
+                name = "NixOS Manual";
+                url = "https://nixos.org/manual/nixos/stable/";
+              }
+              # Add your bookmarks here
+            ];
+          }
+        ];
+      };
     };
   };
 
