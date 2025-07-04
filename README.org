@@ -348,14 +348,12 @@ This declares all imported modules and specific tweaks to the King host:
   boot.loader.grub.enableCryptodisk = true;
 
   boot.initrd.luks.devices."luks-68e37805-7090-4a03-a958-7c3271384a93".keyFile = "/boot/crypto_keyfile.bin";
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "axios";
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Enable networking
   networking.networkmanager.enable = true;
-
-  # Set your time zone.
-  time.timeZone = "America/Edmonton";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_CA.UTF-8";
@@ -372,8 +370,6 @@ This declares all imported modules and specific tweaks to the King host:
     layout = "us";
     variant = "";
   };
-  networking.hostName = "axios";
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
 # SSH configuration
 services.openssh = {
