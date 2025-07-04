@@ -4,8 +4,8 @@
     ./networking.nix
   ];
 
-  # Add NUR overlay for all hosts that import shared
-  nixpkgs.overlays = [ inputs.nur.overlay ];
+  # Fix NUR overlay reference
+  nixpkgs.overlays = [ inputs.nur.overlays.default ];
 
   # Common configuration for all hosts
   time.timeZone = "America/Edmonton";

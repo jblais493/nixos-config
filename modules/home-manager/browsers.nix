@@ -10,7 +10,7 @@
       extensions = with pkgs.nur.repos.rycee.firefox-addons; [
         ublock-origin
         tridactyl
-        dont-fuck-with-paste
+        don-t-fuck-with-paste
         decentraleyes
         privacy-badger
         i-still-dont-care-about-cookies
