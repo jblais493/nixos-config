@@ -15,11 +15,9 @@
     # Theme tools
     lxappearance    # GTK theme selector
     libsForQt5.qt5ct          # Qt theme configuration
-    kvantum        # Qt theme engine
   ];
 
   # Enable Qt theming
   qt.enable = true;
   qt.platformTheme = "qt5ct";
-  qt.style = "kvantum";
 }
