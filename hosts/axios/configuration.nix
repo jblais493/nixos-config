@@ -14,12 +14,19 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Boot configuration for encrypted setup
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot";
+  boot.loader.grub = {
+  enable = true;
+  device = "/dev/sda"; # Install GRUB to MBR
+  enableCryptodisk = true; # Enable LUKS support in GRUB
+  };
 
-  # Remove the boot.initrd.luks.devices section - disko handles this
-  # The LUKS device will be configured automatically by disko
+  boot.initrd.luks.devices = {
+    crypted = {
+    device = "/dev/disk/by-partlabel/luks";
+    allowDiscards = true;
+    preLVM = true;
+    };
+  };
 
   # Btrfs maintenance
   services.btrfs.autoScrub = {
