@@ -18,5 +18,6 @@
     gnumake
     nixd  # Nix LSP
     direnv
+    keychain
   ];
 }

@@ -5,6 +5,7 @@
     mpd
     ncmpcpp
     spotifyd
+    spotdl
 
     # Audio tools
     audacity
