@@ -20,14 +20,6 @@
     enableCryptodisk = lib.mkForce true;
   };
 
-  # ADD THIS - explicit LUKS configuration
-  boot.initrd.luks.devices = {
-    cryptroot = {
-      device = "/dev/disk/by-partlabel/luks";
-      allowDiscards = true;
-    };
-  };
-
   # Rest of your configuration...
   services.btrfs.autoScrub = {
     enable = true;
