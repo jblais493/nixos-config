@@ -15,11 +15,9 @@
 
   # Boot configuration for encrypted setup
   boot.loader.grub = {
-    enable = true;
-    device = "/dev/sda"; # Install GRUB to MBR
-    enableCryptodisk = true; # Enable LUKS support in GRUB
-    # Explicitly disable mirrored boots to avoid conflicts
-    mirroredBoots = [ ];
+  enable = true;
+  devices = [ "/dev/sda" ];  # Use devices instead of device
+  enableCryptodisk = true;
   };
 
   # Explicitly configure LUKS device
