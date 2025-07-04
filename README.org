@@ -520,6 +520,7 @@ I use [[https://github.com/nix-community/home-manager][home-manager]] to manage 
   imports = [
     ./git.nix
     ./setup.nix
+    ./browsers.nix
   ];
 
   home.username = "joshua";
@@ -543,6 +544,7 @@ I use [[https://github.com/nix-community/home-manager][home-manager]] to manage 
   };
 }
 #+end_src
+
 *** setup.nix
 #+begin_src nix :tangle modules/home-manager/setup.nix
 { config, pkgs, ... }:
@@ -596,6 +598,73 @@ I use [[https://github.com/nix-community/home-manager][home-manager]] to manage 
       push.autoSetupRemote = true;
     };
   };
+}
+#+end_src
+*** browsers.nix
+This configures extensions and settings in firefox
+#+begin_src nix :tangle modules/home-manager/browsers.nix
+{ config, pkgs, ... }:
+{
+  programs.firefox = {
+    enable = true;
+
+    profiles.default = {
+      name = "Default";
+      isDefault = true;
+
+      extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+        ublock-origin
+        tridactyl
+        dont-fuck-with-paste
+        decentraleyes
+        privacy-badger
+        i-still-dont-care-about-cookies
+        violentmonkey
+        wayback-machine
+        leechblock-ng
+      ];
+
+      settings = {
+        # Privacy settings
+        "privacy.trackingprotection.enabled" = true;
+        "privacy.trackingprotection.socialtracking.enabled" = true;
+        "privacy.donottrackheader.enabled" = true;
+
+        # Disable telemetry
+        "datareporting.healthreport.uploadEnabled" = false;
+        "datareporting.policy.dataSubmissionEnabled" = false;
+        "toolkit.telemetry.enabled" = false;
+
+        # Security
+        "dom.security.https_only_mode" = true;
+        "security.tls.insecure_fallback_hosts" = "";
+
+        # Disable autoplay
+        "media.autoplay.default" = 5;
+
+        # Performance
+        "browser.cache.disk.enable" = false;
+        "browser.sessionstore.privacy_level" = 2;
+      };
+
+      bookmarks = [
+        {
+          name = "Toolbar";
+          toolbar = true;
+          bookmarks = [
+            {
+              name = "NixOS Manual";
+              url = "https://nixos.org/manual/nixos/stable/";
+            }
+            # Add your bookmarks here
+          ];
+        }
+      ];
+    };
+  };
+
+  # Brave and Zen browser don't have home-manager modules yet
+  # They're installed system-wide via the desktop/browsers.nix module
 }
 #+end_src
 
@@ -742,6 +811,7 @@ This declares all desktop modules for importing to desktop/laptops
     ./bluetooth.nix
     ./printing.nix
     ./networking.nix
+    ./browsers.nix
   ];
 }
 #+end_src
@@ -895,6 +965,37 @@ This declares all desktop modules for importing to desktop/laptops
     networkmanager
     networkmanagerapplet
   ];
+}
+#+end_src
+*** browsers.nix
+#+begin_src nix :tangle modules/desktop/browsers.nix
+{ config, pkgs, ... }:
+{
+  # System-level browser installations
+  environment.systemPackages = with pkgs; [
+    brave
+    zen-browser
+  ];
+
+  # Firefox with extensions via home-manager approach
+  programs.firefox = {
+    enable = true;
+
+    # System-wide policies (optional)
+    policies = {
+      # Disable telemetry
+      DisableTelemetry = true;
+      DisableFirefoxStudies = true;
+      DisablePocket = true;
+
+      # Security settings
+      BlockAboutConfig = false;
+      OfferToSaveLogins = false;
+    };
+  };
+
+  # Note: Extensions are better managed via home-manager
+  # Add this to your home-manager configuration for per-user extension management
 }
 #+end_src
 ** Server
@@ -1283,6 +1384,7 @@ in
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nur.url = "github:nix-community/NUR";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -1299,6 +1401,8 @@ in
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
+
+  nixpkgs.overlays = [ inputs.nur.overlay ];
 
   outputs = { self, nixpkgs, home-manager, deploy-rs, agenix, ... }@inputs: {
     nixosConfigurations = {

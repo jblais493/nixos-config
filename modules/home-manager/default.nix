@@ -4,6 +4,7 @@
   imports = [
     ./git.nix
     ./setup.nix
+    ./browsers.nix
   ];
 
   home.username = "joshua";
