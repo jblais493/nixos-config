@@ -9,7 +9,6 @@ in
     ./git.nix
     ./setup.nix
     ./browsers.nix
-    ./doom.nix
   ];
 
   home.username = "joshua";
