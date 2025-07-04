@@ -17,7 +17,7 @@
     gparted       # Partition editor
 
     # Image writing tools
-    imagewriter   # Simple USB image writer
+    isoimagewriter   # Simple USB image writer
     # or alternatively:
     # gnome-multi-writer  # GNOME's USB writer
     # raspberry-pi-imager # Official Pi imager (works for other images too)
