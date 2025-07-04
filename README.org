@@ -706,6 +706,7 @@ This configures extensions and settings in firefox
     texliveFull  # For LaTeX support
     sqlite       # For org-roam
   ];
+}
 #+end_src
 ** CLI/TUI
 *** default.nix

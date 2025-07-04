@@ -11,3 +11,4 @@
     texliveFull  # For LaTeX support
     sqlite       # For org-roam
   ];
+}
