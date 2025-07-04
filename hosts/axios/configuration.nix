@@ -14,43 +14,27 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Boot configuration for encrypted setup
- boot.loader.grub = {
+  boot.loader.grub = {
     enable = lib.mkForce true;
     devices = lib.mkForce [ "/dev/sda" ];
     enableCryptodisk = lib.mkForce true;
   };
 
- # Btrfs maintenance
+  # ADD THIS - explicit LUKS configuration
+  boot.initrd.luks.devices = {
+    cryptroot = {
+      device = "/dev/disk/by-partlabel/luks";
+      allowDiscards = true;
+    };
+  };
+
+  # Rest of your configuration...
   services.btrfs.autoScrub = {
     enable = true;
     interval = "monthly";
     fileSystems = [ "/" ];
   };
 
-  # Comment out btrbk for now to avoid issues
-  # services.btrbk.instances.btrbk = {
-  #   onCalendar = "daily";
-  #   settings = {
-  #     timestamp_format = "long";
-  #     preserve_day_of_week = "monday";
-
-  #     volume."/" = {
-  #       target = "/snapshots";
-  #       subvolume = {
-  #         "home" = {
-  #           snapshot_preserve_min = "2d";
-  #           snapshot_preserve = "14d 8w 12m";
-  #         };
-  #         "persist" = {
-  #           snapshot_preserve_min = "2d";
-  #           snapshot_preserve = "14d 8w 12m";
-  #         };
-  #       };
-  #     };
-  #   };
-  # };
-
-  # Enable SSH immediately
   services.openssh = {
     enable = true;
     settings = {
@@ -73,7 +57,6 @@
 
   users.groups.joshua = {};
 
-  # Enable compression and btrfs tools
   environment.systemPackages = with pkgs; [
     btrfs-progs
     btrbk

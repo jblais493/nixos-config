@@ -15,8 +15,10 @@
               size = "100%";
               content = {
                 type = "luks";
-                name = "crypted";
-                # Remove password file, let it prompt interactively
+                name = "cryptroot";
+                settings = {
+                  allowDiscards = true;
+                };
                 content = {
                   type = "btrfs";
                   extraArgs = [ "-f" ];
