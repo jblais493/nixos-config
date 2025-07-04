@@ -951,7 +951,6 @@ This configures extensions and settings in firefox
     zsh-autosuggestions
     zsh-syntax-highlighting
     starship
-    thefuck
   ];
 }
 #+end_src

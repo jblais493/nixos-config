@@ -270,7 +270,6 @@ function cd {
     builtin cd "$@" && ls -F
     }
 
-eval $(thefuck --alias)
 SAVEHIST=1000  # Save most-recent 1000 lines
 HISTFILE=~/.zsh_history
 
