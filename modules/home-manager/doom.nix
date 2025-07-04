@@ -5,9 +5,10 @@
     package = pkgs.emacs;
     extraPackages = epkgs: with epkgs; [
       # Essential packages that Doom might need
-      emacsPackages.vterm
-      emacsPackages.pdf-tools
-      emacsPackages.org-roam
+      vterm
+      pdf-tools
+      org-roam
+      treesit-grammars.with-all-grammars  # Tree-sitter grammars
     ];
   };
 
