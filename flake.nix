@@ -61,6 +61,24 @@
         ];
       };
 
+      axios = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./hosts/axios/configuration.nix
+          agenix.nixosModules.default
+
+          # # Add home-manager
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.joshua = import ./modules/home-manager;
+            home-manager.extraSpecialArgs = { inherit inputs; };
+          }
+        ];
+      };
+
       # Server hosts (no home-manager needed)
       alexandria = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
