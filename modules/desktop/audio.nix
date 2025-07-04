@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 {
   # Disable PulseAudio in favor of PipeWire
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
 
   # Enable real-time audio support
   security.rtkit.enable = true;
