@@ -680,7 +680,7 @@ This configures extensions and settings in firefox
 #+begin_src nix :tangle modules/development/default.nix
 { config, pkgs, ... }:
 {
-   imports = [
+  imports = [
     ./doom.nix
   ];
 

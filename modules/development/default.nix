@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 {
-   imports = [
+  imports = [
     ./doom.nix
   ];
 
