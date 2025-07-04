@@ -1,10 +1,18 @@
 { config, pkgs, ... }:
 {
-  # Enable automatic mounting of USB drives
+ # Enable automatic mounting of USB drives
   services.udisks2.enable = true;
 
-  # Enable GVFS for desktop integration (Thunar, file managers)
+  # Enable GVFS for desktop integration
   services.gvfs.enable = true;
+
+  # Force start udisks2
+  systemd.services.udisks2 = {
+    wantedBy = [ "graphical-session.target" ];
+  };
+
+  # Enable polkit for user permissions
+  security.polkit.enable = true;
 
   # Additional packages for USB/storage management
   environment.systemPackages = with pkgs; [
@@ -26,7 +34,4 @@
     dd_rescue     # Better dd with error recovery
     pv            # Progress viewer for dd operations
   ];
-
-  # Enable polkit for user permissions
-  security.polkit.enable = true;
 }
