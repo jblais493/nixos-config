@@ -13,7 +13,7 @@
         don-t-fuck-with-paste
         decentraleyes
         privacy-badger
-        i-still-dont-care-about-cookies
+        istilldontcareaboutcookies
         violentmonkey
         wayback-machine
         leechblock-ng
