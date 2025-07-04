@@ -22,7 +22,7 @@
     unzip
     jq
     rsync
-    borg
+    borgbackup
     coreutils
 
     # Git tools

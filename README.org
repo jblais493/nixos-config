@@ -751,7 +751,7 @@ This configures extensions and settings in firefox
     unzip
     jq
     rsync
-    borg
+    borgbackup
     coreutils
 
     # Git tools
