@@ -6,6 +6,11 @@
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.05";
     nur.url = "github:nix-community/NUR";
 
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -22,7 +27,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, deploy-rs, agenix, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, deploy-rs, agenix, disko, ... }@inputs: {
     nixosConfigurations = {
       # Laptop hosts
       theologica = nixpkgs.lib.nixosSystem {
@@ -66,6 +71,8 @@
         specialArgs = { inherit inputs; };
         modules = [
           ./hosts/axios/configuration.nix
+          ./hosts/axios/disk-config.nix
+          disko.nixosModules.disko
           agenix.nixosModules.default
 
           # # Add home-manager
