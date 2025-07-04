@@ -21,6 +21,8 @@ in
   # Use mkOutOfStoreSymlink for live editing
   home.file = {
     ".config/doom".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/doom";
+    ".zshrc".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/zsh/.zshrc";
+    ".config/starship.toml".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/starship/starship.toml";
     ".config/tmux".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/tmux";
     ".config/hypr".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/hypr";
     ".config/kitty".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/kitty";
