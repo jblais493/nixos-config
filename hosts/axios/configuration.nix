@@ -20,15 +20,6 @@
     enableCryptodisk = lib.mkForce true;
   };
 
-  # Explicitly configure LUKS device
-  boot.initrd.luks.devices = {
-    crypted = {
-      device = "/dev/disk/by-partlabel/luks";
-      allowDiscards = true;
-      preLVM = true;
-    };
-  };
-
   # Btrfs maintenance
   services.btrfs.autoScrub = {
     enable = true;
