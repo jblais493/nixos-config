@@ -1212,7 +1212,7 @@ This declares all desktop modules for importing to desktop/laptops
       wayland = true;
     };
   };
-};
+}
 #+end_src
 ** Shared
 *** default.nix
