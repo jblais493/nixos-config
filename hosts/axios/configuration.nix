@@ -20,7 +20,7 @@
     enableCryptodisk = lib.mkForce true;
   };
 
-  # Btrfs maintenance
+ # Btrfs maintenance
   services.btrfs.autoScrub = {
     enable = true;
     interval = "monthly";

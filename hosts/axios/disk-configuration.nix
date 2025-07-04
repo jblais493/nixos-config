@@ -7,18 +7,16 @@
         content = {
           type = "gpt";
           partitions = {
-            # BIOS boot partition for GRUB
             boot = {
               size = "1M";
-              type = "EF02"; # BIOS boot partition type
+              type = "EF02";
             };
-
-            # Main encrypted partition
             luks = {
               size = "100%";
               content = {
                 type = "luks";
                 name = "crypted";
+                # Remove password file, let it prompt interactively
                 content = {
                   type = "btrfs";
                   extraArgs = [ "-f" ];
@@ -27,24 +25,12 @@
                       mountpoint = "/";
                       mountOptions = [ "compress=zstd" "noatime" ];
                     };
-
                     "/@home" = {
                       mountpoint = "/home";
                       mountOptions = [ "compress=zstd" "noatime" ];
                     };
-
                     "/@nix" = {
                       mountpoint = "/nix";
-                      mountOptions = [ "compress=zstd" "noatime" ];
-                    };
-
-                    "/@persist" = {
-                      mountpoint = "/persist";
-                      mountOptions = [ "compress=zstd" "noatime" ];
-                    };
-
-                    "/@snapshots" = {
-                      mountpoint = "/snapshots";
                       mountOptions = [ "compress=zstd" "noatime" ];
                     };
                   };
