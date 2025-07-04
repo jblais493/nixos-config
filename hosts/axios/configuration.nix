@@ -9,22 +9,45 @@
     ../../modules/media
   ];
 
+  # Bootloader.
+  boot.loader.grub.enable = true;
+  boot.loader.grub.device = "/dev/sda";
+  boot.loader.grub.useOSProber = true;
+
+  # Setup keyfile
+  boot.initrd.secrets = {
+    "/boot/crypto_keyfile.bin" = null;
+  };
+
+  boot.loader.grub.enableCryptodisk = true;
+
+  boot.initrd.luks.devices."luks-68e37805-7090-4a03-a958-7c3271384a93".keyFile = "/boot/crypto_keyfile.bin";
+  networking.hostName = "nixos"; # Define your hostname.
+  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+
+  # Enable networking
+  networking.networkmanager.enable = true;
+
+  # Set your time zone.
+  time.timeZone = "America/Edmonton";
+
+  # Select internationalisation properties.
+  i18n.defaultLocale = "en_CA.UTF-8";
+
+  # Enable the X11 windowing system.
+  services.xserver.enable = true;
+
+  # Enable the GNOME Desktop Environment.
+  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
+
+  # Configure keymap in X11
+  services.xserver.xkb = {
+    layout = "us";
+    variant = "";
+  };
   networking.hostName = "axios";
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-  # Boot configuration for encrypted setup
-  boot.loader.grub = {
-    enable = lib.mkForce true;
-    devices = lib.mkForce [ "/dev/sda" ];
-    enableCryptodisk = lib.mkForce true;
-  };
-
-  # Rest of your configuration...
-  services.btrfs.autoScrub = {
-    enable = true;
-    interval = "monthly";
-    fileSystems = [ "/" ];
-  };
 
 # SSH configuration
 services.openssh = {
