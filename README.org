@@ -680,26 +680,14 @@ This configures extensions and settings in firefox
 #+begin_src nix :tangle modules/development/default.nix
 { config, pkgs, ... }:
 {
+   imports = [
+    ./doom.nix
+  ];
 
   # CLI/TUI tools
   environment.systemPackages = with pkgs; [
-    # File management
-    eza              # Better ls
-    yazi             # Terminal file manager
-    bat              # Better cat
-    fd               # Better find
-    ripgrep-all      # Better grep
-    fzf              # Fuzzy finder
+    # Editor
     neovim
-
-    # Git tools
-    lazygit          # Git TUI
-
-    # System tools
-    btop             # Better top
-    trash-cli        # Safe rm
-    tldr             # Simplified man pages
-    fastfetch        # System info
   ];
 }
 #+end_src
@@ -712,7 +700,6 @@ This configures extensions and settings in firefox
   home.packages = with pkgs; [
     emacs
     # Doom Emacs dependencies
-    git
     ripgrep
     fd
     imagemagick
@@ -733,13 +720,21 @@ This configures extensions and settings in firefox
 
   # Tools that don't need configuration - just install them
   environment.systemPackages = with pkgs; [
-    # File management
+    # Basic CLIs
     eza              # Better ls
     yazi             # Terminal file manager
     bat              # Better cat
     fd               # Better find
     ripgrep-all      # Better grep
     fzf              # Fuzzy finder
+    wget
+    curl
+    killall
+    zip
+    unzip
+    jq
+    rsync
+    coreutils
 
     # Git tools
     lazygit          # Git TUI

@@ -8,13 +8,21 @@
 
   # Tools that don't need configuration - just install them
   environment.systemPackages = with pkgs; [
-    # File management
+    # Basic CLIs
     eza              # Better ls
     yazi             # Terminal file manager
     bat              # Better cat
     fd               # Better find
     ripgrep-all      # Better grep
     fzf              # Fuzzy finder
+    wget
+    curl
+    killall
+    zip
+    unzip
+    jq
+    rsync
+    coreutils
 
     # Git tools
     lazygit          # Git TUI
