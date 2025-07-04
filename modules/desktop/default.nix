@@ -12,5 +12,6 @@
     ./applications.nix
     ./display-manager.nix
     ./storage.nix
+    ./theming.nix
   ];
 }
