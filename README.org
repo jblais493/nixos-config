@@ -146,6 +146,7 @@ This declares all imported modules and specific tweaks to the Theologica host:
   imports = [
     ./hardware-configuration.nix
     ../../modules/desktop
+    ../../modules/shared
     ../../modules/cli-tui
     ../../modules/development
     ../../modules/media
@@ -232,6 +233,7 @@ This declares all imported modules and specific tweaks to the King host:
   imports = [
     ./hardware-configuration.nix
     ../../modules/desktop
+    ../../modules/shared
     ../../modules/cli-tui
     ../../modules/development
     ../../modules/media
@@ -327,6 +329,7 @@ Empirica runs all my [[https://joshblais.com/posts/selfhosting/][selfhosted serv
   imports = [
     ./hardware-configuration.nix
     ../../modules/cli-tui
+    ../../modules/shared
     ../../modules/security
     ../../modules/services
     # ... other imports
@@ -810,7 +813,6 @@ This declares all desktop modules for importing to desktop/laptops
     ./audio.nix
     ./bluetooth.nix
     ./printing.nix
-    ./networking.nix
     ./browsers.nix
   ];
 }
@@ -953,20 +955,6 @@ This declares all desktop modules for importing to desktop/laptops
   services.printing.enable = true;
 }
 #+end_src
-*** networking.nix
-#+begin_src nix :tangle modules/desktop/networking.nix
-{ config, pkgs, ... }:
-{
-  # Enable NetworkManager
-  networking.networkmanager.enable = true;
-
-  # Packages
-  environment.systemPackages = with pkgs; [
-    networkmanager
-    networkmanagerapplet
-  ];
-}
-#+end_src
 *** browsers.nix
 #+begin_src nix :tangle modules/desktop/browsers.nix
 { config, pkgs, ... }:
@@ -998,6 +986,45 @@ This declares all desktop modules for importing to desktop/laptops
   # Add this to your home-manager configuration for per-user extension management
 }
 #+end_src
+** Shared
+*** default.nix
+#+begin_src nix :tangle modules/shared/default.nix
+{ config, pkgs, inputs, ... }:
+{
+  imports = [
+    ./networking.nix
+  ];
+
+  # Add NUR overlay for all hosts that import shared
+  nixpkgs.overlays = [ inputs.nur.overlay ];
+
+  # Common configuration for all hosts
+  time.timeZone = "America/Edmonton";
+  i18n.defaultLocale = "en_CA.UTF-8";
+
+  # Enable flakes
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
+}
+#+end_src
+
+*** networking.nix
+#+begin_src nix :tangle modules/shared/networking.nix
+{ config, pkgs, ... }:
+{
+  # Enable NetworkManager
+  networking.networkmanager.enable = true;
+
+  # Packages
+  environment.systemPackages = with pkgs; [
+    networkmanager
+    networkmanagerapplet
+  ];
+}
+#+end_src
+
 ** Server
 ** Services
 *** default.nix
@@ -1401,8 +1428,6 @@ in
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-
-  nixpkgs.overlays = [ inputs.nur.overlay ];
 
   outputs = { self, nixpkgs, home-manager, deploy-rs, agenix, ... }@inputs: {
     nixosConfigurations = {

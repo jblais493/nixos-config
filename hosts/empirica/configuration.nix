@@ -3,6 +3,7 @@
   imports = [
     ./hardware-configuration.nix
     ../../modules/cli-tui
+    ../../modules/shared
     ../../modules/security
     ../../modules/services
     # ... other imports

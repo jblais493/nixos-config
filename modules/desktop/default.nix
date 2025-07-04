@@ -8,7 +8,6 @@
     ./audio.nix
     ./bluetooth.nix
     ./printing.nix
-    ./networking.nix
     ./browsers.nix
   ];
 }

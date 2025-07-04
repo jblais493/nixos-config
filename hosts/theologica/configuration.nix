@@ -3,6 +3,7 @@
   imports = [
     ./hardware-configuration.nix
     ../../modules/desktop
+    ../../modules/shared
     ../../modules/cli-tui
     ../../modules/development
     ../../modules/media

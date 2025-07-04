@@ -22,8 +22,6 @@
     };
   };
 
-  nixpkgs.overlays = [ inputs.nur.overlay ];
-
   outputs = { self, nixpkgs, home-manager, deploy-rs, agenix, ... }@inputs: {
     nixosConfigurations = {
       # Laptop hosts
