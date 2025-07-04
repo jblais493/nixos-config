@@ -1,11 +1,10 @@
 { config, pkgs, ... }:
 {
-  # Enable GDM display manager
-  services = {
+  # Enable GDM display manager (updated syntax)
+  services.xserver.enable = true;
+
+  services.displayManager.gdm = {
     enable = true;
-    displayManager.gdm = {
-      enable = true;
-      wayland = true;
-    };
+    wayland = true;
   };
 }

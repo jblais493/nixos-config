@@ -43,7 +43,7 @@ users.users.joshua = {
   description = "Joshua Blais";
   group = "joshua";
   extraGroups = [ "networkmanager" "wheel" ];
-  password = "temppassword";  # Remove this after setting up agenix
+  password = "nixos";  # TODO setup ageinx
   openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICCWNto66rFbOvb1VDEDuZYdwHQPfKM7+EjpnHvs3eRr joshua@joshuablais.com"
   ];

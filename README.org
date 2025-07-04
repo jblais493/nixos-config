@@ -369,7 +369,7 @@ users.users.joshua = {
   description = "Joshua Blais";
   group = "joshua";
   extraGroups = [ "networkmanager" "wheel" ];
-  password = "temppassword";  # Remove this after setting up agenix
+  password = "nixos";  # TODO setup ageinx
   openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICCWNto66rFbOvb1VDEDuZYdwHQPfKM7+EjpnHvs3eRr joshua@joshuablais.com"
   ];
@@ -1204,13 +1204,12 @@ This declares all desktop modules for importing to desktop/laptops
 #+begin_src nix :tangle modules/desktop/display-manager.nix
 { config, pkgs, ... }:
 {
-  # Enable GDM display manager
-  services = {
+  # Enable GDM display manager (updated syntax)
+  services.xserver.enable = true;
+
+  services.displayManager.gdm = {
     enable = true;
-    displayManager.gdm = {
-      enable = true;
-      wayland = true;
-    };
+    wayland = true;
   };
 }
 #+end_src
