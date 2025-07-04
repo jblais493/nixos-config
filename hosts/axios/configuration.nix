@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, lib, inputs, ... }:
 {
   imports = [
     ./hardware-configuration.nix
@@ -14,10 +14,10 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Boot configuration for encrypted setup
-  boot.loader.grub = {
-  enable = true;
-  devices = [ "/dev/sda" ];  # Use devices instead of device
-  enableCryptodisk = true;
+ boot.loader.grub = {
+    enable = lib.mkForce true;
+    devices = lib.mkForce [ "/dev/sda" ];
+    enableCryptodisk = lib.mkForce true;
   };
 
   # Explicitly configure LUKS device

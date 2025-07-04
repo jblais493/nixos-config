@@ -324,7 +324,7 @@ Aurelia's machine, a Lenovo X230 laptop.
 *** configuration.nix
 This declares all imported modules and specific tweaks to the King host:
 #+begin_src nix :tangle hosts/axios/configuration.nix
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, lib, inputs, ... }:
 {
   imports = [
     ./hardware-configuration.nix
@@ -340,10 +340,10 @@ This declares all imported modules and specific tweaks to the King host:
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Boot configuration for encrypted setup
-  boot.loader.grub = {
-  enable = true;
-  devices = [ "/dev/sda" ];  # Use devices instead of device
-  enableCryptodisk = true;
+ boot.loader.grub = {
+    enable = lib.mkForce true;
+    devices = lib.mkForce [ "/dev/sda" ];
+    enableCryptodisk = lib.mkForce true;
   };
 
   # Explicitly configure LUKS device
