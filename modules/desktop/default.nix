@@ -9,5 +9,6 @@
     ./bluetooth.nix
     ./printing.nix
     ./browsers.nix
+    ./applications.nix
   ];
 }

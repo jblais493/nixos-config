@@ -688,6 +688,15 @@ This configures extensions and settings in firefox
   environment.systemPackages = with pkgs; [
     # Editor
     neovim
+    hugo
+    go
+    python314
+    gcc
+    clang
+    cmake
+    libtool
+    gnumake
+    nixd  # Nix LSP
   ];
 }
 #+end_src
@@ -712,6 +721,9 @@ This configures extensions and settings in firefox
   ];
 }
 #+end_src
+*** TODO go.nix
+*** TODO python.nix
+*** TODO postgres.nix
 ** CLI/TUI
 *** default.nix
 #+begin_src nix :tangle modules/cli-tui/default.nix
@@ -739,6 +751,7 @@ This configures extensions and settings in firefox
     unzip
     jq
     rsync
+    borg
     coreutils
 
     # Git tools
@@ -818,6 +831,7 @@ This declares all desktop modules for importing to desktop/laptops
     ./bluetooth.nix
     ./printing.nix
     ./browsers.nix
+    ./applications.nix
   ];
 }
 #+end_src
@@ -984,6 +998,44 @@ This declares all desktop modules for importing to desktop/laptops
       OfferToSaveLogins = false;
     };
   };
+}
+#+end_src
+*** applications.nix
+#+begin_src nix :tangle modules/desktop/applications.nix
+{ config, pkgs, ... }:
+{
+  environment.systemPackages = with pkgs; [
+    # File managers
+    xfce.thunar
+    xfce.tumbler
+
+    # Communication
+    signal-desktop
+    telegram-desktop
+
+    # Graphics
+    gimp-with-plugins
+
+    # Productivity
+    libreoffice
+
+    # System utilities
+    brightnessctl
+    libnotify
+    xdg-utils
+
+    # VPN
+    mullvad-vpn
+    mullvad
+
+    # Others
+    qbittorrent
+    syncthing
+    flatpak
+  ];
+
+  # Enable flatpak
+  services.flatpak.enable = true;
 }
 #+end_src
 ** Shared
@@ -1294,10 +1346,6 @@ in
     # Image viewers
     feh
     imv
-
-    # Media players
-    mpv
-    vlc
 
     # Audio tools
     alsa-utils

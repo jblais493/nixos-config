@@ -12,10 +12,6 @@
     feh
     imv
 
-    # Media players
-    mpv
-    vlc
-
     # Audio tools
     alsa-utils
 
