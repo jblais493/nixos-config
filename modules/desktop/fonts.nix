@@ -6,7 +6,6 @@
       # New nerd-fonts namespace
       nerd-fonts.geist-mono
       montserrat
-      bitter
       # Add any other fonts you need
     ];
 
