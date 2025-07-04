@@ -18,7 +18,7 @@
         wayback-machine
         leechblock-ng
         kristofferhagen-nord-theme
-        sideberry
+        sidebery
       ];
 
       settings = {

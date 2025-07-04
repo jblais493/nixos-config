@@ -761,7 +761,7 @@ This configures extensions and settings in firefox
         wayback-machine
         leechblock-ng
         kristofferhagen-nord-theme
-        sideberry
+        sidebery
       ];
 
       settings = {
