@@ -328,7 +328,6 @@ This declares all imported modules and specific tweaks to the King host:
 {
   imports = [
     ./hardware-configuration.nix
-    ./disk-configuration.nix
     ../../modules/desktop
     ../../modules/shared
     ../../modules/cli-tui
@@ -366,16 +365,12 @@ services.openssh = {
 
 users.users.joshua = {
   isNormalUser = true;
-  description = "Joshua Blais";
-  group = "joshua";
-  extraGroups = [ "networkmanager" "wheel" ];
-  password = "nixos";  # TODO setup ageinx
+  description = "joshua";
+  extraGroups = [ "networkmanager" "wheel" "uinput" "input" ];
   openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICCWNto66rFbOvb1VDEDuZYdwHQPfKM7+EjpnHvs3eRr joshua@joshuablais.com"
   ];
 };
-
-  users.groups.joshua = {};
 
   environment.systemPackages = with pkgs; [
     btrfs-progs
@@ -421,49 +416,6 @@ users.users.joshua = {
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
 
-#+end_src
-*** disk-configuration.nix
-#+begin_src nix :tangle hosts/axios/disk-configuration.nix
-{
-  disko.devices = {
-    disk = {
-      main = {
-        type = "disk";
-        device = "/dev/sda";
-        content = {
-          type = "gpt";
-          partitions = {
-            boot = {
-              size = "1M";
-              type = "EF02";
-            };
-            root = {
-              size = "100%";
-              content = {
-                type = "btrfs";
-                extraArgs = [ "-f" ];
-                subvolumes = {
-                  "/@" = {
-                    mountpoint = "/";
-                    mountOptions = [ "compress=zstd" "noatime" ];
-                  };
-                  "/@home" = {
-                    mountpoint = "/home";
-                    mountOptions = [ "compress=zstd" "noatime" ];
-                  };
-                  "/@nix" = {
-                    mountpoint = "/nix";
-                    mountOptions = [ "compress=zstd" "noatime" ];
-                  };
-                };
-              };
-            };
-          };
-        };
-      };
-    };
-  };
-}
 #+end_src
 ** Empirica
 *** README.md
@@ -1701,8 +1653,6 @@ in
         specialArgs = { inherit inputs; };
         modules = [
           ./hosts/axios/configuration.nix
-          ./hosts/axios/disk-configuration.nix
-          disko.nixosModules.disko
           agenix.nixosModules.default
 
           # # Add home-manager

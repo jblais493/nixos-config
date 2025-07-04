@@ -2,7 +2,6 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ./disk-configuration.nix
     ../../modules/desktop
     ../../modules/shared
     ../../modules/cli-tui
@@ -40,16 +39,12 @@ services.openssh = {
 
 users.users.joshua = {
   isNormalUser = true;
-  description = "Joshua Blais";
-  group = "joshua";
-  extraGroups = [ "networkmanager" "wheel" ];
-  password = "nixos";  # TODO setup ageinx
+  description = "joshua";
+  extraGroups = [ "networkmanager" "wheel" "uinput" "input" ];
   openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICCWNto66rFbOvb1VDEDuZYdwHQPfKM7+EjpnHvs3eRr joshua@joshuablais.com"
   ];
 };
-
-  users.groups.joshua = {};
 
   environment.systemPackages = with pkgs; [
     btrfs-progs

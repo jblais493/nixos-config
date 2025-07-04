@@ -71,8 +71,6 @@
         specialArgs = { inherit inputs; };
         modules = [
           ./hosts/axios/configuration.nix
-          ./hosts/axios/disk-configuration.nix
-          disko.nixosModules.disko
           agenix.nixosModules.default
 
           # # Add home-manager
