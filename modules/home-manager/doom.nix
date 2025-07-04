@@ -5,6 +5,7 @@
     package = pkgs.emacs;
     extraPackages = epkgs: with epkgs; [
       # Essential packages that Doom might need
+      doom
       vterm
       pdf-tools
       org-roam
