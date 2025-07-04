@@ -2,7 +2,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ./disk-config.nix
+    ./disk-configuration.nix
     ../../modules/desktop
     ../../modules/shared
     ../../modules/cli-tui
