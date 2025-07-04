@@ -328,6 +328,7 @@ This declares all imported modules and specific tweaks to the King host:
 {
   imports = [
     ./hardware-configuration.nix
+    ./disk-config.nix
     ../../modules/desktop
     ../../modules/shared
     ../../modules/cli-tui
@@ -337,30 +338,79 @@ This declares all imported modules and specific tweaks to the King host:
   ];
 
   networking.hostName = "axios";
-
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  boot.loader.grub = {
+  # Boot configuration for encrypted setup
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.efi.efiSysMountPoint = "/boot";
+
+  # Remove the boot.initrd.luks.devices section - disko handles this
+  # The LUKS device will be configured automatically by disko
+
+  # Btrfs maintenance
+  services.btrfs.autoScrub = {
     enable = true;
-    devices = [ "/dev/sda" ];
+    interval = "monthly";
+    fileSystems = [ "/" ];
   };
+
+  # Enable periodic snapshots with btrbk
+  services.btrbk.instances.btrbk = {
+    onCalendar = "daily";
+    settings = {
+      timestamp_format = "long";
+      preserve_day_of_week = "monday";
+      preserve_day_of_month = "1";
+
+      volume."/" = {
+        target = "/snapshots";
+        subvolume = {
+          "home" = {
+            snapshot_preserve_min = "2d";
+            snapshot_preserve = "14d 8w 12m";
+          };
+          "persist" = {
+            snapshot_preserve_min = "2d";
+            snapshot_preserve = "14d 8w 12m";
+          };
+        };
+      };
+    };
+  };
+
+  # Enable SSH immediately
+  services.openssh = {
+    enable = true;
+    settings = {
+      PermitRootLogin = "yes";
+      PasswordAuthentication = false;
+    };
+  };
+
+  networking.firewall.allowedTCPPorts = [ 22 ];
 
   users.users.joshua = {
     isNormalUser = true;
     description = "Joshua Blais";
     group = "joshua";
     extraGroups = [ "networkmanager" "wheel" ];
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICCWNto66rFbOvb1VDEDuZYdwHQPfKM7+EjpnHvs3eRr joshua@joshuablais.com"
+    ];
   };
 
   users.groups.joshua = {};
 
+  # Enable compression and btrfs tools
+  environment.systemPackages = with pkgs; [
+    btrfs-progs
+    btrbk
+    compsize
+  ];
+
   time.timeZone = "America/Edmonton";
   i18n.defaultLocale = "en_CA.UTF-8";
-
-  environment.systemPackages = with pkgs; [
-    vim
-    git
-  ];
 
   system.stateVersion = "25.05";
 }
@@ -382,13 +432,6 @@ This declares all imported modules and specific tweaks to the King host:
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/cb65c275-db79-4ef5-b231-54100efad99d";
-      fsType = "ext4";
-    };
-
-  boot.initrd.luks.devices."luks-89f9b5d7-d320-4b23-8db5-e3e5823e0578".device = "/dev/disk/by-uuid/89f9b5d7-d320-4b23-8db5-e3e5823e0578";
-
   swapDevices = [ ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
@@ -403,6 +446,89 @@ This declares all imported modules and specific tweaks to the King host:
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
 
+#+end_src
+*** disk-config.nix
+#+begin_src nix :tangle hosts/axios/disk-configuration.nix
+{
+  disko.devices = {
+    disk = {
+      main = {
+        type = "disk";
+        device = "/dev/sda";
+        content = {
+          type = "gpt";
+          partitions = {
+            # Boot partition
+            ESP = {
+              size = "512M";
+              type = "EF00";
+              content = {
+                type = "filesystem";
+                format = "vfat";
+                mountpoint = "/boot";
+                mountOptions = [
+                  "defaults"
+                  "umask=0077"
+                ];
+              };
+            };
+
+            # Main encrypted partition
+            luks = {
+              size = "100%";
+              content = {
+                type = "luks";
+                name = "crypted";
+                # You'll be prompted for password during install
+                content = {
+                  type = "btrfs";
+                  extraArgs = [ "-f" ];
+                  subvolumes = {
+                    # Root subvolume
+                    "/@" = {
+                      mountpoint = "/";
+                      mountOptions = [ "compress=zstd" "noatime" ];
+                    };
+
+                    # Home subvolume
+                    "/@home" = {
+                      mountpoint = "/home";
+                      mountOptions = [ "compress=zstd" "noatime" ];
+                    };
+
+                    # Nix store subvolume
+                    "/@nix" = {
+                      mountpoint = "/nix";
+                      mountOptions = [ "compress=zstd" "noatime" ];
+                    };
+
+                    # Persistent data subvolume
+                    "/@persist" = {
+                      mountpoint = "/persist";
+                      mountOptions = [ "compress=zstd" "noatime" ];
+                    };
+
+                    # Snapshots subvolume
+                    "/@snapshots" = {
+                      mountpoint = "/snapshots";
+                      mountOptions = [ "compress=zstd" "noatime" ];
+                    };
+
+                    # Swap subvolume (btrfs swap file)
+                    "/@swap" = {
+                      mountpoint = "/swap";
+                      mountOptions = [ "noatime" ];
+                    };
+                  };
+                };
+              };
+            };
+          };
+        };
+      };
+    };
+  };
+}
 #+end_src
 ** Empirica
 *** README.md
@@ -1561,6 +1687,11 @@ in
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.05";
     nur.url = "github:nix-community/NUR";
 
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -1577,7 +1708,7 @@ in
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, deploy-rs, agenix, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, deploy-rs, agenix, disko, ... }@inputs: {
     nixosConfigurations = {
       # Laptop hosts
       theologica = nixpkgs.lib.nixosSystem {
@@ -1621,6 +1752,8 @@ in
         specialArgs = { inherit inputs; };
         modules = [
           ./hosts/axios/configuration.nix
+          ./hosts/axios/disk-config.nix
+          disko.nixosModules.disko
           agenix.nixosModules.default
 
           # # Add home-manager
