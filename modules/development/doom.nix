@@ -14,5 +14,22 @@
     git
     curl
     wget
+
+    # Additional Doom dependencies
+    nodejs  # For LSP servers
+    python3 # For various Doom modules
+    shellcheck  # For shell script checking
+    html-tidy  # For HTML formatting
+    stylelint  # For CSS linting
+
+    # Fonts that Doom recommends
+    emacs-all-the-icons-fonts
   ];
+
+  # System-level Emacs configuration
+  services.emacs = {
+    enable = true;
+    package = pkgs.emacs;
+    defaultEditor = true;  # Set Emacs as default editor
+  };
 }
