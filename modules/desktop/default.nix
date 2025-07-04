@@ -11,5 +11,6 @@
     ./browsers.nix
     ./applications.nix
     ./display-manager.nix
+    ./storage.nix
   ];
 }
