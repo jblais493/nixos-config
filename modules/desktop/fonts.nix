@@ -1,0 +1,22 @@
+{ config, pkgs, ... }:
+{
+  fonts = {
+    packages = with pkgs; [
+      alegreya
+      (nerdfonts.override { fonts = [ "GeistMono" ]; })
+      montserrat
+      bitter
+      # Add any other fonts you need
+    ];
+
+    # Font configuration
+    fontconfig = {
+      enable = true;
+      defaultFonts = {
+        serif = [ "Alegreya" ];
+        sansSerif = [ "Montserrat" ];
+        monospace = [ "GeistMono Nerd Font" ];
+      };
+    };
+  };
+}

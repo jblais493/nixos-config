@@ -702,6 +702,7 @@ This declares all desktop modules for importing to desktop/laptops
     ./hyprland.nix
     ./kmonad.nix
     ./kitty.nix
+    ./fonts.nix
     # Add any other desktop modules here
   ];
 }
@@ -766,6 +767,31 @@ This declares all desktop modules for importing to desktop/laptops
 
   # Add your user to the input group
   users.users.joshua.extraGroups = [ "input" ];
+}
+#+end_src
+*** fonts.nix
+#+begin_src nix :tangle modules/desktop/fonts.nix
+{ config, pkgs, ... }:
+{
+  fonts = {
+    packages = with pkgs; [
+      alegreya
+      (nerdfonts.override { fonts = [ "GeistMono" ]; })
+      montserrat
+      bitter
+      # Add any other fonts you need
+    ];
+
+    # Font configuration
+    fontconfig = {
+      enable = true;
+      defaultFonts = {
+        serif = [ "Alegreya" ];
+        sansSerif = [ "Montserrat" ];
+        monospace = [ "GeistMono Nerd Font" ];
+      };
+    };
+  };
 }
 #+end_src
 ** Server
