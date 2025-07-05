@@ -14,8 +14,8 @@
     fi
 
     # Public repos
-    if [ ! -d "${config.home.homeDirectory}/Pictures/Nord" ]; then
-      ${pkgs.git}/bin/git clone https://github.com/jblais493/Wallpapers ${config.home.homeDirectory}/Pictures/Nord
+    if [ ! -d "${config.home.homeDirectory}/Pictures/Wallpapers" ]; then
+      ${pkgs.git}/bin/git clone https://github.com/jblais493/Wallpapers ${config.home.homeDirectory}/Pictures/Wallpapers
     fi
 
     if [ ! -d "${config.home.homeDirectory}/.config/kmonad" ]; then
