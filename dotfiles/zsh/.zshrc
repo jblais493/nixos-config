@@ -26,9 +26,10 @@ export PATH="$HOME/.tmux/plugins/tmuxifier/bin:$PATH"
 
 plugins=(
   git
-  fzf-tab
-  zsh-autosuggestions
-  zsh-syntax-highlighting
+  # Imported via nixOS
+  # fzf-tab
+  # zsh-autosuggestions
+  # zsh-syntax-highlighting
   npm
   zsh-interactive-cd
   z
