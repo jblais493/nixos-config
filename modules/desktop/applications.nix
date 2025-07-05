@@ -8,6 +8,7 @@
     # Communication
     signal-desktop
     telegram-desktop
+    thunderbird
 
     # Graphics
     gimp-with-plugins
