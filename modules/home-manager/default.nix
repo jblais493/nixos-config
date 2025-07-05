@@ -23,7 +23,7 @@ in
     ".config/doom".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/doom";
     ".zshrc".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/zsh/.zshrc";
     ".config/starship.toml".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/starship/starship.toml";
-    ".config/tmux/plugins/catppuccin".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/tmux/plugins/catppuccin";
+    ".config/tmux/plugins/catppuccin/catppuccin.tmux".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/tmux/plugins/catppuccin/catppuccin.tmux";
     ".config/hypr".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/hypr";
     ".config/kitty".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/kitty";
     ".config/waybar".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/waybar";
