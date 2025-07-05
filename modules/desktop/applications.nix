@@ -13,6 +13,9 @@
     # Graphics
     gimp-with-plugins
 
+    # KDE connect
+    libsForQt5.kdeconnect-kde
+
     # Productivity
     libreoffice
 
