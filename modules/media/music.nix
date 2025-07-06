@@ -11,7 +11,7 @@
     audacity
 
     # Audio codecs
-    ffmpeg
+    ffmpeg-full
     flac
     lame
   ];
