@@ -29,6 +29,9 @@
     # Git tools
     lazygit          # Git TUI
 
+    # Pass
+    pass
+
     # System tools
     btop             # Better top
     trash-cli        # Safe rm
