@@ -199,7 +199,7 @@ alias doompurge="~/.config/emacs/bin/doom purge"
 alias doomupgrade="~/.config/emacs/bin/doom upgrade"
 
 # NixOS
-alias nrs="~/dotfiles/scripts/nix-config.sh"
+alias nrs="sudo nixos-rebuild switch --flake"
 alias enix="nvim ~/dotfiles/nixos/configuration.nix"
 
 # Networking
