@@ -868,6 +868,7 @@ This configures extensions and settings in firefox
     go
     python314
     gcc
+    glibc
     clang
     cmake
     libtool

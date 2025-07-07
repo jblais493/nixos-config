@@ -12,6 +12,7 @@
     go
     python314
     gcc
+    glibc
     clang
     cmake
     libtool
