@@ -367,7 +367,7 @@ This declares all imported modules and specific tweaks to the King host:
 
   # Enable the GNOME Desktop Environment.
   # services.displayManager.gdm.enable = true;
-  # services.desktopManager.gnome.enable = true;
+  services.desktopManager.gnome.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -873,6 +873,7 @@ This configures extensions and settings in firefox
     cmake
     libtool
     gnumake
+    sdbus-cpp
     nixd  # Nix LSP
     direnv
     keychain
@@ -888,6 +889,8 @@ This configures extensions and settings in firefox
     emacs
     # Doom Emacs dependencies
     ripgrep
+    vips
+    wmctrl
     fd
     imagemagick
     texlive.combined.scheme-full  # For LaTeX support
@@ -950,6 +953,9 @@ This configures extensions and settings in firefox
     rsync
     borgbackup
     coreutils
+    ydotool
+    gnupg
+    age
 
     # Git tools
     lazygit          # Git TUI
@@ -1328,6 +1334,8 @@ This declares all desktop modules for importing to desktop/laptops
     # Nord cursor theme
     nordzy-cursor-theme
 
+    nwg-look
+
     # Icon themes
     zafiro-icons    # Zafiro icon theme
     papirus-icon-theme  # Alternative/fallback icons
@@ -1667,6 +1675,7 @@ in
   environment.systemPackages = with pkgs; [
     # Music players
     mpd
+    mpc
     ncmpcpp
     spotifyd
     spotdl

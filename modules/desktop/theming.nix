@@ -8,6 +8,8 @@
     # Nord cursor theme
     nordzy-cursor-theme
 
+    nwg-look
+
     # Icon themes
     zafiro-icons    # Zafiro icon theme
     papirus-icon-theme  # Alternative/fallback icons

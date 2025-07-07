@@ -5,6 +5,8 @@
     emacs
     # Doom Emacs dependencies
     ripgrep
+    vips
+    wmctrl
     fd
     imagemagick
     texlive.combined.scheme-full  # For LaTeX support

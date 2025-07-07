@@ -25,6 +25,9 @@
     rsync
     borgbackup
     coreutils
+    ydotool
+    gnupg
+    age
 
     # Git tools
     lazygit          # Git TUI

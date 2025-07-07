@@ -17,6 +17,7 @@
     cmake
     libtool
     gnumake
+    sdbus-cpp
     nixd  # Nix LSP
     direnv
     keychain

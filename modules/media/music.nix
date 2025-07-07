@@ -3,6 +3,7 @@
   environment.systemPackages = with pkgs; [
     # Music players
     mpd
+    mpc
     ncmpcpp
     spotifyd
     spotdl
