@@ -9,14 +9,22 @@
     ../../modules/media
   ];
 
-  networking.hostName = "king";
-
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   boot.loader.grub = {
     enable = true;
     devices = [ "/dev/sda" ];
+    useOSProber = true;
   };
+
+  # Setup keyfile
+  boot.initrd.secrets = {
+    "/boot/crypto_keyfile.bin" = null;
+  };
+
+  boot.loader.grub.enableCryptodisk = true;
+  boot.initrd.luks.devices."luks-89f9b5d7-d320-4b23-8db5-e3e5823e0578".keyFile = "/boot/crypto_keyfile.bin";
+  networking.hostName = "king"; # Define your hostname.
 
   users.users.joshua = {
     isNormalUser = true;
