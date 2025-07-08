@@ -19,8 +19,8 @@
 
   boot.consoleLogLevel = 0;
 
-  # Fast GRUB timeout
-  boot.loader.grub.timeout = 1;
+  # Fast boot timeout (updated option name)
+  boot.loader.timeout = 1;
 
   # Beautiful GRUB theme
   boot.loader.grub.theme = pkgs.nixos-grub2-theme;
@@ -30,9 +30,4 @@
 
   # LUKS + Plymouth integration for themed password prompts
   boot.initrd.systemd.enable = true;
-
-  # Plymouth themes package for the spinner
-  environment.systemPackages = with pkgs; [
-    plymouth-themes
-  ];
 }
