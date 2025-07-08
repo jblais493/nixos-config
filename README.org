@@ -691,6 +691,8 @@ in
 #+end_src
 
 *** setup.nix
+Scripts to setup a new machine with directories in their correct locations.
+
 #+begin_src nix :tangle modules/home-manager/setup.nix
 { config, pkgs, ... }:
 {
@@ -725,6 +727,8 @@ in
 }
 #+end_src
 *** git.nix
+Establish git settings
+
 #+begin_src nix :tangle modules/home-manager/git.nix
 { config, pkgs, ... }:
 {
@@ -747,6 +751,7 @@ in
 #+end_src
 *** browsers.nix
 This configures extensions and settings in firefox
+
 #+begin_src nix :tangle modules/home-manager/browsers.nix
 { config, pkgs, ... }:
 {
@@ -853,6 +858,8 @@ This configures extensions and settings in firefox
 #+end_src
 ** Development
 *** default.nix
+Basic development packages for ease of development and deployment.
+
 #+begin_src nix :tangle modules/development/default.nix
 { config, pkgs, ... }:
 {
@@ -881,6 +888,8 @@ This configures extensions and settings in firefox
 }
 #+end_src
 *** doom.nix
+Emacs configuration using DOOM emacs.
+
 #+begin_src nix :tangle modules/development/doom.nix
 { config, pkgs, ... }:
 {
@@ -925,6 +934,8 @@ This configures extensions and settings in firefox
 *** TODO postgres.nix
 ** CLI/TUI
 *** default.nix
+Default shell utilities across machines.
+
 #+begin_src nix :tangle modules/cli-tui/default.nix
 { config, pkgs, ... }:
 
@@ -1002,6 +1013,8 @@ This configures extensions and settings in firefox
 
 #+end_src
 *** zsh.nix
+ZSH setup. TODO: enhance speed of startup and decide if we include modules from nix or just dotfiles.
+
 #+begin_src nix :tangle modules/cli-tui/zsh.nix
 { config, pkgs, ... }:
 {
@@ -1042,14 +1055,14 @@ This configures extensions and settings in firefox
 
 ** Desktop
 *** default.nix
-This declares all desktop modules for importing to desktop/laptops
+This declares all desktop modules for importing to desktop/laptops.
+
 #+begin_src nix :tangle modules/desktop/default.nix
 { config, pkgs, ... }:
 {
   imports = [
     ./hyprland.nix
     ./kmonad.nix
-    ./kitty.nix
     ./fonts.nix
     ./audio.nix
     ./bluetooth.nix
@@ -1090,22 +1103,15 @@ This declares all desktop modules for importing to desktop/laptops
     wlsunset
     hyprwayland-scanner
     swaynotificationcenter
+    kitty
     polkit_gnome # for authentication flows
   ];
 }
 #+end_src
 
-*** kitty.nix
-#+begin_src nix :tangle modules/desktop/kitty.nix
-{ config, pkgs, ... }:
-
-{
-  environment.systemPackages = with pkgs; [
-    kitty
-  ];
-}
-#+end_src
 *** kmonad.nix
+Kmonad setup for keyboard layout using Colemak DH and various enhancements.
+
 #+begin_src nix :tangle modules/desktop/kmonad.nix
 { config, pkgs, ... }:
 {
@@ -1126,6 +1132,8 @@ This declares all desktop modules for importing to desktop/laptops
 }
 #+end_src
 *** fonts.nix
+Font setup, Alegreya for reading, Geist for monospace, montserrat for professional.
+
 #+begin_src nix :tangle modules/desktop/fonts.nix
 { config, pkgs, ... }:
 {
@@ -1151,6 +1159,8 @@ This declares all desktop modules for importing to desktop/laptops
 }
 #+end_src
 *** audio.nix
+Piplewire, alsa, other minor audio tweaks
+
 #+begin_src nix :tangle modules/desktop/audio.nix
 { config, pkgs, ... }:
 {
@@ -1179,6 +1189,8 @@ This declares all desktop modules for importing to desktop/laptops
 }
 #+end_src
 *** bluetooth.nix
+Bluetooth services for desktops
+
 #+begin_src nix :tangle modules/desktop/bluetooth.nix
 { config, pkgs, ... }:
 {
@@ -1194,6 +1206,8 @@ This declares all desktop modules for importing to desktop/laptops
 }
 #+end_src
 *** printing.nix
+Setup printing availability for desktop machines.
+
 #+begin_src nix :tangle modules/desktop/printing.nix
 { config, pkgs, ... }:
 {
@@ -1202,6 +1216,8 @@ This declares all desktop modules for importing to desktop/laptops
 }
 #+end_src
 *** browsers.nix
+Brave and Firefox browsers.
+
 #+begin_src nix :tangle modules/desktop/browsers.nix
 { config, pkgs, ... }:
 {
@@ -1229,6 +1245,8 @@ This declares all desktop modules for importing to desktop/laptops
 }
 #+end_src
 *** applications.nix
+Various desktop applications for comms, files, etc.
+
 #+begin_src nix :tangle modules/desktop/applications.nix
 { config, pkgs, ... }:
 {
@@ -1271,6 +1289,8 @@ This declares all desktop modules for importing to desktop/laptops
 }
 #+end_src
 *** display-manager.nix
+Login screen.
+
 #+begin_src nix :tangle modules/desktop/display-manager.nix
 { config, pkgs, ... }:
 {
@@ -1284,6 +1304,8 @@ This declares all desktop modules for importing to desktop/laptops
 }
 #+end_src
 *** storage.nix
+Dealing with automatic mounting of drives, creating new ISOs etc.
+
 #+begin_src nix :tangle modules/desktop/storage.nix
 { config, pkgs, ... }:
 {
@@ -1324,6 +1346,8 @@ This declares all desktop modules for importing to desktop/laptops
 }
 #+end_src
 *** theming.nix
+Setting nord theming and styles. Replace packages here for setting your own custom theme.
+
 #+begin_src nix :tangle modules/desktop/theming.nix
 { config, pkgs, ... }:
 {
