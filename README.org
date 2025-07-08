@@ -2031,8 +2031,5 @@ in
 
 * TODO Fixes
 ** TODO Fix cursor styling
-** TODO Fix gnome password prompt
-** TODO Fix Tmux catpuccin color scheme
 ** TODO Addin battery optimizations for laptop
 ** TODO speed of zsh shell opening
-** TODO theming of thunar
