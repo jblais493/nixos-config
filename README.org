@@ -1352,8 +1352,9 @@ This declares all desktop modules for importing to desktop/laptops
 }
 #+end_src
 *** boot.nix
+This sets up boot screens and adds logos with plymouth
+
 #+begin_src nix :tangle modules/desktop/boot.nix
-# modules/boot.nix
 { config, lib, pkgs, ... }:
 
 {
@@ -1386,11 +1387,6 @@ This declares all desktop modules for importing to desktop/laptops
 
   # LUKS + Plymouth integration for themed password prompts
   boot.initrd.systemd.enable = true;
-
-  # Ensure smooth transition from Plymouth to desktop
-  services.displayManager.setupCommands = ''
-    ${pkgs.plymouth}/bin/plymouth quit --retain-splash || true
-  '';
 
   # Plymouth themes package for the spinner
   environment.systemPackages = with pkgs; [

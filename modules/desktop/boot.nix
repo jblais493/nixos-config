@@ -1,4 +1,3 @@
-# modules/boot.nix
 { config, lib, pkgs, ... }:
 
 {
@@ -31,11 +30,6 @@
 
   # LUKS + Plymouth integration for themed password prompts
   boot.initrd.systemd.enable = true;
-
-  # Ensure smooth transition from Plymouth to desktop
-  services.displayManager.setupCommands = ''
-    ${pkgs.plymouth}/bin/plymouth quit --retain-splash || true
-  '';
 
   # Plymouth themes package for the spinner
   environment.systemPackages = with pkgs; [
