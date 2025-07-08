@@ -24,6 +24,5 @@
     hyprwayland-scanner
     swaynotificationcenter
     kitty
-    polkit_gnome # for authentication flows
   ];
 }
