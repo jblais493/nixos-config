@@ -583,6 +583,7 @@
 (evil-define-key 'insert global-map (kbd "C-v") 'clipboard-yank)
 
 ;; Vterm adjustemts
+(setq vterm-shell (or (executable-find "zsh") "/run/current-system/sw/bin/zsh"))
 (setq vterm-environment '("TERM=xterm-256color"))
 (set-language-environment "UTF-8")
 (set-default-coding-systems 'utf-8)
