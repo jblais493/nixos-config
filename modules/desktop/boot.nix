@@ -4,7 +4,7 @@
   # Fast, beautiful Plymouth boot with NixOS branding
   boot.plymouth = {
     enable = true;
-    theme = "spinner";
+    theme = "breeze";
   };
 
   # Silent boot for speed and clean look
