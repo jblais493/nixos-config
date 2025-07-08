@@ -1,25 +1,23 @@
 { config, pkgs, ... }:
 {
-  # Nord theming packages
+  # Your existing packages
   environment.systemPackages = with pkgs; [
-    # Nordic GTK theme
     nordic
-
-    # Nord cursor theme
     nordzy-cursor-theme
-
     nwg-look
-
-    # Icon themes
-    zafiro-icons    # Zafiro icon theme
-    papirus-icon-theme  # Alternative/fallback icons
-
-    # Theme tools
-    lxappearance    # GTK theme selector
-    libsForQt5.qt5ct          # Qt theme configuration
+    zafiro-icons
+    papirus-icon-theme
+    lxappearance
+    libsForQt5.qt5ct
   ];
 
-  # Enable Qt theming
+  # Configure default cursor theme system-wide
+  environment.variables = {
+    XCURSOR_THEME = "Nordzy-cursors";
+    XCURSOR_SIZE = "24";
+  };
+
+  # Qt configuration
   qt.enable = true;
   qt.platformTheme = "qt5ct";
 }
