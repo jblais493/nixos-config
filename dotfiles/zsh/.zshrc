@@ -326,9 +326,13 @@ hugo() {
 # Add in direnv hook
 eval "$(direnv hook zsh)"
 
-# Use keychain to manage ssh-agent
-eval $(keychain --eval --agents ssh empire.key 2>/dev/null)
-# Add key manually since keychain has trouble with it
+
+# Use keychain to manage ssh-agent - load both keys
+eval $(keychain --eval --agents ssh empire.key id_ed25519 2>/dev/null)
+# Add keys manually since keychain has trouble with them
 if ! ssh-add -l 2>/dev/null | grep -q "empire beginning ssh key"; then
   ssh-add ~/.ssh/empire.key
+fi
+if ! ssh-add -l 2>/dev/null | grep -q "joshua@joshuablais.com"; then
+  ssh-add ~/.ssh/id_ed25519
 fi
