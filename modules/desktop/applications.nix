@@ -9,6 +9,7 @@
     signal-desktop
     telegram-desktop
     thunderbird
+    element-desktop
 
     # Graphics
     gimp-with-plugins

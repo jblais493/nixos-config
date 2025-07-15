@@ -9,6 +9,7 @@
     ./printing.nix
     ./browsers.nix
     ./applications.nix
+    ./email.nix
     ./display-manager.nix
     ./storage.nix
     ./theming.nix

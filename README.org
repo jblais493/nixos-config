@@ -1072,6 +1072,7 @@ This declares all desktop modules for importing to desktop/laptops.
     ./printing.nix
     ./browsers.nix
     ./applications.nix
+    ./email.nix
     ./display-manager.nix
     ./storage.nix
     ./theming.nix
@@ -1261,6 +1262,7 @@ Various desktop applications for comms, files, etc.
     signal-desktop
     telegram-desktop
     thunderbird
+    element-desktop
 
     # Graphics
     gimp-with-plugins
@@ -1490,6 +1492,20 @@ This sets up boot screens and adds logos with plymouth
 
   # LUKS + Plymouth integration for themed password prompts
   boot.initrd.systemd.enable = true;
+}
+#+end_src
+*** email.nix
+#+begin_src nix :tangle modules/desktop/email.nix
+{ config, pkgs, ... }:
+{
+  environment.systemPackages = with pkgs; [
+    mu
+    isync
+    msmtp
+
+    gnutls
+    ca-certificates
+  ];
 }
 #+end_src
 ** Shared
