@@ -1495,6 +1495,8 @@ This sets up boot screens and adds logos with plymouth
 }
 #+end_src
 *** email.nix
+Setting up email in mu4e in emacs, packages necessary:
+
 #+begin_src nix :tangle modules/desktop/email.nix
 { config, pkgs, ... }:
 {
