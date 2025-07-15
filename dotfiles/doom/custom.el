@@ -13,8 +13,7 @@
  '(org-agenda-files
    '("~/org/done.org" "/home/joshua/org/projects.org" "/home/joshua/org/inbox.org"
      "/home/joshua/org/tracking.org" "/home/joshua/org/notes.org"
-     "/home/joshua/org/contacts.org" "/home/joshua/org/calendar.org"
-     "/home/joshua/org/journal/2025/Week 13/March 25, 2025.org"))
+     "/home/joshua/org/contacts.org" "/home/joshua/org/calendar.org"))
  '(package-selected-packages
    '(company company dart-mode elpher emacs-everywhere flycheck hover jabber
      lsp-dart lsp-mode lsp-treemacs lsp-ui multi-vterm org-gtasks org-roam-ui

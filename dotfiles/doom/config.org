@@ -674,7 +674,6 @@ This sets up k-j as an evil escape sequence. Not used anymore due to setting esc
 * Vterm
 #+begin_src elisp
 ;; Vterm adjustemts
-(setq vterm-shell (or (executable-find "zsh") "/run/current-system/sw/bin/zsh"))
 (setq vterm-environment '("TERM=xterm-256color"))
 (set-language-environment "UTF-8")
 (set-default-coding-systems 'utf-8)
@@ -1717,17 +1716,9 @@ go install github.com/sqls-server/sqls@latest
 
 ;; MU4E configuration
 (after! mu4e
-  ;; Tell Doom where to find mu
   (setq mu4e-mu-binary "/usr/bin/mu")
-
-  ;; Set your update interval
   (setq mu4e-update-interval (* 10 60))
-
-  ;; Load mu4e configuration if the file exists
-  (let ((mu4e-config (expand-file-name "private/mu4e-config.el" doom-private-dir)))
-    (when (file-exists-p mu4e-config)
-      (load mu4e-config)))
-  )
+  (load (expand-file-name "private/mu4e-config.el" doom-private-dir)))
 #+end_src
 
 ** Elfeed

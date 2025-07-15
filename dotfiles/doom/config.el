@@ -583,7 +583,6 @@
 (evil-define-key 'insert global-map (kbd "C-v") 'clipboard-yank)
 
 ;; Vterm adjustemts
-(setq vterm-shell (or (executable-find "zsh") "/run/current-system/sw/bin/zsh"))
 (setq vterm-environment '("TERM=xterm-256color"))
 (set-language-environment "UTF-8")
 (set-default-coding-systems 'utf-8)
@@ -1536,17 +1535,9 @@ WHERE tablename = '%s';" table-name)))
 
 ;; MU4E configuration
 (after! mu4e
-  ;; Tell Doom where to find mu
   (setq mu4e-mu-binary "/usr/bin/mu")
-
-  ;; Set your update interval
   (setq mu4e-update-interval (* 10 60))
-
-  ;; Load mu4e configuration if the file exists
-  (let ((mu4e-config (expand-file-name "private/mu4e-config.el" doom-private-dir)))
-    (when (file-exists-p mu4e-config)
-      (load mu4e-config)))
-  )
+  (load (expand-file-name "private/mu4e-config.el" doom-private-dir)))
 
 ;; Load elfeed-download package
 (load! "lisp/elfeed-download")
