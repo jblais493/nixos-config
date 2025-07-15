@@ -6,6 +6,5 @@
     msmtp
 
     gnutls
-    ca-certificates
   ];
 }

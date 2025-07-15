@@ -1504,7 +1504,6 @@ This sets up boot screens and adds logos with plymouth
     msmtp
 
     gnutls
-    ca-certificates
   ];
 }
 #+end_src
