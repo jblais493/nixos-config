@@ -18,6 +18,18 @@
       auth-source-cache-expiry nil) ; default is 7200 (2h)
 #+end_src
 
+** Keychain setup
+Using ssh keys for various servers/repos, easiest way to keep this persistent.
+
+#+BEGIN_SRC elisp
+;; Set SSH_AUTH_SOCK from keychain
+(let ((ssh-auth-sock (string-trim
+                      (shell-command-to-string
+                       "keychain --eval --quiet --agents ssh 2>/dev/null | grep SSH_AUTH_SOCK | sed 's/.*SSH_AUTH_SOCK=\\([^;]*\\).*/\\1/'"))))
+  (when (and ssh-auth-sock (file-exists-p ssh-auth-sock))
+    (setenv "SSH_AUTH_SOCK" ssh-auth-sock)))
+#+END_SRC
+
 ** Fonts
 I really like GeistMono as a replacement for SourceCode Pro. Alegreya is a great writing font
 

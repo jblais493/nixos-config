@@ -100,7 +100,7 @@
      ((string= ext "h") (all-the-icons-fileicon "h" :face 'font-lock-preprocessor-face))
      ((string= ext "go") (all-the-icons-alltheicon "go" :face 'font-lock-keyword-face))
      ((string= ext "svelte") (all-the-icons-fileicon "svelte" :face 'font-lock-type-face))
-     ((string= ext "rs") (all-the-icons-fileicon "rust" :face 'font-lock-type-face))
+     ((string= ext "rs") (all-the-icons-alltheicon "rust" :face 'font-lock-type-face))
      ((string= ext "php") (all-the-icons-fileicon "php" :face 'font-lock-function-name-face))
      ((string= ext "el") (all-the-icons-fileicon "elisp" :face 'font-lock-variable-name-face))
      ((string= ext "clj") (all-the-icons-fileicon "clojure" :face 'font-lock-function-name-face))
