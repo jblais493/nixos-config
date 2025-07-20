@@ -886,7 +886,7 @@ This configures extensions and settings in firefox
 Basic development packages for ease of development and deployment.
 
 #+begin_src nix :tangle modules/development/default.nix
-{ config, pkgs, ... }:
+{ conf{ config, pkgs, ... }:
 {
   imports = [
     ./doom.nix
@@ -911,14 +911,14 @@ Basic development packages for ease of development and deployment.
     keychain
 
     # Rust related
--   rustc
--   cargo
--   rustfmt
--   rust-analyzer
--   clippy
+    rustc
+    cargo
+    rustfmt
+    rust-analyzer
+    clippy
   ];
 }
-#+end_src
+
 *** doom.nix
 Emacs configuration using DOOM emacs.
 
