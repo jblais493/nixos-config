@@ -2083,3 +2083,5 @@ in
 ** TODO Fix cursor styling
 ** TODO Addin battery optimizations for laptop
 ** TODO speed of zsh shell opening
+** TODO Get mu4e working
+** TODO Hugo blog version issue
