@@ -15,12 +15,18 @@
     glibc
     clang
     cmake
-    rustc
     libtool
     gnumake
     sdbus-cpp
     nixd  # Nix LSP
     direnv
     keychain
+
+    # Rust related
+    rustc
+    cargo
+    rustfmt
+    rust-analyzer
+    clippy
   ];
 }
