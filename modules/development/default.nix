@@ -15,6 +15,7 @@
     glibc
     clang
     cmake
+    rustc
     libtool
     gnumake
     sdbus-cpp
