@@ -2085,3 +2085,4 @@ in
 ** TODO speed of zsh shell opening
 ** TODO Get mu4e working
 ** TODO Hugo blog version issue
+** TODO Set global secrets, explore sops-nix
