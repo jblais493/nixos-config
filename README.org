@@ -909,6 +909,13 @@ Basic development packages for ease of development and deployment.
     nixd  # Nix LSP
     direnv
     keychain
+
+    # Rust related
+-   rustc
+-   cargo
+-   rustfmt
+-   rust-analyzer
+-   clippy
   ];
 }
 #+end_src
@@ -921,6 +928,7 @@ Emacs configuration using DOOM emacs.
   # Install Emacs and Doom dependencies at system level
   environment.systemPackages = with pkgs; [
     emacs
+    emacsPackages.mu4e
     # Doom Emacs dependencies
     ripgrep
     vips

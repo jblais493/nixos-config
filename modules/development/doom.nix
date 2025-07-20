@@ -3,6 +3,7 @@
   # Install Emacs and Doom dependencies at system level
   environment.systemPackages = with pkgs; [
     emacs
+    emacsPackages.mu4e
     # Doom Emacs dependencies
     ripgrep
     vips

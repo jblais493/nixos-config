@@ -23,10 +23,10 @@
     keychain
 
     # Rust related
-    rustc
-    cargo
-    rustfmt
-    rust-analyzer
-    clippy
+-   rustc
+-   cargo
+-   rustfmt
+-   rust-analyzer
+-   clippy
   ];
 }
