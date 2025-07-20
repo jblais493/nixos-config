@@ -2086,3 +2086,4 @@ in
 ** TODO Get mu4e working
 ** TODO Hugo blog version issue
 ** TODO Set global secrets, explore sops-nix
+** TODO Persistence of git login
