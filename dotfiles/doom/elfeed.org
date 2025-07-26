@@ -26,6 +26,7 @@
 
 ** Linux
 *** [[https://lwn.net/headlines/rss][LWN.net]] :linux:
+*** [[https://computer.rip/rss.xml][Computers Are Bad]]
 *** [[https://itsfoss.com/feed/][It's FOSS]]
 *** [[https://www.phoronix.com/rss.php][Phoronix]]
 *** [[https://www.linuxjournal.com/node/feed][Linux Journal]] :linux:
@@ -33,6 +34,7 @@
 *** [[https://susam.net/feed.xml][Susam.net]]
 *** [[https://battlepenguin.com/feed.xml][BattlePenguin]]
 *** [[https://www.lifeintech.com/feed.xml][LifeinTech]]
+*** [[https://xn--gckvb8fzb.com/index.xml][xn--gckvb8fzb]] :linux:
 ** Emacs
 *** [[https://sachachua.com/blog/category/emacs/feed/][Sacha Chua]] :emacs:
 *** [[https://irreal.org/blog/?feed=rss2][Irreal]] :emacs:
@@ -71,6 +73,7 @@
 
 ** Blogs :blog:
 *** [[https://joshblais.com/index.xml][Joshua Blais]]
+*** [[https://adactio.com/rss/][Jeremy Keith]] :tech:indieweb:
 *** [[https://wrongthink.link/posts/index.xml][Wrong Think]] :tech:security:
 *** [[https://www.rousette.org.uk/index.xml][Rousette]]
 *** [[https://randomgeekery.org/index.xml][Random Geekery]]
