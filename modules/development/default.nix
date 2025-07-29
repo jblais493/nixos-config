@@ -11,9 +11,7 @@
     hugo
     go
     python314
-    (python313.withPackages (ps: with ps; [
-      tweepy
-    ]))
+    python313Packages.tweepy
     gcc
     glibc
     clang
