@@ -8,6 +8,7 @@ in
   imports = [
     ./git.nix
     ./setup.nix
+    ./theming.nix
     ./browsers.nix
   ];
 
