@@ -24,6 +24,7 @@
     brightnessctl
     libnotify
     xdg-utils
+    gammastep
 
     # VPN
     mullvad-vpn

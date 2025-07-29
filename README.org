@@ -1332,6 +1332,7 @@ Various desktop applications for comms, files, etc.
     brightnessctl
     libnotify
     xdg-utils
+    gammastep
 
     # VPN
     mullvad-vpn
