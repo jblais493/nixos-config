@@ -34,10 +34,12 @@
 
     # Pass
     environment.systemPackages = with pkgs; [
-        pass
-        (pass.withExtensions (exts: with exts; [
+        (pass-wayland.withExtensions (exts: with exts; [
             pass-otp
+            pass-import
+            pass-audit
         ]))
+        tessen
     ];
 
     # System tools
