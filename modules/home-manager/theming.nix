@@ -9,19 +9,18 @@
     x11.enable = true;
   };
 
-  # GTK theming the declarative way
   gtk = {
     enable = true;
     theme = {
-      name = "Nordic";
+      name = "Nordic-darker";
       package = pkgs.nordic;
     };
     iconTheme = {
-      name = "Zafiro-icons";
+      name = "Zafiro-icons-Dark";
       package = pkgs.zafiro-icons;
     };
     cursorTheme = {
-      name = "Nordzy-cursors-white";
+      name = "Nordzy-cursors";
       package = pkgs.nordzy-cursor-theme;
       size = 24;
     };
