@@ -30,6 +30,9 @@
     age
     tree
 
+    # Nix workflow
+    direnv
+
     # Git tools
     lazygit          # Git TUI
 

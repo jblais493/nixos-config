@@ -1082,6 +1082,9 @@ Default shell utilities across machines.
     age
     tree
 
+    # Nix workflow
+    direnv
+
     # Git tools
     lazygit          # Git TUI
 
