@@ -34,6 +34,7 @@
 
     # Pass
     pass
+    passExtensions.pass-otp
 
     # System tools
     btop             # Better top

@@ -1537,13 +1537,12 @@ WHERE tablename = '%s';" table-name)))
         :n "S" #'calibredb-switch-library
         :n "q" #'calibredb-search-quit))
 
-;; Add mu4e to load path
-(add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
-
-;; MU4E configuration
 (after! mu4e
-  (setq mu4e-mu-binary "/usr/bin/mu")
+  ;; Let NixOS provide the binary path
+  (setq mu4e-mu-binary (executable-find "mu"))
   (setq mu4e-update-interval (* 10 60))
+
+  ;; Your existing config
   (load (expand-file-name "private/mu4e-config.el" doom-private-dir)))
 
 ;; Load elfeed-download package

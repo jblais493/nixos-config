@@ -1027,6 +1027,7 @@ Default shell utilities across machines.
 
     # Pass
     pass
+    passExtensions.pass-otp
 
     # System tools
     btop             # Better top
