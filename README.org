@@ -1569,6 +1569,10 @@ Setting up email in mu4e in emacs, packages necessary:
 
     gnutls
   ];
+
+  environment.sessionVariables = {
+    EMACSLOADPATH = "${pkgs.emacsPackages.mu4e}/share/emacs/site-lisp/mu4e:";
+  };
 }
 #+end_src
 ** Shared

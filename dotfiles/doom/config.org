@@ -1724,11 +1724,8 @@ go install github.com/sqls-server/sqls@latest
 ** Mu4e
 #+begin_src elisp
 (after! mu4e
-  ;; Let NixOS provide the binary path
   (setq mu4e-mu-binary (executable-find "mu"))
   (setq mu4e-update-interval (* 10 60))
-
-  ;; Your existing config
   (load (expand-file-name "private/mu4e-config.el" doom-private-dir)))
 #+end_src
 

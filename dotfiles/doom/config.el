@@ -1538,11 +1538,8 @@ WHERE tablename = '%s';" table-name)))
         :n "q" #'calibredb-search-quit))
 
 (after! mu4e
-  ;; Let NixOS provide the binary path
   (setq mu4e-mu-binary (executable-find "mu"))
   (setq mu4e-update-interval (* 10 60))
-
-  ;; Your existing config
   (load (expand-file-name "private/mu4e-config.el" doom-private-dir)))
 
 ;; Load elfeed-download package
