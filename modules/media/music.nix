@@ -4,7 +4,7 @@
     # Music players
     mpd
     mpc
-    # ncmpcpp
+    ncmpcpp
     spotifyd
     spotdl
 
