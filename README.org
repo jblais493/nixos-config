@@ -160,13 +160,9 @@ This declares all imported modules and specific tweaks to the Theologica host:
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Boot loader configuration
-  boot.loader.grub = {
-    enable = true;
-    devices = [ "/dev/sda" ]; # Change this to your actual boot device
     # Or use systemd-boot instead:
-    # boot.loader.systemd-boot.enable = true;
-    # boot.loader.efi.canTouchEfiVariables = true;
-  };
+    boot.loader.systemd-boot.enable = true;
+    boot.loader.efi.canTouchEfiVariables = true;
 
   # Define your user properly
   users.users.joshua = {
@@ -744,7 +740,10 @@ Scripts to setup a new machine with directories in their correct locations.
   programs.gpg.enable = true;
   services.gpg-agent = {
     enable = true;
-    pinentry.package = pkgs.pinentry-gtk2;
+    pinentryPackage = pkgs.pinentry-gtk2;
+    extraConfig = ''
+      allow-loopback-pinentry
+    '';
   };
 }
 #+end_src

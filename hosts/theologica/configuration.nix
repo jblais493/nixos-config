@@ -17,13 +17,9 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Boot loader configuration
-  boot.loader.grub = {
-    enable = true;
-    devices = [ "/dev/sda" ]; # Change this to your actual boot device
     # Or use systemd-boot instead:
-    # boot.loader.systemd-boot.enable = true;
-    # boot.loader.efi.canTouchEfiVariables = true;
-  };
+    boot.loader.systemd-boot.enable = true;
+    boot.loader.efi.canTouchEfiVariables = true;
 
   # Define your user properly
   users.users.joshua = {
