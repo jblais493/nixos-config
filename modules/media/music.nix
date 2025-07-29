@@ -18,17 +18,13 @@
   # Add the MPD service configuration
   services.mpd = {
     enable = true;
-    user = "joshua";  # Replace with your username
+    user = "joshua";
     group = "users";
     musicDirectory = "/home/joshua/MusicOrganized/";
+    # Use NixOS built-in directory management instead of custom paths
+    dataDir = "/home/joshua/.config/mpd";
+    playlistDirectory = "/home/joshua/.config/mpd/playlists";
     extraConfig = ''
-      playlist_directory "/home/joshua/.config/mpd/playlists"
-      db_file "/home/joshua/.config/mpd/database"
-      log_file "/home/joshua/.config/mpd/log"
-      pid_file "/home/joshua/.config/mpd/pid"
-      state_file "/home/joshua/.config/mpd/state"
-      sticker_file "/home/joshua/.config/mpd/sticker.sql"
-
       bind_to_address "localhost"
       port "6600"
       auto_update "yes"
@@ -40,7 +36,7 @@
           name "PipeWire Audio"
       }
 
-      # Fallback to pulse (pipewire provides pulse compatibility)
+      # Fallback to pulse
       audio_output {
           type "pulse"
           name "Pulse Audio"
@@ -64,6 +60,12 @@
       }
     '';
   };
+
+  # Create the required directories
+  systemd.tmpfiles.rules = [
+    "d /home/joshua/.config/mpd 0755 joshua users -"
+    "d /home/joshua/.config/mpd/playlists 0755 joshua users -"
+  ];
 
   # Ensure users can access audio devices
   users.groups.audio = {};
