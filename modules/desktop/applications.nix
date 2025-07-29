@@ -15,7 +15,7 @@
     gimp-with-plugins
 
     # KDE connect
-    libsForQt5.kdeconnect-kde
+    kdePackages.kdeconnect-kde
 
     # Productivity
     libreoffice
@@ -35,6 +35,14 @@
     syncthing
     flatpak
   ];
+
+  programs.kdeconnect.enable = true;
+
+  # Firewall rules for kdeconnect
+  networking.firewall = {
+    allowedTCPPortRanges = [ { from = 1714; to = 1764; } ];
+    allowedUDPPortRanges = [ { from = 1714; to = 1764; } ];
+  };
 
   # Enable flatpak
   services.flatpak.enable = true;

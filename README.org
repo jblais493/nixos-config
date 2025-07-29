@@ -1382,7 +1382,7 @@ Various desktop applications for comms, files, etc.
     gimp-with-plugins
 
     # KDE connect
-    libsForQt5.kdeconnect-kde
+    kdePackages.kdeconnect-kde
 
     # Productivity
     libreoffice
@@ -1402,6 +1402,14 @@ Various desktop applications for comms, files, etc.
     syncthing
     flatpak
   ];
+
+  programs.kdeconnect.enable = true;
+
+  # Firewall rules for kdeconnect
+  networking.firewall = {
+    allowedTCPPortRanges = [ { from = 1714; to = 1764; } ];
+    allowedUDPPortRanges = [ { from = 1714; to = 1764; } ];
+  };
 
   # Enable flatpak
   services.flatpak.enable = true;
@@ -2141,7 +2149,6 @@ in
 #+end_src
 
 * TODO Fixes
-** TODO Fix cursor styling
 ** TODO Addin battery optimizations for laptop
 ** TODO speed of zsh shell opening
 ** TODO Get mu4e working
