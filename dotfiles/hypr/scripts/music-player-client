@@ -1,0 +1,92 @@
+#!/usr/bin/env sh
+# Universal music control that only affects one player at a time
+# Usage: ./music_control.sh [command]
+# Commands: previous, next, play-pause, play, pause, stop
+
+COMMAND=$1
+
+# Function to find the most appropriate player to control
+get_target_player() {
+    # First check if any player is currently playing
+    local playing_player=$(playerctl -l 2>/dev/null | xargs -I{} sh -c 'playerctl -p {} status 2>/dev/null | grep -q "Playing" && echo {}' | head -1)
+
+    if [ -n "$playing_player" ]; then
+        echo "$playing_player"
+        return
+    fi
+
+    # If nothing is playing, check if Spotify is running
+    if playerctl -l 2>/dev/null | grep -q "spotify"; then
+        echo "spotify"
+        return
+    fi
+
+    # Default to MPD if available
+    if command -v mpc >/dev/null && mpc status >/dev/null 2>&1; then
+        echo "mpd"
+        return
+    fi
+
+    # Check for browser-based players (likely YouTube)
+    local browser=$(playerctl -l 2>/dev/null | grep -E 'firefox|chromium|brave|chrome' | head -1)
+    if [ -n "$browser" ]; then
+        echo "$browser"
+        return
+    fi
+
+    # Fallback to the first available player
+    local first_player=$(playerctl -l 2>/dev/null | head -1)
+    if [ -n "$first_player" ]; then
+        echo "$first_player"
+    else
+        echo ""
+    fi
+}
+
+# Get the single player to control
+TARGET_PLAYER=$(get_target_player)
+
+# If no player is available, exit with a message
+if [ -z "$TARGET_PLAYER" ]; then
+    notify-send "Music Control" "No active music players found"
+    exit 1
+fi
+
+# Execute the command on the target player
+if [ "$TARGET_PLAYER" = "mpd" ]; then
+    case "$COMMAND" in
+        "previous")
+            mpc prev >/dev/null
+            ;;
+        "next")
+            mpc next >/dev/null
+            ;;
+        "play-pause" | "play" | "pause")
+            mpc toggle >/dev/null
+            ;;
+        "stop")
+            mpc stop >/dev/null
+            ;;
+    esac
+
+    # Get current track info for notification
+    CURRENT_TRACK=$(mpc current)
+    if [ -n "$CURRENT_TRACK" ]; then
+        notify-send "MPD" "$CURRENT_TRACK"
+    fi
+else
+    # Use playerctl for everything else
+    playerctl -p "$TARGET_PLAYER" "$COMMAND" >/dev/null 2>&1
+
+    # Get current track info for notification
+    ARTIST=$(playerctl -p "$TARGET_PLAYER" metadata artist 2>/dev/null)
+    TITLE=$(playerctl -p "$TARGET_PLAYER" metadata title 2>/dev/null)
+
+    if [ -n "$TITLE" ]; then
+        if [ -n "$ARTIST" ]; then
+            notify-send "$TARGET_PLAYER" "$ARTIST - $TITLE"
+        else
+            notify-send "$TARGET_PLAYER" "$TITLE"
+        fi
+    fi
+fi
