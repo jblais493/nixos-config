@@ -1026,8 +1026,14 @@ Default shell utilities across machines.
     lazygit          # Git TUI
 
     # Pass
-    pass
-    passExtensions.pass-otp
+    environment.systemPackages = with pkgs; [
+        (pass-wayland.withExtensions (exts: with exts; [
+            pass-otp
+            pass-import
+            pass-audit
+        ]))
+        tessen
+    ];
 
     # System tools
     btop             # Better top
