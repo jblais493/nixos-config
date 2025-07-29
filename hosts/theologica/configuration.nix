@@ -17,9 +17,8 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Boot loader configuration
-    # Or use systemd-boot instead:
-    boot.loader.systemd-boot.enable = true;
-    boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 
   # Define your user properly
   users.users.joshua = {
