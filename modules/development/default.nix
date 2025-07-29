@@ -12,6 +12,7 @@
     go
     (python313.withPackages (ps: with ps; [
       tweepy
+      mastodon-py
     ]))
     gcc
     glibc
