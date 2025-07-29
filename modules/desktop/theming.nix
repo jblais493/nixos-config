@@ -13,15 +13,15 @@
   ];
 
   # Global environment variables for theming
-  environment.variables = {
-    # Cursor theme
-    XCURSOR_THEME = "Nordzy-cursors-white";
-    XCURSOR_SIZE = "24";
-    # GTK themes
-    GTK_THEME = "Nordic";
-    # Qt theming
-    QT_QPA_PLATFORMTHEME = "qt5ct";
-  };
+  # environment.variables = {
+  #   # Cursor theme
+  #   XCURSOR_THEME = "Nordzy-cursors-white";
+  #   XCURSOR_SIZE = "24";
+  #   # GTK themes
+  #   GTK_THEME = "Nordic";
+  #   # Qt theming
+  #   QT_QPA_PLATFORMTHEME = "qt5ct";
+  # };
 
   # Set cursor theme at login
   environment.loginShellInit = ''
