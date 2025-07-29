@@ -1,4 +1,4 @@
-{ conf{ config, pkgs, ... }:
+{ config, pkgs, ... }:
 {
   imports = [
     ./doom.nix

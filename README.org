@@ -964,7 +964,7 @@ This configures extensions and settings in firefox
 Basic development packages for ease of development and deployment.
 
 #+begin_src nix :tangle modules/development/default.nix
-{ conf{ config, pkgs, ... }:
+{ config, pkgs, ... }:
 {
   imports = [
     ./doom.nix
