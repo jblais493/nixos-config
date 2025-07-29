@@ -33,8 +33,12 @@
     lazygit          # Git TUI
 
     # Pass
-    pass
-    passExtensions.pass-otp
+    environment.systemPackages = with pkgs; [
+        pass
+        (pass.withExtensions (exts: with exts; [
+            pass-otp
+        ]))
+    ];
 
     # System tools
     btop             # Better top
