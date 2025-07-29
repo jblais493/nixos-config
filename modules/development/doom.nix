@@ -21,7 +21,6 @@
 
     # Additional Doom dependencies
     nodejs  # For LSP servers
-    python3 # For various Doom modules
     shellcheck  # For shell script checking
     html-tidy  # For HTML formatting
     stylelint  # For CSS linting
