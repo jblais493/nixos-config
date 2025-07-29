@@ -1149,6 +1149,7 @@ This declares all desktop modules for importing to desktop/laptops.
   # Install Hyprland ecosystem packages
   environment.systemPackages = with pkgs; [
     waybar
+    wtype
     wofi
     swww
     grim

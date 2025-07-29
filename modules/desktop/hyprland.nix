@@ -10,6 +10,7 @@
   # Install Hyprland ecosystem packages
   environment.systemPackages = with pkgs; [
     waybar
+    wtype
     wofi
     swww
     grim
