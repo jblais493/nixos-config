@@ -12,6 +12,7 @@
     imagemagick
     texlive.combined.scheme-full  # For LaTeX support
     sqlite       # For org-roam
+    aspell
 
     # Additional tools Doom might need
     git

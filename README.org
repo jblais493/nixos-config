@@ -999,6 +999,7 @@ Basic development packages for ease of development and deployment.
     clippy
   ];
 }
+#+end_src
 
 *** doom.nix
 Emacs configuration using DOOM emacs.

@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ conf{ config, pkgs, ... }:
 {
   imports = [
     ./doom.nix
@@ -11,6 +11,9 @@
     hugo
     go
     python314
+    (python313.withPackages (ps: with ps; [
+      tweepy
+    ]))
     gcc
     glibc
     clang
@@ -23,10 +26,10 @@
     keychain
 
     # Rust related
-   rustc
-   cargo
-   rustfmt
-   rust-analyzer
-   clippy
+    rustc
+    cargo
+    rustfmt
+    rust-analyzer
+    clippy
   ];
 }
