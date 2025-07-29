@@ -10,7 +10,6 @@
     neovim
     hugo
     go
-    python314
     (python313.withPackages (ps: with ps; [
       tweepy
     ]))

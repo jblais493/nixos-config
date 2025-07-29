@@ -976,7 +976,6 @@ Basic development packages for ease of development and deployment.
     neovim
     hugo
     go
-    python314
     (python313.withPackages (ps: with ps; [
       tweepy
     ]))
