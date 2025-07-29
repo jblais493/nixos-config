@@ -38,7 +38,21 @@
 
   programs.kdeconnect.enable = true;
 
-  # Firewall rules for kdeconnect
+systemd.user.services.kdeconnect = {
+    description = "KDE Connect daemon";
+    wantedBy = [ "default.target" ];
+    after = [ "graphical-session.target" ];
+    serviceConfig = {
+      ExecStart = "${pkgs.kdePackages.kdeconnect-kde}/bin/kdeconnectd";
+      Restart = "on-failure";
+      RestartSec = 3;
+    };
+    environment = {
+      # Ensure proper DBus session
+      DISPLAY = ":0";
+    };
+  };
+
   networking.firewall = {
     allowedTCPPortRanges = [ { from = 1714; to = 1764; } ];
     allowedUDPPortRanges = [ { from = 1714; to = 1764; } ];
