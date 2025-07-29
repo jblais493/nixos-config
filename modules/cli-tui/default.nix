@@ -28,6 +28,7 @@
     ydotool
     gnupg
     age
+    tree
 
     # Git tools
     lazygit          # Git TUI

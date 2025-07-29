@@ -1002,7 +1002,6 @@ Basic development packages for ease of development and deployment.
 
 *** doom.nix
 Emacs configuration using DOOM emacs.
-
 #+begin_src nix :tangle modules/development/doom.nix
 { config, pkgs, ... }:
 {
@@ -1081,6 +1080,7 @@ Default shell utilities across machines.
     ydotool
     gnupg
     age
+    tree
 
     # Git tools
     lazygit          # Git TUI
