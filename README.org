@@ -156,9 +156,6 @@ This declares all imported modules and specific tweaks to the Theologica host:
   # Host-specific configuration
   networking.hostName = "theologica";
 
-  # Enable flakes
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
   # Boot loader configuration
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -1593,8 +1590,11 @@ Setting up email in mu4e in emacs, packages necessary:
   time.timeZone = "America/Edmonton";
   i18n.defaultLocale = "en_CA.UTF-8";
 
-  # Enable flakes
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+ # Enable flakes and trusted users
+  nix.settings = {
+    experimental-features = [ "nix-command" "flakes" ];
+    trusted-users = [ "root" "joshua" ];  # Add this line
+  };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
