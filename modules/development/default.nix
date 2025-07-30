@@ -22,9 +22,12 @@
     libtool
     gnumake
     sdbus-cpp
+    keychain
+
+    # Nix related
     nixd  # Nix LSP
     direnv
-    keychain
+    devenv
 
     # Rust related
     rustc

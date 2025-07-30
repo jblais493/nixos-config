@@ -987,9 +987,12 @@ Basic development packages for ease of development and deployment.
     libtool
     gnumake
     sdbus-cpp
+    keychain
+
+    # Nix related
     nixd  # Nix LSP
     direnv
-    keychain
+    devenv
 
     # Rust related
     rustc
