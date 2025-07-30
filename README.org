@@ -980,6 +980,7 @@ Basic development packages for ease of development and deployment.
       mastodon-py
     ]))
     gcc
+    gh
     glibc
     clang
     cmake

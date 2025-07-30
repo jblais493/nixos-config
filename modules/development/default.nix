@@ -15,6 +15,7 @@
       mastodon-py
     ]))
     gcc
+    gh
     glibc
     clang
     cmake

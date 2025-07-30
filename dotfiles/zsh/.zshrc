@@ -327,7 +327,6 @@ esac
 # Add in direnv hook
 eval "$(direnv hook zsh)"
 
-
 # Use keychain to manage ssh-agent - load both keys
 eval $(keychain --eval --agents ssh empire.key id_ed25519 2>/dev/null)
 # Add keys manually since keychain has trouble with them
