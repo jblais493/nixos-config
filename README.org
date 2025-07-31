@@ -1564,12 +1564,25 @@ This sets up boot screens and adds logos with plymouth
 *** power.nix
 #+begin_src nix :tangle modules/desktop/power.nix
 { config, lib, pkgs, ... }:
-
 {
   # Core power management services
   services = {
     # Explicitly disabled since we are using TLP
     power-profiles-daemon.enable = false;
+
+    # Lid switch and login manager configuration - REMOVE the extra "services."
+    logind = {
+      lidSwitch = "suspend";           # What to do when lid closes
+      lidSwitchExternalPower = "suspend"; # Same behavior on AC power
+      lidSwitchDocked = "ignore";      # Don't suspend when docked to external display
+      powerKey = "suspend";            # Power button behavior
+      powerKeyLongPress = "poweroff";  # Long press = shutdown
+      extraConfig = ''
+        HandleLidSwitchDocked=ignore
+        IdleAction=suspend
+        IdleActionSec=30min
+      '';
+    };
 
     # upower: The D-Bus service providing power enumeration and control
     # This is your foundation - everything else builds upon it
