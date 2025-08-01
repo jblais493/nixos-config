@@ -7,6 +7,7 @@
     ../../modules/cli-tui
     ../../modules/development
     ../../modules/media
+    ../../modules/security
   ];
 
   # Bootloader.
