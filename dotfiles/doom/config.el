@@ -171,6 +171,7 @@
         orderless-matching-styles '(orderless-literal
                                     orderless-prefixes
                                     orderless-initialism
+                                    orderless-flex
                                     orderless-regexp)))
 
 ;; Quick command repetition
