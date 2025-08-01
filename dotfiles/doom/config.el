@@ -706,6 +706,35 @@ This function is designed to be called via `emacsclient -e`."
         lsp-ui-sideline-enable nil
         lsp-ui-peek-enable t))
 
+(after! project
+  ;; Master project detection function - extensible for all project types
+  (add-hook 'project-find-functions
+            (lambda (dir)
+              (cond
+               ;; Go projects
+               ((locate-dominating-file dir "go.mod")
+                (cons 'transient (locate-dominating-file dir "go.mod")))
+
+               ;; Rust projects
+               ((locate-dominating-file dir "Cargo.toml")
+                (cons 'transient (locate-dominating-file dir "Cargo.toml")))
+
+               ;; Node.js projects
+               ((locate-dominating-file dir "package.json")
+                (cons 'transient (locate-dominating-file dir "package.json")))
+
+               ;; Python projects (multiple markers)
+               ((or (locate-dominating-file dir "pyproject.toml")
+                    (locate-dominating-file dir "setup.py")
+                    (locate-dominating-file dir "requirements.txt"))
+                (cons 'transient (or (locate-dominating-file dir "pyproject.toml")
+                                     (locate-dominating-file dir "setup.py")
+                                     (locate-dominating-file dir "requirements.txt"))))
+
+               ;; Generic git projects (fallback)
+               ((locate-dominating-file dir ".git")
+                (cons 'transient (locate-dominating-file dir ".git")))))))
+
 (add-to-list 'auto-mode-alist '("\\.astro\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.templ\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.svelte\\'" . web-mode))
