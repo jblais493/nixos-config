@@ -9,7 +9,12 @@
     # Editor
     neovim
     hugo
+    # Go toolchain
     go
+    gopls
+    godef
+    gotools
+
     (python313.withPackages (ps: with ps; [
       tweepy
       mastodon-py
