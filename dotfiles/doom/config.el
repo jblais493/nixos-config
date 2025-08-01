@@ -681,20 +681,16 @@ This function is designed to be called via `emacsclient -e`."
         lsp-enable-snippet nil
         lsp-enable-symbol-highlighting nil
         lsp-enable-links nil
-
         ;; Go-specific settings
-        lsp-go-hover-kind "Synopsis"
-        lsp-go-analyses '((fieldalignment . t)
-                          (nilness . t)
+        lsp-go-hover-kind "FullDocumentation"  ; CHANGED: was "Synopsis"
+        lsp-go-analyses '((nilness . t)        ; CHANGED: removed fieldalignment
                           (unusedwrite . t)
                           (unusedparams . t))
-
         ;; Register custom gopls settings
         lsp-gopls-completeUnimported t
         lsp-gopls-staticcheck t
         lsp-gopls-analyses '((unusedparams . t)
                              (unusedwrite . t))))
-
 ;; LSP UI settings for better performance
 (after! lsp-ui
   (setq lsp-ui-doc-enable t
@@ -1263,6 +1259,7 @@ WHERE tablename = '%s';" table-name)))
       ;; Magit mode mappngs
       (:prefix ("g" . "magit")  ; Use 'g' as the main prefix
        :desc "Stage all files"          "a" #'magit-stage-modified
+       :desc "goto function definition" "d" #'evil-goto-definition
        :desc "Push"                     "P" #'magit-push
        :desc "Pull"                     "p" #'magit-pull
        :desc "Merge"                    "m" #'magit-merge
@@ -1814,6 +1811,7 @@ WHERE tablename = '%s';" table-name)))
 (load! "lisp/create-daily")
 (load! "lisp/audio-record")
 (load! "lisp/universal-launcher")
+(load! "lisp/jitsi-meeting")
 (load! "lisp/weather")
 (load! "lisp/termux-sms")
 ;; POSSE posting system
