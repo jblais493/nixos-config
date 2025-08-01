@@ -544,6 +544,7 @@
           '(("Google" . "https://www.google.com/search?q=")
             ("DuckDuckGo" . "https://duckduckgo.com/?q=")
             ("Wikipedia" . "https://en.wikipedia.org/w/index.php?search=")
+            ("Nix Packages" . "https://search.nixos.org/packages?channel=25.05&show=")
             ("DevDocs.io" . "https://devdocs.io/#q=")
             ("Doom discourse" . "https://discourse.doomemacs.org/search?q=")
             ("Doom issues" . "https://github.com/doomemacs/doomemacs/issues?q=")
