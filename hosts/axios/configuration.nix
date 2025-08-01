@@ -48,7 +48,7 @@ services.openssh = {
   enable = true;
   settings = {
     PermitRootLogin = "no";  # Change this to "no" for security
-    PasswordAuthentication = true;  # Enable password auth temporarily
+    PasswordAuthentication = false;  # Enable password auth temporarily
   };
 };
 
