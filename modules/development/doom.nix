@@ -13,6 +13,9 @@
     texlive.combined.scheme-full  # For LaTeX support
     sqlite       # For org-roam
     aspell
+    aspellDicts.en
+    aspellDicts.en-computers  # technical terms
+    aspellDicts.en-science    # scientific terms
 
     # Additional tools Doom might need
     git
