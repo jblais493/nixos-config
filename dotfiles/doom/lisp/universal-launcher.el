@@ -546,6 +546,7 @@
             ("DuckDuckGo" . "https://duckduckgo.com/?q=")
             ("Marginalia" . "https://search.marginalia.nu/search?query=")
             ("Wiby" . "https://wiby.me/?q=")
+            ("Anna's Archive" . "https://annas-archive.org/search?q=")
             ("Wikipedia" . "https://en.wikipedia.org/w/index.php?search=")
             ("4get" . "https://4get.ca/web?s=")
             ("Nix Packages" . "https://search.nixos.org/packages?channel=25.05&show=")
