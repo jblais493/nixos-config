@@ -542,8 +542,12 @@
   "Search the web with QUERY using default browser."
   (let* ((search-engines
           '(("Google" . "https://www.google.com/search?q=")
+            ("ArchWiki" . "https://wiki.archlinux.org/index.php?search=")
             ("DuckDuckGo" . "https://duckduckgo.com/?q=")
+            ("Marginalia" . "https://search.marginalia.nu/search?query=")
+            ("Wiby" . "https://wiby.me/?q=")
             ("Wikipedia" . "https://en.wikipedia.org/w/index.php?search=")
+            ("4get" . "https://4get.ca/web?s=")
             ("Nix Packages" . "https://search.nixos.org/packages?channel=25.05&show=")
             ("DevDocs.io" . "https://devdocs.io/#q=")
             ("Doom discourse" . "https://discourse.doomemacs.org/search?q=")
@@ -561,7 +565,7 @@
             ("Wolfram Alpha" . "https://www.wolframalpha.com/input/?i=")
             ("YouTube" . "https://www.youtube.com/results?search_query=")
             ("Perplexity" . "https://www.perplexity.ai/search/new?q=")
-            ("Bing" . "https://www.bing.com/search?q=")))
+            ))
          (default-engine (or universal-launcher--last-search-engine
                              universal-launcher-default-search-engine
                              "Google"))
