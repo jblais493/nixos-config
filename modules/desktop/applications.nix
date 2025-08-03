@@ -12,7 +12,7 @@
     element-desktop
 
     # Graphics
-    gimp-with-plugins
+    gimp3-with-plugins
 
     # KDE connect
     kdePackages.kdeconnect-kde

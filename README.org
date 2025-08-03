@@ -1398,7 +1398,7 @@ Various desktop applications for comms, files, etc.
     element-desktop
 
     # Graphics
-    gimp-with-plugins
+    gimp3-with-plugins
 
     # KDE connect
     kdePackages.kdeconnect-kde
