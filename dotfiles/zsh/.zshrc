@@ -200,8 +200,10 @@ alias doomupgrade="~/.config/emacs/bin/doom upgrade"
 
 # NixOS
 alias nrs="sudo nixos-rebuild switch --flake"
+alias nrb="sudo nixos-rebuild build --flake"
 alias nrsf='sudo nixos-rebuild switch --no-reexec'  # fast rebuilds
 alias enix="nvim ~/dotfiles/nixos/configuration.nix"
+alias ngc="sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations +3 && sudo nix-collect-garbage"
 
 # Networking
 alias nmconnect="nmcli device wifi connect"
