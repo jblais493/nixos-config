@@ -204,6 +204,7 @@ alias nrb="sudo nixos-rebuild build --flake"
 alias nrsf='sudo nixos-rebuild switch --no-reexec'  # fast rebuilds
 alias enix="nvim ~/dotfiles/nixos/configuration.nix"
 alias ngc="sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations +3 && sudo nix-collect-garbage"
+alias nopt="sudo nix-store --optimise"               # Deduplicate store
 
 # Networking
 alias nmconnect="nmcli device wifi connect"
