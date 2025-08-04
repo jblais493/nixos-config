@@ -23,13 +23,16 @@
   + Snacks:
     +
 *** Movement
-- [ ] Cardio
-- [ ] Strength
+- [ ] Morning Movement
+- [ ] Morning walk
+- [ ] 30 minute Strength
+- [ ] 20 minute free
+- [ ] Nightly stretch/foamroll
+
 
 * Morning Foundation [0/7]
 ** [ ] Wake up, drink water, cold water on face, teeth
 ** [ ] [[https://traditionalcatholicprayers.com/2019/10/05/morning-prayers/][Morning Prayer]] and scripture
-** [ ] Morning Movement (Cardio, bodyweight, yoga)
 ** [ ] Shower, Groom, & Dressed
 ** [ ] Vitamins, Magnesium, Vitamin D
 ** [ ] Review day's battle plan
@@ -44,6 +47,9 @@
 ** Revenue generated: $
 ** Key wins:
 
+* Tracking
+#+BEGIN: clocktable :maxlevel 3 :scope agenda :block today :fileskip0 t :stepskip0 t
+#+END:
 
 * Family Focus
 ** Quality Time Minutes: 
@@ -57,19 +63,6 @@
 ** [ ] Daily Mass
 ** [ ] Rosary
 ** [ ] Spiritual Reading
-** Hours [0/9]
-*** [ ] [[https://universalis.com/today.htm][About Today]]
-*** [ ] [[https://universalis.com/mass.htm][Mass]]
-*** [ ] [[https://universalis.com/readings.htm][Office of Readings]]
-*** [ ] [[https://universalis.com/lauds.htm][Lauds]]
-*** [ ] [[https://universalis.com/terce.htm][Terce]]
-*** [ ] [[https://universalis.com/sext.htm][Sext]]
-*** [ ] [[https://universalis.com/none.htm][None]]
-*** [ ] [[https://universalis.com/vespers.htm][Vespers]]
-*** [ ] [[https://universalis.com/compline.htm][Compline]]
-
-* Learning
-** [ ] Language
 
 * Evening Review
 ** Victories
@@ -89,7 +82,6 @@
 - [ ] Setup tomorrows journal file
 - [ ] Post priorities from [[file:~/org/projects.org][projects.org]] file
 - [ ] Set clothes out for morning
-*** [ ] Evening stretching
 *** [ ] Evening Groom
 *** [ ] [[https://traditionalcatholicprayers.com/2019/10/03/evening-prayers/][Evening Prayer]]
 
