@@ -26,11 +26,13 @@
   # Firewall
   networking.firewall.enable = true;
 
+  # Tailscale service
+  services.tailscale.enable = true;
+
   # Security packages
   environment.systemPackages = with pkgs; [
     fail2ban
     gnupg
-    tailscale
     age
   ];
 }
