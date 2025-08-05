@@ -2259,9 +2259,11 @@ in
 #+end_src
 
 * TODO Fixes
-** TODO Addin battery optimizations for laptop
-** TODO speed of zsh shell opening
-** TODO Get mu4e working
 ** TODO Hugo blog version issue
 ** TODO Set global secrets, explore sops-nix
-** TODO Persistence of git login
+
+* DONE
+** DONE Persistence of git login
+** DONE Addin battery optimizations for laptop
+** DONE speed of zsh shell opening
+** DONE Get mu4e working
