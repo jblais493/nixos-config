@@ -30,6 +30,7 @@
   environment.systemPackages = with pkgs; [
     fail2ban
     gnupg
+    tailscale
     age
   ];
 }
