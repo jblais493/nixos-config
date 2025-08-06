@@ -9,3 +9,6 @@ Platforms are slavery. PGP key attached.
 Joshua Blais
 Broker,
 Revere
+
+<#part type="text/plain" filename="~/gpg-pub.asc" disposition=attachment description="PGP key">
+<#/part>
