@@ -7,14 +7,12 @@
 title: "${1:Post Title}"
 description: "${2:Brief description for SEO}"
 pubDate: ${3:`(format-time-string "%Y-%m-%d")`}
-lastModDate: ${4:}
+lastModDate: "${4:}"
 draft: ${5:false}
 toc: ${6:true}
 share: ${7:true}
 giscus: ${8:true}
-ogImage: ${9:true}
+ogImage: ${9:false}
 tags: ["${10:primary-tag}", "${11:secondary-tag}"]
 ---
-${12:<img src="${13:/images/posts/}" alt="${14:Descriptive alt text}" width="700" style="display: block; margin: 0 auto;">
-
-}$0>
+${12:<img src="${13:/images/posts/}" alt="${14:Descriptive alt text}" width="700" style="display: block; margin: 0 auto;"}$0>
