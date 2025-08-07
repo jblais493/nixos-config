@@ -1421,6 +1421,7 @@ Various desktop applications for comms, files, etc.
     flatpak
   ];
 
+  services.resolved.enable = true;
   services.mullvad-vpn.enable = true;
   programs.kdeconnect.enable = true;
 

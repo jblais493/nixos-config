@@ -35,6 +35,7 @@
     flatpak
   ];
 
+  services.resolved.enable = true;
   services.mullvad-vpn.enable = true;
   programs.kdeconnect.enable = true;
 
