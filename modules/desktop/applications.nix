@@ -36,6 +36,8 @@
     flatpak
   ];
 
+  services.mullvad-vpn.enable = true;
+
   programs.kdeconnect.enable = true;
 
 systemd.user.services.kdeconnect = {
