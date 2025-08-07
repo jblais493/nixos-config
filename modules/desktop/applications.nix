@@ -28,7 +28,6 @@
 
     # VPN
     mullvad-vpn
-    mullvad
 
     # Others
     qbittorrent
@@ -36,6 +35,7 @@
     flatpak
   ];
 
+  services.mullvad-vpn.enable = true;
   programs.kdeconnect.enable = true;
 
 systemd.user.services.kdeconnect = {
