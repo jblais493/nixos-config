@@ -6,6 +6,7 @@
 
   environment.systemPackages = with pkgs; [
     bluez
+    bluetui
     blueman
     bluez-tools
   ];
