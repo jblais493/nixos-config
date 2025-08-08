@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: image
+# uuid: img
+# key: img
+# condition: t
+# --
+
+<img src="${1:source}" alt="${2:description}" width="700" style="display: block; margin: 0 auto;">
