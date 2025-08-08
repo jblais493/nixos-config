@@ -239,8 +239,8 @@ alias kmon="kmonad ~/.config/kmonad/config.kbd &"
 # Development
 alias work="arttime --nolearn -a eye -t 'For I consider that the sufferings of this present time are not worth comparing with the glory that is going to be revealed to us - Romans 8:18' -g 4h"
 alias search-email='~/.config/scripts/email_search'
-alias blogdeploy="~/.config/scripts/Development/blogdeploy.sh"
 alias deploy="~/.config/scripts/Development/deploy"
+alias blogdeploy="deploy blogrevamp joshblais.com auto"
 alias lh="~/.config/scripts/Development/lighthouse.sh"
 
 # Docker commands migrated to podman
