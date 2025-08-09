@@ -31,6 +31,15 @@
                 (mapconcat (lambda (tag) (format "\"%s\"" tag)) tags ", ")
               ""))))
 
+(defun my/offset-markdown-headings (text)
+  "Offset markdown headings by one level (# becomes ##, etc.)"
+  (with-temp-buffer
+    (insert text)
+    (goto-char (point-min))
+    (while (re-search-forward "^\\(#+\\) " nil t)
+      (replace-match "#\\1 "))
+    (buffer-string)))
+
 (defun publish-post-to-astro ()
   "Select and publish an org file from the writing directory to Astro blog."
   (interactive)
@@ -47,11 +56,10 @@
          (target-file (concat astro-posts-dir kebab-name ".md")))
     (when (yes-or-no-p (format "Publish %s to %s?" selected-name target-file))
       (with-current-buffer (find-file-noselect selected-file)
-        ;; Generate frontmatter from current buffer
         (let ((frontmatter (my/generate-astro-frontmatter))
-              ;; Export to markdown without frontmatter
-              (content (org-export-as 'md nil nil t)))
-          ;; Write combined result
+              ;; Export to markdown and offset headings
+              (content (my/offset-markdown-headings
+                        (org-export-as 'md nil nil t))))
           (with-temp-file target-file
             (insert frontmatter)
             (insert content))))

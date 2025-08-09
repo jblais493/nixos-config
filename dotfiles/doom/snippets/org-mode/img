@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: image
+# uuid:
+# key: img
+# condition: t
+# --
+
+#+attr_html: :alt ${2:description} :width 700 :style display: block; margin: 0 auto;
+[[${1:source}][${2:description}]]
