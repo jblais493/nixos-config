@@ -13,6 +13,12 @@
     sudo.enable = true;
   };
 
+  # enable mosh
+  programs.mosh.enable = true;
+
+  # Tailscale service
+  services.tailscale.enable = true;
+
   # SSH hardening
   services.openssh = {
     enable = true;
@@ -25,9 +31,6 @@
 
   # Firewall
   networking.firewall.enable = true;
-
-  # Tailscale service
-  services.tailscale.enable = true;
 
   # Security packages
   environment.systemPackages = with pkgs; [
