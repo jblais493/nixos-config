@@ -3,6 +3,7 @@
   # System-level browser installations
   environment.systemPackages = with pkgs; [
     brave
+    tor-browser
   ];
 
   # Firefox with extensions via home-manager approach

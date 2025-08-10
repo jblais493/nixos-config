@@ -1354,7 +1354,7 @@ Setup printing availability for desktop machines.
 }
 #+end_src
 *** browsers.nix
-Brave and Firefox browsers.
+Brave, Tor, and Firefox browsers.
 
 #+begin_src nix :tangle modules/desktop/browsers.nix
 { config, pkgs, ... }:
@@ -1362,6 +1362,7 @@ Brave and Firefox browsers.
   # System-level browser installations
   environment.systemPackages = with pkgs; [
     brave
+    tor-browser
   ];
 
   # Firefox with extensions via home-manager approach
