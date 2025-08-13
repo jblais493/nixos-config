@@ -36,6 +36,9 @@
     # Git tools
     lazygit          # Git TUI
 
+    # Networking tools
+    nmap
+
     # Pass
     (pass-wayland.withExtensions (exts: with exts; [
         pass-otp
