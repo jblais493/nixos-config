@@ -995,10 +995,6 @@ Basic development packages for ease of development and deployment.
     sdbus-cpp
     keychain
 
-    # Nix related
-    nixd  # Nix LSP
-    direnv
-    devenv
 
     # Rust related
     rustc
@@ -1097,7 +1093,11 @@ Default shell utilities across machines.
     tree
 
     # Nix workflow
+    nixd  # Nix LSP
+    nh  # nix helper
     direnv
+    devenv
+    nix-output-monitor
 
     # Git tools
     lazygit          # Git TUI

@@ -31,7 +31,11 @@
     tree
 
     # Nix workflow
+    nixd  # Nix LSP
+    nh  # nix helper
     direnv
+    devenv
+    nix-output-monitor
 
     # Git tools
     lazygit          # Git TUI

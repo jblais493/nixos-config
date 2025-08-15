@@ -29,10 +29,6 @@
     sdbus-cpp
     keychain
 
-    # Nix related
-    nixd  # Nix LSP
-    direnv
-    devenv
 
     # Rust related
     rustc
