@@ -20,7 +20,6 @@ export PATH=$PATH:~/.config/scripts/Accounting
 export PATH=$PATH:~/.config/scripts/Dotfiles
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/joshua/.oh-my-zsh"
 export EDITOR="nvim"
 export PATH="$HOME/.tmux/plugins/tmuxifier/bin:$PATH"
 
@@ -49,7 +48,6 @@ plugins=(
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=4'
 
-source $ZSH/oh-my-zsh.sh
 
 # Setup fzf
 if [[ ! "$PATH" == */usr/share/fzf/bin* ]]; then
@@ -199,7 +197,7 @@ alias doompurge="~/.config/emacs/bin/doom purge"
 alias doomupgrade="~/.config/emacs/bin/doom upgrade"
 
 # NixOS
-alias nrs="sudo nixos-rebuild switch --flake"
+alias nrs="nh os switch . --hostname"
 alias nrb="sudo nixos-rebuild build --flake"
 alias nrsf='sudo nixos-rebuild switch --no-reexec'  # fast rebuilds
 alias enix="nvim ~/dotfiles/nixos/configuration.nix"
