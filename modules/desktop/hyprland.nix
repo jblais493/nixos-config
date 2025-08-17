@@ -16,6 +16,7 @@
     grim
     slurp
     wl-clipboard
+    xclip
     hyprlock
     hypridle
     hyprpicker

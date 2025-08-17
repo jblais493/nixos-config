@@ -1236,6 +1236,7 @@ This declares all desktop modules for importing to desktop/laptops.
     grim
     slurp
     wl-clipboard
+    xclip
     hyprlock
     hypridle
     hyprpicker
