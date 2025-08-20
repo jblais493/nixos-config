@@ -21,6 +21,7 @@
     ]))
     gcc
     gh
+    forgejo-cli
     glibc
     clang
     cmake

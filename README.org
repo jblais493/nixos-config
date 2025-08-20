@@ -987,6 +987,7 @@ Basic development packages for ease of development and deployment.
     ]))
     gcc
     gh
+    forgejo-cli
     glibc
     clang
     cmake
