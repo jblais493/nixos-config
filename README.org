@@ -1667,6 +1667,18 @@ Setting up email in mu4e in emacs, packages necessary:
   ];
 }
 #+end_src
+*** gaming.nix
+Add OSRS Runelite to nixOS
+
+#+begin_src nix :tangle modules/desktop/gaming.nix
+{ config, pkgs, ... }:
+{
+  environment.systemPackages = with pkgs; [
+    runelite
+  ];
+}
+#+end_src
+
 ** Shared
 *** default.nix
 #+begin_src nix :tangle modules/shared/default.nix

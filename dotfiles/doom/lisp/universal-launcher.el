@@ -542,6 +542,7 @@
   "Search the web with QUERY using default browser."
   (let* ((search-engines
           '(("Google" . "https://www.google.com/search?q=")
+            ("Go documentation" . "https://pkg.go.dev/search?q=")
             ("ArchWiki" . "https://wiki.archlinux.org/index.php?search=")
             ("DuckDuckGo" . "https://duckduckgo.com/?q=")
             ("Marginalia" . "https://search.marginalia.nu/search?query=")
