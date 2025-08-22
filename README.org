@@ -1208,6 +1208,7 @@ This declares all desktop modules for importing to desktop/laptops.
     ./browsers.nix
     ./applications.nix
     ./email.nix
+    ./gaming.nix
     ./display-manager.nix
     ./storage.nix
     ./theming.nix

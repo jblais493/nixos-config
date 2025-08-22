@@ -10,6 +10,7 @@
     ./browsers.nix
     ./applications.nix
     ./email.nix
+    ./gaming.nix
     ./display-manager.nix
     ./storage.nix
     ./theming.nix
