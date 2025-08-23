@@ -158,6 +158,7 @@ alias movies="cd /mnt/nomad/TrueNAS/media/Movies"
 alias library="cd /mnt/nomad/TrueNAS/Library"
 alias mpray="nvim ~/Vaults/Personal/Prayers/Morning\ Prayers.md"
 alias epray="nvim ~/Vaults/Personal/Prayers/Evening\ Prayers.md"
+alias osrs="flatpak run com.adamcake.Bolt"
 
 # Scripts
 alias w2pdf="wkhtmltopdf"
