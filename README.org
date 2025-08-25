@@ -726,6 +726,7 @@ in
     ".config/swaync".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/swaync";
     ".config/wofi".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/wofi";
     ".config/nvim".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/nvim";
+    ".config/fastfetch".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/fastfetch";
     ".config/zathura".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/zathura";
     ".tmux.conf".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/tmux/.tmux.conf";
   };

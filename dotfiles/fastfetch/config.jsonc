@@ -1,0 +1,159 @@
+{
+    "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+    "logo": {
+        "source": "~/.config/fastfetch/logo.png",
+        "type": "auto",
+        "width": 35,
+        "height": 20,
+        "padding": {
+            "left": 2,
+            "right": 4,
+            "top": 1
+        }
+    },
+    "display": {
+        "separator": " ➜ ",
+        "color": {
+            "keys": "blue",
+            "separator": "magenta"
+        }
+    },
+    "modules": [
+        {
+            "type": "title",
+            "color": {
+                "user": "blue",
+                "at": "white",
+                "host": "cyan"
+            }
+        },
+        {
+            "type": "separator",
+            "string": "─────────────────────────────────"
+        },
+        {
+            "type": "os",
+            "key": "OS",
+            "format": "{pretty-name}"
+        },
+        {
+            "type": "kernel",
+            "key": "Kernel",
+            "format": "{release}"
+        },
+        {
+            "type": "uptime",
+            "key": "Uptime"
+        },
+        {
+            "type": "packages",
+            "key": "Packages"
+        },
+        {
+            "type": "shell",
+            "key": "Shell"
+        },
+        {
+            "type": "display",
+            "key": "Display",
+            "compactType": "original"
+        },
+        {
+            "type": "de",
+            "key": "DE"
+        },
+        {
+            "type": "wm",
+            "key": "WM"
+        },
+        {
+            "type": "wmtheme",
+            "key": "WM Theme"
+        },
+        {
+            "type": "theme",
+            "key": "Theme"
+        },
+        {
+            "type": "icons",
+            "key": "Icons"
+        },
+        {
+            "type": "font",
+            "key": "Font"
+        },
+        {
+            "type": "cursor",
+            "key": "Cursor"
+        },
+        {
+            "type": "terminal",
+            "key": "Terminal"
+        },
+        {
+            "type": "terminalfont",
+            "key": "Terminal Font"
+        },
+        {
+            "type": "separator",
+            "string": "─────────────────────────────────"
+        },
+        {
+            "type": "cpu",
+            "key": "CPU",
+            "showPeCoreCount": true
+        },
+        {
+            "type": "gpu",
+            "key": "GPU",
+            "format": "{vendor} {name}"
+        },
+        {
+            "type": "memory",
+            "key": "Memory"
+        },
+        {
+            "type": "swap",
+            "key": "Swap"
+        },
+        {
+            "type": "disk",
+            "key": "Disk (/)",
+            "folders": "/"
+        },
+        {
+            "type": "battery",
+            "key": "Battery"
+        },
+        {
+            "type": "poweradapter",
+            "key": "Power"
+        },
+        {
+            "type": "separator",
+            "string": "─────────────────────────────────"
+        },
+        {
+            "type": "localip",
+            "key": "Local IP",
+            "format": "{ipv4} ({ifname})"
+        },
+        {
+            "type": "publicip",
+            "key": "Public IP"
+        },
+        {
+            "type": "dns",
+            "key": "DNS"
+        },
+        {
+            "type": "separator",
+            "string": "─────────────────────────────────"
+        },
+        {
+            "type": "colors",
+            "paddingLeft": 2,
+            "symbol": "circle"
+        }
+    ]
+}
