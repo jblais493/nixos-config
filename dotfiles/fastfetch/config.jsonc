@@ -134,15 +134,6 @@
             "string": "─────────────────────────────────"
         },
         {
-            "type": "localip",
-            "key": "Local IP",
-            "format": "{ipv4} ({ifname})"
-        },
-        {
-            "type": "publicip",
-            "key": "Public IP"
-        },
-        {
             "type": "dns",
             "key": "DNS"
         },
