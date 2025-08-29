@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: handler-method-only
+# key: hm
+# condition: t
+# --
+func (h *${1:Handler}) ${2:MethodName}(w http.ResponseWriter, r *http.Request) {
+	$0
+}

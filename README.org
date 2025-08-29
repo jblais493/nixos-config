@@ -1404,7 +1404,6 @@ Various desktop applications for comms, files, etc.
     signal-desktop
     telegram-desktop
     thunderbird
-    element-desktop
 
     # Graphics
     gimp3-with-plugins

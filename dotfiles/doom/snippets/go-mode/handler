@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: handler-function
+# key: hfun
+# condition: t
+# --
+
+func ${1:HandlerName}(w http.ResponseWriter, r *http.Request) {
+	$0
+}

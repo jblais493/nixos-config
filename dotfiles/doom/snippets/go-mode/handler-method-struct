@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: handler-method-struct
+# key: hmeth
+# condition: t
+# --
+type ${1:Handler} struct {
+	${2:db     *sql.DB}
+	${3:logger *slog.Logger}
+}
+
+func (h *$1) ${4:MethodName}(w http.ResponseWriter, r *http.Request) {
+	$0
+}
