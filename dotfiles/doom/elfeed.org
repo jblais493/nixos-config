@@ -35,6 +35,7 @@
 *** [[https://battlepenguin.com/feed.xml][BattlePenguin]]
 *** [[https://www.lifeintech.com/feed.xml][LifeinTech]]
 *** [[https://xn--gckvb8fzb.com/index.xml][xn--gckvb8fzb]] :linux:
+*** [[https://blog.ctms.me/index.xml][Dom Corriveau]]
 ** Emacs
 *** [[https://sachachua.com/blog/category/emacs/feed/][Sacha Chua]] :emacs:
 *** [[https://irreal.org/blog/?feed=rss2][Irreal]] :emacs:
