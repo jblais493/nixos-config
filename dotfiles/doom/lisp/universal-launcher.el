@@ -95,7 +95,7 @@
      ((string= ext "py") (all-the-icons-alltheicon "python" :face 'font-lock-keyword-face))
      ((string= ext "rb") (all-the-icons-fileicon "ruby" :face 'font-lock-type-face))
      ((string= ext "java") (all-the-icons-fileicon "java" :face 'font-lock-function-name-face))
-     ((string= ext "c") (all-the-icons-fileicon "c" :face 'font-lock-keyword-face))
+     ((string= ext "c") (all-the-icons-alltheicon "c" :face 'font-lock-keyword-face))
      ((string= ext "cpp") (all-the-icons-fileicon "cpp" :face 'font-lock-keyword-face))
      ((string= ext "h") (all-the-icons-fileicon "h" :face 'font-lock-preprocessor-face))
      ((string= ext "go") (all-the-icons-alltheicon "go" :face 'font-lock-keyword-face))
