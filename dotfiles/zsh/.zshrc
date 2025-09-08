@@ -10,6 +10,8 @@ fi
 
 export PATH=$PATH:~/.local/bin/
 
+setopt CORRECT
+
 #scripts
 export PATH=$PATH:~/.config/scripts
 export PATH=$PATH:~/.config/scripts/Automations

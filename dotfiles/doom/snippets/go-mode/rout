@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: router (httprouter)
+# key: rout
+# condition: t
+# --
+
+router.HandlerFunc(http.${1:method}, "${2:endpoint}", ${3:handler})
