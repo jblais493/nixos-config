@@ -740,9 +740,47 @@ This function is designed to be called via `emacsclient -e`."
 (set-file-template! "\\.svelte$" :trigger "__svelte" :mode 'web-mode)
 
 ;; Enable Treesitter for Go in org
-(after! tree-sitter
-  (require 'tree-sitter-langs)
-  (add-to-list 'tree-sitter-major-mode-language-alist '(org-mode . go)))
+;; config.el - Complete treesit setup
+(use-package! treesit
+  :config
+  ;; Define all language sources
+  (setq treesit-language-source-alist
+        '((go "https://github.com/tree-sitter/tree-sitter-go" "master" "src")
+          (gomod "https://github.com/camdencheek/tree-sitter-go-mod" "main" "src")
+          (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
+          (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
+          (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+          (html "https://github.com/tree-sitter/tree-sitter-html" "master" "src")
+          (css "https://github.com/tree-sitter/tree-sitter-css" "master" "src")
+          (templ "https://github.com/vrischmann/tree-sitter-templ" "master" "src")))
+
+  ;; Auto-install missing grammars
+  (dolist (lang '(go gomod javascript typescript tsx html css templ))
+    (unless (treesit-language-available-p lang)
+      (treesit-install-language-grammar lang)))
+
+  ;; Mode associations - prefer -ts-mode variants
+  (setq major-mode-remap-alist
+        '((go-mode . go-ts-mode)
+          (javascript-mode . js-ts-mode)
+          (typescript-mode . typescript-ts-mode)
+          (css-mode . css-ts-mode)
+          (html-mode . html-ts-mode))))
+
+;; Org-babel integration with treesit
+(after! org
+  (setq org-src-lang-modes
+        (append org-src-lang-modes
+                '(("go" . go-ts)
+                  ("javascript" . js-ts)
+                  ("typescript" . typescript-ts)
+                  ("html" . html-ts)
+                  ("css" . css-ts)))))
+
+;; Templ mode configuration
+(use-package! templ-ts-mode
+  :mode "\\.templ\\'"
+  :after treesit)
 
 (use-package! svelte-mode
   :mode "\\.svelte\\'"

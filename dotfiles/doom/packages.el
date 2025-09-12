@@ -24,6 +24,7 @@
 ;; (package! theme-magic)
 (package! centaur-tabs)
 (package! prettier-js)
+(package! templ-ts-mode)
 ;; (package! company-tabnine)
 ;; (package! sublimity)
 (package! treemacs-all-the-icons)
