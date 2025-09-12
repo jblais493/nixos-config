@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: templ
+# key: templ
+# condition: t
+# --
+
+templ ${1:FunctionName}(${2:params}) {
+	${3:@layout.Page("${4:title}", ${5:false}, ${6:cfg}) {
+		${0:@components.Component()}
+	}}
+}:

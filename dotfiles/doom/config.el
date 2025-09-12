@@ -761,8 +761,7 @@ This function is designed to be called via `emacsclient -e`."
 
   ;; Mode associations - prefer -ts-mode variants
   (setq major-mode-remap-alist
-        '((go-mode . go-ts-mode)
-          (javascript-mode . js-ts-mode)
+        '((javascript-mode . js-ts-mode)
           (typescript-mode . typescript-ts-mode)
           (css-mode . css-ts-mode)
           (html-mode . html-ts-mode))))

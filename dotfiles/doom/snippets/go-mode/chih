@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: chih
+# key: handl
+# condition: t
+# --
+
+func ${1:handlerName}(cfg *config.Config) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		public.MarketingPage(cfg).Render(r.Context(), w)
+	}
+}
