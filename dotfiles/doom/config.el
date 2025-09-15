@@ -732,11 +732,9 @@ This function is designed to be called via `emacsclient -e`."
                 (cons 'transient (locate-dominating-file dir ".git")))))))
 
 (add-to-list 'auto-mode-alist '("\\.astro\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.templ\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.svelte\\'" . web-mode))
 
 (set-file-template! "\\.astro$" :trigger "__astro" :mode 'web-mode)
-(set-file-template! "\\.templ$" :trigger "__templ" :mode 'web-mode)
 (set-file-template! "\\.svelte$" :trigger "__svelte" :mode 'web-mode)
 
 ;; Enable Treesitter for Go in org
@@ -777,9 +775,39 @@ This function is designed to be called via `emacsclient -e`."
                   ("css" . css-ts)))))
 
 ;; Templ mode configuration
+;; Dedicated Templ configuration - let templ LSP handle everything
+;; Clean templ LSP configuration following official LSP mode patterns
 (use-package! templ-ts-mode
   :mode "\\.templ\\'"
-  :after treesit)
+  :after treesit
+  :config
+  ;; Configure the language ID
+  (add-to-list 'lsp-language-id-configuration '(templ-ts-mode . "templ"))
+
+  ;; Register the templ LSP client properly
+  (with-eval-after-load 'lsp-mode
+    (lsp-register-client
+     (make-lsp-client
+      :new-connection (lsp-stdio-connection
+                       (lambda ()
+                         (if (executable-find "templ")
+                             '("templ" "lsp")
+                           (error "templ not found in PATH"))))
+      :activation-fn (lsp-activate-on "templ")
+      :server-id 'templ
+      :major-modes '(templ-ts-mode)
+      :priority 1)))
+
+  ;; Enable LSP for templ files
+  (add-hook 'templ-ts-mode-hook #'lsp-deferred)
+
+  ;; Company completion
+  (after! company
+    (set-company-backend! 'templ-ts-mode
+      '(company-capf company-yasnippet company-dabbrev))))
+
+;; File template
+(set-file-template! "\\.templ$" :trigger "__templ" :mode 'templ-ts-mode)
 
 (use-package! svelte-mode
   :mode "\\.svelte\\'"
