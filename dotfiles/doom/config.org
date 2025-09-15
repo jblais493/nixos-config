@@ -887,9 +887,7 @@ Add Astro and svelte files to web-mode automatically:
                   ("html" . html-ts)
                   ("css" . css-ts)))))
 
-;; Templ mode configuration
-;; Dedicated Templ configuration - let templ LSP handle everything
-;; Clean templ LSP configuration following official LSP mode patterns
+;; Enhanced templ configuration with full HTML tooling
 (use-package! templ-ts-mode
   :mode "\\.templ\\'"
   :after treesit
@@ -897,8 +895,9 @@ Add Astro and svelte files to web-mode automatically:
   ;; Configure the language ID
   (add-to-list 'lsp-language-id-configuration '(templ-ts-mode . "templ"))
 
-  ;; Register the templ LSP client properly
+  ;; Register multiple LSP clients for rich support
   (with-eval-after-load 'lsp-mode
+    ;; Primary templ LSP
     (lsp-register-client
      (make-lsp-client
       :new-connection (lsp-stdio-connection
@@ -909,18 +908,59 @@ Add Astro and svelte files to web-mode automatically:
       :activation-fn (lsp-activate-on "templ")
       :server-id 'templ
       :major-modes '(templ-ts-mode)
-      :priority 1)))
+      :priority 10))
 
-  ;; Enable LSP for templ files
+    ;; Add HTML LSP for rich HTML completion
+    (lsp-register-client
+     (make-lsp-client
+      :new-connection (lsp-stdio-connection "vscode-html-language-server" "--stdio")
+      :activation-fn (lambda (file-name _mode)
+                       (and (derived-mode-p 'templ-ts-mode)
+                            (string-suffix-p ".templ" file-name)))
+      :server-id 'html-templ
+      :major-modes '(templ-ts-mode)
+      :priority 5)))
+
+  ;; Enable LSP
   (add-hook 'templ-ts-mode-hook #'lsp-deferred)
 
-  ;; Company completion
+  ;; Enable Emmet for HTML expansions (div.hey -> <div class="hey"></div>)
+  (add-hook 'templ-ts-mode-hook #'emmet-mode)
+
+  ;; Enhanced company completion with HTML backends
   (after! company
     (set-company-backend! 'templ-ts-mode
-      '(company-capf company-yasnippet company-dabbrev))))
+      '(:separate
+        company-capf              ; LSP completions (templ + HTML)
+        company-web-html          ; HTML tag/attribute completion
+        company-css               ; CSS class completion
+        company-yasnippet         ; HTML snippets
+        company-dabbrev)))        ; Buffer text
+
+  ;; Enable web-mode style HTML completion features
+  (add-hook 'templ-ts-mode-hook
+            (lambda ()
+              ;; Enable HTML-style completion
+              (setq-local company-minimum-prefix-length 1)
+              (setq-local company-idle-delay 0.1)
+
+              ;; Set up for HTML element completion
+              (when (featurep 'company-web-html)
+                (add-to-list 'company-backends 'company-web-html))))
+
+  ;; Configure Emmet for templ files
+  (after! emmet-mode
+    (add-to-list 'emmet-jsx-major-modes 'templ-ts-mode)
+    (setq emmet-expand-jsx-className? t)))
 
 ;; File template
 (set-file-template! "\\.templ$" :trigger "__templ" :mode 'templ-ts-mode)
+
+;; Optional: Add HTML yasnippets to templ mode
+(after! yasnippet
+  (add-hook 'templ-ts-mode-hook
+            (lambda ()
+              (yas-activate-extra-mode 'html-mode))))
 #+end_src
 
 ** Svelte and JS
