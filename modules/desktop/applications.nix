@@ -10,8 +10,13 @@
     telegram-desktop
     thunderbird
 
-    # Graphics
+    # Graphics and image optimizations
     gimp3-with-plugins
+    libwebp
+    libavif
+    mozjpeg
+    oxipng
+    nodePackages.svgo
 
     # KDE connect
     kdePackages.kdeconnect-kde
