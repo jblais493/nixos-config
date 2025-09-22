@@ -1215,7 +1215,6 @@ This declares all desktop modules for importing to desktop/laptops.
     ./theming.nix
     ./boot.nix
     ./power.nix
-    ./../../secrets.nix
   ];
 }
 #+end_src
