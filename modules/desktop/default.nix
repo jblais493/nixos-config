@@ -16,5 +16,6 @@
     ./theming.nix
     ./boot.nix
     ./power.nix
+    ../../secrets.nix
   ];
 }
