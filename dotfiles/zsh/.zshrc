@@ -256,7 +256,7 @@ alias dps="podman ps -a"
 alias dl="podman logs"
 
 # Generate API Key
-alias apigen="go run ~/.config/scripts/Development/apikeygen.go -app"
+alias keygen="nix run github:jblais493/go-api-key"
 
 # Tasks for running htmx app
 alias tr="go-task run"
