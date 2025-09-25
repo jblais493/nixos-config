@@ -132,6 +132,8 @@
 *** [[https://her.st/rss.xml :tech:security:
 ][her.st]]
 *** [[https://www.ssp.sh/index.xml][Simon Späti]]
+*** [[https://xenodium.com/rss][Xenodium]]
+
 
 ** YouTube :youtube:
 *** Technology :tech:
