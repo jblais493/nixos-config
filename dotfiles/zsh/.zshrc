@@ -259,6 +259,7 @@ alias dl="podman logs"
 alias keygen="nix run github:jblais493/go-api-key"
 
 # Tasks for running htmx app
+alias tfmt="templ fmt"
 alias tr="go-task run"
 alias tm="go-task migrate"
 alias tb="go-task templ"
