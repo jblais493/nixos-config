@@ -20,7 +20,7 @@
 ;;(require 'alert)
 
 ;; Core variables for timer functionality
-(defvar pomodoro-work-minutes 1  ; Set to 1 for testing
+(defvar pomodoro-work-minutes 25  ; Set to 1 for testing, 25 for actual
   "Work period length in minutes.")
 
 (defvar pomodoro-break-minutes 5  ; Set to 1 for testing
