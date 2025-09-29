@@ -1915,12 +1915,13 @@ go install github.com/sqls-server/sqls@latest
          ([remap save-buffer] . elfeed-tube-save)))
 #+end_src
 
-** Org-gcal
+** org-caldav
 I use org mode for calendaring, but I export and sync to my google calendar so I have reminders on my mobile device.
+*** TODO We are moving toward a self-hosted calendaring system in the near future. This is where we will integrate to a radicale/nextcloud instance using https://github.com/dengste/org-caldav
 
 #+begin_src elisp
 ;; Load private org-gcal credentials if the file exists
-(load! "lisp/org-gcal-credentials")
+;; (load! "lisp/org-gcal-credentials")
 #+end_src
 
 ** Dirvish

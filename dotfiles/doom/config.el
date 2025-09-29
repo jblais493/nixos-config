@@ -1723,7 +1723,7 @@ WHERE tablename = '%s';" table-name)))
          ([remap save-buffer] . elfeed-tube-save)))
 
 ;; Load private org-gcal credentials if the file exists
-(load! "lisp/org-gcal-credentials")
+;; (load! "lisp/org-gcal-credentials")
 
 ;; Open dirvish
 (map! :leader

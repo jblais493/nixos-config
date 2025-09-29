@@ -19,6 +19,8 @@
    '(company company dart-mode elpher emacs-everywhere flycheck hover jabber
      just-mode lsp-dart lsp-mode lsp-treemacs lsp-ui multi-vterm org-gtasks
      org-roam-ui protobuf-mode sqlite3 templ-ts-mode))
+ '(pomodoro-break-minutes 5)
+ '(pomodoro-work-minutes 25)
  '(send-mail-function 'smtpmail-send-it)
  '(smtpmail-smtp-server "mail.joshblais.com")
  '(smtpmail-smtp-service 25)

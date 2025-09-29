@@ -20,11 +20,23 @@
 ;;(require 'alert)
 
 ;; Core variables for timer functionality
-(defvar pomodoro-work-minutes 25  ; Set to 1 for testing, 25 for actual
-  "Work period length in minutes.")
+(defgroup pomodoro nil
+  "Simple Pomodoro timer for Emacs."
+  :group 'tools
+  :prefix "pomodoro-")
 
-(defvar pomodoro-break-minutes 5  ; Set to 1 for testing
-  "Break period length in minutes.")
+(defcustom pomodoro-work-minutes 25
+  "Work period length in minutes."
+  :type 'integer
+  :group 'pomodoro)
+
+(defcustom pomodoro-break-minutes 5
+  "Break period length in minutes."
+  :type 'integer
+  :group 'pomodoro)
+
+;; (defvar pomodoro-break-minutes 5  ; Set to 1 for testing
+;;   "Break period length in minutes.")
 
 (defvar pomodoro-task ""
   "Current task being worked on.")
