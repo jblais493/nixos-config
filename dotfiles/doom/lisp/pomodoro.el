@@ -20,7 +20,7 @@
 ;;(require 'alert)
 
 ;; Core variables for timer functionality
-(defvar pomodoro-work-minutes 25  ; Set to 1 for testing
+(defvar pomodoro-work-minutes 1  ; Set to 1 for testing
   "Work period length in minutes.")
 
 (defvar pomodoro-break-minutes 5  ; Set to 1 for testing
@@ -52,17 +52,23 @@
   (setq global-mode-string
         (append global-mode-string '(pomodoro-mode-line))))
 
-;; Alert function that uses the alert package instead of direct sound playing
 (defun pomodoro-play-alert (message)
-  "Send a desktop notification with MESSAGE and play a sound when pomodoro period ends.
-Uses Emacs' built-in notification system for better system integration."
+  "Send notification and play sound reliably."
   (when (fboundp 'notifications-notify)
     (notifications-notify
      :title "Pomodoro Timer"
      :body message
-     :urgency 'critical
-     :sound-file "~/Music/Bell.wav"
-     :sound-name "alarm-clock-elapsed")))
+     :urgency 'critical))
+  ;; Use pw-play (native PipeWire) or fallback gracefully
+  (let ((sound-file (expand-file-name "~/Downloads/Bell.mp3")))
+    (cond
+     ((executable-find "pw-play")
+      (start-process "pomodoro-sound" nil "pw-play" sound-file))
+     ((executable-find "mpv")
+      (start-process "pomodoro-sound" nil "mpv" "--no-video" "--volume=100" sound-file))
+     ((executable-find "ffplay")
+      (start-process "pomodoro-sound" nil "ffplay" "-nodisp" "-autoexit" "-volume" "100" sound-file))
+     (t (message "No audio player found for pomodoro alert")))))
 
 ;; Function to ensure the done.org file exists and has today's date
 (defun pomodoro-ensure-done-file ()
@@ -176,16 +182,24 @@ Uses Emacs' built-in notification system for better system integration."
   "Kill the current pomodoro session."
   (interactive)
   (when pomodoro-update-timer
-    (cancel-timer pomodoro-update-timer))
+    (cancel-timer pomodoro-update-timer)
+    (setq pomodoro-update-timer nil))
   (when pomodoro-timer
-    (cancel-timer pomodoro-timer))
+    (cancel-timer pomodoro-timer)
+    (setq pomodoro-timer nil))
   (setq pomodoro-mode-line "")
+  (setq pomodoro-end-time nil)
   (force-mode-line-update)
   (message "Pomodoro timer stopped."))
 
-;; Keybindings
-(global-set-key (kbd "C-c p") 'pomodoro-start)
-(global-set-key (kbd "C-c P") 'pomodoro-kill)
+(defun pomodoro-toggle ()
+  "Start or kill the pomodoro timer based on current state."
+  (interactive)
+  (if (or pomodoro-timer pomodoro-update-timer)
+      (pomodoro-kill)
+    (pomodoro-start)))
+
+(global-set-key (kbd "C-c P") 'pomodoro-toggle)
 
 (provide 'pomodoro)
 ;;; pomodoro.el ends here
