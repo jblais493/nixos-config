@@ -240,6 +240,9 @@ alias kmon="kmonad ~/.config/kmonad/config.kbd &"
 
 # Development
 alias secrets="nix run github:jblais493/go-secrets --"
+alias newrepo="nix run github:jblais493/go-repo"
+# Generate API Key
+alias keygen="nix run github:jblais493/go-api-key"
 alias work="arttime --nolearn -a eye -t 'For I consider that the sufferings of this present time are not worth comparing with the glory that is going to be revealed to us - Romans 8:18' -g 4h"
 alias search-email='~/.config/scripts/email_search'
 alias deploy="~/.config/scripts/Development/deploy"
@@ -254,9 +257,6 @@ alias dcb='podman build -t forge.labrynth.org/josh/$(basename $PWD):latest .'
 alias dc="podman compose"
 alias dps="podman ps -a"
 alias dl="podman logs"
-
-# Generate API Key
-alias keygen="nix run github:jblais493/go-api-key"
 
 # Tasks for running htmx app
 alias tfmt="templ fmt"
