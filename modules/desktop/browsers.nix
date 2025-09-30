@@ -7,26 +7,14 @@
   ];
 
   # Firefox with extensions via home-manager approach
-  programs.firefox = {
+programs.firefox = {
     enable = true;
-
-    # System-wide policies (optional)
     policies = {
-      # Disable telemetry
       DisableTelemetry = true;
       DisableFirefoxStudies = true;
       DisablePocket = true;
-
-      # Security settings
       BlockAboutConfig = false;
       OfferToSaveLogins = false;
-    };
-
-    settings = {
-      "widget.use-xdg-desktop-portal.file-picker" = 1;
-      "gfx.webrender.all" = true;
-      "media.ffmpeg.vaapi.enabled" = true;
-      "layers.acceleration.force-enabled" = true;
     };
   };
 }
