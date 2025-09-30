@@ -2,6 +2,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ./hardware-overrides.nix
     ../../modules/desktop
     ../../modules/shared
     ../../modules/cli-tui
