@@ -55,6 +55,7 @@ in
     ".config/nvim".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/nvim";
     ".config/fastfetch".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/fastfetch";
     ".config/zathura".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/zathura";
+    ".config/btop".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/btop";
     ".tmux.conf".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/tmux/.tmux.conf";
   };
 }
