@@ -21,5 +21,12 @@
       BlockAboutConfig = false;
       OfferToSaveLogins = false;
     };
+
+    settings = {
+      "widget.use-xdg-desktop-portal.file-picker" = 1;
+      "gfx.webrender.all" = true;
+      "media.ffmpeg.vaapi.enabled" = true;
+      "layers.acceleration.force-enabled" = true;
+    };
   };
 }

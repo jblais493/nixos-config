@@ -7,6 +7,23 @@
     xwayland.enable = true;
   };
 
+  xdg.portal = {
+  enable = true;
+  extraPortals = [
+    pkgs.xdg-desktop-portal-hyprland
+    pkgs.xdg-desktop-portal-gtk
+  ];
+  config = {
+    common.default = "*";
+    hyprland.default = ["hyprland" "gtk"];
+  };
+};
+
+  environment.sessionVariables = {
+  MOZ_ENABLE_WAYLAND = "1";
+  NIXOS_OZONE_WL = "1";  # Also helps Electron apps
+};
+
   # Install Hyprland ecosystem packages
   environment.systemPackages = with pkgs; [
     waybar

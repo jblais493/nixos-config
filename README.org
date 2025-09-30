@@ -1231,6 +1231,23 @@ This declares all desktop modules for importing to desktop/laptops.
     xwayland.enable = true;
   };
 
+  xdg.portal = {
+  enable = true;
+  extraPortals = [
+    pkgs.xdg-desktop-portal-hyprland
+    pkgs.xdg-desktop-portal-gtk
+  ];
+  config = {
+    common.default = "*";
+    hyprland.default = ["hyprland" "gtk"];
+  };
+};
+
+  environment.sessionVariables = {
+  MOZ_ENABLE_WAYLAND = "1";
+  NIXOS_OZONE_WL = "1";  # Also helps Electron apps
+};
+
   # Install Hyprland ecosystem packages
   environment.systemPackages = with pkgs; [
     waybar
@@ -1387,6 +1404,13 @@ Brave, Tor, and Firefox browsers.
       # Security settings
       BlockAboutConfig = false;
       OfferToSaveLogins = false;
+    };
+
+    settings = {
+      "widget.use-xdg-desktop-portal.file-picker" = 1;
+      "gfx.webrender.all" = true;
+      "media.ffmpeg.vaapi.enabled" = true;
+      "layers.acceleration.force-enabled" = true;
     };
   };
 }
