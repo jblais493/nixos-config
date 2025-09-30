@@ -28,6 +28,7 @@
     ydotool
     gnupg
     age
+    tea
     tree
 
     # Nix workflow

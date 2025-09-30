@@ -1091,6 +1091,7 @@ Default shell utilities across machines.
     ydotool
     gnupg
     age
+    tea
     tree
 
     # Nix workflow
