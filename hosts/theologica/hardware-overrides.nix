@@ -2,10 +2,9 @@
 { config, pkgs, lib, ... }:
 {
   # AMD Radeon 680M (Rembrandt) Graphics Configuration
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
+    enable32Bit = true;  # Replaces driSupport32Bit
 
     extraPackages = with pkgs; [
       amdvlk              # AMD Vulkan driver
