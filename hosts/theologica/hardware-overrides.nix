@@ -4,15 +4,13 @@
   # AMD Radeon 680M (Rembrandt) Graphics Configuration
   hardware.graphics = {
     enable = true;
-    enable32Bit = true;  # Replaces driSupport32Bit
+    enable32Bit = true;
 
     extraPackages = with pkgs; [
       amdvlk              # AMD Vulkan driver
       libva               # Video acceleration API
       vaapiVdpau          # VDPAU backend for VAAPI
       libvdpau-va-gl      # VDPAU driver
-      rocminfo            # ROCm system info
-      rocm-opencl-icd     # OpenCL support
     ];
 
     extraPackages32 = with pkgs.pkgsi686Linux; [
