@@ -116,9 +116,9 @@
 ;; Speed of which-key popup
 (setq which-key-idle-delay 0.2)
 
-;; Completion mechanisms
-(setq completing-read-function #'completing-read-default)
-(setq read-file-name-function #'read-file-name-default)
+;; Completion mechanisms (commented out as they interfere with vertico)
+;; (setq completing-read-function #'completing-read-default)
+;; (setq read-file-name-function #'read-file-name-default)
 ;; Makes path completion more like find-file everywhere
 (setq read-file-name-completion-ignore-case t
       read-buffer-completion-ignore-case t

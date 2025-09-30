@@ -176,9 +176,9 @@ We set the visual line wrapping and relative line numbers (then we can just go u
 
 ** Completion
 #+begin_src elisp
-;; Completion mechanisms
-(setq completing-read-function #'completing-read-default)
-(setq read-file-name-function #'read-file-name-default)
+;; Completion mechanisms (commented out as they interfere with vertico)
+;; (setq completing-read-function #'completing-read-default)
+;; (setq read-file-name-function #'read-file-name-default)
 ;; Makes path completion more like find-file everywhere
 (setq read-file-name-completion-ignore-case t
       read-buffer-completion-ignore-case t
