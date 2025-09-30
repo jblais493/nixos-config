@@ -19,7 +19,7 @@
 
     # Additional tools Doom might need
     git
-    git-crypt
+    tea
     curl
     wget
 
