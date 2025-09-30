@@ -982,7 +982,7 @@ Basic development packages for ease of development and deployment.
     gnumake
     sdbus-cpp
     keychain
-
+    pciutils
 
     # Rust related
     rustc

@@ -28,7 +28,7 @@
     gnumake
     sdbus-cpp
     keychain
-
+    pciutils
 
     # Rust related
     rustc
