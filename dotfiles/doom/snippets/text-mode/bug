@@ -1,0 +1,28 @@
+# -*- mode: snippet -*-
+# name: bug-template
+# key: bug
+# --
+## Current Behavior
+${1:What's broken? Be specific.}
+
+## Expected Behavior
+${2:What should happen instead?}
+
+## Reproduction Steps
+1. ${3:Step 1}
+2. ${4:Step 2}
+3. ${5:Observe the bug}
+
+## Root Cause (Hypothesis)
+${6:What do you think is causing this?}
+
+## Proposed Fix
+${7:How will you fix it?}
+
+## Why This Matters
+${8:Impact on users/system}
+
+## Acceptance Criteria
+- [ ] ${9:Bug is fixed}
+- [ ] ${10:No regression in related features}
+$0

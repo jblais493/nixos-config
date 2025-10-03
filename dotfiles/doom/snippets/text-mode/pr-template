@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# name: pr-template
+# key: pr
+# condition: t
+# --
+
+# ${1:Title}
+
+## Description
+${2:What this PR does}
+
+## Changes
+- ${3:Change 1}
+- ${4:Change 2}
+
+## Testing
+- ${5:How you tested}
+
+Closes #${6:issue-number}
+$0

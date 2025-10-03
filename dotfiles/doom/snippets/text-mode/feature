@@ -1,0 +1,25 @@
+# -*- mode: snippet -*-
+# name: issue-template
+# key: feat
+# --
+## Current Behavior
+${1:What is the current state?}
+
+## Desired Behavior
+${2:What should happen instead?}
+
+## Why This Matters
+${3:Why is this important? First principles reasoning.}
+
+## Proposed Approach
+${4:How will you implement this?}
+- ${5:Step 1}
+- ${6:Step 2}
+
+## Open Questions
+${7:What are you unsure about?}
+
+## Acceptance Criteria
+- [ ] ${8:Criterion 1}
+- [ ] ${9:Criterion 2}
+$0
