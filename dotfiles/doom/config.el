@@ -377,6 +377,9 @@
 ;; Remove holidays from agenda
 (setq org-agenda-include-diary nil)
 
+;; Mark tasks with a CLOSED timestamp on DONE
+(setq org-log-done 'time)
+
 ;; Capture templates
 (setq org-capture-templates
       '(("t" "Todo" entry
@@ -390,14 +393,6 @@
         ("d" "Deadline" entry
          (file+headline "~/org/calendar.org" "Deadlines")
          "* TODO %^{Task}\nDEADLINE: %^{Deadline}T\n:PROPERTIES:\n:CREATED: %U\n:CAPTURED: %a\n:END:\n%?")
-
-        ("p" "Project" entry
-         (file+headline "~/org/projects.org" "Projects")
-         "* PROJ %^{Project name}\n:PROPERTIES:\n:CREATED: %U\n:CAPTURED: %a\n:END:\n** TODO %?")
-
-        ("i" "Idea" entry
-         (file+headline "~/org/ideas.org" "Ideas")
-         "** IDEA %^{Idea}\n:PROPERTIES:\n:CREATED: %U\n:CAPTURED: %a\n:END:\n%?")
 
         ("b" "Bookmark" entry
         (file+headline "~/org/bookmarks.org" "Inbox")
