@@ -11,7 +11,8 @@
      "7ea883b13485f175d3075c72fceab701b5bf76b2076f024da50dff4107d0db25" default))
  '(magit-todos-insert-after '(bottom) nil nil "Changed by setter of obsolete option `magit-todos-insert-at'")
  '(org-agenda-files
-   '("~/Projects/MaisonOS/README.org"
+   '("~/org/done.org" "/home/joshua/Development/luminaforge/README.org"
+     "/home/joshua/Projects/MaisonOS/README.org"
      "/home/joshua/nixos-config/dotfiles/doom/README.org"
      "/home/joshua/Projects/Homeserver/README.org"
      "/home/joshua/Projects/Holdsworth Design/README.org"
