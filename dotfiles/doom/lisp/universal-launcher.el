@@ -551,6 +551,7 @@
             ("Anna's Archive" . "https://annas-archive.org/search?q=")
             ("Wikipedia" . "https://en.wikipedia.org/w/index.php?search=")
             ("4get" . "https://4get.ca/web?s=")
+            ("Goodreads" . "https://www.goodreads.com/search?q=")
             ("Nix Packages" . "https://search.nixos.org/packages?channel=25.05&show=")
             ("DevDocs.io" . "https://devdocs.io/#q=")
             ("Doom discourse" . "https://discourse.doomemacs.org/search?q=")
