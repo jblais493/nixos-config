@@ -11,7 +11,10 @@
      "7ea883b13485f175d3075c72fceab701b5bf76b2076f024da50dff4107d0db25" default))
  '(magit-todos-insert-after '(bottom) nil nil "Changed by setter of obsolete option `magit-todos-insert-at'")
  '(org-agenda-files
-   '("~/Projects/Holdsworth Design/README.org" "/home/joshua/org/personal.org"
+   '("~/nixos-config/dotfiles/doom/README.org"
+     "/home/joshua/Projects/Homeserver/README.org"
+     "/home/joshua/Projects/Holdsworth Design/README.org"
+     "/home/joshua/org/personal.org"
      "/home/joshua/Projects/Revere Imaginative/README.org"
      "/home/joshua/Development/edifice/todo.org"
      "/home/joshua/Projects/Youtube/README.org"

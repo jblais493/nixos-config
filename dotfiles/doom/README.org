@@ -527,3 +527,16 @@ What it is set to is controlled by `+doom-dashboard-pwd-policy'."
    "\n"))
 
 #+end_src
+
+** TODO Get emacs org-caldav to send to nextcloud instead of google calendar
+:PROPERTIES:
+:CREATED: [2025-05-23 Fri 13:11]
+:CAPTURED:
+:END:
+** TODO Add org-agenda clockin/out to pomodoro timer
+:PROPERTIES:
+:CREATED: [2025-09-29 Mon 06:58]
+:CAPTURED:
+:END:
+- Prompt for item select, auto clock in and out on the pomo timer start/stop - allows for time tracking in daily files
+- Automatically add the pomo to done.org and stop timer
