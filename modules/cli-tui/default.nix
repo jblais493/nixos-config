@@ -17,6 +17,7 @@
     ripgrep-all      # Better grep
     fzf              # Fuzzy finder
     wget
+    httrack
     curl
     killall
     zip
