@@ -58,4 +58,43 @@ in
     ".config/btop".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/btop";
     ".tmux.conf".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/tmux/.tmux.conf";
   };
+
+  # MPD Service
+    services.mpd = {
+    enable = true;
+    musicDirectory = "/home/joshua/MusicOrganized";
+    extraConfig = ''
+      bind_to_address "localhost"
+      port "6600"
+      auto_update "yes"
+      metadata_to_use "+comment"
+
+      audio_output {
+        type "pipewire"
+        name "PipeWire Audio"
+      }
+
+      audio_output {
+        type "pulse"
+        name "Pulse Audio"
+      }
+
+      audio_output {
+        type "fifo"
+        name "album_art"
+        path "/tmp/mpd.fifo"
+        format "44100:16:2"
+      }
+
+      audio_output {
+        type "httpd"
+        name "HTTP Stream"
+        encoder "vorbis"
+        port "8000"
+        bind_to_address "127.0.0.1"
+        quality "5.0"
+        format "44100:16:2"
+      }
+    '';
+  };
 }
