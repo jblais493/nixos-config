@@ -1914,6 +1914,7 @@ WHERE tablename = '%s';" table-name)))
 (load! "lisp/jitsi-meeting")
 (load! "lisp/weather")
 (load! "lisp/termux-sms")
+(load! "lisp/org-caldav")
 ;; POSSE posting system
 (load! "lisp/posse/posse-twitter")
 (load! "lisp/posse/instagram-scheduler")

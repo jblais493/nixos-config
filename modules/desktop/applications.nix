@@ -90,7 +90,7 @@ systemd.user.services.kdeconnect = {
     enable = true;
     settings = {
       server = {
-        hosts = [ "127.0.0.1:5232" ];  # Localhost only for testing
+        hosts = [ "0.0.0.0:5232" ];  # Localhost only for testing
       };
       auth = {
         type = "htpasswd";
@@ -103,6 +103,12 @@ systemd.user.services.kdeconnect = {
       logging = {
         level = "info";  # Helpful for debugging during testing
       };
+    };
+  };
+
+  networking.firewall = {
+    interfaces."tailscale0" = {
+      allowedTCPPorts = [ 5232 ];
     };
   };
 }
