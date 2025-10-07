@@ -1495,20 +1495,21 @@ systemd.user.services.kdeconnect = {
   # Enable flatpak
   services.flatpak.enable = true;
 
-    services.syncthing = {
-    enable = true;
-    user = "joshua";
-    dataDir = "/home/joshua/.syncthing";
-    configDir = "/home/joshua/.config/syncthing";
-    overrideDevices = true;
-    overrideFolders = true;
+  # Syncthing for laptop to phone synchronization
+  services.syncthing = {
+  enable = true;
+  user = "joshua";
+  dataDir = "/home/joshua/.syncthing";
+  configDir = "/home/joshua/.config/syncthing";
+  overrideDevices = true;
+  overrideFolders = true;
 
-    settings = {
-      devices = {
-        "phone" = { id = "TTUKVRU-FEJGUXM-SERMOTN-TJNRQKV-7QP2N5J-V3ESDBE-5WTKB4K-2LCGDA3"; };
-      };
+  settings = {
+    devices = {
+      "phone" = { id = "TTUKVRU-FEJGUXM-SERMOTN-TJNRQKV-7QP2N5J-V3ESDBE-5WTKB4K-2LCGDA3"; };
     };
   };
+ };
 }
 #+end_src
 *** display-manager.nix
