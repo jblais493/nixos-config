@@ -1492,7 +1492,7 @@ WHERE tablename = '%s';" table-name)))
 (require 'emms-player-mpd)
 (setq emms-player-mpd-server-name "localhost")
 (setq emms-player-mpd-server-port "6600")
-(setq emms-player-mpd-music-directory (expand-file-name "~/Music"))
+(setq emms-player-mpd-music-directory (expand-file-name "~/MusicOrganized"))
 
 ;; Connect to MPD and add it to player list and info functions
 (add-to-list 'emms-player-list 'emms-player-mpd)
