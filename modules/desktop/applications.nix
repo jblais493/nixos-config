@@ -35,7 +35,6 @@
 
     # Others
     qbittorrent
-    syncthing
     flatpak
   ];
 
@@ -65,4 +64,29 @@ systemd.user.services.kdeconnect = {
 
   # Enable flatpak
   services.flatpak.enable = true;
+
+    services.syncthing = {
+    enable = true;
+    user = "joshua";
+    dataDir = "/home/joshua/.syncthing";
+    configDir = "/home/joshua/.config/syncthing";
+    overrideDevices = true;
+    overrideFolders = true;
+
+    settings = {
+      devices = {
+        "phone" = { id = "YOUR-PHONE-DEVICE-ID"; };
+        "backup-pi" = { id = "YOUR-PI-DEVICE-ID"; };
+      };
+
+      folders = {
+        "contacts-sync" = {
+          path = "/home/joshua/sync";
+          devices = [ "phone" ];
+          # Optional: only sync the VCF file
+          ignorePerms = false;
+        };
+      };
+    };
+  };
 }
