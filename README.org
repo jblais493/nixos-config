@@ -1505,17 +1505,7 @@ systemd.user.services.kdeconnect = {
 
     settings = {
       devices = {
-        "phone" = { id = "YOUR-PHONE-DEVICE-ID"; };
-        "backup-pi" = { id = "YOUR-PI-DEVICE-ID"; };
-      };
-
-      folders = {
-        "contacts-sync" = {
-          path = "/home/joshua/sync";
-          devices = [ "phone" ];
-          # Optional: only sync the VCF file
-          ignorePerms = false;
-        };
+        "phone" = { id = "TTUKVRU-FEJGUXM-SERMOTN-TJNRQKV-7QP2N5J-V3ESDBE-5WTKB4K-2LCGDA3"; };
       };
     };
   };
