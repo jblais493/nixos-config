@@ -36,6 +36,9 @@
     # Others
     qbittorrent
     flatpak
+
+    # Added for Radicale
+    apacheHttpd
   ];
 
   services.resolved.enable = true;
@@ -102,7 +105,4 @@ systemd.user.services.kdeconnect = {
       };
     };
   };
-
-  # Install htpasswd tool for user management
-  environment.systemPackages = [ pkgs.apacheHttpd ];
 }

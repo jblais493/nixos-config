@@ -1463,6 +1463,9 @@ Various desktop applications for comms, files, etc.
     # Others
     qbittorrent
     flatpak
+
+    # Added for Radicale
+    apacheHttpd
   ];
 
   services.resolved.enable = true;
@@ -1529,9 +1532,6 @@ systemd.user.services.kdeconnect = {
       };
     };
   };
-
-  # Install htpasswd tool for user management
-  environment.systemPackages = [ pkgs.apacheHttpd ];
 }
 #+end_src
 *** display-manager.nix
