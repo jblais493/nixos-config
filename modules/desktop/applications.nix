@@ -80,4 +80,29 @@ systemd.user.services.kdeconnect = {
     };
   };
  };
+
+
+  # Radicale testing for server calendar/VCard sync
+  services.radicale = {
+    enable = true;
+    settings = {
+      server = {
+        hosts = [ "127.0.0.1:5232" ];  # Localhost only for testing
+      };
+      auth = {
+        type = "htpasswd";
+        htpasswd_filename = "/var/lib/radicale/users";
+        htpasswd_encryption = "bcrypt";
+      };
+      storage = {
+        filesystem_folder = "/var/lib/radicale/collections";
+      };
+      logging = {
+        level = "info";  # Helpful for debugging during testing
+      };
+    };
+  };
+
+  # Install htpasswd tool for user management
+  environment.systemPackages = [ pkgs.apacheHttpd ];
 }
