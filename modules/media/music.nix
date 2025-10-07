@@ -2,7 +2,6 @@
 {
   environment.systemPackages = with pkgs; [
     # Music players
-    mpd
     mpc
     ncmpcpp
     spotify
