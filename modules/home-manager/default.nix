@@ -62,5 +62,6 @@ in
 
   services.mpd = {
     enable = true;
+    musicDirectory = "/home/joshua/MusicOrganized";
   };
 }
