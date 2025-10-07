@@ -1859,24 +1859,6 @@ in
       };
     };
 
-    # Nextcloud for cloud storage and collaboration
-    services.nextcloud = {
-      enable = true;
-      hostName = "localhost"; # Change this to your domain
-      database.createLocally = true;
-      configureRedis = true;
-      maxUploadSize = "16G";
-      https = false; # Set to true when you have proper domain/certs
-      config = {
-        adminuser = "admin";
-        adminpassFile = "/etc/nixos/nextcloud-admin-pass";
-      };
-      settings = {
-        default_phone_region = "CA";
-        maintenance_window_start = 2;
-      };
-    };
-
     # Create the admin password file (you'll need to create this)
     environment.etc."nextcloud-admin-pass" = {
       text = "change-this-password";
