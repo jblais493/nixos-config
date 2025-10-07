@@ -1722,7 +1722,7 @@ WHERE tablename = '%s';" table-name)))
 
 ;; Open dirvish
 (map! :leader
-      :desc "Dirvish in current dir" "d" #'dirvish)
+      :desc "Open dirvish" "o d" #'dirvish)
 
 (defun my/dired-copy-file-directory ()
   "Copy directory of file at point and switch to workspace 2"

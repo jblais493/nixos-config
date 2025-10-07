@@ -1923,7 +1923,7 @@ I use org mode for calendaring, but I export and sync to my google calendar so I
 #+begin_src elisp
 ;; Open dirvish
 (map! :leader
-      :desc "Dirvish in current dir" "d" #'dirvish)
+      :desc "Open dirvish" "o d" #'dirvish)
 #+end_src
 
 ** Graphical File management
