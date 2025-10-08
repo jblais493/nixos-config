@@ -764,6 +764,8 @@ in
     ".config/zathura".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/zathura";
     ".config/btop".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/btop";
     ".config/mpd".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/mpd";
+    ".config/yt-dlp".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/yt-dlp";
+    ".config/mpv".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/mpv";
     ".tmux.conf".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/tmux/.tmux.conf";
   };
 

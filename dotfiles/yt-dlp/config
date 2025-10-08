@@ -1,0 +1,2 @@
+--cookies-from-browser firefox
+-f bestvideo[height<=?1080]+bestaudio/best
