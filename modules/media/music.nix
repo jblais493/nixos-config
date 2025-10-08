@@ -1,17 +1,11 @@
 { config, pkgs, ... }:
-
-let
-  unstable = import <nixpkgs-unstable> {
-    config = config.nixpkgs.config;
-  };
-in
 {
   environment.systemPackages = with pkgs; [
     # Music players
     mpc
     ncmpcpp
     spotify
-    unstable.spotdl  # Pull from unstable
+    spotdl
     # Audio tools
     audacity
     # Audio codecs
@@ -20,5 +14,6 @@ in
     lame
   ];
 
+  # Ensure users can access audio devices
   users.groups.audio = {};
 }
