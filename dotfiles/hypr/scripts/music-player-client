@@ -1,15 +1,45 @@
 #!/usr/bin/env sh
-# Universal music control that only affects one player at a time
+# Universal music control with EMMS as primary target
 # Usage: ./music_control.sh [command]
 # Commands: previous, next, play-pause, play, pause, stop
 
 COMMAND=$1
 
-# Function to find the most appropriate player to control
+# Function to check if EMMS is available and responsive
+is_emms_available() {
+    # Check if emacsclient can connect and EMMS is loaded
+    emacsclient -e "(featurep 'emms)" 2>/dev/null | grep -q "t"
+}
+
+# Function to execute EMMS command
+emms_command() {
+    local cmd=$1
+    case "$cmd" in
+        "previous")
+            emacsclient -e "(emms-previous)" >/dev/null 2>&1
+            ;;
+        "next")
+            emacsclient -e "(emms-next)" >/dev/null 2>&1
+            ;;
+        "play-pause")
+            emacsclient -e "(emms-pause)" >/dev/null 2>&1
+            ;;
+        "play")
+            emacsclient -e "(emms-start)" >/dev/null 2>&1
+            ;;
+        "pause")
+            emacsclient -e "(emms-pause)" >/dev/null 2>&1
+            ;;
+        "stop")
+            emacsclient -e "(emms-stop)" >/dev/null 2>&1
+            ;;
+    esac
+}
+
+# Function to find the most appropriate player to control (fallback)
 get_target_player() {
     # First check if any player is currently playing
     local playing_player=$(playerctl -l 2>/dev/null | xargs -I{} sh -c 'playerctl -p {} status 2>/dev/null | grep -q "Playing" && echo {}' | head -1)
-
     if [ -n "$playing_player" ]; then
         echo "$playing_player"
         return
@@ -43,12 +73,17 @@ get_target_player() {
     fi
 }
 
-# Get the single player to control
+# Primary: Check EMMS first
+if is_emms_available; then
+    emms_command "$COMMAND"
+    exit 0
+fi
+
+# Fallback: Use traditional player control
 TARGET_PLAYER=$(get_target_player)
 
-# If no player is available, exit with a message
 if [ -z "$TARGET_PLAYER" ]; then
-    notify-send "Music Control" "No active music players found"
+    notify-send "Music Control" "No active music players found (EMMS not loaded)"
     exit 1
 fi
 
@@ -69,16 +104,13 @@ if [ "$TARGET_PLAYER" = "mpd" ]; then
             ;;
     esac
 
-    # Get current track info for notification
     CURRENT_TRACK=$(mpc current)
     if [ -n "$CURRENT_TRACK" ]; then
         notify-send "MPD" "$CURRENT_TRACK"
     fi
 else
-    # Use playerctl for everything else
     playerctl -p "$TARGET_PLAYER" "$COMMAND" >/dev/null 2>&1
 
-    # Get current track info for notification
     ARTIST=$(playerctl -p "$TARGET_PLAYER" metadata artist 2>/dev/null)
     TITLE=$(playerctl -p "$TARGET_PLAYER" metadata title 2>/dev/null)
 
