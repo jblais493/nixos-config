@@ -1910,6 +1910,85 @@ go install github.com/sqls-server/sqls@latest
          ([remap save-buffer] . elfeed-tube-save)))
 #+end_src
 
+** Gnus
+#+begin_src elisp
+(after! gnus
+  ;; === SERVER CONNECTION ===
+  (setq gnus-select-method
+        '(nntp "news.eternal-september.org"
+               (nntp-address "news.eternal-september.org")
+               (nntp-port-number 119)
+               (nntp-stream-type starttls)
+               ))
+
+  ;; === IDENTITY ===
+  (setq user-full-name ""
+        user-mail-address "")
+
+  ;; === LOCAL STORAGE ===
+  (setq gnus-directory "~/.local/share/gnus/"
+        gnus-cache-directory "~/.local/share/gnus/cache/"
+        gnus-article-save-directory "~/.local/share/gnus/saved/"
+        message-directory "~/.local/share/gnus/mail/")
+
+  ;; === THREADING ===
+  (setq gnus-summary-thread-gathering-function 'gnus-gather-threads-by-references
+        gnus-thread-sort-functions '(gnus-thread-sort-by-most-recent-date)
+        gnus-thread-hide-subtree nil)
+
+  ;; === VISUAL PRESENTATION ===
+  (setq gnus-summary-line-format "%U%R %20,20f  %B%s\n"
+        gnus-sum-thread-tree-root "● "
+        gnus-sum-thread-tree-false-root "◎ "
+        gnus-sum-thread-tree-single-indent "◉ "
+        gnus-sum-thread-tree-indent "  "
+        gnus-sum-thread-tree-leaf-with-other "├─► "
+        gnus-sum-thread-tree-single-leaf "╰─► "
+        gnus-sum-thread-tree-vertical "│ ")
+
+  ;; === BEHAVIOR ===
+  (setq gnus-asynchronous t
+        gnus-use-cache t
+        gnus-use-scoring t
+        message-kill-buffer-on-exit t
+        gnus-treat-strip-trailing-blank-lines t)
+
+  ;; === AUTO-SUBSCRIPTION ===
+  (defvar my-gnus-subscribed-groups
+    '("alt.cyberpunk.tech"
+      "alt.cyberpunk"
+      "comp.lang.go"
+      "comp.os.linux.development.apps"
+      "comp.editors"
+      "comp.arch"
+      "comp.programming"
+      "comp.unix.programmer"
+      "alt.philosophy.debate"
+      "soc.religion.christian"
+      "alt.privacy.anon-server"
+      "comp.risks"
+      "misc.writing")
+    "Newsgroups to auto-subscribe on first connection.")
+
+  (defun my-gnus-auto-subscribe-groups ()
+    "Subscribe to groups in `my-gnus-subscribed-groups' if not already subscribed."
+    (interactive)
+    (dolist (group my-gnus-subscribed-groups)
+      (let ((full-group (concat "nntp+news.eternal-september.org:" group)))
+        (unless (gnus-group-entry full-group)
+          (gnus-subscribe-group full-group)
+          (message "Subscribed to %s" group)))))
+
+  (add-hook 'gnus-started-hook #'my-gnus-auto-subscribe-groups)
+
+  ;; === UI ENHANCEMENTS ===
+  (add-hook 'gnus-group-mode-hook #'gnus-topic-mode)
+
+  (custom-set-faces!
+    '(gnus-summary-normal-unread :inherit font-lock-keyword-face)
+    '(gnus-summary-selected :inherit (bold highlight))))
+#+end_src
+
 ** org-caldav
 I use org mode for calendaring, but I export and sync to my google calendar so I have reminders on my mobile device.
 *** TODO We are moving toward a self-hosted calendaring system in the near future. This is where we will integrate to a radicale/nextcloud instance using https://github.com/dengste/org-caldav
