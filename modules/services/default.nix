@@ -1,5 +1,9 @@
 { config, lib, pkgs, ... }:
 
+  environment.systemPackages = with pkgs; [
+     apacheHttpd
+  ];
+
 with lib;
 
 let

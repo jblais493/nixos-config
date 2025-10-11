@@ -1886,6 +1886,10 @@ Add OSRS Runelite to nixOS
 #+begin_src nix :tangle modules/services/default.nix
 { config, lib, pkgs, ... }:
 
+  environment.systemPackages = with pkgs; [
+     apacheHttpd
+  ];
+
 with lib;
 
 let
