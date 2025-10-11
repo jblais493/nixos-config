@@ -88,6 +88,15 @@
       };
 
       # Server hosts (no home-manager needed)
+      empirica = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./hosts/empirica/configuration.nix
+          agenix.nixosModules.default
+        ];
+      };
+
       alexandria = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };

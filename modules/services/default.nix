@@ -32,8 +32,7 @@ in
     # Jellyfin - Native media server
     services.jellyfin = {
       enable = true;
-      openFirewall = true;
-      # Jellyfin will auto-detect media in common locations
+      openFirewall = false;
     };
 
     # Syncthing - File synchronization
@@ -42,55 +41,98 @@ in
       user = cfg.user;
       dataDir = "/home/${cfg.user}/syncthing";
       configDir = "/home/${cfg.user}/.config/syncthing";
-      openDefaultPorts = true;
+      openDefaultPorts = false;
     };
 
     # The *arr stack for media management
     services.radarr = {
       enable = true;
-      openFirewall = true;
+      openFirewall = false;
     };
 
     services.lidarr = {
       enable = true;
-      openFirewall = true;
+      openFirewall = false;
     };
 
     services.prowlarr = {
       enable = true;
-      openFirewall = true;
+      openFirewall = false;
     };
 
     services.sonarr = {
       enable = true;
-      openFirewall = true;
+      openFirewall = false;
     };
 
     # Calibre-web for ebook management
     services.calibre-web = {
       enable = true;
       listen.port = 8083;
-      openFirewall = true;
+      openFirewall = false;
       options = {
         calibreLibrary = "${cfg.mediaDir}/books";
         enableBookUploading = true;
       };
     };
 
-    # Create the admin password file (you'll need to create this)
-    environment.etc."nextcloud-admin-pass" = {
-      text = "change-this-password";
-      mode = "0600";
-      user = "nextcloud";
-      group = "nextcloud";
+    # Radicale - CalDAV/CardDAV server
+    services.radicale = {
+      enable = true;
+      settings = {
+        server = {
+          hosts = [ "127.0.0.1:5232" ];  # Actual localhost binding
+        };
+        auth = {
+          type = "htpasswd";
+          htpasswd_filename = "/var/lib/radicale/users";
+          htpasswd_encryption = "bcrypt";
+        };
+        storage = {
+          filesystem_folder = "/var/lib/radicale/collections";
+        };
+        logging = {
+          level = "info";
+        };
+      };
     };
 
-    # Plex (alternative to Jellyfin - enable one or the other)
-    # services.plex = {
-    #   enable = true;
-    #   openFirewall = true;
-    #   dataDir = "/var/lib/plex";
-    # };
+    # Reverse proxy for all services (critical for clean architecture)
+    services.caddy = {
+      enable = true;
+      virtualHosts = {
+        "jellyfin.empirica.local" = {
+          extraConfig = ''
+            reverse_proxy localhost:8096
+          '';
+        };
+        "homepage.empirica.local" = {
+          extraConfig = ''
+            reverse_proxy localhost:3000
+          '';
+        };
+        "radicale.empirica.local" = {
+          extraConfig = ''
+            reverse_proxy localhost:5232
+          '';
+        };
+        "pihole.empirica.local" = {
+          extraConfig = ''
+            reverse_proxy localhost:8080
+          '';
+        };
+        "audiobookshelf.empirica.local" = {
+          extraConfig = ''
+            reverse_proxy localhost:13378
+          '';
+        };
+        "calibre.empirica.local" = {
+          extraConfig = ''
+            reverse_proxy localhost:8083
+          '';
+        };
+      };
+    };
 
     # Create media directories with proper permissions
     systemd.tmpfiles.rules = [
@@ -103,14 +145,14 @@ in
       "d '${cfg.mediaDir}/photos' 0755 ${cfg.user} users - -"
     ];
 
-    # Services that might need container approach (for now)
+    # Podman for containers
     virtualisation.podman = {
       enable = true;
       dockerCompat = true;
       defaultNetwork.settings.dns_enabled = true;
     };
 
-    # Container services for things without native NixOS support
+    # Container services
     systemd.services = {
       # Audiobookshelf
       audiobookshelf = {
@@ -122,7 +164,7 @@ in
           User = cfg.user;
           Restart = "unless-stopped";
           ExecStart = "${pkgs.podman}/bin/podman run --rm --name audiobookshelf " +
-            "-p 13378:80 " +
+            "-p 127.0.0.1:13378:80 " +
             "-e TZ=${cfg.timezone} " +
             "-v /home/${cfg.user}/containers/audiobookshelf/config:/config " +
             "-v /home/${cfg.user}/containers/audiobookshelf/metadata:/metadata " +
@@ -142,7 +184,7 @@ in
           User = cfg.user;
           Restart = "unless-stopped";
           ExecStart = "${pkgs.podman}/bin/podman run --rm --name homepage " +
-            "-p 3000:3000 " +
+            "-p 127.0.0.1:3000:3000 " +
             "-e PUID=1000 -e PGID=1000 " +
             "-v /home/${cfg.user}/containers/homepage/config:/app/config " +
             "ghcr.io/gethomepage/homepage:latest";
@@ -157,10 +199,10 @@ in
         wantedBy = [ "multi-user.target" ];
         serviceConfig = {
           Type = "exec";
-          User = "root"; # Pi-hole needs root for DNS
+          User = "root";
           Restart = "unless-stopped";
           ExecStart = "${pkgs.podman}/bin/podman run --rm --name pihole " +
-            "-p 53:53/tcp -p 53:53/udp -p 8080:80 " +
+            "-p 127.0.0.1:53:53/tcp -p 127.0.0.1:53:53/udp -p 127.0.0.1:8080:80 " +
             "-e TZ=${cfg.timezone} " +
             "-e WEBPASSWORD=changeme " +
             "-v /home/${cfg.user}/containers/pihole/etc-pihole:/etc/pihole " +
@@ -171,10 +213,17 @@ in
       };
     };
 
-    # Firewall ports for container services
+    # Tailscale service
+    services.tailscale.enable = true;
+
+    # Firewall: Only Caddy (HTTP/HTTPS) accessible via Tailscale
     networking.firewall = {
-      allowedTCPPorts = [ 3000 8080 13378 ];
-      allowedUDPPorts = [ 53 ];
+      interfaces."tailscale0" = {
+        allowedTCPPorts = [ 80 443 ];  # Only Caddy - it proxies everything
+      };
+      # Everything else locked down
+      allowedTCPPorts = [ ];
+      allowedUDPPorts = [ ];
     };
   };
 }

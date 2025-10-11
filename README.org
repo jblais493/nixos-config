@@ -261,7 +261,6 @@ Adds in vulcan support for builtin AMD GPU
 }
 #+end_src
 
-
 ** King
 *** README.md
 #+begin_src markdown :tangle hosts/king/README.md
@@ -521,37 +520,95 @@ Empirica runs all my [[https://joshblais.com/posts/selfhosting/][selfhosted serv
     ../../modules/shared
     ../../modules/security
     ../../modules/services
-    # ... other imports
   ];
 
   # Host-specific configuration
   networking.hostName = "empirica";
-  # ... rest of your host config
+
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
+  # Define your user properly
+  users.users.joshua = {
+    isNormalUser = true;
+    description = "Joshua Blais";
+    group = "joshua";
+    extraGroups = [ "networkmanager" "wheel" ];
+  };
+
+  # Localization
+  time.timeZone = "America/Edmonton";
+  i18n.defaultLocale = "en_CA.UTF-8";
+
+    # Enable the OpenSSH daemon.
+  services.openssh.enable = true;
+
+    # Disable all systemd sleep/suspend/hibernate targets
+  systemd.targets = {
+    sleep.enable = false;
+    suspend.enable = false;
+    hibernate.enable = false;
+    hybrid-sleep.enable = false;
+  };
+
+  # Configure systemd-logind to ignore power events
+  services.logind = {
+    lidSwitch = "ignore";           # If it's a laptop
+    lidSwitchDocked = "ignore";
+    lidSwitchExternalPower = "ignore";
+    extraConfig = ''
+      HandlePowerKey=ignore
+      HandleSuspendKey=ignore
+      HandleHibernateKey=ignore
+      IdleAction=ignore
+    '';
+  };
+
+  # Prevent automatic suspension
+  powerManagement = {
+    enable = false;  # Disable NixOS power management entirely
+  };
+
+  system.stateVersion = "25.05";
 }
 #+end_src
 *** hardware-configuration.nix
 #+begin_src nix :tangle hosts/empirica/hardware-configuration.nix
-# This is a placeholder hardware configuration
-# You'll need to generate the real one when you install NixOS
 { config, lib, pkgs, modulesPath, ... }:
-{
-  imports = [ ];
 
-  # Placeholder hardware config
+{
+  imports =
+    [ (modulesPath + "/installer/scan/not-detected.nix")
+    ];
+
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-  # Placeholder filesystem config
-  fileSystems."/" = {
-    device = "/dev/disk/by-uuid/placeholder";
-    fsType = "ext4";
-  };
+  fileSystems."/" =
+    { device = "/dev/disk/by-uuid/372b76cb-6dc6-498b-9489-1569751fde20";
+      fsType = "ext4";
+    };
+
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-uuid/B55A-18D2";
+      fsType = "vfat";
+      options = [ "fmask=0077" "dmask=0077" ];
+    };
+
+  swapDevices = [ ];
+
+  # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
+  # (the default) this is the recommended approach. When using systemd-networkd it's
+  # still possible to use this option, but it's recommended to use it in conjunction
+  # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
+  networking.useDHCP = lib.mkDefault true;
+  # networking.interfaces.enp0s31f6.useDHCP = lib.mkDefault true;
+  # networking.interfaces.wlp2s0.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-}
 #+end_src
 
 ** Alexandria
@@ -1852,8 +1909,7 @@ in
     # Jellyfin - Native media server
     services.jellyfin = {
       enable = true;
-      openFirewall = true;
-      # Jellyfin will auto-detect media in common locations
+      openFirewall = false;
     };
 
     # Syncthing - File synchronization
@@ -1862,55 +1918,98 @@ in
       user = cfg.user;
       dataDir = "/home/${cfg.user}/syncthing";
       configDir = "/home/${cfg.user}/.config/syncthing";
-      openDefaultPorts = true;
+      openDefaultPorts = false;
     };
 
     # The *arr stack for media management
     services.radarr = {
       enable = true;
-      openFirewall = true;
+      openFirewall = false;
     };
 
     services.lidarr = {
       enable = true;
-      openFirewall = true;
+      openFirewall = false;
     };
 
     services.prowlarr = {
       enable = true;
-      openFirewall = true;
+      openFirewall = false;
     };
 
     services.sonarr = {
       enable = true;
-      openFirewall = true;
+      openFirewall = false;
     };
 
     # Calibre-web for ebook management
     services.calibre-web = {
       enable = true;
       listen.port = 8083;
-      openFirewall = true;
+      openFirewall = false;
       options = {
         calibreLibrary = "${cfg.mediaDir}/books";
         enableBookUploading = true;
       };
     };
 
-    # Create the admin password file (you'll need to create this)
-    environment.etc."nextcloud-admin-pass" = {
-      text = "change-this-password";
-      mode = "0600";
-      user = "nextcloud";
-      group = "nextcloud";
+    # Radicale - CalDAV/CardDAV server
+    services.radicale = {
+      enable = true;
+      settings = {
+        server = {
+          hosts = [ "127.0.0.1:5232" ];  # Actual localhost binding
+        };
+        auth = {
+          type = "htpasswd";
+          htpasswd_filename = "/var/lib/radicale/users";
+          htpasswd_encryption = "bcrypt";
+        };
+        storage = {
+          filesystem_folder = "/var/lib/radicale/collections";
+        };
+        logging = {
+          level = "info";
+        };
+      };
     };
 
-    # Plex (alternative to Jellyfin - enable one or the other)
-    # services.plex = {
-    #   enable = true;
-    #   openFirewall = true;
-    #   dataDir = "/var/lib/plex";
-    # };
+    # Reverse proxy for all services (critical for clean architecture)
+    services.caddy = {
+      enable = true;
+      virtualHosts = {
+        "jellyfin.empirica.local" = {
+          extraConfig = ''
+            reverse_proxy localhost:8096
+          '';
+        };
+        "homepage.empirica.local" = {
+          extraConfig = ''
+            reverse_proxy localhost:3000
+          '';
+        };
+        "radicale.empirica.local" = {
+          extraConfig = ''
+            reverse_proxy localhost:5232
+          '';
+        };
+        "pihole.empirica.local" = {
+          extraConfig = ''
+            reverse_proxy localhost:8080
+          '';
+        };
+        "audiobookshelf.empirica.local" = {
+          extraConfig = ''
+            reverse_proxy localhost:13378
+          '';
+        };
+        "calibre.empirica.local" = {
+          extraConfig = ''
+            reverse_proxy localhost:8083
+          '';
+        };
+      };
+    };
 
     # Create media directories with proper permissions
     systemd.tmpfiles.rules = [
@@ -1923,14 +2022,14 @@ in
       "d '${cfg.mediaDir}/photos' 0755 ${cfg.user} users - -"
     ];
 
-    # Services that might need container approach (for now)
+    # Podman for containers
     virtualisation.podman = {
       enable = true;
       dockerCompat = true;
       defaultNetwork.settings.dns_enabled = true;
     };
 
-    # Container services for things without native NixOS support
+    # Container services
     systemd.services = {
       # Audiobookshelf
       audiobookshelf = {
@@ -1942,7 +2041,7 @@ in
           User = cfg.user;
           Restart = "unless-stopped";
           ExecStart = "${pkgs.podman}/bin/podman run --rm --name audiobookshelf " +
-            "-p 13378:80 " +
+            "-p 127.0.0.1:13378:80 " +
             "-e TZ=${cfg.timezone} " +
             "-v /home/${cfg.user}/containers/audiobookshelf/config:/config " +
             "-v /home/${cfg.user}/containers/audiobookshelf/metadata:/metadata " +
@@ -1962,7 +2061,7 @@ in
           User = cfg.user;
           Restart = "unless-stopped";
           ExecStart = "${pkgs.podman}/bin/podman run --rm --name homepage " +
-            "-p 3000:3000 " +
+            "-p 127.0.0.1:3000:3000 " +
             "-e PUID=1000 -e PGID=1000 " +
             "-v /home/${cfg.user}/containers/homepage/config:/app/config " +
             "ghcr.io/gethomepage/homepage:latest";
@@ -1977,10 +2076,10 @@ in
         wantedBy = [ "multi-user.target" ];
         serviceConfig = {
           Type = "exec";
-          User = "root"; # Pi-hole needs root for DNS
+          User = "root";
           Restart = "unless-stopped";
           ExecStart = "${pkgs.podman}/bin/podman run --rm --name pihole " +
-            "-p 53:53/tcp -p 53:53/udp -p 8080:80 " +
+            "-p 127.0.0.1:53:53/tcp -p 127.0.0.1:53:53/udp -p 127.0.0.1:8080:80 " +
             "-e TZ=${cfg.timezone} " +
             "-e WEBPASSWORD=changeme " +
             "-v /home/${cfg.user}/containers/pihole/etc-pihole:/etc/pihole " +
@@ -1991,10 +2090,17 @@ in
       };
     };
 
-    # Firewall ports for container services
+    # Tailscale service
+    services.tailscale.enable = true;
+
+    # Firewall: Only Caddy (HTTP/HTTPS) accessible via Tailscale
     networking.firewall = {
-      allowedTCPPorts = [ 3000 8080 13378 ];
-      allowedUDPPorts = [ 53 ];
+      interfaces."tailscale0" = {
+        allowedTCPPorts = [ 80 443 ];  # Only Caddy - it proxies everything
+      };
+      # Everything else locked down
+      allowedTCPPorts = [ ];
+      allowedUDPPorts = [ ];
     };
   };
 }
@@ -2303,6 +2409,15 @@ in
       };
 
       # Server hosts (no home-manager needed)
+      empirica = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./hosts/empirica/configuration.nix
+          agenix.nixosModules.default
+        ];
+      };
+
       alexandria = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
