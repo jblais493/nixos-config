@@ -1,8 +1,8 @@
 let
   # Your personal SSH public key (from ~/.ssh/joshuakey.pub)
-  joshua = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICCWNto66rFbOvb1VDEDuZYdwHQPfKM7+EjpnHvs3eRr joshua@joshuablais.com";
+  joshua = "age1k0sc4ugaxzpav2rs8cmugwthaa3tpuzygvax8u84m6sm9ldh737qspv058";
 
-  # Machine SSH host keys
+  # Machine age keys
   # king = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBb root@king";
   # theologica = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCc root@theologica";
   # alexandria = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDd root@alexandria";
@@ -18,4 +18,5 @@ in
 {
   # Database secrets (only for servers)
   "postgres-password.age".publicKeys = users;
+  "canlock.age".publicKeys = users;
 }
