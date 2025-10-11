@@ -132,7 +132,7 @@ services.homepage-dashboard = {
 };
 
   # Syncthing for data sync - daily to server + phone to server
-  systemd.services.syncthing = {
+  services.syncthing = {
   enable = true;
   user = "joshua";
   dataDir = "/home/joshua/.syncthing";
