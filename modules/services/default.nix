@@ -109,7 +109,7 @@ services.homepage-dashboard = {
         {
           "Syncthing" = {
             icon = "mdi-sync";
-            href = "https://syncthing.empirica";
+            href = "https://sync.empirica";
             description = "File synchronization";
             widget = {
               type = "syncthing";
@@ -247,10 +247,13 @@ services.caddy = {
         reverse_proxy localhost:8096
       '';
     };
-    "sync.empirica" = {
-      extraConfig = ''
-        tls internal
-        reverse_proxy localhost:8384
+"sync.empirica" = {
+  extraConfig = ''
+    tls internal
+    reverse_proxy localhost:8384 {
+      # Forward original host header
+      header_up Host localhost:8384
+      header_up X-Forwarded-Host {host}
       '';
     };
     "homepage.empirica" = {
