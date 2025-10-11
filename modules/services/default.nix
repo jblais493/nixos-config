@@ -131,41 +131,43 @@ in
     };
 
     # Reverse proxy for all services (critical for clean architecture)
-    services.caddy = {
-      enable = true;
-      virtualHosts = {
-        "jellyfin.empirica.local" = {
-          extraConfig = ''
-            reverse_proxy localhost:8096
-          '';
-        };
-        "homepage.empirica.local" = {
-          extraConfig = ''
-            reverse_proxy localhost:3000
-          '';
-        };
-        "radicale.empirica.local" = {
-          extraConfig = ''
-            reverse_proxy localhost:5232
-          '';
-        };
-        "adguard.empirica.local" = {
-          extraConfig = ''
-        reverse_proxy localhost:3001
-          '';
-        };
-        "audiobookshelf.empirica.local" = {
-          extraConfig = ''
-            reverse_proxy localhost:13378
-          '';
-        };
-        "calibre.empirica.local" = {
-          extraConfig = ''
-            reverse_proxy localhost:8083
-          '';
-        };
-      };
+services.caddy = {
+  enable = true;
+  virtualHosts = {
+    # This syntax explicitly tells Caddy to serve this domain on port 80 (HTTP)
+    # and disables automatic HTTPS redirects for it.
+    "jellyfin.empirica.local:80" = {
+      extraConfig = ''
+        reverse_proxy localhost:8096
+      '';
     };
+    "homepage.empirica.local:80" = {
+      extraConfig = ''
+        reverse_proxy localhost:3000
+      '';
+    };
+    "radicale.empirica.local:80" = {
+      extraConfig = ''
+        reverse_proxy localhost:5232
+      '';
+    };
+    "adguard.empirica.local:80" = {
+      extraConfig = ''
+        reverse_proxy localhost:3001
+      '';
+    };
+    "audiobookshelf.empirica.local:80" = {
+      extraConfig = ''
+        reverse_proxy localhost:13378
+      '';
+    };
+    "calibre.empirica.local:80" = {
+      extraConfig = ''
+        reverse_proxy localhost:8083
+      '';
+    };
+  };
+};
 
     # Create media directories with proper permissions
 # Add to your systemd.tmpfiles.rules section:
