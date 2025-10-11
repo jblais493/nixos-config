@@ -19,4 +19,6 @@ in
   # Database secrets (only for servers)
   "postgres-password.age".publicKeys = users;
   "canlock.age".publicKeys = users;
+  "gnus-name.age".publicKeys = users;
+  "gnus-email.age".publicKeys = users;
 }

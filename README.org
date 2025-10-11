@@ -2153,10 +2153,22 @@ This will define secrets decryption for desktops
 {
   age.identityPaths = [ "/home/joshua/.config/age/keys.txt" ];
 
-  age.secrets.canlock = {
-    file = ../secrets/canlock.age;
-    owner = "joshua";
-    mode = "400";
+  age.secrets = {
+    canlock = {
+      file = ../secrets/canlock.age;
+      owner = "joshua";
+      mode = "400";
+    };
+    gnus-name = {
+      file = ../secrets/gnus-name.age;
+      owner = "joshua";
+      mode = "400";
+    };
+    gnus-email = {
+      file = ../secrets/gnus-email.age;
+      owner = "joshua";
+      mode = "400";
+    };
   };
 }
 #+end_src
@@ -2194,6 +2206,8 @@ in
   # Database secrets (only for servers)
   "postgres-password.age".publicKeys = users;
   "canlock.age".publicKeys = users;
+  "gnus-name.age".publicKeys = users;
+  "gnus-email.age".publicKeys = users;
 }
 #+end_src
 

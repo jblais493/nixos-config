@@ -1720,9 +1720,20 @@ WHERE tablename = '%s';" table-name)))
                (nntp-stream-type starttls)
                ))
 
-  ;; === IDENTITY ===
-  (setq user-full-name ""
-        user-mail-address "")
+  (setq canlock-password
+        (with-temp-buffer
+          (insert-file-contents "/run/agenix/canlock")
+          (string-trim (buffer-string))))
+
+  (setq user-full-name
+        (with-temp-buffer
+          (insert-file-contents "/run/agenix/gnus-name")
+          (string-trim (buffer-string))))
+
+  (setq user-mail-address
+        (with-temp-buffer
+          (insert-file-contents "/run/agenix/gnus-email")
+          (string-trim (buffer-string))))
 
   ;; === LOCAL STORAGE ===
   (setq gnus-directory "~/.local/share/gnus/"
