@@ -9,13 +9,6 @@ let
   # Ensure your router has a DHCP reservation to always assign this IP.
   serverIP = "192.168.0.28";
 
-  # Automatically generate DNS rewrite rules from Caddy's virtual hosts.
-  # This now correctly strips the ":80" port from the domain name.
-  dnsRewrites = lib.mapAttrsToList (name: value: {
-    domain = (builtins.elemAt (lib.splitString ":" name) 0);
-    answer = serverIP;
-  }) config.services.caddy.virtualHosts;
-
 in
 {
   options.services.homelab = {
@@ -108,20 +101,31 @@ in
       };
     };
 
-    services.adguardhome = {
-      enable = true;
-      host = "0.0.0.0";
-      port = 3001;
-      openFirewall = false;
-      settings = {
-        dns = {
-          bind_hosts = [ "0.0.0.0" ];
-          port = 53;
-          # Declarative DNS rewrites are now managed from Caddy config
-          rewrites = dnsRewrites;
-        };
-      };
+services.adguardhome = {
+  enable = true;
+  host = "0.0.0.0";
+  port = 3001;
+  openFirewall = false;
+  settings = {
+    dns = {
+      bind_hosts = [ "0.0.0.0" ];
+      port = 53;
+      upstream_dns = [
+        "1.1.1.1"
+        "8.8.8.8"
+      ];
+      # Try explicit list format
+      rewrites = [
+        { domain = "jellyfin.empirica.local"; answer = serverIP; }
+        { domain = "homepage.empirica.local"; answer = serverIP; }
+        { domain = "radicale.empirica.local"; answer = serverIP; }
+        { domain = "adguard.empirica.local"; answer = serverIP; }
+        { domain = "audiobookshelf.empirica.local"; answer = serverIP; }
+        { domain = "calibre.empirica.local"; answer = serverIP; }
+      ];
     };
+  };
+};
 
     # Radicale - CalDAV/CardDAV server
     services.radicale = {
