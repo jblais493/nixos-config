@@ -410,45 +410,39 @@ We set the visual line wrapping and relative line numbers (then we can just go u
 
 ** Org Agenda
 #+begin_src elisp
-;; Org Agenda
-;; Set days viewed to 3, set start day to today, create seperator, and Dashboard view
+;; Load org-habit module
+(require 'org-habit)
+(add-to-list 'org-modules 'org-habit)
+
+;; Configure habit graph display
+(setq org-habit-show-habits-only-for-today t)  ; or nil to show all days
+(setq org-habit-graph-column 50)  ; adjust based on your screen
+
 (setq org-agenda-remove-tags t)
 (setq org-agenda-block-separator 32)
 (setq org-agenda-custom-commands
       '(("d" "Dashboard"
-         (
-          (tags "PRIORITY=\"A\""
+         ((tags "PRIORITY=\"A\""
                 ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
                  (org-agenda-overriding-header "\n HIGHEST PRIORITY")
-                 (org-agenda-prefix-format "   %i %?-2 t%s")
-                 )
-                )
+                 (org-agenda-prefix-format "   %i %?-2 t%s")))
+
           (agenda ""
-                  (
-                   (org-agenda-start-day "+0d")
-                   (org-agenda-span 1)
+                  ((org-agenda-start-day "+0d")
+                   (org-agenda-span 3)  ; Show 3 days for better habit tracking
                    (org-agenda-time)
                    (org-agenda-remove-tags t)
                    (org-agenda-todo-keyword-format "")
                    (org-agenda-scheduled-leaders '("" ""))
                    (org-agenda-current-time-string "ᐊ┈┈┈┈┈┈┈┈┈ NOW")
-                   (org-agenda-overriding-header "\n TODAY'S SCHEDULE")
-                   (org-agenda-prefix-format "   %i %?-2 t%s")
-                   )
-                  )
-          (tags-todo  "-STYLE=\"habit\""
-                      (
-                       (org-agenda-overriding-header "\n ALL TODO")
-                       (org-agenda-sorting-strategy '(priority-down))
-                       (org-agenda-remove-tags t)
-                       (org-agenda-prefix-format "   %i %?-2 t%s")
-                       )
-                      )))))
+                   (org-agenda-overriding-header "\n TODAY'S SCHEDULE & HABITS")
+                   (org-agenda-prefix-format "   %i %?-2 t%s")))
 
-;; Remove Scheduled tag
-(setq org-agenda-scheduled-leaders '("" ""))
-;; Remove holidays from agenda
-(setq org-agenda-include-diary nil)
+          (tags-todo "-STYLE=\"habit\""  ; This still excludes habits from TODO list
+                     ((org-agenda-overriding-header "\n ALL TODO")
+                      (org-agenda-sorting-strategy '(priority-down))
+                      (org-agenda-remove-tags t)
+                      (org-agenda-prefix-format "   %i %?-2 t%s")))))))
 #+end_src
 
 ** Org capture templates
