@@ -8,6 +8,8 @@
     ../../modules/services
   ];
 
+  services.homelab.enable = true;
+
   networking.hostName = "empirica";
 
   boot.loader.systemd-boot.enable = true;

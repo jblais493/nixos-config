@@ -522,6 +522,8 @@ Empirica runs all my [[https://joshblais.com/posts/selfhosting/][selfhosted serv
     ../../modules/services
   ];
 
+  services.homelab.enable = true;
+
   networking.hostName = "empirica";
 
   boot.loader.systemd-boot.enable = true;
