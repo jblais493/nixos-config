@@ -69,11 +69,6 @@ services.homepage-dashboard = {
 
   settings = {
     title = "Empirica Homelab";
-    # Disable host validation or configure trusted proxies
-    # disableHostValidation = true;  # Quick fix
-
-    # Or better - explicitly trust Caddy
-    trustedProxies = [ "127.0.0.1" "::1" ];
   };
 
   services = [
@@ -84,8 +79,6 @@ services.homepage-dashboard = {
             icon = "mdi-router-wireless";
             href = "http://192.168.0.1";
             description = "Network gateway and firewall";
-            siteMonitor = "http://192.168.0.1";
-            statusStyle = "dot";
           };
         }
         {
@@ -93,14 +86,6 @@ services.homepage-dashboard = {
             icon = "mdi-shield-check";
             href = "https://adguard.empirica";
             description = "DNS and ad blocking";
-            siteMonitor = "https://adguard.empirica";
-          };
-        }
-        {
-          "Syncthing" = {
-            icon = "mdi-sync";
-            href = "https://syncthing.empirica";  # If you add this to Caddy
-            description = "File synchronization";
           };
         }
       ];
@@ -111,27 +96,33 @@ services.homepage-dashboard = {
           "Jellyfin" = {
             icon = "mdi-jellyfish-outline";
             href = "https://jellyfin.empirica";
-            description = "Media playback for films and television";
-            siteMonitor = "https://jellyfin.empirica";
+            description = "Media playback";
           };
         }
         {
           "Audiobookshelf" = {
             icon = "mdi-book-music";
             href = "https://audiobookshelf.empirica";
-            description = "Audiobook and podcast server";
+            description = "Audiobooks";
           };
         }
         {
           "Calibre" = {
             icon = "mdi-book-open-variant";
             href = "https://calibre.empirica";
-            description = "Ebook library management";
+            description = "Ebook library";
           };
         }
       ];
     }
   ];
+};
+
+# Add the environment variable
+systemd.services.homepage-dashboard = {
+  serviceConfig = {
+    Environment = [ "HOMEPAGE_ALLOWED_HOSTS=homepage.empirica" ];
+  };
 };
 
     services.audiobookshelf = {
