@@ -44,6 +44,21 @@ in
       openDefaultPorts = false;
     };
 
+
+    services.homepage-dashboard = {
+      enable = true;
+      listenPort = 3000;
+      openFirewall = false;
+      # Configuration can be managed declaratively
+    };
+
+    services.audiobookshelf = {
+      enable = true;
+      port = 13378;
+      host = "127.0.0.1";  # Localhost only
+      openFirewall = false;
+    };
+
     # The *arr stack for media management
     services.radarr = {
       enable = true;
@@ -170,44 +185,6 @@ systemd.tmpfiles.rules = [
 
     # Container services
     systemd.services = {
-      # Audiobookshelf
-      audiobookshelf = {
-        description = "Audiobookshelf";
-        after = [ "network.target" ];
-        wantedBy = [ "multi-user.target" ];
-        serviceConfig = {
-          Type = "exec";
-          User = cfg.user;
-          Restart = "always";
-          ExecStart = "${pkgs.podman}/bin/podman run --rm --name audiobookshelf " +
-            "-p 127.0.0.1:13378:80 " +
-            "-e TZ=${cfg.timezone} " +
-            "-v /home/${cfg.user}/containers/audiobookshelf/config:/config " +
-            "-v /home/${cfg.user}/containers/audiobookshelf/metadata:/metadata " +
-            "-v ${cfg.mediaDir}/audiobooks:/audiobooks " +
-            "ghcr.io/advplyr/audiobookshelf:latest";
-          ExecStop = "${pkgs.podman}/bin/podman stop audiobookshelf";
-        };
-      };
-
-      # Homepage dashboard
-      homepage = {
-        description = "Homepage Dashboard";
-        after = [ "network.target" ];
-        wantedBy = [ "multi-user.target" ];
-        serviceConfig = {
-          Type = "exec";
-          User = cfg.user;
-          Restart = "always";
-          ExecStart = "${pkgs.podman}/bin/podman run --rm --name homepage " +
-            "-p 127.0.0.1:3000:3000 " +
-            "-e PUID=1000 -e PGID=1000 " +
-            "-v /home/${cfg.user}/containers/homepage/config:/app/config " +
-            "ghcr.io/gethomepage/homepage:latest";
-          ExecStop = "${pkgs.podman}/bin/podman stop homepage";
-        };
-      };
-
       # Pi-hole
       pihole = {
         description = "Pi-hole DNS";
