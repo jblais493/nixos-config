@@ -38,18 +38,10 @@
   };
 
   # Configure systemd-logind to ignore power events
-services.logind = {
-  lidSwitch = "ignore";
-  lidSwitchDocked = "ignore";
-  lidSwitchExternalPower = "ignore";
-
-  settings = {
-    HandlePowerKey = "ignore";
-    HandleSuspendKey = "ignore";
-    HandleHibernateKey = "ignore";
-    IdleAction = "ignore";
-  };
-};
+services.logind.extraConfig = ''
+  HandlePowerKey=ignore
+  IdleAction=ignore
+'';
 
   # Prevent automatic suspension
   powerManagement = {
