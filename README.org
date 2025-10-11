@@ -1894,7 +1894,7 @@ let
   # --- IMPORTANT ---
   # Change 'enp1s0' to your server's actual primary network interface name.
   # You can find it by running the `ip a` command on your server.
-  serverIP = (builtins.head config.networking.interfaces.enp1s0.ipv4.addresses).address;
+  serverIP = (builtins.head config.networking.interfaces.wlp2s0.ipv4.addresses).address;
 
   # Automatically generate DNS rewrite rules from Caddy's virtual hosts.
   # This now correctly strips the ":80" port from the domain name.
