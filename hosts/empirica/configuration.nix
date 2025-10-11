@@ -8,13 +8,13 @@
     ../../modules/services
   ];
 
-  # Host-specific configuration
   networking.hostName = "empirica";
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # Define your user properly
+  users.groups.joshua = {};
+
   users.users.joshua = {
     isNormalUser = true;
     description = "Joshua Blais";
@@ -22,14 +22,12 @@
     extraGroups = [ "networkmanager" "wheel" ];
   };
 
-  # Localization
   time.timeZone = "America/Edmonton";
   i18n.defaultLocale = "en_CA.UTF-8";
 
-    # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
-    # Disable all systemd sleep/suspend/hibernate targets
+  # Disable all systemd sleep/suspend/hibernate targets
   systemd.targets = {
     sleep.enable = false;
     suspend.enable = false;
@@ -37,11 +35,13 @@
     hybrid-sleep.enable = false;
   };
 
-  # Configure systemd-logind to ignore power events
-services.logind.extraConfig = ''
-  HandlePowerKey=ignore
-  IdleAction=ignore
-'';
+# Configure systemd-logind to ignore power events
+  services.logind.settings = {
+    Login = {
+      HandlePowerKey = "ignore";
+      IdleAction = "ignore";
+    };
+  };
 
   # Prevent automatic suspension
   powerManagement = {
