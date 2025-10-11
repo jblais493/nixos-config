@@ -1890,6 +1890,19 @@ with lib;
 
 let
   cfg = config.services.homelab;
+
+  # --- IMPORTANT ---
+  # Change 'enp1s0' to your server's actual primary network interface name.
+  # You can find it by running the `ip a` command on your server.
+  serverIP = (builtins.head config.networking.interfaces.enp1s0.ipv4.addresses).address;
+
+  # Automatically generate DNS rewrite rules from Caddy's virtual hosts.
+  # This now correctly strips the ":80" port from the domain name.
+  dnsRewrites = lib.mapAttrsToList (name: value: {
+    domain = (builtins.elemAt (lib.splitString ":" name) 0);
+    answer = serverIP;
+  }) config.services.caddy.virtualHosts;
+
 in
 {
   options.services.homelab = {
@@ -1917,7 +1930,7 @@ in
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
       # needed for radicale
-       apacheHttpd
+        apacheHttpd
     ];
 
     # Jellyfin - Native media server
@@ -1991,6 +2004,8 @@ in
         dns = {
           bind_hosts = [ "0.0.0.0" ];
           port = 53;
+          # Declarative DNS rewrites are now managed from Caddy config
+          rewrites = dnsRewrites;
         };
       };
     };
@@ -2017,67 +2032,65 @@ in
     };
 
     # Reverse proxy for all services (critical for clean architecture)
-services.caddy = {
-  enable = true;
-  virtualHosts = {
-    # This syntax explicitly tells Caddy to serve this domain on port 80 (HTTP)
-    # and disables automatic HTTPS redirects for it.
-    "jellyfin.empirica.local:80" = {
-      extraConfig = ''
-        reverse_proxy localhost:8096
-      '';
+    services.caddy = {
+      enable = true;
+      virtualHosts = {
+        # This syntax explicitly serves on port 80 (HTTP) and disables automatic HTTPS
+        "jellyfin.empirica.local:80" = {
+          extraConfig = ''
+            reverse_proxy localhost:8096
+          '';
+        };
+        "homepage.empirica.local:80" = {
+          extraConfig = ''
+            reverse_proxy localhost:3000
+          '';
+        };
+        "radicale.empirica.local:80" = {
+          extraConfig = ''
+            reverse_proxy localhost:5232
+          '';
+        };
+        "adguard.empirica.local:80" = {
+          extraConfig = ''
+            reverse_proxy localhost:3001
+          '';
+        };
+        "audiobookshelf.empirica.local:80" = {
+          extraConfig = ''
+            reverse_proxy localhost:13378
+          '';
+        };
+        "calibre.empirica.local:80" = {
+          extraConfig = ''
+            reverse_proxy localhost:8083
+          '';
+        };
+      };
     };
-    "homepage.empirica.local:80" = {
-      extraConfig = ''
-        reverse_proxy localhost:3000
-      '';
-    };
-    "radicale.empirica.local:80" = {
-      extraConfig = ''
-        reverse_proxy localhost:5232
-      '';
-    };
-    "adguard.empirica.local:80" = {
-      extraConfig = ''
-        reverse_proxy localhost:3001
-      '';
-    };
-    "audiobookshelf.empirica.local:80" = {
-      extraConfig = ''
-        reverse_proxy localhost:13378
-      '';
-    };
-    "calibre.empirica.local:80" = {
-      extraConfig = ''
-        reverse_proxy localhost:8083
-      '';
-    };
-  };
-};
 
     # Create media directories with proper permissions
-# Add to your systemd.tmpfiles.rules section:
-systemd.tmpfiles.rules = [
-  "d '${cfg.mediaDir}' 0755 ${cfg.user} users - -"
-  "d '${cfg.mediaDir}/movies' 0755 ${cfg.user} users - -"
-  "d '${cfg.mediaDir}/tvshows' 0755 ${cfg.user} users - -"
-  "d '${cfg.mediaDir}/music' 0755 ${cfg.user} users - -"
-  "d '${cfg.mediaDir}/books' 0755 ${cfg.user} users - -"
-  "d '${cfg.mediaDir}/audiobooks' 0755 ${cfg.user} users - -"
-  "d '${cfg.mediaDir}/photos' 0755 ${cfg.user} users - -"
+    systemd.tmpfiles.rules = [
+      "d '${cfg.mediaDir}' 0755 ${cfg.user} users - -"
+      "d '${cfg.mediaDir}/movies' 0755 ${cfg.user} users - -"
+      "d '${cfg.mediaDir}/tvshows' 0755 ${cfg.user} users - -"
+      "d '${cfg.mediaDir}/music' 0755 ${cfg.user} users - -"
+      "d '${cfg.mediaDir}/books' 0755 ${cfg.user} users - -"
+      "d '${cfg.mediaDir}/audiobooks' 0755 ${cfg.user} users - -"
+      "d '${cfg.mediaDir}/photos' 0755 ${cfg.user} users - -"
 
-  # Container config directories
-  "d '/home/${cfg.user}/containers' 0755 ${cfg.user} users - -"
-  "d '/home/${cfg.user}/containers/audiobookshelf' 0755 ${cfg.user} users - -"
-  "d '/home/${cfg.user}/containers/audiobookshelf/config' 0755 ${cfg.user} users - -"
-  "d '/home/${cfg.user}/containers/audiobookshelf/metadata' 0755 ${cfg.user} users - -"
-  "d '/home/${cfg.user}/containers/homepage' 0755 ${cfg.user} users - -"
-  "d '/home/${cfg.user}/containers/homepage/config' 0755 ${cfg.user} users - -"
+      # Container config directories
+      "d '/home/${cfg.user}/containers' 0755 ${cfg.user} users - -"
+      "d '/home/${cfg.user}/containers/audiobookshelf' 0755 ${cfg.user} users - -"
+      "d '/home/${cfg.user}/containers/audiobookshelf/config' 0755 ${cfg.user} users - -"
+      "d '/home/${cfg.user}/containers/audiobookshelf/metadata' 0755 ${cfg.user} users - -"
+      "d '/home/${cfg.user}/containers/homepage' 0755 ${cfg.user} users - -"
+      "d '/home/${cfg.user}/containers/homepage/config' 0755 ${cfg.user} users - -"
 
-  # Radicale directory and empty users file
-  "d '/var/lib/radicale' 0750 radicale radicale - -"
-  "f '/var/lib/radicale/users' 0640 radicale radicale - -"
-];
+      # Radicale directory and empty users file
+      "d '/var/lib/radicale' 0750 radicale radicale - -"
+      "f '/var/lib/radicale/users' 0640 radicale radicale - -"
+    ];
 
     # Podman for containers
     virtualisation.podman = {
@@ -2092,11 +2105,11 @@ systemd.tmpfiles.rules = [
     # Tailscale service
     services.tailscale.enable = true;
 
-# Firewall: Allow access on LAN
-networking.firewall = {
-  allowedTCPPorts = [ 53 80 443 3001 ];
-  allowedUDPPorts = [ 53 ];
-};
+    # Firewall: Allow access on LAN
+    networking.firewall = {
+      allowedTCPPorts = [ 53 80 443 3001 ];
+      allowedUDPPorts = [ 53 ];
+    };
   };
 }
 #+end_src
