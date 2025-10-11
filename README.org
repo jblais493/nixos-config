@@ -2032,43 +2032,43 @@ in
     };
 
     # Reverse proxy for all services (critical for clean architecture)
-    services.caddy = {
+services.caddy = {
   enable = true;
 
-  # Generate internal CA certificates
-  globalConfig = ''
-    auto_https internal
-  '';
-
   virtualHosts = {
-    # Remove :80 to let Caddy handle HTTPS automatically
     "jellyfin.empirica.local" = {
       extraConfig = ''
+        tls internal
         reverse_proxy localhost:8096
       '';
     };
     "homepage.empirica.local" = {
       extraConfig = ''
+        tls internal
         reverse_proxy localhost:3000
       '';
     };
     "radicale.empirica.local" = {
       extraConfig = ''
+        tls internal
         reverse_proxy localhost:5232
       '';
     };
     "adguard.empirica.local" = {
       extraConfig = ''
+        tls internal
         reverse_proxy localhost:3001
       '';
     };
     "audiobookshelf.empirica.local" = {
       extraConfig = ''
+        tls internal
         reverse_proxy localhost:13378
       '';
     };
     "calibre.empirica.local" = {
       extraConfig = ''
+        tls internal
         reverse_proxy localhost:8083
       '';
     };
