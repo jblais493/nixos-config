@@ -2102,11 +2102,8 @@ systemd.tmpfiles.rules = [
 
     # Firewall: Only Caddy (HTTP/HTTPS) accessible via Tailscale
     networking.firewall = {
-      interfaces."tailscale0" = {
-        allowedTCPPorts = [ 80 443 ];  # Only Caddy - it proxies everything
-      };
-      # Everything else locked down
-      allowedTCPPorts = [ ];
+      # Allow Caddy on all interfaces (safe because you're behind a router)
+      allowedTCPPorts = [ 80 443 ];
       allowedUDPPorts = [ ];
     };
   };
