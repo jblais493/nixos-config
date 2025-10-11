@@ -70,10 +70,10 @@ services.homepage-dashboard = {
   settings = {
     title = "Empirica Homelab";
     # Disable host validation or configure trusted proxies
-    disableHostValidation = true;  # Quick fix
+    # disableHostValidation = true;  # Quick fix
 
     # Or better - explicitly trust Caddy
-    # trustedProxies = [ "127.0.0.1" "::1" ];
+    trustedProxies = [ "127.0.0.1" "::1" ];
   };
 
   services = [
