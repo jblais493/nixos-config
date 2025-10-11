@@ -152,7 +152,7 @@ services.homepage-dashboard = {
 # Add the environment variable
 systemd.services.homepage-dashboard = {
   serviceConfig = {
-    Environment = [ "HOMEPAGE_ALLOWED_HOSTS=homepage.empirica", "HOMEPAGE_ALLOWED_HOSTS=100.69.46.98:3000" ];
+    Environment = [ "HOMEPAGE_ALLOWED_HOSTS=homepage.empirica,100.69.46.98:3000,100.69.46.98" ];
   };
 };
 
