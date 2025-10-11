@@ -1891,10 +1891,9 @@ with lib;
 let
   cfg = config.services.homelab;
 
-  # --- IMPORTANT ---
-  # Change 'enp1s0' to your server's actual primary network interface name.
-  # You can find it by running the `ip a` command on your server.
-  serverIP = (builtins.head config.networking.interfaces.wlp2s0.ipv4.addresses).address;
+  # For a server, it's most reliable to use its static IP directly.
+  # Ensure your router has a DHCP reservation to always assign this IP.
+  serverIP = "192.168.0.28";
 
   # Automatically generate DNS rewrite rules from Caddy's virtual hosts.
   # This now correctly strips the ":80" port from the domain name.
