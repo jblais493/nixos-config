@@ -159,7 +159,7 @@ systemd.services.homepage-dashboard = {
     services.audiobookshelf = {
       enable = true;
       port = 13378;
-      host = "127.0.0.1";  # Localhost only
+      host = "0.0.0.0";
       openFirewall = false;
     };
 
@@ -209,7 +209,7 @@ services.adguardhome = {
       enable = true;
       settings = {
         server = {
-          hosts = [ "127.0.0.1:5232" ];  # Actual localhost binding
+          hosts = [ "0.0.0.0:5232" ];
         };
         auth = {
           type = "htpasswd";
@@ -310,7 +310,7 @@ virtualisation.oci-containers.containers.calibre-web-automated = {
   autoStart = true;
 
   ports = [
-    "127.0.0.1:8083:8083"  # Only expose to localhost
+    "0.0.0.0:8083:8083"
   ];
 
   volumes = [
