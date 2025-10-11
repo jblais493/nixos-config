@@ -32,6 +32,7 @@
     tea
     tree
     neovim
+    dig
 
     # Nix workflow
     nixd  # Nix LSP
