@@ -37,6 +37,7 @@
     # Nix workflow
     nixd  # Nix LSP
     nh  # nix helper
+    nixfmt
     direnv
     devenv
     nix-output-monitor
