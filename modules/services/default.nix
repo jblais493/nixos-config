@@ -1,10 +1,5 @@
 { config, lib, pkgs, ... }:
 
-  environment.systemPackages = with pkgs; [
-    # needed for radicale
-     apacheHttpd
-  ];
-
 with lib;
 
 let
@@ -34,6 +29,11 @@ in
   };
 
   config = mkIf cfg.enable {
+    environment.systemPackages = with pkgs; [
+      # needed for radicale
+       apacheHttpd
+    ];
+
     # Jellyfin - Native media server
     services.jellyfin = {
       enable = true;
