@@ -2188,7 +2188,7 @@ services.caddy = {
     virtualisation.podman = {
       enable = true;
       dockerCompat = true;
-      defaultNetwork.settings.dns_enabled = true;
+      defaultNetwork.settings.dns_enabled = false;
     };
 
 # Add Calibre-Web-Automated as a container
