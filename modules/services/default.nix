@@ -88,6 +88,19 @@ services.homepage-dashboard = {
             description = "DNS and ad blocking";
           };
         }
+        {
+          "Syncthing" = {
+            icon = "mdi-sync";
+            href = "https://syncthing.empirica";
+            description = "File synchronization";
+            widget = {
+              type = "syncthing";
+              url = "http://localhost:8384";
+              # Optional: add API key for stats
+              # key = "your-syncthing-api-key";
+            };
+          };
+        }
       ];
     }
     {
@@ -117,6 +130,23 @@ services.homepage-dashboard = {
     }
   ];
 };
+
+  # Syncthing for data sync - daily to server + phone to server
+  systemd.services.syncthing = {
+  enable = true;
+  user = "joshua";
+  dataDir = "/home/joshua/.syncthing";
+  configDir = "/home/joshua/.config/syncthing";
+  overrideDevices = true;
+  overrideFolders = true;
+
+  settings = {
+    devices = {
+      "phone" = { id = "TTUKVRU-FEJGUXM-SERMOTN-TJNRQKV-7QP2N5J-V3ESDBE-5WTKB4K-2LCGDA3"; };
+    };
+  };
+ };
+
 
 # Add the environment variable
 systemd.services.homepage-dashboard = {
@@ -214,6 +244,12 @@ services.caddy = {
       extraConfig = ''
         tls internal
         reverse_proxy localhost:8096
+      '';
+    };
+    "sync.empirica" = {
+      extraConfig = ''
+        tls internal
+        reverse_proxy localhost:8384
       '';
     };
     "homepage.empirica" = {
