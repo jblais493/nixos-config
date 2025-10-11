@@ -2075,37 +2075,39 @@ systemd.tmpfiles.rules = [
     };
 
     # Container services
-    systemd.services = {
-      # Pi-hole
-      pihole = {
-        description = "Pi-hole DNS";
-        after = [ "network.target" ];
-        wantedBy = [ "multi-user.target" ];
-        serviceConfig = {
-          Type = "exec";
-          User = "root";
-          Restart = "always";
-          ExecStart = "${pkgs.podman}/bin/podman run --rm --name pihole " +
-            "-p 127.0.0.1:53:53/tcp -p 127.0.0.1:53:53/udp -p 127.0.0.1:8080:80 " +
-            "-e TZ=${cfg.timezone} " +
-            "-e WEBPASSWORD=changeme " +
-            "-v /home/${cfg.user}/containers/pihole/etc-pihole:/etc/pihole " +
-            "-v /home/${cfg.user}/containers/pihole/etc-dnsmasq.d:/etc/dnsmasq.d " +
-            "docker.io/pihole/pihole:latest";
-          ExecStop = "${pkgs.podman}/bin/podman stop pihole";
-        };
-      };
-    };
+systemd.services.pihole = {
+  description = "Pi-hole DNS";
+  after = [ "network.target" "podman.service" ];
+  requires = [ "podman.service" ];
+  wantedBy = [ "multi-user.target" ];
+  serviceConfig = {
+    Type = "exec";
+    User = "root";
+    Restart = "always";
+    RestartSec = "10s";
+    ExecStartPre = [
+      "-${pkgs.podman}/bin/podman stop pihole"
+      "-${pkgs.podman}/bin/podman rm -f pihole"
+    ];
+    ExecStart = "${pkgs.podman}/bin/podman run --rm --name pihole " +
+      "-p 53:53/tcp -p 53:53/udp -p 8080:80 " +  # Changed from 127.0.0.1 to all interfaces
+      "-e TZ=${cfg.timezone} " +
+      "-e WEBPASSWORD=changeme " +
+      "-v /home/${cfg.user}/containers/pihole/etc-pihole:/etc/pihole " +
+      "-v /home/${cfg.user}/containers/pihole/etc-dnsmasq.d:/etc/dnsmasq.d " +
+      "docker.io/pihole/pihole:latest";
+    ExecStop = "${pkgs.podman}/bin/podman stop pihole";
+  };
+};
 
     # Tailscale service
     services.tailscale.enable = true;
 
-    # Firewall: Only Caddy (HTTP/HTTPS) accessible via Tailscale
-    networking.firewall = {
-      # Allow Caddy on all interfaces (safe because you're behind a router)
-      allowedTCPPorts = [ 80 443 ];
-      allowedUDPPorts = [ ];
-    };
+# Firewall: Allow access on LAN
+networking.firewall = {
+  allowedTCPPorts = [ 53 80 443 8080 ];
+  allowedUDPPorts = [ 53 ];
+};
   };
 }
 #+end_src
