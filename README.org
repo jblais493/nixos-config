@@ -2176,12 +2176,8 @@ services.caddy = {
       "d '${cfg.mediaDir}/photos' 0755 ${cfg.user} users - -"
 
       # Container config directories
-      "d '/home/${cfg.user}/containers' 0755 ${cfg.user} users - -"
-      "d '/home/${cfg.user}/containers/audiobookshelf' 0755 ${cfg.user} users - -"
-      "d '/home/${cfg.user}/containers/audiobookshelf/config' 0755 ${cfg.user} users - -"
-      "d '/home/${cfg.user}/containers/audiobookshelf/metadata' 0755 ${cfg.user} users - -"
-      "d '/home/${cfg.user}/containers/homepage' 0755 ${cfg.user} users - -"
-      "d '/home/${cfg.user}/containers/homepage/config' 0755 ${cfg.user} users - -"
+      "d '/home/${cfg.user}/containers/calibre-web-automated' 0755 ${cfg.user} users - -"
+      "d '/home/${cfg.user}/containers/calibre-web-automated/config' 0755 ${cfg.user} users - -"
 
       # Radicale directory and empty users file
       "d '/var/lib/radicale' 0750 radicale radicale - -"
@@ -2225,13 +2221,6 @@ virtualisation.oci-containers.containers.calibre-web-automated = {
     # GOOGLE_BOOKS_API_KEY = "your-key-here";
   };
 };
-
-# Update tmpfiles to create container config directory
-systemd.tmpfiles.rules = [
-  # ... existing rules ...
-  "d '/home/${cfg.user}/containers/calibre-web-automated' 0755 ${cfg.user} users - -"
-  "d '/home/${cfg.user}/containers/calibre-web-automated/config' 0755 ${cfg.user} users - -"
-];
 
     # Tailscale service
     services.tailscale.enable = true;
