@@ -153,37 +153,37 @@ services.caddy = {
   enable = true;
 
   virtualHosts = {
-    "jellyfin.empirica.local" = {
+    "jellyfin.empirica" = {
       extraConfig = ''
         tls internal
         reverse_proxy localhost:8096
       '';
     };
-    "homepage.empirica.local" = {
+    "homepage.empirica" = {
       extraConfig = ''
         tls internal
         reverse_proxy localhost:3000
       '';
     };
-    "radicale.empirica.local" = {
+    "radicale.empirica" = {
       extraConfig = ''
         tls internal
         reverse_proxy localhost:5232
       '';
     };
-    "adguard.empirica.local" = {
+    "adguard.empirica" = {
       extraConfig = ''
         tls internal
         reverse_proxy localhost:3001
       '';
     };
-    "audiobookshelf.empirica.local" = {
+    "audiobookshelf.empirica" = {
       extraConfig = ''
         tls internal
         reverse_proxy localhost:13378
       '';
     };
-    "calibre.empirica.local" = {
+    "calibre.empirica" = {
       extraConfig = ''
         tls internal
         reverse_proxy localhost:8083
