@@ -182,7 +182,7 @@ in
         serviceConfig = {
           Type = "exec";
           User = cfg.user;
-          Restart = "unless-stopped";
+          Restart = "always";
           ExecStart = "${pkgs.podman}/bin/podman run --rm --name homepage " +
             "-p 127.0.0.1:3000:3000 " +
             "-e PUID=1000 -e PGID=1000 " +
