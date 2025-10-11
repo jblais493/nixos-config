@@ -118,6 +118,14 @@
 
     # Deploy-rs configuration for remote deployment
     deploy.nodes = {
+      empirica = {
+        hostname = "192.168.0.28";  # Or use Tailscale hostname when set up
+        profiles.system = {
+          sshUser = "joshua";
+          user = "root";
+          path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.empirica;
+        };
+      };
       alexandria = {
         hostname = "alexandria.your-domain.com";
         profiles.system = {
@@ -127,4 +135,6 @@
       };
     };
   };
+
+  checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
 }
