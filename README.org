@@ -1982,7 +1982,7 @@ in
       };
     };
 
-services.adguardhome = {
+    services.adguardhome = {
       enable = true;
       host = "0.0.0.0";
       port = 3001;
@@ -2036,10 +2036,10 @@ services.adguardhome = {
           '';
         };
         "adguard.empirica.local" = {
-      extraConfig = ''
+          extraConfig = ''
         reverse_proxy localhost:3001
-      '';
-    };
+          '';
+        };
         "audiobookshelf.empirica.local" = {
           extraConfig = ''
             reverse_proxy localhost:13378
