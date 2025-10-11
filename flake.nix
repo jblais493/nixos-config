@@ -119,7 +119,7 @@
     # Deploy-rs configuration for remote deployment
     deploy.nodes = {
       empirica = {
-        hostname = "192.168.0.28";  # Or use Tailscale hostname when set up
+        hostname = "192.168.0.28";
         profiles.system = {
           sshUser = "joshua";
           user = "root";
