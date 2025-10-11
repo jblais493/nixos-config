@@ -2071,17 +2071,6 @@ systemd.services.homepage-dashboard = {
       openFirewall = false;
     };
 
-    # Calibre-web for ebook management
-    services.calibre-web = {
-      enable = true;
-      listen.port = 8083;
-      openFirewall = false;
-      options = {
-        calibreLibrary = "${cfg.mediaDir}/books";
-        enableBookUploading = true;
-      };
-    };
-
 services.adguardhome = {
       enable = true;
       host = "0.0.0.0";
@@ -2206,8 +2195,43 @@ services.caddy = {
       defaultNetwork.settings.dns_enabled = true;
     };
 
-    # Container services
-    # calibre-web-automated
+# Add Calibre-Web-Automated as a container
+virtualisation.oci-containers.containers.calibre-web-automated = {
+  image = "crocodilestick/calibre-web-automated:latest";
+  autoStart = true;
+
+  ports = [
+    "127.0.0.1:8083:8083"  # Only expose to localhost
+  ];
+
+  volumes = [
+    "${cfg.mediaDir}/books:/books"
+    "/home/${cfg.user}/containers/calibre-web-automated/config:/config"
+  ];
+
+  environment = {
+    PUID = "1000";  # Your user ID
+    PGID = "100";   # users group
+    TZ = cfg.timezone;
+
+    # Calibre-Web-Automated specific settings
+    CALIBRE_LIBRARY_PATH = "/books";
+
+    # Optional: Enable automatic metadata fetching
+    METADATA_UPDATE = "true";
+
+    # Optional: Goodreads/Google Books API keys for better metadata
+    # GOODREADS_API_KEY = "your-key-here";
+    # GOOGLE_BOOKS_API_KEY = "your-key-here";
+  };
+};
+
+# Update tmpfiles to create container config directory
+systemd.tmpfiles.rules = [
+  # ... existing rules ...
+  "d '/home/${cfg.user}/containers/calibre-web-automated' 0755 ${cfg.user} users - -"
+  "d '/home/${cfg.user}/containers/calibre-web-automated/config' 0755 ${cfg.user} users - -"
+];
 
     # Tailscale service
     services.tailscale.enable = true;
