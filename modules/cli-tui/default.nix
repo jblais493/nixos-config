@@ -31,6 +31,7 @@
     age
     tea
     tree
+    neovim
 
     # Nix workflow
     nixd  # Nix LSP

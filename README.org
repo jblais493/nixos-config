@@ -1172,6 +1172,7 @@ Default shell utilities across machines.
     age
     tea
     tree
+    neovim
 
     # Nix workflow
     nixd  # Nix LSP
