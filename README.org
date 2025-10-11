@@ -2048,7 +2048,7 @@ in
         serviceConfig = {
           Type = "exec";
           User = cfg.user;
-          Restart = "unless-stopped";
+          Restart = "always";
           ExecStart = "${pkgs.podman}/bin/podman run --rm --name audiobookshelf " +
             "-p 127.0.0.1:13378:80 " +
             "-e TZ=${cfg.timezone} " +
