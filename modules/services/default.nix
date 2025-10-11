@@ -51,13 +51,31 @@ in
       openFirewall = false;
     };
 
-    # Syncthing - File synchronization
-    services.syncthing = {
+  # Syncthing for data sync - daily to server + phone to server
+services.syncthing = {
       enable = true;
       user = cfg.user;
       dataDir = "/home/${cfg.user}/syncthing";
       configDir = "/home/${cfg.user}/.config/syncthing";
       openDefaultPorts = false;
+      overrideDevices = true;
+      overrideFolders = true;
+
+      settings = {
+        devices = {
+          "phone" = {
+            id = "TTUKVRU-FEJGUXM-SERMOTN-TJNRQKV-7QP2N5J-V3ESDBE-5WTKB4K-2LCGDA3";
+          };
+        };
+        # Add folders here when you're ready
+        folders = {
+          # Example:
+          # "phone-photos" = {
+          #   path = "${cfg.mediaDir}/photos/phone";
+          #   devices = [ "phone" ];
+          # };
+        };
+      };
     };
 
 
@@ -130,23 +148,6 @@ services.homepage-dashboard = {
     }
   ];
 };
-
-  # Syncthing for data sync - daily to server + phone to server
-  services.syncthing = {
-  enable = true;
-  user = "joshua";
-  dataDir = "/home/joshua/.syncthing";
-  configDir = "/home/joshua/.config/syncthing";
-  overrideDevices = true;
-  overrideFolders = true;
-
-  settings = {
-    devices = {
-      "phone" = { id = "TTUKVRU-FEJGUXM-SERMOTN-TJNRQKV-7QP2N5J-V3ESDBE-5WTKB4K-2LCGDA3"; };
-    };
-  };
- };
-
 
 # Add the environment variable
 systemd.services.homepage-dashboard = {
