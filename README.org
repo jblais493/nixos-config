@@ -609,6 +609,7 @@ Empirica runs all my [[https://joshblais.com/posts/selfhosting/][selfhosted serv
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+}
 #+end_src
 
 ** Alexandria
