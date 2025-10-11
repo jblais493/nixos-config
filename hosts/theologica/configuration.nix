@@ -9,6 +9,7 @@
     ../../modules/development
     ../../modules/media
     ../../modules/security
+    ../../modules/secrets.nix
   ];
 
   # Host-specific configuration

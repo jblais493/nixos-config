@@ -154,6 +154,7 @@ This declares all imported modules and specific tweaks to the Theologica host:
     ../../modules/development
     ../../modules/media
     ../../modules/security
+    ../../modules/secrets.nix
   ];
 
   # Host-specific configuration
@@ -2144,6 +2145,21 @@ in
   ];
 }
 #+end_src
+** Secrets
+This will define secrets decryption for desktops
+
+#+begin_src nix :tangle modules/secrets.nix
+{ config, lib, ... }:
+{
+  age.identityPaths = [ "/home/joshua/.config/age/keys.txt" ];
+
+  age.secrets.canlock = {
+    file = ../secrets/canlock.age;
+    owner = "joshua";
+    mode = "400";
+  };
+}
+#+end_src
 * Overlays
 * Secrets
 We manage secrets with [[https://github.com/ryantm/agenix][agenix]].
@@ -2306,9 +2322,7 @@ in
 }
 #+end_src
 
-* TODO Fixes
-** TODO Hugo blog version issue
-** TODO Set global secrets, explore sops-nix
+* Fixes
 
 * DONE
 ** DONE Persistence of git login
