@@ -2072,6 +2072,11 @@ systemd.services.homepage-dashboard = {
       openFirewall = false;
     };
 
+    services.sabnzbd = {
+      enable = true;
+      openFirewall = false;
+    }
+
 services.adguardhome = {
       enable = true;
       host = "0.0.0.0";
@@ -2185,6 +2190,12 @@ services.caddy = {
       extraConfig = ''
         tls internal
         reverse_proxy localhost:9696
+      '';
+    };
+    "sabnzbd.empirica" = {
+      extraConfig = ''
+        tls internal
+        reverse_proxy localhost:8080
       '';
     };
   };
