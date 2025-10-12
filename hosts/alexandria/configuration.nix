@@ -3,7 +3,6 @@
   imports = [
     ./hardware-configuration.nix
     ../../modules/security
-    ../../modules/services
   ];
 
   networking.hostName = "alexandria";

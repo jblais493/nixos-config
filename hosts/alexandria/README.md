@@ -1,5 +1,4 @@
 # Alexandria
-
-Hetzner server database host
+Hetzner minimal server
 
 ## Specifications

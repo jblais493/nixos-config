@@ -42,7 +42,7 @@ in
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
       # needed for radicale
-        apacheHttpd
+      apacheHttpd
     ];
 
     # Jellyfin - Native media server
@@ -51,8 +51,8 @@ in
       openFirewall = false;
     };
 
-  # Syncthing for data sync - daily to server + phone to server
-services.syncthing = {
+    # Syncthing for data sync - daily to server + phone to server
+    services.syncthing = {
       enable = true;
       user = cfg.user;
       dataDir = "/home/${cfg.user}/syncthing";
@@ -67,7 +67,6 @@ services.syncthing = {
             id = "TTUKVRU-FEJGUXM-SERMOTN-TJNRQKV-7QP2N5J-V3ESDBE-5WTKB4K-2LCGDA3";
           };
         };
-        # Add folders here when you're ready
         folders = {
           # Example:
           # "phone-photos" = {
@@ -78,255 +77,60 @@ services.syncthing = {
       };
     };
 
-
-# Homepage setup:
-services.homepage-dashboard = {
-  enable = true;
-  listenPort = 3000;
-  openFirewall = false;
-
-  settings = {
-    title = "Empirica Homelab";
-    theme = "dark";
-    color = "slate";
-    background = "https://images.unsplash.com/photo-1502790671504-542ad42d5189?auto=format&fit=crop&w=2560&q=80";
-    backgroundOpacity = 0.5;
-    headerStyle = "boxed";
-    hideVersion = true;
-
-    layout = {
-      "Network Infrastructure" = {
-        style = "row";
-        columns = 3;
+    # Miniflux - RSS feed reader
+    services.miniflux = {
+      enable = true;
+      config = {
+        LISTEN_ADDR = "localhost:8082";
+        BASE_URL = "https://miniflux.empirica";
       };
-      "Media Consumption" = {
-        style = "row";
-        columns = 3;
-      };
-      "Media Automation" = {
-        style = "row";
-        columns = 3;
+      adminCredentialsFile = "/run/secrets/miniflux-admin";
+    };
+
+    # Paperless-NGX - Document management
+    services.paperless = {
+      enable = true;
+      address = "0.0.0.0";
+      port = 28981;
+      settings = {
+        PAPERLESS_OCR_LANGUAGE = "eng";
+        PAPERLESS_TIME_ZONE = cfg.timezone;
+        PAPERLESS_ADMIN_USER = cfg.user;
+        PAPERLESS_ADMIN_PASSWORD = "changeme"; # Change this after first login
       };
     };
-  };
 
-  widgets = [
-    {
-      resources = {
-        cpu = true;
-        memory = true;
-        disk = "/";
-        uptime = true;
+    # Immich - Self-hosted photo and video management
+    services.immich = {
+      enable = true;
+      host = "0.0.0.0";
+      port = 2283;
+      mediaLocation = "${cfg.mediaDir}/photos";
+    };
+
+    # Uptime Kuma - Service monitoring
+    services.uptime-kuma = {
+      enable = true;
+      settings = {
+        PORT = "3002";
+        HOST = "0.0.0.0";
       };
-    }
-    {
-      datetime = {
-        text_size = "xl";
-        format = {
-          dateStyle = "full";
-          timeStyle = "short";
-        };
+    };
+
+    # Microbin - Self-hosted pastebin
+    services.microbin = {
+      enable = true;
+      settings = {
+        MICROBIN_PORT = 8090;
+        MICROBIN_BIND = "0.0.0.0";
+        MICROBIN_PUBLIC_PATH = "https://paste.empirica";
+        MICROBIN_EDITABLE = true;
+        MICROBIN_HIDE_FOOTER = false;
+        MICROBIN_PRIVATE = false;
       };
-    }
-  ];
+    };
 
-  bookmarks = [
-    {
-      Developer = [
-        {
-          Github = [
-            {
-              abbr = "GH";
-              href = "https://github.com/";
-            }
-          ];
-        }
-      ];
-    }
-    {
-      Social = [
-        {
-          Reddit = [
-            {
-              abbr = "RE";
-              href = "https://reddit.com/";
-            }
-          ];
-        }
-      ];
-    }
-    {
-      Entertainment = [
-        {
-          YouTube = [
-            {
-              abbr = "YT";
-              href = "https://youtube.com/";
-            }
-          ];
-        }
-      ];
-    }
-  ];
-
-  services = [
-    # Foundation Layer: Infrastructure that enables everything else
-    {
-      "Network Infrastructure" = [
-        {
-          "AdGuard Home" = {
-            icon = "adguardhome";
-            href = "https://adguard.empirica";
-            description = "DNS sovereignty and network-level blocking";
-            # widget = {
-            #   type = "adguard";
-            #   url = "http://localhost:3001";
-            # };
-          };
-        }
-        {
-          "Router" = {
-            icon = "router";
-            href = "http://192.168.0.1";
-            description = "Gateway and perimeter defense";
-          };
-        }
-        {
-          "Syncthing" = {
-            icon = "syncthing";
-            href = "https://sync.empirica";
-            description = "Distributed file synchronization";
-            # widget = {
-            #   type = "syncthing";
-            #   url = "http://localhost:8384";
-            # };
-          };
-        }
-      ];
-    }
-
-    # Consumption Layer: Direct interaction with media
-    {
-      "Media Consumption" = [
-        {
-          "Jellyfin" = {
-            icon = "jellyfin";
-            href = "https://jellyfin.empirica";
-            description = "Self-hosted media server";
-            # widget = {
-            #   type = "jellyfin";
-            #   url = "http://localhost:8096";
-            #   key = "{{HOMEPAGE_VAR_JELLYFIN_KEY}}";
-            # };
-          };
-        }
-        {
-          "Audiobookshelf" = {
-            icon = "audiobookshelf";
-            href = "https://audiobookshelf.empirica";
-            description = "Audiobook and podcast server";
-          };
-        }
-        {
-          "Calibre" = {
-            icon = "calibreweb";
-            href = "https://calibre.empirica";
-            description = "Ebook library and management";
-          };
-        }
-      ];
-    }
-
-    # Automation Layer: The invisible machinery (your "arr" stack)
-    {
-      "Media Automation" = [
-        {
-          "Prowlarr" = {
-            icon = "prowlarr";
-            href = "https://prowlarr.empirica";
-            description = "Indexer manager - the source of all sources";
-            # widget = {
-            #   type = "prowlarr";
-            #   url = "http://localhost:9696";
-            #   key = "{{HOMEPAGE_VAR_PROWLARR_KEY}}";
-            # };
-          };
-        }
-        {
-          "Radarr" = {
-            icon = "radarr";
-            href = "https://radarr.empirica";
-            description = "Movie collection manager";
-            # widget = {
-            #   type = "radarr";
-            #   url = "http://localhost:7878";
-            #   key = "{{HOMEPAGE_VAR_RADARR_KEY}}";
-            # };
-          };
-        }
-        {
-          "Sonarr" = {
-            icon = "sonarr";
-            href = "https://sonarr.empirica";
-            description = "Series collection manager";
-            # widget = {
-            #   type = "sonarr";
-            #   url = "http://localhost:8989";
-            #   key = "{{HOMEPAGE_VAR_SONARR_KEY}}";
-            # };
-          };
-        }
-        {
-          "Lidarr" = {
-            icon = "lidarr";
-            href = "https://lidarr.empirica";
-            description = "Music collection manager";
-            # widget = {
-            #   type = "lidarr";
-            #   url = "http://localhost:8686";
-            #   key = "{{HOMEPAGE_VAR_LIDARR_KEY}}";
-            # };
-          };
-        }
-        {
-          "Bazarr" = {
-            icon = "bazarr";
-            href = "https://bazarr.empirica";
-            description = "Subtitle automation";
-            # widget = {
-            #   type = "bazarr";
-            #   url = "http://localhost:6767";
-            #   key = "{{HOMEPAGE_VAR_BAZARR_KEY}}";
-            # };
-          };
-        }
-        {
-          "SABnzbd" = {
-            icon = "sabnzbd";
-            href = "https://sabnzbd.empirica";
-            description = "Usenet download client";
-            # widget = {
-            #   type = "sabnzbd";
-            #   url = "http://localhost:8080";
-            #   key = "{{HOMEPAGE_VAR_SABNZBD_KEY}}";
-            # };
-          };
-        }
-      ];
-    }
-  ];
-
-  # When ready, uncomment this and create /run/secrets/homepage-env with API keys
-  # environmentFile = "/run/secrets/homepage-env";
-};
-
-# Add the environment variable
-systemd.services.homepage-dashboard = {
-  serviceConfig = {
-    Environment = [ "HOMEPAGE_ALLOWED_HOSTS=homepage.empirica,100.69.46.98:3000,100.69.46.98" ];
-  };
-};
-
+    # Audiobookshelf
     services.audiobookshelf = {
       enable = true;
       port = 13378;
@@ -365,7 +169,7 @@ systemd.services.homepage-dashboard = {
       openFirewall = false;
     };
 
-services.adguardhome = {
+    services.adguardhome = {
       enable = true;
       host = "0.0.0.0";
       port = 3001;
@@ -406,94 +210,442 @@ services.adguardhome = {
       };
     };
 
-    # Reverse proxy for all services (critical for clean architecture)
-services.caddy = {
-  enable = true;
+    # Homepage setup
+    services.homepage-dashboard = {
+      enable = true;
+      listenPort = 3000;
+      openFirewall = false;
 
-  virtualHosts = {
-    "jellyfin.empirica" = {
-      extraConfig = ''
-        tls internal
-        reverse_proxy localhost:8096
-      '';
+      settings = {
+        title = "Empirica Homelab";
+        theme = "dark";
+        color = "slate";
+        background = "https://images.unsplash.com/photo-1502790671504-542ad42d5189?auto=format&fit=crop&w=2560&q=80";
+        backgroundOpacity = 0.5;
+        headerStyle = "boxed";
+        hideVersion = true;
+
+        layout = {
+          "Network Infrastructure" = {
+            style = "row";
+            columns = 3;
+          };
+          "Media Consumption" = {
+            style = "row";
+            columns = 3;
+          };
+          "Media Automation" = {
+            style = "row";
+            columns = 3;
+          };
+          "Knowledge & Documents" = {
+            style = "row";
+            columns = 3;
+          };
+          "Operations & Utilities" = {
+            style = "row";
+            columns = 3;
+          };
+        };
+      };
+
+      widgets = [
+        {
+          resources = {
+            cpu = true;
+            memory = true;
+            disk = "/";
+            uptime = true;
+          };
+        }
+        {
+          datetime = {
+            text_size = "xl";
+            format = {
+              dateStyle = "full";
+              timeStyle = "short";
+            };
+          };
+        }
+      ];
+
+      bookmarks = [
+        {
+          Developer = [
+            {
+              Github = [
+                {
+                  abbr = "GH";
+                  href = "https://github.com/";
+                }
+              ];
+            }
+          ];
+        }
+        {
+          Social = [
+            {
+              Reddit = [
+                {
+                  abbr = "RE";
+                  href = "https://reddit.com/";
+                }
+              ];
+            }
+          ];
+        }
+        {
+          Entertainment = [
+            {
+              YouTube = [
+                {
+                  abbr = "YT";
+                  href = "https://youtube.com/";
+                }
+              ];
+            }
+          ];
+        }
+      ];
+
+      services = [
+        # Foundation Layer: Infrastructure that enables everything else
+        {
+          "Network Infrastructure" = [
+            {
+              "AdGuard Home" = {
+                icon = "adguardhome";
+                href = "https://adguard.empirica";
+                description = "DNS sovereignty and network-level blocking";
+                # widget = {
+                #   type = "adguard";
+                #   url = "http://localhost:3001";
+                # };
+              };
+            }
+            {
+              "Router" = {
+                icon = "router";
+                href = "http://192.168.0.1";
+                description = "Gateway and perimeter defense";
+              };
+            }
+            {
+              "Syncthing" = {
+                icon = "syncthing";
+                href = "https://sync.empirica";
+                description = "Distributed file synchronization";
+                # widget = {
+                #   type = "syncthing";
+                #   url = "http://localhost:8384";
+                # };
+              };
+            }
+          ];
+        }
+
+        # Consumption Layer: Direct interaction with media
+        {
+          "Media Consumption" = [
+            {
+              "Jellyfin" = {
+                icon = "jellyfin";
+                href = "https://jellyfin.empirica";
+                description = "Self-hosted media server";
+                # widget = {
+                #   type = "jellyfin";
+                #   url = "http://localhost:8096";
+                #   key = "{{HOMEPAGE_VAR_JELLYFIN_KEY}}";
+                # };
+              };
+            }
+            {
+              "Audiobookshelf" = {
+                icon = "audiobookshelf";
+                href = "https://audiobookshelf.empirica";
+                description = "Audiobook and podcast server";
+              };
+            }
+            {
+              "Calibre" = {
+                icon = "calibreweb";
+                href = "https://calibre.empirica";
+                description = "Ebook library and management";
+              };
+            }
+          ];
+        }
+
+        # Automation Layer: The invisible machinery (your "arr" stack)
+        {
+          "Media Automation" = [
+            {
+              "Prowlarr" = {
+                icon = "prowlarr";
+                href = "https://prowlarr.empirica";
+                description = "Indexer manager - the source of all sources";
+                # widget = {
+                #   type = "prowlarr";
+                #   url = "http://localhost:9696";
+                #   key = "{{HOMEPAGE_VAR_PROWLARR_KEY}}";
+                # };
+              };
+            }
+            {
+              "Radarr" = {
+                icon = "radarr";
+                href = "https://radarr.empirica";
+                description = "Movie collection manager";
+                # widget = {
+                #   type = "radarr";
+                #   url = "http://localhost:7878";
+                #   key = "{{HOMEPAGE_VAR_RADARR_KEY}}";
+                # };
+              };
+            }
+            {
+              "Sonarr" = {
+                icon = "sonarr";
+                href = "https://sonarr.empirica";
+                description = "Series collection manager";
+                # widget = {
+                #   type = "sonarr";
+                #   url = "http://localhost:8989";
+                #   key = "{{HOMEPAGE_VAR_SONARR_KEY}}";
+                # };
+              };
+            }
+            {
+              "Lidarr" = {
+                icon = "lidarr";
+                href = "https://lidarr.empirica";
+                description = "Music collection manager";
+                # widget = {
+                #   type = "lidarr";
+                #   url = "http://localhost:8686";
+                #   key = "{{HOMEPAGE_VAR_LIDARR_KEY}}";
+                # };
+              };
+            }
+            {
+              "Bazarr" = {
+                icon = "bazarr";
+                href = "https://bazarr.empirica";
+                description = "Subtitle automation";
+                # widget = {
+                #   type = "bazarr";
+                #   url = "http://localhost:6767";
+                #   key = "{{HOMEPAGE_VAR_BAZARR_KEY}}";
+                # };
+              };
+            }
+            {
+              "SABnzbd" = {
+                icon = "sabnzbd";
+                href = "https://sabnzbd.empirica";
+                description = "Usenet download client";
+                # widget = {
+                #   type = "sabnzbd";
+                #   url = "http://localhost:8080";
+                #   key = "{{HOMEPAGE_VAR_SABNZBD_KEY}}";
+                # };
+              };
+            }
+          ];
+        }
+
+        # Knowledge Management: Information consumption and document storage
+        {
+          "Knowledge & Documents" = [
+            {
+              "Miniflux" = {
+                icon = "miniflux";
+                href = "https://miniflux.empirica";
+                description = "RSS feed reader - curated information diet";
+              };
+            }
+            {
+              "Paperless-NGX" = {
+                icon = "paperlessngx";
+                href = "https://paperless.empirica";
+                description = "Document management with OCR";
+                # widget = {
+                #   type = "paperlessngx";
+                #   url = "http://localhost:28981";
+                #   key = "{{HOMEPAGE_VAR_PAPERLESS_KEY}}";
+                # };
+              };
+            }
+            {
+              "Immich" = {
+                icon = "immich";
+                href = "https://immich.empirica";
+                description = "Self-hosted photo and video management";
+              };
+            }
+          ];
+        }
+
+        # Operations: Monitoring and utilities
+        {
+          "Operations & Utilities" = [
+            {
+              "Uptime Kuma" = {
+                icon = "uptimekuma";
+                href = "https://uptime.empirica";
+                description = "Service monitoring and status";
+                # widget = {
+                #   type = "uptimekuma";
+                #   url = "http://localhost:3002";
+                #   slug = "homelab";
+                # };
+              };
+            }
+            {
+              "Microbin" = {
+                icon = "pastebin";
+                href = "https://paste.empirica";
+                description = "Self-hosted pastebin";
+              };
+            }
+          ];
+        }
+      ];
+
+      # When ready, uncomment this and create /run/secrets/homepage-env with API keys
+      # environmentFile = "/run/secrets/homepage-env";
     };
-"sync.empirica" = {
-  extraConfig = ''
-    tls internal
-    reverse_proxy localhost:8384 {
-      # Forward original host header
-      header_up Host localhost:8384
-      header_up X-Forwarded-Host {host}
-      '';
+
+    # Homepage environment configuration
+    # NOTE: Required because homepage-dashboard module doesn't expose environment config
+    systemd.services.homepage-dashboard.serviceConfig = {
+      Environment = [
+        "HOMEPAGE_ALLOWED_HOSTS=homepage.empirica,100.69.46.98:3000,100.69.46.98"
+      ];
     };
-    "homepage.empirica" = {
-      extraConfig = ''
-        tls internal
-        reverse_proxy localhost:3000
-      '';
+
+    # Reverse proxy for all services (critical for clean architecture)
+    services.caddy = {
+      enable = true;
+
+      virtualHosts = {
+        "jellyfin.empirica" = {
+          extraConfig = ''
+            tls internal
+            reverse_proxy localhost:8096
+          '';
+        };
+        "sync.empirica" = {
+          extraConfig = ''
+            tls internal
+            reverse_proxy localhost:8384 {
+              header_up Host localhost:8384
+              header_up X-Forwarded-Host {host}
+            }
+          '';
+        };
+        "homepage.empirica" = {
+          extraConfig = ''
+            tls internal
+            reverse_proxy localhost:3000
+          '';
+        };
+        "radicale.empirica" = {
+          extraConfig = ''
+            tls internal
+            reverse_proxy localhost:5232
+          '';
+        };
+        "adguard.empirica" = {
+          extraConfig = ''
+            tls internal
+            reverse_proxy localhost:3001
+          '';
+        };
+        "audiobookshelf.empirica" = {
+          extraConfig = ''
+            tls internal
+            reverse_proxy localhost:13378
+          '';
+        };
+        "calibre.empirica" = {
+          extraConfig = ''
+            tls internal
+            reverse_proxy localhost:8083
+          '';
+        };
+        "radarr.empirica" = {
+          extraConfig = ''
+            tls internal
+            reverse_proxy localhost:7878
+          '';
+        };
+        "sonarr.empirica" = {
+          extraConfig = ''
+            tls internal
+            reverse_proxy localhost:8989
+          '';
+        };
+        "lidarr.empirica" = {
+          extraConfig = ''
+            tls internal
+            reverse_proxy localhost:8686
+          '';
+        };
+        "prowlarr.empirica" = {
+          extraConfig = ''
+            tls internal
+            reverse_proxy localhost:9696
+          '';
+        };
+        "bazarr.empirica" = {
+          extraConfig = ''
+            tls internal
+            reverse_proxy localhost:6767
+          '';
+        };
+        "sabnzbd.empirica" = {
+          extraConfig = ''
+            tls internal
+            reverse_proxy localhost:8080
+          '';
+        };
+        # New services
+        "miniflux.empirica" = {
+          extraConfig = ''
+            tls internal
+            reverse_proxy localhost:8082
+          '';
+        };
+        "paperless.empirica" = {
+          extraConfig = ''
+            tls internal
+            reverse_proxy localhost:28981
+          '';
+        };
+        "immich.empirica" = {
+          extraConfig = ''
+            tls internal
+            reverse_proxy localhost:2283 {
+              header_up X-Forwarded-For {remote_host}
+              header_up X-Forwarded-Proto {scheme}
+            }
+          '';
+        };
+        "uptime.empirica" = {
+          extraConfig = ''
+            tls internal
+            reverse_proxy localhost:3002
+          '';
+        };
+        "paste.empirica" = {
+          extraConfig = ''
+            tls internal
+            reverse_proxy localhost:8090
+          '';
+        };
+      };
     };
-    "radicale.empirica" = {
-      extraConfig = ''
-        tls internal
-        reverse_proxy localhost:5232
-      '';
-    };
-    "adguard.empirica" = {
-      extraConfig = ''
-        tls internal
-        reverse_proxy localhost:3001
-      '';
-    };
-    "audiobookshelf.empirica" = {
-      extraConfig = ''
-        tls internal
-        reverse_proxy localhost:13378
-      '';
-    };
-    "calibre.empirica" = {
-      extraConfig = ''
-        tls internal
-        reverse_proxy localhost:8083
-      '';
-    };
-     "radarr.empirica" = {
-      extraConfig = ''
-        tls internal
-        reverse_proxy localhost:7878
-      '';
-    };
-    "sonarr.empirica" = {
-      extraConfig = ''
-        tls internal
-        reverse_proxy localhost:8989
-      '';
-    };
-    "lidarr.empirica" = {
-      extraConfig = ''
-        tls internal
-        reverse_proxy localhost:8686
-      '';
-    };
-    "prowlarr.empirica" = {
-      extraConfig = ''
-        tls internal
-        reverse_proxy localhost:9696
-      '';
-    };
-    "bazarr.empirica" = {
-      extraConfig = ''
-        tls internal
-        reverse_proxy localhost:6767
-      '';
-    };
-    "sabnzbd.empirica" = {
-      extraConfig = ''
-        tls internal
-        reverse_proxy localhost:8080
-      '';
-    };
-  };
-};
 
     # Create media directories with proper permissions
     systemd.tmpfiles.rules = [
@@ -505,13 +657,16 @@ services.caddy = {
       "d '${cfg.mediaDir}/audiobooks' 0755 ${cfg.user} users - -"
       "d '${cfg.mediaDir}/photos' 0755 ${cfg.user} users - -"
 
-      # Container config directories
+      # Container config directories (only for Calibre now)
       "d '/home/${cfg.user}/containers/calibre-web-automated' 0755 ${cfg.user} users - -"
       "d '/home/${cfg.user}/containers/calibre-web-automated/config' 0755 ${cfg.user} users - -"
 
       # Radicale directory and empty users file
       "d '/var/lib/radicale' 0750 radicale radicale - -"
       "f '/var/lib/radicale/users' 0640 radicale radicale - -"
+
+      # Miniflux admin credentials file
+      "f '/run/secrets/miniflux-admin' 0600 miniflux miniflux - -"
     ];
 
     # Podman for containers
@@ -521,36 +676,28 @@ services.caddy = {
       defaultNetwork.settings.dns_enabled = false;
     };
 
-# Add Calibre-Web-Automated as a container
-virtualisation.oci-containers.containers.calibre-web-automated = {
-  image = "crocodilestick/calibre-web-automated:latest";
-  autoStart = true;
+    # Calibre-Web-Automated container (only container needed)
+    virtualisation.oci-containers.containers.calibre-web-automated = {
+      image = "crocodilestick/calibre-web-automated:latest";
+      autoStart = true;
 
-  ports = [
-    "0.0.0.0:8083:8083"
-  ];
+      ports = [
+        "0.0.0.0:8083:8083"
+      ];
 
-  volumes = [
-    "${cfg.mediaDir}/books:/books"
-    "/home/${cfg.user}/containers/calibre-web-automated/config:/config"
-  ];
+      volumes = [
+        "${cfg.mediaDir}/books:/books"
+        "/home/${cfg.user}/containers/calibre-web-automated/config:/config"
+      ];
 
-  environment = {
-    PUID = "1000";  # Your user ID
-    PGID = "100";   # users group
-    TZ = cfg.timezone;
-
-    # Calibre-Web-Automated specific settings
-    CALIBRE_LIBRARY_PATH = "/books";
-
-    # Optional: Enable automatic metadata fetching
-    METADATA_UPDATE = "true";
-
-    # Optional: Goodreads/Google Books API keys for better metadata
-    # GOODREADS_API_KEY = "your-key-here";
-    # GOOGLE_BOOKS_API_KEY = "your-key-here";
-  };
-};
+      environment = {
+        PUID = "1000";
+        PGID = "100";
+        TZ = cfg.timezone;
+        CALIBRE_LIBRARY_PATH = "/books";
+        METADATA_UPDATE = "true";
+      };
+    };
 
     # Tailscale service
     services.tailscale.enable = true;
