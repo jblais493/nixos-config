@@ -253,7 +253,6 @@ in
             cpu = true;
             cputemp = true;
             memory = true;
-            disk = "/var";
             uptime = true;
           };
         }
