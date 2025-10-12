@@ -327,7 +327,7 @@ in
             }
             {
               "Calibre" = {
-                icon = "calibreweb";
+                icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/calibre-web.png";
                 href = "https://calibre.empirica";
                 description = "Ebook library and management";
               };
@@ -425,7 +425,7 @@ in
             }
             {
               "Paperless-NGX" = {
-                icon = "paperlessngx";
+                icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/paperless-ngx.webp";
                 href = "https://paperless.empirica";
                 description = "Document management with OCR";
                 # widget = {
@@ -450,7 +450,7 @@ in
           "Operations & Utilities" = [
             {
               "Uptime Kuma" = {
-                icon = "uptimekuma";
+                icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/uptime-kuma.webp";
                 href = "https://uptime.empirica";
                 description = "Service monitoring and status";
                 # widget = {
@@ -462,7 +462,7 @@ in
             }
             {
               "Microbin" = {
-                icon = "pastebin";
+                icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/microbin.webp";
                 href = "https://paste.empirica";
                 description = "Self-hosted pastebin";
               };
