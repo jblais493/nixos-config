@@ -218,7 +218,7 @@ in
         title = "Empirica Homelab";
         theme = "dark";
         color = "slate";
-        background = "https://images.unsplash.com/photo-1502790671504-542ad42d5189?auto=format&fit=crop&w=2560&q=80";
+        background = "https://raw.githubusercontent.com/jblais493/Wallpapers/refs/heads/master/serenity.jpg";
         backgroundOpacity = 0.5;
         headerStyle = "boxed";
         hideVersion = true;
@@ -252,16 +252,15 @@ in
           resources = {
             cpu = true;
             memory = true;
-            disk = "/";
+            disk = "/dev/nvme0n1p2";
             uptime = true;
           };
         }
         {
           datetime = {
-            text_size = "xl";
+            text_size = "sm";
             format = {
               dateStyle = "full";
-              timeStyle = "short";
             };
           };
         }
