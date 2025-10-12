@@ -251,8 +251,9 @@ in
         {
           resources = {
             cpu = true;
+            cputemp = true;
             memory = true;
-            disk = "/dev/nvme0n1p2";
+            disk = "/var/lib/containers/storage/overlay";
             uptime = true;
           };
         }
