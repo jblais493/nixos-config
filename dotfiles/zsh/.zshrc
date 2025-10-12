@@ -201,6 +201,7 @@ alias doomupgrade="~/.config/emacs/bin/doom upgrade"
 
 # NixOS
 alias nrs="nh os switch . --hostname"
+alias nrs-empirica="nixos-rebuild switch --flake .#empirica --target-host joshua@192.168.0.28 --sudo"
 alias ns="nh search"
 alias nrb="sudo nixos-rebuild build --flake"
 alias nrsf='sudo nixos-rebuild switch --no-reexec'  # fast rebuilds
