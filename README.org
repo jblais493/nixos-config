@@ -520,6 +520,7 @@ Empirica runs all my [[https://joshblais.com/posts/selfhosting/][selfhosted serv
     ../../modules/shared
     ../../modules/security
     ../../modules/services
+    ../../modules/secrets.nix
   ];
 
   services.homelab.enable = true;

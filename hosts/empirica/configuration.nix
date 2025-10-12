@@ -6,6 +6,7 @@
     ../../modules/shared
     ../../modules/security
     ../../modules/services
+    ../../modules/secrets.nix
   ];
 
   services.homelab.enable = true;
