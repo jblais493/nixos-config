@@ -2154,27 +2154,6 @@ in
         }
       ];
 
-      bookmarks = [
-      {
-          Developer = [
-          { name = "Github"; abbr = "GH"; href = "https://github.com/"; }
-          { name = "Codeberg"; abbr = "CB"; href = "https://codeberg.org/"; }
-          { name = "Forge"; abbr = "FJ"; href = "https://forge.labrynth.org/"; }
-          ];
-      }
-      {
-          Social = [
-          { name = "HackerNews"; abbr = "HN"; href = "https://news.ycombinator.com/best"; }
-          { name = "Lobsters"; abbr = "LB"; href = "https://lobste.rs/"; }
-          ];
-      }
-      {
-          Entertainment = [
-          { name = "YouTube"; abbr = "YT"; href = "https://youtube.com/"; }
-          ];
-      }
-      ];
-
       services = [
         # Foundation Layer: Infrastructure that enables everything else
         {
