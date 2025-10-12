@@ -9,7 +9,7 @@
     ../../modules/development
     ../../modules/media
     ../../modules/security
-    ../../modules/secrets.nix
+    ../../modules/secrets-joshua.nix
   ];
 
   # Host-specific configuration

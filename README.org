@@ -154,7 +154,7 @@ This declares all imported modules and specific tweaks to the Theologica host:
     ../../modules/development
     ../../modules/media
     ../../modules/security
-    ../../modules/secrets.nix
+    ../../modules/secrets-joshua.nix
   ];
 
   # Host-specific configuration
@@ -520,7 +520,7 @@ Empirica runs all my [[https://joshblais.com/posts/selfhosting/][selfhosted serv
     ../../modules/shared
     ../../modules/security
     ../../modules/services
-    ../../modules/secrets.nix
+    ../../modules/secrets-empirica.nix
   ];
 
   services.homelab.enable = true;
@@ -2706,12 +2706,12 @@ in
 ** Secrets
 This will define secrets decryption for desktops
 
-#+begin_src nix :tangle modules/secrets.nix
+*** secrets-joshua
+#+begin_src nix :tangle modules/secrets-joshua.nix
 { config, lib, ... }:
 {
   age.identityPaths = [
     "/home/joshua/.config/age/keys.txt"
-    "/etc/age/keys.txt"
   ];
 
   age.secrets = {
@@ -2730,8 +2730,20 @@ This will define secrets decryption for desktops
       owner = "joshua";
       mode = "400";
     };
+  };
+}
+#+end_src
+*** secrets-empirica
+#+begin_src nix :tangle modules/secrets-empirica.nix
+{ config, lib, ... }:
+{
+  age.identityPaths = [
+    "/etc/age/keys.txt"
+  ];
+
+  age.secrets = {
     miniflux-admin = {
-      file = ../secrets/miniflux-admin.age;
+      file = ../../secrets/miniflux-admin.age;
       owner = "miniflux";
       group = "miniflux";
       mode = "0600";

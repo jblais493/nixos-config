@@ -2,7 +2,6 @@
 {
   age.identityPaths = [
     "/home/joshua/.config/age/keys.txt"
-    "/etc/age/keys.txt"
   ];
 
   age.secrets = {
@@ -20,12 +19,6 @@
       file = ../secrets/gnus-email.age;
       owner = "joshua";
       mode = "400";
-    };
-    miniflux-admin = {
-      file = ../../secrets/miniflux-admin.age;
-      owner = "miniflux";
-      group = "miniflux";
-      mode = "0600";
     };
   };
 }
