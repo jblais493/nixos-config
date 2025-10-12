@@ -273,7 +273,7 @@ in
           "Network Infrastructure" = [
             {
               "AdGuard Home" = {
-                icon = "adguardhome";
+                icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/adguard-home.webp";
                 href = "https://adguard.empirica";
                 description = "DNS sovereignty and network-level blocking";
                 # widget = {
