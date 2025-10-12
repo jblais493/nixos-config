@@ -279,16 +279,34 @@ in
                   href = "https://github.com/";
                 }
               ];
+              Codeberg = [
+                {
+                  abbr = "CB";
+                  href = "https://codeberg.org/";
+                }
+              ];
+              Forgejo = [
+                {
+                  abbr = "FJ";
+                  href = "https://forge.labrynth.org/";
+                }
+              ];
             }
           ];
         }
         {
           Social = [
             {
-              Reddit = [
+              HackerNews = [
                 {
-                  abbr = "RE";
-                  href = "https://reddit.com/";
+                  abbr = "HN";
+                  href = "https://news.ycombinator.com/best";
+                }
+              ];
+              Lobste.rs = [
+                {
+                  abbr = "LB";
+                  href = "https://lobste.rs/";
                 }
               ];
             }
