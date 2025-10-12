@@ -81,8 +81,7 @@ in
     services.miniflux = {
       enable = true;
       config = {
-        LISTEN_ADDR = "localhost:8082";
-        BASE_URL = "https://miniflux.empirica";
+        LISTEN_ADDR = "0.0.0.0:8082";
       };
       adminCredentialsFile = "/run/secrets/miniflux-admin";
     };
@@ -269,62 +268,29 @@ in
         }
       ];
 
-      bookmarks = [
-        {
-          Developer = [
-            {
-              Github = [
-                {
-                  abbr = "GH";
-                  href = "https://github.com/";
-                }
-              ];
-              Codeberg = [
-                {
-                  abbr = "CB";
-                  href = "https://codeberg.org/";
-                }
-              ];
-              Forgejo = [
-                {
-                  abbr = "FJ";
-                  href = "https://forge.labrynth.org/";
-                }
-              ];
-            }
-          ];
-        }
-        {
-          Social = [
-            {
-              HackerNews = [
-                {
-                  abbr = "HN";
-                  href = "https://news.ycombinator.com/best";
-                }
-              ];
-              Lobste.rs = [
-                {
-                  abbr = "LB";
-                  href = "https://lobste.rs/";
-                }
-              ];
-            }
-          ];
-        }
-        {
-          Entertainment = [
-            {
-              YouTube = [
-                {
-                  abbr = "YT";
-                  href = "https://youtube.com/";
-                }
-              ];
-            }
-          ];
-        }
-      ];
+bookmarks = [
+  {
+    category = "Developer";
+    links = [
+      { name = "Github"; abbr = "GH"; href = "https://github.com/"; }
+      { name = "Codeberg"; abbr = "CB"; href = "https://codeberg.org/"; }
+      { name = "Forge"; abbr = "FJ"; href = "https://forge.labrynth.org/"; }
+    ];
+  }
+  {
+    category = "Social";
+    links = [
+      { name = "HackerNews"; abbr = "HN"; href = "https://news.ycombinator.com/best"; }
+      { name = "Lobsters"; abbr = "LB"; href = "https://lobste.rs/"; }
+    ];
+  }
+  {
+    category = "Entertainment";
+    links = [
+      { name = "YouTube"; abbr = "YT"; href = "https://youtube.com/"; }
+    ];
+  }
+];
 
       services = [
         # Foundation Layer: Infrastructure that enables everything else
