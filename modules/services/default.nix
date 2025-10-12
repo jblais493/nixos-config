@@ -262,7 +262,7 @@ in
             url = "https://search.rhscz.eu/search?q=";
             target = "_blank";
             showSearchSuggestions = "true";
-            focur = "true";
+            focus = "true";
           };
         }
         {
