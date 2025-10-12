@@ -104,9 +104,6 @@ in
       enable = true;
       host = "0.0.0.0";
       port = 2283;
-      environment = {
-        IMMICH_MEDIA_LOCATION = "/var/lib/immich/upload";  # Changed from /home/joshua/Media/photos
-      };
     };
 
     # Uptime Kuma - Service monitoring
