@@ -5,11 +5,11 @@
   ];
 
   age.secrets = {
-    miniflux-admin = {
-      file = ../secrets/miniflux-admin.age;
-      owner = "miniflux";
-      group = "miniflux";
-      mode = "0600";
+miniflux-admin = {
+    file = ../secrets/miniflux-admin.age;
+    owner = "root";
+    group = "root";
+    mode = "0400";  # Root readable only
     };
   };
 }
