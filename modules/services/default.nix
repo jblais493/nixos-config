@@ -178,10 +178,10 @@ services.homepage-dashboard = {
             icon = "adguardhome";
             href = "https://adguard.empirica";
             description = "DNS sovereignty and network-level blocking";
-            widget = {
-              type = "adguard";
-              url = "http://localhost:3001";
-            };
+            # widget = {
+            #   type = "adguard";
+            #   url = "http://localhost:3001";
+            # };
           };
         }
         {
@@ -196,10 +196,10 @@ services.homepage-dashboard = {
             icon = "syncthing";
             href = "https://sync.empirica";
             description = "Distributed file synchronization";
-            widget = {
-              type = "syncthing";
-              url = "http://localhost:8384";
-            };
+            # widget = {
+            #   type = "syncthing";
+            #   url = "http://localhost:8384";
+            # };
           };
         }
       ];
@@ -213,11 +213,11 @@ services.homepage-dashboard = {
             icon = "jellyfin";
             href = "https://jellyfin.empirica";
             description = "Self-hosted media server";
-            widget = {
-              type = "jellyfin";
-              url = "http://localhost:8096";
-              key = "{{HOMEPAGE_VAR_JELLYFIN_KEY}}";
-            };
+            # widget = {
+            #   type = "jellyfin";
+            #   url = "http://localhost:8096";
+            #   key = "{{HOMEPAGE_VAR_JELLYFIN_KEY}}";
+            # };
           };
         }
         {
@@ -245,11 +245,11 @@ services.homepage-dashboard = {
             icon = "prowlarr";
             href = "https://prowlarr.empirica";
             description = "Indexer manager - the source of all sources";
-            widget = {
-              type = "prowlarr";
-              url = "http://localhost:9696";
-              key = "{{HOMEPAGE_VAR_PROWLARR_KEY}}";
-            };
+            # widget = {
+            #   type = "prowlarr";
+            #   url = "http://localhost:9696";
+            #   key = "{{HOMEPAGE_VAR_PROWLARR_KEY}}";
+            # };
           };
         }
         {
@@ -257,11 +257,11 @@ services.homepage-dashboard = {
             icon = "radarr";
             href = "https://radarr.empirica";
             description = "Movie collection manager";
-            widget = {
-              type = "radarr";
-              url = "http://localhost:7878";
-              key = "{{HOMEPAGE_VAR_RADARR_KEY}}";
-            };
+            # widget = {
+            #   type = "radarr";
+            #   url = "http://localhost:7878";
+            #   key = "{{HOMEPAGE_VAR_RADARR_KEY}}";
+            # };
           };
         }
         {
@@ -269,11 +269,11 @@ services.homepage-dashboard = {
             icon = "sonarr";
             href = "https://sonarr.empirica";
             description = "Series collection manager";
-            widget = {
-              type = "sonarr";
-              url = "http://localhost:8989";
-              key = "{{HOMEPAGE_VAR_SONARR_KEY}}";
-            };
+            # widget = {
+            #   type = "sonarr";
+            #   url = "http://localhost:8989";
+            #   key = "{{HOMEPAGE_VAR_SONARR_KEY}}";
+            # };
           };
         }
         {
@@ -281,11 +281,11 @@ services.homepage-dashboard = {
             icon = "lidarr";
             href = "https://lidarr.empirica";
             description = "Music collection manager";
-            widget = {
-              type = "lidarr";
-              url = "http://localhost:8686";
-              key = "{{HOMEPAGE_VAR_LIDARR_KEY}}";
-            };
+            # widget = {
+            #   type = "lidarr";
+            #   url = "http://localhost:8686";
+            #   key = "{{HOMEPAGE_VAR_LIDARR_KEY}}";
+            # };
           };
         }
         {
@@ -293,11 +293,11 @@ services.homepage-dashboard = {
             icon = "bazarr";
             href = "https://bazarr.empirica";
             description = "Subtitle automation";
-            widget = {
-              type = "bazarr";
-              url = "http://localhost:6767";
-              key = "{{HOMEPAGE_VAR_BAZARR_KEY}}";
-            };
+            # widget = {
+            #   type = "bazarr";
+            #   url = "http://localhost:6767";
+            #   key = "{{HOMEPAGE_VAR_BAZARR_KEY}}";
+            # };
           };
         }
         {
@@ -305,19 +305,19 @@ services.homepage-dashboard = {
             icon = "sabnzbd";
             href = "https://sabnzbd.empirica";
             description = "Usenet download client";
-            widget = {
-              type = "sabnzbd";
-              url = "http://localhost:8080";
-              key = "{{HOMEPAGE_VAR_SABNZBD_KEY}}";
-            };
+            # widget = {
+            #   type = "sabnzbd";
+            #   url = "http://localhost:8080";
+            #   key = "{{HOMEPAGE_VAR_SABNZBD_KEY}}";
+            # };
           };
         }
       ];
     }
   ];
 
-  # For API keys, use environment variables in your NixOS config
-  environmentFile = "/run/secrets/homepage-env";
+  # When ready, uncomment this and create /run/secrets/homepage-env with API keys
+  # environmentFile = "/run/secrets/homepage-env";
 };
 
 # Add the environment variable
