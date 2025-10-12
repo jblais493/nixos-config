@@ -258,6 +258,12 @@ in
           };
         }
         {
+          greeting = {
+            text_size = "sm";
+            text = "Welcome Joshua"
+          };
+        }
+        {
           datetime = {
             text_size = "sm";
             format = {
