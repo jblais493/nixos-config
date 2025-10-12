@@ -191,7 +191,7 @@ systemd.services.homepage-dashboard = {
 
     services.bazarr = {
       enable = true;
-      openFirewall = true;
+      openFirewall = false;
     };
 
 services.adguardhome = {
@@ -307,6 +307,12 @@ services.caddy = {
       extraConfig = ''
         tls internal
         reverse_proxy localhost:9696
+      '';
+    };
+    "bazarr.empirica" = {
+      extraConfig = ''
+        tls internal
+        reverse_proxy localhost:6767
       '';
     };
     "sabnzbd.empirica" = {
