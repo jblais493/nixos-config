@@ -484,9 +484,14 @@ in
     # Homepage environment configuration
     # NOTE: Required because homepage-dashboard module doesn't expose environment config
     systemd.services.homepage-dashboard.serviceConfig = {
-      Environment = [
+    Environment = [
         "HOMEPAGE_ALLOWED_HOSTS=homepage.empirica,100.69.46.98:3000,100.69.46.98"
-      ];
+    ];
+
+    # Allow homepage to read disk stats
+    ProtectProc = "default";      # Change from "invisible"
+    ProtectSystem = "full";       # Loosen from "strict"
+    PrivateDevices = false;       # Allow device enumeration
     };
 
     # Reverse proxy for all services (critical for clean architecture)
