@@ -187,10 +187,6 @@ systemd.services.homepage-dashboard = {
     services.sabnzbd = {
       enable = true;
       openFirewall = false;
-      configFile = pkgs.writeText "sabnzbd.ini" ''
-      [misc]
-      host_whitelist = sabnzbd.empirica, localhost, 0.0.0.0
-      '';
     };
 
 services.adguardhome = {
