@@ -2382,10 +2382,10 @@ in
         "HOMEPAGE_ALLOWED_HOSTS=homepage.empirica,100.69.46.98:3000,100.69.46.98"
     ];
 
-    # Allow homepage to read disk stats
-    ProtectProc = "default";      # Change from "invisible"
-    ProtectSystem = "full";       # Loosen from "strict"
-    PrivateDevices = false;       # Allow device enumeration
+    # Force overrides of the module's hardening
+    ProtectProc = lib.mkForce "default";
+    ProtectSystem = lib.mkForce "full";
+    PrivateDevices = lib.mkForce false;
     };
 
     # Reverse proxy for all services (critical for clean architecture)
