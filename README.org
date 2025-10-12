@@ -2511,6 +2511,11 @@ in
       "d '${cfg.mediaDir}/audiobooks' 0755 ${cfg.user} users - -"
       "d '${cfg.mediaDir}/photos' 0775 joshua joshua - -"  # Changed: joshua:joshua, mode 0775 for immich use
 
+      # Media folders for immich
+      "d /var/lib/immich 0750 immich immich -"
+      "d /var/lib/immich/upload 0750 immich immich -"
+      "d /var/lib/immich/library 0750 immich immich -"
+
       # Container config directories (only for Calibre now)
       "d '/home/${cfg.user}/containers/calibre-web-automated' 0755 ${cfg.user} users - -"
       "d '/home/${cfg.user}/containers/calibre-web-automated/config' 0755 ${cfg.user} users - -"
