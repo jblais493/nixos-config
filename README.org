@@ -2743,7 +2743,7 @@ This will define secrets decryption for desktops
 
   age.secrets = {
     miniflux-admin = {
-      file = ../../secrets/miniflux-admin.age;
+      file = ../secrets/miniflux-admin.age;
       owner = "miniflux";
       group = "miniflux";
       mode = "0600";
@@ -2778,7 +2778,6 @@ let
   allSystems = users ++ servers;
 in
 {
-  "postgres-password.age".publicKeys = servers;
   "canlock.age".publicKeys = users;
   "gnus-name.age".publicKeys = users;
   "gnus-email.age".publicKeys = users;

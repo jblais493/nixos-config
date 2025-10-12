@@ -12,7 +12,6 @@ let
   allSystems = users ++ servers;
 in
 {
-  "postgres-password.age".publicKeys = servers;
   "canlock.age".publicKeys = users;
   "gnus-name.age".publicKeys = users;
   "gnus-email.age".publicKeys = users;
