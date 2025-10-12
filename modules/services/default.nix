@@ -260,7 +260,7 @@ in
         {
           greeting = {
             text_size = "sm";
-            text = "Welcome Joshua"
+            text = Welcome Joshua
           };
         }
         {
