@@ -87,66 +87,237 @@ services.homepage-dashboard = {
 
   settings = {
     title = "Empirica Homelab";
+    theme = "dark";
+    color = "slate";
+    background = "https://images.unsplash.com/photo-1502790671504-542ad42d5189?auto=format&fit=crop&w=2560&q=80";
+    backgroundOpacity = 0.5;
+    headerStyle = "boxed";
+    hideVersion = true;
+
+    layout = {
+      "Network Infrastructure" = {
+        style = "row";
+        columns = 3;
+      };
+      "Media Consumption" = {
+        style = "row";
+        columns = 3;
+      };
+      "Media Automation" = {
+        style = "row";
+        columns = 3;
+      };
+    };
   };
 
+  widgets = [
+    {
+      resources = {
+        cpu = true;
+        memory = true;
+        disk = "/";
+        uptime = true;
+      };
+    }
+    {
+      datetime = {
+        text_size = "xl";
+        format = {
+          dateStyle = "full";
+          timeStyle = "short";
+        };
+      };
+    }
+  ];
+
+  bookmarks = [
+    {
+      Developer = [
+        {
+          Github = [
+            {
+              abbr = "GH";
+              href = "https://github.com/";
+            }
+          ];
+        }
+      ];
+    }
+    {
+      Social = [
+        {
+          Reddit = [
+            {
+              abbr = "RE";
+              href = "https://reddit.com/";
+            }
+          ];
+        }
+      ];
+    }
+    {
+      Entertainment = [
+        {
+          YouTube = [
+            {
+              abbr = "YT";
+              href = "https://youtube.com/";
+            }
+          ];
+        }
+      ];
+    }
+  ];
+
   services = [
+    # Foundation Layer: Infrastructure that enables everything else
     {
       "Network Infrastructure" = [
         {
-          "Router" = {
-            icon = "mdi-router-wireless";
-            href = "http://192.168.0.1";
-            description = "Network gateway and firewall";
+          "AdGuard Home" = {
+            icon = "adguardhome";
+            href = "https://adguard.empirica";
+            description = "DNS sovereignty and network-level blocking";
+            widget = {
+              type = "adguard";
+              url = "http://localhost:3001";
+            };
           };
         }
         {
-          "AdGuard Home" = {
-            icon = "mdi-shield-check";
-            href = "https://adguard.empirica";
-            description = "DNS and ad blocking";
+          "Router" = {
+            icon = "router";
+            href = "http://192.168.0.1";
+            description = "Gateway and perimeter defense";
           };
         }
         {
           "Syncthing" = {
-            icon = "mdi-sync";
+            icon = "syncthing";
             href = "https://sync.empirica";
-            description = "File synchronization";
+            description = "Distributed file synchronization";
             widget = {
               type = "syncthing";
               url = "http://localhost:8384";
-              # Optional: add API key for stats
-              # key = "your-syncthing-api-key";
             };
           };
         }
       ];
     }
+
+    # Consumption Layer: Direct interaction with media
     {
-      "Media" = [
+      "Media Consumption" = [
         {
           "Jellyfin" = {
-            icon = "mdi-jellyfish-outline";
+            icon = "jellyfin";
             href = "https://jellyfin.empirica";
-            description = "Media playback";
+            description = "Self-hosted media server";
+            widget = {
+              type = "jellyfin";
+              url = "http://localhost:8096";
+              key = "{{HOMEPAGE_VAR_JELLYFIN_KEY}}";
+            };
           };
         }
         {
           "Audiobookshelf" = {
-            icon = "mdi-book-music";
+            icon = "audiobookshelf";
             href = "https://audiobookshelf.empirica";
-            description = "Audiobooks";
+            description = "Audiobook and podcast server";
           };
         }
         {
           "Calibre" = {
-            icon = "mdi-book-open-variant";
+            icon = "calibreweb";
             href = "https://calibre.empirica";
-            description = "Ebook library";
+            description = "Ebook library and management";
+          };
+        }
+      ];
+    }
+
+    # Automation Layer: The invisible machinery (your "arr" stack)
+    {
+      "Media Automation" = [
+        {
+          "Prowlarr" = {
+            icon = "prowlarr";
+            href = "https://prowlarr.empirica";
+            description = "Indexer manager - the source of all sources";
+            widget = {
+              type = "prowlarr";
+              url = "http://localhost:9696";
+              key = "{{HOMEPAGE_VAR_PROWLARR_KEY}}";
+            };
+          };
+        }
+        {
+          "Radarr" = {
+            icon = "radarr";
+            href = "https://radarr.empirica";
+            description = "Movie collection manager";
+            widget = {
+              type = "radarr";
+              url = "http://localhost:7878";
+              key = "{{HOMEPAGE_VAR_RADARR_KEY}}";
+            };
+          };
+        }
+        {
+          "Sonarr" = {
+            icon = "sonarr";
+            href = "https://sonarr.empirica";
+            description = "Series collection manager";
+            widget = {
+              type = "sonarr";
+              url = "http://localhost:8989";
+              key = "{{HOMEPAGE_VAR_SONARR_KEY}}";
+            };
+          };
+        }
+        {
+          "Lidarr" = {
+            icon = "lidarr";
+            href = "https://lidarr.empirica";
+            description = "Music collection manager";
+            widget = {
+              type = "lidarr";
+              url = "http://localhost:8686";
+              key = "{{HOMEPAGE_VAR_LIDARR_KEY}}";
+            };
+          };
+        }
+        {
+          "Bazarr" = {
+            icon = "bazarr";
+            href = "https://bazarr.empirica";
+            description = "Subtitle automation";
+            widget = {
+              type = "bazarr";
+              url = "http://localhost:6767";
+              key = "{{HOMEPAGE_VAR_BAZARR_KEY}}";
+            };
+          };
+        }
+        {
+          "SABnzbd" = {
+            icon = "sabnzbd";
+            href = "https://sabnzbd.empirica";
+            description = "Usenet download client";
+            widget = {
+              type = "sabnzbd";
+              url = "http://localhost:8080";
+              key = "{{HOMEPAGE_VAR_SABNZBD_KEY}}";
+            };
           };
         }
       ];
     }
   ];
+
+  # For API keys, use environment variables in your NixOS config
+  environmentFile = "/run/secrets/homepage-env";
 };
 
 # Add the environment variable
