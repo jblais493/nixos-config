@@ -83,7 +83,7 @@ in
       config = {
         LISTEN_ADDR = "0.0.0.0:8082";
       };
-      adminCredentialsFile = "/run/secrets/miniflux-admin";
+      adminCredentialsFile = "/run/agenix/miniflux-admin";
     };
 
     # Paperless-NGX - Document management
@@ -624,9 +624,6 @@ in
       # Radicale directory and empty users file
       "d '/var/lib/radicale' 0750 radicale radicale - -"
       "f '/var/lib/radicale/users' 0640 radicale radicale - -"
-
-      # Miniflux admin credentials file
-      "f '/run/secrets/miniflux-admin' 0600 miniflux miniflux - -"
     ];
 
     # Podman for containers
