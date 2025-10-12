@@ -253,14 +253,14 @@ in
             cpu = true;
             cputemp = true;
             memory = true;
-            disk = "/var/lib/containers/storage/overlay";
+            disk = "/var";
             uptime = true;
           };
         }
         {
           greeting = {
             text_size = "sm";
-            text = Welcome Joshua
+            text = "Welcome Joshua";
           };
         }
         {
