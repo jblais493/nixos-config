@@ -189,6 +189,11 @@ systemd.services.homepage-dashboard = {
       openFirewall = false;
     };
 
+    services.bazarr = {
+      enable = true;
+      openFirewall = true;
+    };
+
 services.adguardhome = {
       enable = true;
       host = "0.0.0.0";
