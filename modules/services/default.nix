@@ -187,7 +187,7 @@ systemd.services.homepage-dashboard = {
     services.sabnzbd = {
       enable = true;
       openFirewall = false;
-    }
+    };
 
 services.adguardhome = {
       enable = true;
