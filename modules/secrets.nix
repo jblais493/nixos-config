@@ -22,7 +22,7 @@
       mode = "400";
     };
     miniflux-admin = {
-      file = ../../secrets/miniflux-admin.age;
+      file = ../secrets/miniflux-admin.age;
       owner = "miniflux";
       group = "miniflux";
       mode = "0600";
