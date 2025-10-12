@@ -25,6 +25,13 @@
     extraGroups = [ "networkmanager" "wheel" ];
   };
 
+  users.users.immich = {
+    isSystemUser = true;
+    group = "immich";
+    extraGroups = [ "joshua" ];  # Add to joshua's group
+    description = "Immich photo management service";
+  };
+
   security.sudo.extraRules = [
     {
       users = [ "joshua" ];
