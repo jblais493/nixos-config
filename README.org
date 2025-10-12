@@ -2151,9 +2151,21 @@ in
           };
         }
         {
-          greeting = {
-            text_size = "sm";
-            text = "Welcome Joshua";
+          search = {
+            provider = "custom";
+            url = "https://search.rhscz.eu/search?q=";
+            target = "_blank";
+            showSearchSuggestions = "true";
+            focur = "true";
+          };
+        }
+        {
+          openmeteo = {
+            label = "Edmonton";
+            latitude = "53.5462";
+            longitude = "-113.4937";
+            units = "metric";
+            cache = "5";
           };
         }
         {
@@ -2164,23 +2176,6 @@ in
             };
           };
         }
-        {
-          openmeteo = {
-            label = "Edmonton";
-            latitude = "53.5462";
-            longitude = "-113.4937";
-            units = "metric";
-          };
-        }
-        # {
-        #   search = {
-        #     provider = "custom";
-        #     url = "https://search.rhscz.eu/search?q=";
-        #     target = "_blank";
-        #     showSearchSuggestions = "true";
-        #     focur = "true";
-        #   };
-        # }
       ];
 
       services = [
