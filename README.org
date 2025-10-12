@@ -2163,6 +2163,30 @@ services.caddy = {
         reverse_proxy localhost:8083
       '';
     };
+     "radarr.empirica" = {
+      extraConfig = ''
+        tls internal
+        reverse_proxy localhost:7878
+      '';
+    };
+    "sonarr.empirica" = {
+      extraConfig = ''
+        tls internal
+        reverse_proxy localhost:8989
+      '';
+    };
+    "lidarr.empirica" = {
+      extraConfig = ''
+        tls internal
+        reverse_proxy localhost:8686
+      '';
+    };
+    "prowlarr.empirica" = {
+      extraConfig = ''
+        tls internal
+        reverse_proxy localhost:9696
+      '';
+    };
   };
 };
 
