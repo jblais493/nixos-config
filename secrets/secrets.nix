@@ -1,24 +1,20 @@
 let
-  # Your personal SSH public key (from ~/.ssh/joshuakey.pub)
+  # Your personal SSH public key (from ~/.config/age/keys.txt
   joshua = "age1k0sc4ugaxzpav2rs8cmugwthaa3tpuzygvax8u84m6sm9ldh737qspv058";
 
   # Machine age keys
-  # king = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBb root@king";
-  # theologica = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCc root@theologica";
-  # alexandria = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDd root@alexandria";
-  # empire = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEe root@empire";
-
+  empirica = "age1gt2m3dtrkx3lwnddwv62fesadyd5pkmadtwtdfwvcs4lhcyqt33qfq386s";
 
   # Groups for convenience
   users = [ joshua ];
   # desktops = [ king theologica ];
-  # servers = [ alexandria empire ];
-  # allSystems = desktops ++ servers;
+  servers = [ empirica ];
+  allSystems = users ++ servers;
 in
 {
-  # Database secrets (only for servers)
-  "postgres-password.age".publicKeys = users;
+  "postgres-password.age".publicKeys = servers;
   "canlock.age".publicKeys = users;
   "gnus-name.age".publicKeys = users;
   "gnus-email.age".publicKeys = users;
+  "miniflux-admin.age".publicKeys = servers;
 }
