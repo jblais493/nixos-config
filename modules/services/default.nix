@@ -278,15 +278,15 @@ in
             units = "metric";
           };
         }
-        {
-          search = {
-            provider = "custom";
-            url = "https://search.rhscz.eu/search?q=";
-            target = "_blank";
-            showSearchSuggestions = "true";
-            focur = "true";
-          };
-        }
+        # {
+        #   search = {
+        #     provider = "custom";
+        #     url = "https://search.rhscz.eu/search?q=";
+        #     target = "_blank";
+        #     showSearchSuggestions = "true";
+        #     focur = "true";
+        #   };
+        # }
       ];
 
       services = [
