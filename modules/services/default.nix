@@ -615,7 +615,7 @@ in
       "d '${cfg.mediaDir}/music' 0755 ${cfg.user} users - -"
       "d '${cfg.mediaDir}/books' 0755 ${cfg.user} users - -"
       "d '${cfg.mediaDir}/audiobooks' 0755 ${cfg.user} users - -"
-      "d '${cfg.mediaDir}/photos' 0755 ${cfg.user} users - -"
+      "d '${cfg.mediaDir}/photos' 0775 joshua joshua - -"  # Changed: joshua:joshua, mode 0775 for immich use
 
       # Container config directories (only for Calibre now)
       "d '/home/${cfg.user}/containers/calibre-web-automated' 0755 ${cfg.user} users - -"
