@@ -220,7 +220,7 @@ in
         color = "slate";
         background = "https://raw.githubusercontent.com/jblais493/Wallpapers/refs/heads/master/serenity.jpg";
         backgroundOpacity = 0.5;
-        headerStyle = "boxed";
+        headerStyle = "clean";
         hideVersion = true;
 
         layout = {
@@ -268,6 +268,14 @@ in
             format = {
               dateStyle = "full";
             };
+          };
+        }
+        {
+          openmeteo = {
+            label = "Edmonton";
+            latitude = "53.5462";
+            longitude = "-113.4937";
+            units = "metric";
           };
         }
       ];
