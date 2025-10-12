@@ -59,6 +59,7 @@ in
     ".config/mpd".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/mpd";
     ".config/yt-dlp".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/yt-dlp";
     ".config/mpv".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/mpv";
+    ".config/tridactyl".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/tridactyl";
     ".tmux.conf".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/tmux/.tmux.conf";
   };
 
