@@ -2,6 +2,22 @@
 #+PROPERTY: header-args:elisp :tangle config.el
 
 * Initial Setup
+** Testing
+This will test our emacs load time and setup. Comment out when not in use!
+#+begin_src elisp
+;; Profile startup
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (message "*** Emacs loaded in %s with %d garbage collections."
+                     (format "%.2f seconds"
+                             (float-time
+                              (time-subtract after-init-time before-init-time)))
+                     gcs-done)))
+
+;; For detailed profiling, temporarily add:
+(setq use-package-verbose t)
+#+end_src
+
 ** Included configuration
 #+begin_src elisp
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
@@ -591,7 +607,7 @@ We set the visual line wrapping and relative line numbers (then we can just go u
   :after org-roam)
 
 (use-package! org-roam-ui
-  :after org-roam
+  :defer t
   :config
   (setq org-roam-ui-sync-theme t
         org-roam-ui-follow t
@@ -1653,6 +1669,10 @@ go install github.com/sqls-server/sqls@latest
 ** EMMS
 #+begin_src elisp
 ;; EMMS full configuration with Nord theme, centered layout, and swaync notifications
+(use-package! emms
+  :defer t
+  :commands (emms emms-browser emms-playlist-mode-go))
+
 (emms-all)
 (emms-default-players)
 (emms-mode-line-mode 1)

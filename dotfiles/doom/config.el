@@ -1,3 +1,15 @@
+;; Profile startup
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (message "*** Emacs loaded in %s with %d garbage collections."
+                     (format "%.2f seconds"
+                             (float-time
+                              (time-subtract after-init-time before-init-time)))
+                     gcs-done)))
+
+;; For detailed profiling, temporarily add:
+(setq use-package-verbose t)
+
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
 ;; Place your private configuration here! Remember, you do not need to run 'doom
@@ -512,7 +524,7 @@
   :after org-roam)
 
 (use-package! org-roam-ui
-  :after org-roam
+  :defer t
   :config
   (setq org-roam-ui-sync-theme t
         org-roam-ui-follow t
@@ -1473,6 +1485,10 @@ WHERE tablename = '%s';" table-name)))
   (setq persp-auto-resume-time -1))
 
 ;; EMMS full configuration with Nord theme, centered layout, and swaync notifications
+(use-package! emms
+  :defer t
+  :commands (emms emms-browser emms-playlist-mode-go))
+
 (emms-all)
 (emms-default-players)
 (emms-mode-line-mode 1)
