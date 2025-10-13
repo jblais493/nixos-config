@@ -1,3 +1,4 @@
+# ../../modules/supernote/default.nix
 { config, pkgs, lib, ... }:
 
 let
@@ -7,33 +8,26 @@ let
     url = "https://github.com/jblais493/supernote";
     ref = "main";
   }) {};
+
+  username = "joshua";  # Your username
 in
 {
   options.services.supernote-watcher = {
     enable = lib.mkEnableOption "Supernote automatic PDF conversion watcher";
-
-    notesDir = lib.mkOption {
-      type = lib.types.str;
-      default = "$HOME/Documents/supernote";
-      description = "Directory containing .note files";
-    };
-
-    pdfDir = lib.mkOption {
-      type = lib.types.str;
-      default = "$HOME/Documents/supernote-pdf";
-      description = "Directory for converted PDF files";
-    };
   };
 
   config = lib.mkIf cfg.enable {
     environment.systemPackages = [ supernote-tools ];
 
-    systemd.user.services.supernote-watcher = {
-      description = "Supernote automatic PDF conversion";
-      after = [ "graphical-session.target" ];
-      wantedBy = [ "default.target" ];
+    # Create the service for your specific user
+    systemd.services."supernote-watcher@${username}" = {
+      description = "Supernote automatic PDF conversion for ${username}";
+      wantedBy = [ "multi-user.target" ];
+      after = [ "network.target" ];
 
       serviceConfig = {
+        Type = "simple";
+        User = username;
         ExecStart = "${supernote-tools}/bin/supernote-watcher";
         Restart = "always";
         RestartSec = "10s";
