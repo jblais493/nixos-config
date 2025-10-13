@@ -1540,6 +1540,7 @@ Various desktop applications for comms, files, etc.
     libnotify
     xdg-utils
     gammastep
+    usbutils
 
     # VPN
     mullvad-vpn

@@ -29,6 +29,7 @@
     libnotify
     xdg-utils
     gammastep
+    usbutils
 
     # VPN
     mullvad-vpn
