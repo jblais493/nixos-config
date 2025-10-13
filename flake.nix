@@ -56,7 +56,6 @@
 
       # Build a deploy-rs deployment target
       mkDeploy = hostname: cfg: {
-        inherit hostname;
         profiles.system = {
           user = "root";
           sshUser = cfg.sshUser or "root";
