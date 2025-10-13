@@ -12,11 +12,14 @@
       auth-source-cache-expiry nil) ; default is 7200 (2h)
 
 ;; Set SSH_AUTH_SOCK from keychain
-(let ((ssh-auth-sock (string-trim
-                      (shell-command-to-string
-                       "keychain --eval --quiet --agents ssh 2>/dev/null | grep SSH_AUTH_SOCK | sed 's/.*SSH_AUTH_SOCK=\\([^;]*\\).*/\\1/'"))))
-  (when (and ssh-auth-sock (file-exists-p ssh-auth-sock))
-    (setenv "SSH_AUTH_SOCK" ssh-auth-sock)))
+(run-with-idle-timer
+ 1 nil
+ (lambda ()
+   (let ((ssh-auth-sock (string-trim
+                         (shell-command-to-string
+                          "keychain --eval --quiet --agents ssh 2>/dev/null | grep SSH_AUTH_SOCK | sed 's/.*SSH_AUTH_SOCK=\\([^;]*\\).*/\\1/'"))))
+     (when (and ssh-auth-sock (file-exists-p ssh-auth-sock))
+       (setenv "SSH_AUTH_SOCK" ssh-auth-sock)))))
 
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
 ;; are the three important ones:
