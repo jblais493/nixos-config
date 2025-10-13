@@ -42,7 +42,7 @@
   ];
 
   programs.adb.enable = true;
-  users.users.<your-user>.extraGroups = ["adbusers"];
+  users.users.joshua.extraGroups = ["adbusers"];
 
   services.resolved.enable = true;
   services.mullvad-vpn.enable = true;
