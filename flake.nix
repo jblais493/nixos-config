@@ -81,7 +81,7 @@
 
       # Remote deployment targets
       deploy.nodes = {
-        empirica   = mkDeploy "empirica"   { sshUser = "joshua"; hostname = "192.168.0.28"; };
+        empirica   = mkDeploy "empirica"   { sshUser = "root"; hostname = "192.168.0.28"; };
         alexandria = mkDeploy "alexandria" { hostname = "alexandria.your-domain.com"; };
         # empire   = mkDeploy "empire"     { hostname = "empire.your-domain.com"; };
       };
