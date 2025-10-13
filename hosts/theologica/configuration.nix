@@ -35,6 +35,9 @@
   time.timeZone = "America/Edmonton";
   i18n.defaultLocale = "en_CA.UTF-8";
 
+  # Supernote sync service
+  services.supernote-watcher.enable = true;
+
   # Set the state version
   system.stateVersion = "25.05";
 }
