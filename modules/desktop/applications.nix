@@ -41,6 +41,7 @@
     apacheHttpd
   ];
 
+  # Android tooling
   programs.adb.enable = true;
   users.users.joshua.extraGroups = ["adbusers"];
 

@@ -1552,6 +1552,7 @@ Various desktop applications for comms, files, etc.
     apacheHttpd
   ];
 
+  # Android tooling
   programs.adb.enable = true;
   users.users.joshua.extraGroups = ["adbusers"];
 
