@@ -1,144 +1,94 @@
 {
-  description = "Joshua Blais' NixOS Configuration";
+  description = "Joshua Blais' NixOS Infrastructure";
 
   inputs = {
+    # Core
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.05";
     nur.url = "github:nix-community/NUR";
 
-    disko = {
-      url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # Tools
+    disko.url = "github:nix-community/disko";
+    home-manager.url = "github:nix-community/home-manager";
+    deploy-rs.url = "github:serokell/deploy-rs";
+    agenix.url = "github:ryantm/agenix";
 
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # Custom modules
+    supernote-tools.url = "github:jblais493/supernote";
 
-    deploy-rs = {
-      url = "github:serokell/deploy-rs";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    agenix = {
-      url = "github:ryantm/agenix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    supernote-tools = {
-      url = "github:jblais493/supernote";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # Pin all inputs to main nixpkgs
+    disko.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
+    agenix.inputs.nixpkgs.follows = "nixpkgs";
+    supernote-tools.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, home-manager, deploy-rs, agenix, disko, ... }@inputs: {
-    nixosConfigurations = {
-      # Laptop hosts
-      theologica = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = { inherit inputs; };
-        modules = [
-          ./hosts/theologica/configuration.nix
-          agenix.nixosModules.default
-          inputs.supernote-tools.nixosModules.default
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.joshua = import ./modules/home-manager;
-            home-manager.extraSpecialArgs = { inherit inputs; };
-            home-manager.backupFileExtension = "backup";
-          }
-        ];
-      };
+  outputs = { self, nixpkgs, ... }@inputs:
+    let
+      lib = nixpkgs.lib;
 
-      king = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = { inherit inputs; };
-        modules = [
-          ./hosts/king/configuration.nix
-          agenix.nixosModules.default
+      # Common modules for all systems
+      base = [
+        inputs.agenix.nixosModules.default
+      ];
 
-          # # Add home-manager
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.joshua = import ./modules/home-manager;
-            home-manager.extraSpecialArgs = { inherit inputs; };
-            home-manager.backupFileExtension = "backup";
-          }
-        ];
-      };
+      # Desktop machines get base + GUI tools
+      desktop = base ++ [
+        inputs.supernote-tools.nixosModules.default
+        inputs.home-manager.nixosModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.users.joshua = import ./modules/home-manager;
+          home-manager.extraSpecialArgs = { inherit inputs; };
+          home-manager.backupFileExtension = "backup";
+        }
+      ];
 
-      axios = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = { inherit inputs; };
-        modules = [
-          ./hosts/axios/configuration.nix
-          agenix.nixosModules.default
-
-          # Add home-manager
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.joshua = import ./modules/home-manager;
-            home-manager.extraSpecialArgs = { inherit inputs; };
-            home-manager.backupFileExtension = "backup";
-          }
-        ];
-      };
-
-      # Server hosts (no home-manager needed)
-      empirica = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = { inherit inputs; };
-        modules = [
-          ./hosts/empirica/configuration.nix
-          agenix.nixosModules.default
-        ];
-      };
-
-      alexandria = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = { inherit inputs; };
-        modules = [
-          ./hosts/alexandria/configuration.nix
-          agenix.nixosModules.default
-        ];
-      };
-
-      empire = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = { inherit inputs; };
-        modules = [
-          ./hosts/empire/configuration.nix
-          agenix.nixosModules.default
-        ];
-      };
-    };
-
-    # Deploy-rs configuration for remote deployment
-    deploy.nodes = {
-      empirica = {
-        hostname = "192.168.0.28";
-        profiles.system = {
-          sshUser = "joshua";
-          user = "root";
-          path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.empirica;
+      # Build a NixOS system configuration
+      mkHost = hostname: modules:
+        lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = { inherit inputs; };
+          modules = [ ./hosts/${hostname}/configuration.nix ] ++ modules;
         };
-      };
-      alexandria = {
-        hostname = "alexandria.your-domain.com";
+
+      # Build a deploy-rs deployment target
+      mkDeploy = hostname: cfg: {
+        inherit hostname;
         profiles.system = {
           user = "root";
-          path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.alexandria;
+          sshUser = cfg.sshUser or "root";
+          path = inputs.deploy-rs.lib.x86_64-linux.activate.nixos
+            self.nixosConfigurations.${hostname};
         };
       };
-    };
 
-  checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
-  };
+    in {
+      # System configurations
+      nixosConfigurations = {
+        # Personal machines (desktop environment)
+        theologica = mkHost "theologica" desktop;
+        king       = mkHost "king"       desktop;
+        axios      = mkHost "axios"      desktop;
+
+        # Server infrastructure (headless)
+        empirica   = mkHost "empirica"   base;
+        alexandria = mkHost "alexandria" base;
+        empire     = mkHost "empire"     base;
+      };
+
+      # Remote deployment targets
+      deploy.nodes = {
+        empirica   = mkDeploy "empirica"   { sshUser = "joshua"; hostname = "192.168.0.28"; };
+        alexandria = mkDeploy "alexandria" { hostname = "alexandria.your-domain.com"; };
+        # empire   = mkDeploy "empire"     { hostname = "empire.your-domain.com"; };
+      };
+
+      # Deployment validation checks
+      checks = builtins.mapAttrs
+        (_: deployLib: deployLib.deployChecks self.deploy)
+        inputs.deploy-rs.lib;
+    };
 }
