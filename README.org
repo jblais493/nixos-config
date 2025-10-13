@@ -180,7 +180,7 @@ This declares all imported modules and specific tweaks to the Theologica host:
   time.timeZone = "America/Edmonton";
   i18n.defaultLocale = "en_CA.UTF-8";
 
-  # Supernote sync service
+  # Enable Supernote sync tool
   services.supernote-watcher.enable = true;
 
   # Set the state version
@@ -2789,16 +2789,11 @@ miniflux-admin = {
 ** Supernote
 #+begin_src nix :tangle modules/supernote.nix
 # modules/supernote.nix
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 
 let
   cfg = config.services.supernote-watcher;
-
-  supernote-tools = pkgs.callPackage (builtins.fetchGit {
-    url = "https://github.com/jblais493/supernote";
-    ref = "main";
-  }) {};
-
+  supernote-tools = inputs.supernote-tools.packages.${pkgs.system}.default;
   username = "joshua";
 in
 {
@@ -2809,7 +2804,6 @@ in
   config = lib.mkIf cfg.enable {
     environment.systemPackages = [ supernote-tools ];
 
-    # Create system service that runs as your user
     systemd.services.supernote-watcher-joshua = {
       description = "Supernote automatic PDF conversion for joshua";
       wantedBy = [ "multi-user.target" ];
@@ -2887,6 +2881,11 @@ in
 
     agenix = {
       url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    supernote-tools = {
+      url = "github:jblais493/supernote";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

@@ -1,14 +1,9 @@
 # modules/supernote.nix
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 
 let
   cfg = config.services.supernote-watcher;
-
-  supernote-tools = pkgs.callPackage (builtins.fetchGit {
-    url = "https://github.com/jblais493/supernote";
-    ref = "main";
-  }) {};
-
+  supernote-tools = inputs.supernote-tools.packages.${pkgs.system}.default;
   username = "joshua";
 in
 {
@@ -19,7 +14,6 @@ in
   config = lib.mkIf cfg.enable {
     environment.systemPackages = [ supernote-tools ];
 
-    # Create system service that runs as your user
     systemd.services.supernote-watcher-joshua = {
       description = "Supernote automatic PDF conversion for joshua";
       wantedBy = [ "multi-user.target" ];

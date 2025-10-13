@@ -25,6 +25,11 @@
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    supernote-tools = {
+      url = "github:jblais493/supernote";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, home-manager, deploy-rs, agenix, disko, ... }@inputs: {
