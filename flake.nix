@@ -41,8 +41,7 @@
         modules = [
           ./hosts/theologica/configuration.nix
           agenix.nixosModules.default
-
-          # Add home-manager
+          inputs.supernote-tools.nixosModules.default
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;

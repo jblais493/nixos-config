@@ -155,7 +155,6 @@ This declares all imported modules and specific tweaks to the Theologica host:
     ../../modules/media
     ../../modules/security
     ../../modules/secrets-joshua.nix
-    ../../modules/supernote.nix
   ];
 
   # Host-specific configuration
@@ -2786,40 +2785,6 @@ miniflux-admin = {
   };
 }
 #+end_src
-** Supernote
-#+begin_src nix :tangle modules/supernote.nix
-# modules/supernote.nix
-{ config, pkgs, lib, inputs, ... }:
-
-let
-  cfg = config.services.supernote-watcher;
-  supernote-tools = inputs.supernote-tools.packages.${pkgs.system}.default;
-  username = "joshua";
-in
-{
-  options.services.supernote-watcher = {
-    enable = lib.mkEnableOption "Supernote automatic PDF conversion watcher";
-  };
-
-  config = lib.mkIf cfg.enable {
-    environment.systemPackages = [ supernote-tools ];
-
-    systemd.services.supernote-watcher-joshua = {
-      description = "Supernote automatic PDF conversion for joshua";
-      wantedBy = [ "multi-user.target" ];
-      after = [ "network.target" ];
-
-      serviceConfig = {
-        Type = "simple";
-        User = username;
-        ExecStart = "${supernote-tools}/bin/supernote-watcher";
-        Restart = "always";
-        RestartSec = "10s";
-      };
-    };
-  };
-}
-#+end_src
 * Overlays
 * Secrets
 We manage secrets with [[https://github.com/ryantm/agenix][agenix]].
@@ -2899,8 +2864,7 @@ in
         modules = [
           ./hosts/theologica/configuration.nix
           agenix.nixosModules.default
-
-          # Add home-manager
+          inputs.supernote-tools.nixosModules.default
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;

@@ -10,7 +10,6 @@
     ../../modules/media
     ../../modules/security
     ../../modules/secrets-joshua.nix
-    ../../modules/supernote.nix
   ];
 
   # Host-specific configuration
