@@ -1,4 +1,4 @@
-# ../../modules/supernote/default.nix
+# modules/supernote.nix
 { config, pkgs, lib, ... }:
 
 let
@@ -9,7 +9,7 @@ let
     ref = "main";
   }) {};
 
-  username = "joshua";  # Your username
+  username = "joshua";
 in
 {
   options.services.supernote-watcher = {
@@ -19,9 +19,9 @@ in
   config = lib.mkIf cfg.enable {
     environment.systemPackages = [ supernote-tools ];
 
-    # Create the service for your specific user
-    systemd.services."supernote-watcher@${username}" = {
-      description = "Supernote automatic PDF conversion for ${username}";
+    # Create system service that runs as your user
+    systemd.services.supernote-watcher-joshua = {
+      description = "Supernote automatic PDF conversion for joshua";
       wantedBy = [ "multi-user.target" ];
       after = [ "network.target" ];
 
