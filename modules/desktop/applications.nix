@@ -37,6 +37,9 @@
     qbittorrent
     flatpak
 
+    # ADB and android tooling
+    android-tools
+
     # Added for Radicale
     apacheHttpd
   ];
