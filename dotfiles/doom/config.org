@@ -84,8 +84,9 @@ I like the nord theme that is packaged with doom, though I have done some custom
 ** Indenting
 #+begin_src elisp
 ;; Aggresssive Indent
-(require 'aggressive-indent)
-(global-aggressive-indent-mode 1)
+(use-package! aggressive-indent
+  :defer t
+  :hook (prog-mode . aggressive-indent-mode))
 #+end_src
 
 ** Cursor blink
@@ -767,6 +768,7 @@ This function is designed to be called via `emacsclient -e`."
         lsp-log-io nil
         lsp-completion-provider :capf
         lsp-enable-file-watchers nil
+        lsp-auto-guess-root t
         lsp-enable-folding nil
         lsp-enable-text-document-color nil
         lsp-enable-on-type-formatting nil

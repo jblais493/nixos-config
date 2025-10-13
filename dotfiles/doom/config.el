@@ -54,8 +54,9 @@
 (add-to-list 'default-frame-alist '(alpha . (96 . 97)))
 
 ;; Aggresssive Indent
-(require 'aggressive-indent)
-(global-aggressive-indent-mode 1)
+(use-package! aggressive-indent
+  :defer t
+  :hook (prog-mode . aggressive-indent-mode))
 
 ;; Blink cursor
 (blink-cursor-mode 1)
@@ -664,6 +665,7 @@ This function is designed to be called via `emacsclient -e`."
         lsp-log-io nil
         lsp-completion-provider :capf
         lsp-enable-file-watchers nil
+        lsp-auto-guess-root t
         lsp-enable-folding nil
         lsp-enable-text-document-color nil
         lsp-enable-on-type-formatting nil
