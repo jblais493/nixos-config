@@ -1088,7 +1088,6 @@ Basic development packages for ease of development and deployment.
       tweepy
       mastodon-py
     ]))
-    pipx
     gcc
     gh
     glibc

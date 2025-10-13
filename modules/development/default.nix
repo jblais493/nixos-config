@@ -19,7 +19,6 @@
       tweepy
       mastodon-py
     ]))
-    pipx
     gcc
     gh
     glibc
