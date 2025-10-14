@@ -79,8 +79,9 @@ systemd.user.services.kdeconnect = {
   user = "joshua";
   dataDir = "/home/joshua/.syncthing";
   configDir = "/home/joshua/.config/syncthing";
-  overrideDevices = true;
-  overrideFolders = true;
+  # Can declaratively set this later:
+  # overrideDevices = true;
+  # overrideFolders = true;
 
   settings = {
     devices = {
