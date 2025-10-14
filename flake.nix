@@ -56,12 +56,12 @@
 
       # Build a deploy-rs deployment target
       mkDeploy = hostname: cfg: {
-        inherit hostname;
-        profiles.system = {
+      hostname = cfg.hostname;  # Use the hostname from cfg, not the parameter
+      profiles.system = {
           user = "root";
           sshUser = cfg.sshUser or "root";
           path = inputs.deploy-rs.lib.x86_64-linux.activate.nixos
-            self.nixosConfigurations.${hostname};
+          self.nixosConfigurations.${hostname};  # Use hostname for config lookup
         };
       };
 
