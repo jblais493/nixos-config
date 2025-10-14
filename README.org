@@ -2882,6 +2882,7 @@ in
 
       # Build a deploy-rs deployment target
       mkDeploy = hostname: cfg: {
+        inherit hostname;
         profiles.system = {
           user = "root";
           sshUser = cfg.sshUser or "root";
@@ -2906,7 +2907,7 @@ in
 
       # Remote deployment targets
       deploy.nodes = {
-        empirica   = mkDeploy "empirica"   { sshUser = "root"; hostname = "192.168.0.28"; };
+        empirica   = mkDeploy "empirica"   { sshUser = "joshua"; hostname = "192.168.0.28"; };
         alexandria = mkDeploy "alexandria" { hostname = "alexandria.your-domain.com"; };
         # empire   = mkDeploy "empire"     { hostname = "empire.your-domain.com"; };
       };
