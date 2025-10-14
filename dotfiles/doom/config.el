@@ -1394,7 +1394,7 @@ WHERE tablename = '%s';" table-name)))
       ;; Mappings for Elfeed and ERC
       (:prefix("e" . "Elfeed/ERC/AI")
        :desc "Open elfeed"              "e" #'elfeed
-       :desc "Open ERC"                 "r" #'erc
+       :desc "Open ERC"                 "r" #'my/erc-connect
        :desc "Open EWW Browser"         "w" #'eww
        :desc "Update elfeed"            "u" #'elfeed-update
        :desc "MPV watch video"          "v" #'elfeed-tube-mpv
@@ -1965,6 +1965,22 @@ WHERE tablename = '%s';" table-name)))
 (map! :leader
       (:prefix ("o" . "open")
        :desc "Connect to Rizon IRC" "i" #'my/irc-connect-rizon))
+
+(defun my/erc-connect ()
+  (interactive)
+  (let ((password (auth-source-pick-first-password :host "irc.joshblais.com" :user "joshua")))
+    (if password
+        (erc-tls :server "irc.joshblais.com"
+                 :port 6697
+                 :nick "joshuablais"
+                 :password (format "joshua/liberachat:%s" password))
+      (message "Password not found"))))
+
+(setq erc-autojoin-channels-alist
+      '(("libera" "#technicalrenaissance" "#emacs" "#go-nuts" "#systemcrafters"))
+      erc-track-shorten-start 8
+      erc-kill-buffer-on-part t
+      erc-auto-query 'bury)
 
 (define-minor-mode my/audio-recorder-mode
   "Minor mode for recording audio in Emacs."
