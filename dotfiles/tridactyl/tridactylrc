@@ -1,3 +1,3 @@
-" Move through popup suggestions with arrow keys
-bind --mode=ex <Down> completions.next
-bind --mode=ex <Up> completions.prev
+set editorcmd emacsclient -c -a "" --eval "(progn (markdown-mode))"
+bind --mode=ex <Down> ex.next_completion
+bind --mode=ex <Up> ex.prev_completion
