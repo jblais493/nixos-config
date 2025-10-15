@@ -67,6 +67,8 @@ programs.firefox = {
       }
     '';
 
+    nativeMessagingHosts.tridactyl = true;
+
     bookmarks = {
       force = true;
       settings = [
