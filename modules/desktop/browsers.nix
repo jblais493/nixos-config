@@ -4,8 +4,6 @@
   environment.systemPackages = with pkgs; [
     brave
     tor-browser
-    # Native messenger for tridactyl extension
-    tridactyl-native
   ];
 
   # Firefox with extensions via home-manager approach
