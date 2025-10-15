@@ -2,6 +2,7 @@
 {
 programs.firefox = {
   enable = true;
+  nativeMessagingHosts.tridactyl = true;
   profiles.default = {
     name = "Default";
     isDefault = true;
@@ -66,8 +67,6 @@ programs.firefox = {
         color: var(--nord6) !important;
       }
     '';
-
-    nativeMessagingHosts.tridactyl = true;
 
     bookmarks = {
       force = true;
