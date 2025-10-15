@@ -2,7 +2,7 @@
 {
 programs.firefox = {
   enable = true;
-  nativeMessagingHosts.packages = [ pkgs.tridactyl-native ];
+  nativeMessagingHosts = [ pkgs.tridactyl-native ];
   profiles.default = {
     name = "Default";
     isDefault = true;
