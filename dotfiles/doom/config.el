@@ -1890,11 +1890,11 @@ WHERE tablename = '%s';" table-name)))
               collect (cond
                        ;; Last line without final newline
                        ((and (= i last-idx) (not has-final-newline))
-                        (format "wtype -s 350 \"%s\""
+                        (format "wtype \"%s\""
                                 (replace-regexp-in-string "\"" "\\\\\"" line)))
                        ;; Any other line
                        (t
-                        (format "wtype -s 350 \"%s\" && wtype -k Return"
+                        (format "wtype \"%s\" && wtype -k Return"
                                 (replace-regexp-in-string "\"" "\\\\\"" line)))))
      " && ")))
 

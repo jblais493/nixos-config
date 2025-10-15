@@ -1,3 +1,3 @@
-set editorcmd emacsclient -c -a "" --eval "(progn (markdown-mode))"
-bind --mode=ex <Down> ex.next_completion
-bind --mode=ex <Up> ex.prev_completion
+set editorcmd emacsclient -c
+bind --mode=ex <ArrowDown> ex.next_completion
+bind --mode=ex <ArrowUp> ex.prev_completion
