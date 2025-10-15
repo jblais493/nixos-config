@@ -1,1 +1,3 @@
-set newtab https://homepage.empirica
+" Move through popup suggestions with arrow keys
+bind --mode=ex <Down> completions.next
+bind --mode=ex <Up> completions.prev

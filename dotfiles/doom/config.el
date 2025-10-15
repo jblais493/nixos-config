@@ -387,6 +387,11 @@
                       (org-agenda-remove-tags t)
                       (org-agenda-prefix-format "   %i %?-2 t%s")))))))
 
+(defun my/org-agenda-dashboard ()
+  "Open the custom org-agenda dashboard."
+  (interactive)
+  (org-agenda nil "d"))
+
 ;; Mark tasks with a CLOSED timestamp on DONE
 (setq org-log-done 'time)
 
