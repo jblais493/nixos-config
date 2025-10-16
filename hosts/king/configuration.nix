@@ -23,7 +23,6 @@
 
   boot.loader.grub = {
     enable = true;
-    devices = [ "/dev/sda" ];
     useOSProber = true;
     enableCryptodisk = true;  # Moved this up for clarity
   };

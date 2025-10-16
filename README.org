@@ -305,7 +305,6 @@ This declares all imported modules and specific tweaks to the King host:
 
   boot.loader.grub = {
     enable = true;
-    devices = [ "/dev/sda" ];
     useOSProber = true;
     enableCryptodisk = true;  # Moved this up for clarity
   };
