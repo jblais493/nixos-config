@@ -1,7 +1,8 @@
 { config, pkgs, inputs, ... }:
 {
   imports = [
-    ./hardware-configuration.nix
+    # ./hardware-configuration.nix
+    inputs.disko.nixosModules.disko
     ./disko.nix
     ../../modules/desktop
     ../../modules/shared
@@ -52,5 +53,5 @@
     git
   ];
 
-  system.stateVersion = "24.11";
+  system.stateVersion = "25.05";
 }

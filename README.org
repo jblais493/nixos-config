@@ -283,7 +283,8 @@ This declares all imported modules and specific tweaks to the King host:
 { config, pkgs, inputs, ... }:
 {
   imports = [
-    ./hardware-configuration.nix
+    # ./hardware-configuration.nix
+    inputs.disko.nixosModules.disko
     ./disko.nix
     ../../modules/desktop
     ../../modules/shared
@@ -334,7 +335,7 @@ This declares all imported modules and specific tweaks to the King host:
     git
   ];
 
-  system.stateVersion = "24.11";
+  system.stateVersion = "25.05";
 }
 #+end_src
 *** hardware-configuration.nix
