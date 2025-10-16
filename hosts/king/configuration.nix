@@ -31,7 +31,7 @@
   };
 
   boot.loader.grub.enableCryptodisk = true;
-  boot.initrd.luks.devices."luks-89f9b5d7-d320-4b23-8db5-e3e5823e0578".keyFile = "/boot/crypto_keyfile.bin";
+  boot.initrd.luks.devices."cryptroot".keyFile = "/boot/crypto_keyfile.bin";
   networking.hostName = "king"; # Define your hostname.
 
   users.users.joshua = {
