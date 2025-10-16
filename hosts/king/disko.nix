@@ -8,8 +8,15 @@
         content = {
           type = "gpt";
           partitions = {
+            # BIOS boot partition - critical for GPT + legacy GRUB
+            bios = {
+              size = "1M";
+              type = "EF02";  # BIOS boot partition type
+              priority = 1;   # Make it first
+            };
             boot = {
               size = "512M";
+              priority = 2;
               content = {
                 type = "filesystem";
                 format = "ext4";
@@ -18,6 +25,7 @@
             };
             luks = {
               size = "100%";
+              priority = 3;
               content = {
                 type = "luks";
                 name = "cryptroot";
@@ -58,7 +66,6 @@
         };
       };
     };
-
     # Tmpfs for /tmp
     nodev = {
       "/tmp" = {
