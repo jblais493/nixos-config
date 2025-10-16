@@ -11,6 +11,14 @@
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
+  services.openssh = {
+    enable = true;
+    settings = {
+      PermitRootLogin = "prohibit-password";
+      PasswordAuthentication = false;
+    };
+  };
+
   boot.loader.grub = {
     enable = true;
     devices = [ "/dev/sda" ];
