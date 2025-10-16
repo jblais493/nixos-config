@@ -370,6 +370,79 @@ This declares all imported modules and specific tweaks to the King host:
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
 #+end_src
+*** Disks Configuration
+#+begin_src nix :tangle hosts/king/disko.nix
+{ ... }:
+{
+  disko.devices = {
+    disk = {
+      main = {
+        type = "disk";
+        device = "/dev/sda";
+        content = {
+          type = "gpt";
+          partitions = {
+            boot = {
+              size = "512M";
+              content = {
+                type = "filesystem";
+                format = "ext4";
+                mountpoint = "/boot";
+              };
+            };
+            luks = {
+              size = "100%";
+              content = {
+                type = "luks";
+                name = "cryptroot";
+                settings = {
+                  allowDiscards = true;
+                  bypassWorkqueues = true;
+                };
+                # Password will be prompted during disko format
+                content = {
+                  type = "btrfs";
+                  extraArgs = [ "-f" ];
+                  subvolumes = {
+                    # Root - ephemeral, wiped on boot
+                    "@root" = {
+                      mountpoint = "/";
+                      mountOptions = [ "compress=zstd" "noatime" ];
+                    };
+                    # Nix store - persistent
+                    "@nix" = {
+                      mountpoint = "/nix";
+                      mountOptions = [ "compress=zstd" "noatime" ];
+                    };
+                    # Persistent data - explicitly opted-in state
+                    "@persist" = {
+                      mountpoint = "/persist";
+                      mountOptions = [ "compress=zstd" "noatime" ];
+                    };
+                    # Snapshots for time machine
+                    "@snapshots" = {
+                      mountpoint = "/snapshots";
+                      mountOptions = [ "compress=zstd" "noatime" ];
+                    };
+                  };
+                };
+              };
+            };
+          };
+        };
+      };
+    };
+
+    # Tmpfs for /tmp
+    nodev = {
+      "/tmp" = {
+        fsType = "tmpfs";
+        mountOptions = [ "size=4G" "mode=1777" ];
+      };
+    };
+  };
+}
+#+end_src
 ** Axios
 *** README.md
 #+begin_src markdown :tangle hosts/axios/README.md
@@ -2869,6 +2942,7 @@ in
       # Common modules for all systems
       base = [
         inputs.agenix.nixosModules.default
+        inputs.disko.nixosModules.default
       ];
 
       # Desktop machines get base + GUI tools
@@ -2889,7 +2963,9 @@ in
         lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = { inherit inputs; };
-          modules = [ ./hosts/${hostname}/configuration.nix ] ++ modules;
+          modules = [ ./hosts/${hostname}/configuration.nix
+                      ./hosts/${hostname}/disko.nix
+                ] ++ modules;
         };
 
       # Build a deploy-rs deployment target
