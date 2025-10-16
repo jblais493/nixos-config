@@ -137,6 +137,7 @@
 
 ** YouTube :youtube:
 *** Technology :tech:
+**** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCxsYJ_S4jVayHx828AtQjig][Nathan Laundry]]
 **** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCwHwDuNd9lCdA7chyyquDXw][BreadOnPenguins]]
 **** [[https://www.youtube.com/feeds/videos.xml?channel_id=UC2eYFnH61tmytImy1mTYvhA][Luke Smith]]
 **** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCsnGwSIHyoYN0kiINAGUKxg][Wolfgang]]

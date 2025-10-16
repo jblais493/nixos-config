@@ -26,6 +26,7 @@
   programs.gpg.enable = true;
   services.gpg-agent = {
     enable = true;
+    defaultCacheTtl = 86400;
     pinentry.package = pkgs.pinentry-gtk2;
     extraConfig = ''
       allow-loopback-pinentry

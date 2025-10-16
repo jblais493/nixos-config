@@ -884,13 +884,14 @@ Scripts to setup a new machine with directories in their correct locations.
   programs.gpg.enable = true;
   services.gpg-agent = {
     enable = true;
+    defaultCacheTtl = 86400;
     pinentry.package = pkgs.pinentry-gtk2;
     extraConfig = ''
       allow-loopback-pinentry
     '';
   };
 }
-#+end_#+begin_src
+,#+end_#+begin_src
 
 #+end_src
 *** theming.nix
