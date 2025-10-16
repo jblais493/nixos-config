@@ -902,10 +902,8 @@ Scripts to setup a new machine with directories in their correct locations.
 
   programs.nix-index-database.comma.enable = true;
 }
-
-,#+end_#+begin_src
-
 #+end_src
+
 *** theming.nix
 #+begin_src nix :tangle modules/home-manager/theming.nix
 { config, pkgs, ... }:

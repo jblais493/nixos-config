@@ -41,5 +41,3 @@
 
   programs.nix-index-database.comma.enable = true;
 }
-
-#+end_#+begin_src
