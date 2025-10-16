@@ -899,8 +899,6 @@ Scripts to setup a new machine with directories in their correct locations.
     enable = true;
     enableBashIntegration = true;
   };
-
-  programs.nix-index-database.comma.enable = true;
 }
 #+end_src
 
