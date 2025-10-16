@@ -25,15 +25,9 @@
     enable = true;
     devices = [ "/dev/sda" ];
     useOSProber = true;
+    enableCryptodisk = true;  # Moved this up for clarity
   };
 
-  # Setup keyfile
-  boot.initrd.secrets = {
-    "/boot/crypto_keyfile.bin" = null;
-  };
-
-  boot.loader.grub.enableCryptodisk = true;
-  boot.initrd.luks.devices."cryptroot".keyFile = "/boot/crypto_keyfile.bin";
   networking.hostName = "king"; # Define your hostname.
 
   users.users.joshua = {
