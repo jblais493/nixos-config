@@ -18,6 +18,7 @@ programs.firefox = {
       wayback-machine
       leechblock-ng
       kristofferhagen-nord-theme
+      libredirect
     ];
 
     settings = {
