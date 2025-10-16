@@ -894,7 +894,15 @@ Scripts to setup a new machine with directories in their correct locations.
       allow-loopback-pinentry
     '';
   };
+
+  programs.nix-index = {
+    enable = true;
+    enableBashIntegration = true;
+  };
+
+  programs.nix-index-database.comma.enable = true;
 }
+
 ,#+end_#+begin_src
 
 #+end_src
