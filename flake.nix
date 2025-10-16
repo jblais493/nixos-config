@@ -31,7 +31,6 @@
       # Common modules for all systems
       base = [
         inputs.agenix.nixosModules.default
-        inputs.disko.nixosModules.default
       ];
 
       # Desktop machines get base + GUI tools
@@ -52,9 +51,7 @@
         lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = { inherit inputs; };
-          modules = [ ./hosts/${hostname}/configuration.nix
-                      ./hosts/${hostname}/disko.nix
-                ] ++ modules;
+          modules = [ ./hosts/${hostname}/configuration.nix ] ++ modules;
         };
 
       # Build a deploy-rs deployment target

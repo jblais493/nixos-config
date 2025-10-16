@@ -2,6 +2,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ./disko.nix
     ../../modules/desktop
     ../../modules/shared
     ../../modules/cli-tui
