@@ -33,6 +33,7 @@
     isNormalUser = true;
     description = "Joshua Blais";
     group = "joshua";
+    initialPassword = "changeme";
     extraGroups = [ "networkmanager" "wheel" ];
   };
 
