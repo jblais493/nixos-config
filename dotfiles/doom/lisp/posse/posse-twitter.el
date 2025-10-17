@@ -85,6 +85,10 @@
   (let ((instance (my-get-auth-secret "mastodon.instance" "MastodonAPI"))
         (access-token (my-get-auth-secret "mastodon.social" "MastodonAPI")))
 
+    ;; DEBUG
+    (message "DEBUG: Mastodon instance value: %s" instance)
+    (message "DEBUG: Mastodon token length: %d" (length access-token))
+
     (unless (and instance access-token)
       (error "Missing Mastodon credentials. Check your ~/.authinfo.gpg file"))
 
@@ -195,8 +199,6 @@
                   (message "Posted to microblog + all social platforms!")
                   (kill-buffer))
               (message "Microblog: ✓ | Social: %s" result)))))))))
-
-;; Key binding - NOW AT TOP LEVEL!
 (map! :leader
       (:prefix ("t" . "Tweet")
        :desc "Post to all platforms" "t" #'my-post-tweet))
