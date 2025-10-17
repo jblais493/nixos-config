@@ -993,7 +993,6 @@ let
 in
 {
   imports = [
-    ./git.nix
     ./setup.nix
     ./theming.nix
     ./browsers.nix
@@ -1155,32 +1154,6 @@ Scripts to setup a new machine with directories in their correct locations.
       "gsettings set org.gnome.desktop.interface cursor-theme 'Nordzy-cursors-white'"
       "gsettings set org.gnome.desktop.interface cursor-size 24"
     ];
-  };
-}
-#+end_src
-*** git.nix
-Establish git settings
-
-#+begin_src nix :tangle modules/home-manager/git.nix
-{ config, pkgs, ... }:
-{
-  programs.git = {
-    enable = true;
-    userName = "Joshua Blais";
-    userEmail = "josh@joshblais.com";
-
-    extraConfig = {
-      credential.helper = "store";
-      init.defaultBranch = "master";
-      core = {
-        editor = "nvim";
-        autocrlf = "input";
-      };
-      pull.rebase = true;
-      push.autoSetupRemote = true;
-
-      url."git@github.com:".insteadOf = "https://github.com/";
-    };
   };
 }
 #+end_src
