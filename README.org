@@ -1374,143 +1374,14 @@ Emacs configuration using DOOM emacs.
 #+end_src
 ** CLI/TUI
 *** default.nix
-Default shell utilities across machines.
-
-#+begin_src nix :tangle modules/cli-tui/default.nix
-{ config, pkgs, ... }:
-
-{
-  imports = [
-    ./zsh.nix
-    ./tmux.nix
-  ];
-
-  # Tools that don't need configuration - just install them
-  environment.systemPackages = with pkgs; [
-    # Basic CLIs
-    eza              # Better ls
-    zoxide           # Better cd
-    yazi             # Terminal file manager
-    bat              # Better cat
-    fd               # Better find
-    ripgrep-all      # Better grep
-    fzf              # Fuzzy finder
-    wget
-    httrack
-    curl
-    killall
-    zip
-    unzip
-    jq
-    rsync
-    borgbackup
-    coreutils
-    ydotool
-    gnupg
-    age
-    tea
-    tree
-    neovim
-    dig
-
-    # Nix workflow
-    nixd # Nix LSP
-    nh # nix helper
-    nixfmt # nix formatting
-    deploy-rs # deployment
-    direnv # start environments on cd into directory
-    devenv # development environments
-    nix-output-monitor # nix output monitoring
-    deadnix # Make sure code is getting used
-    comma # run packages without installing
-
-    # Git tools
-    lazygit          # Git TUI
-
-    # Networking tools
-    nmap
-
-    # Pass
-    (pass-wayland.withExtensions (exts: with exts; [
-        pass-otp
-        pass-import
-        pass-audit
-    ]))
-
-    # System tools
-    btop             # Better top
-    trash-cli        # Safe rm
-    tldr             # Simplified man pages
-    fastfetch        # System info
-
-    # Development containers
-    podman           # Container runtime
-    podman-compose   # Docker-compose for podman
-  ];
-
-  # Enable podman
-  virtualisation.podman = {
-    enable = true;
-    dockerCompat = true;  # Create docker alias
-    defaultNetwork.settings.dns_enabled = false;
-  };
-}
-#+end_src
+Imports all cli-tui utilities for daily drivers.
+*** shell
+**** zsh.nix
+**** tmux.nix
 *** tmux.nix
-#+begin_src nix :tangle modules/cli-tui/tmux.nix
-{ config, pkgs, ... }:
-
-{
-  # System-level tmux installation
-  environment.systemPackages = with pkgs; [
-    tmux
-    tmuxifier
-  ];
-
-  # Home-manager will handle the config via symlink
-  programs.tmux.enable = true;
-}
-#+end_src
+Tmux setup for servers/desktops
 *** zsh.nix
-ZSH setup. TODO: enhance speed of startup and decide if we include modules from nix or just dotfiles.
-
-#+begin_src nix :tangle modules/cli-tui/zsh.nix
-{ config, pkgs, ... }:
-{
-  # Enable zsh with built-in configuration
-  programs.zsh = {
-    enable = true;
-    ohMyZsh = {
-      enable = true;
-      plugins = [ "git" "sudo" "history" "fzf" ];
-      theme = "robbyrussell";
-    };
-    autosuggestions.enable = true;
-    syntaxHighlighting.enable = true;
-
-    # Remove this line - it doesn't exist
-    # enableFzfIntegration = true;
-
-    # Optional: Add some aliases
-    shellAliases = {
-      ll = "ls -l";
-      la = "ls -la";
-      grep = "grep --color=auto";
-    };
-  };
-
-  # Set zsh as default shell for user
-  users.users.joshua.shell = pkgs.zsh;
-
-  # Install additional tools
-  environment.systemPackages = with pkgs; [
-    starship  # Modern prompt
-    fzf       # Fuzzy finder
-    fd        # Better find (used by fzf)
-    ripgrep   # Better grep (used by fzf)
-  ];
-}
-#+end_src
+ZSH setup. Used across all machines
 
 ** Desktop
 *** default.nix

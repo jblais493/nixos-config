@@ -15,11 +15,26 @@
       };
       pull.rebase = true;
       push.autoSetupRemote = true;
+
+      rebase = {
+        autoSquash = true;
+        autoStash = true;
+      };
+
+      fetch.prune = true;
+
+      diff = {
+        algorithm = "histogram";
+        colorMoved = "default";
+      };
+
+      merge.conflictStyle = "zdiff3";
     };
   };
 
-  # Install git in system packages too
   environment.systemPackages = with pkgs; [
     git
+    lazygit # Git TUI
+    tea # Gitea CLI (if you use Gitea)
   ];
 }

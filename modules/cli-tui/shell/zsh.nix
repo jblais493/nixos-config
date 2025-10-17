@@ -5,7 +5,12 @@
     enable = true;
     ohMyZsh = {
       enable = true;
-      plugins = [ "git" "sudo" "history" "fzf" ];
+      plugins = [
+        "git"
+        "sudo"
+        "history"
+        "fzf"
+      ];
       theme = "robbyrussell";
     };
     autosuggestions.enable = true;
@@ -27,9 +32,9 @@
 
   # Install additional tools
   environment.systemPackages = with pkgs; [
-    starship  # Modern prompt
-    fzf       # Fuzzy finder
-    fd        # Better find (used by fzf)
-    ripgrep   # Better grep (used by fzf)
+    starship # Modern prompt
+    fzf # Fuzzy finder
+    fd # Better find (used by fzf)
+    ripgrep # Better grep (used by fzf)
   ];
 }
