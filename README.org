@@ -1264,17 +1264,16 @@ Basic development packages for ease of development and deployment.
 
   # CLI/TUI tools
   environment.systemPackages = with pkgs; [
-    hugo
     # Go toolchain
     go
     gopls
     godef
     gotools
 
-    (python313.withPackages (ps: with ps; [
-      tweepy
-      mastodon-py
-    ]))
+    # (python313.withPackages (ps: with ps; [
+    #   tweepy
+    #   mastodon-py
+    # ]))
     gcc
     gh
     glibc
@@ -1395,10 +1394,13 @@ Neovim installed
 *** network.nix
 Networking related CLI/TUIs
 *** nix.nix
+Nix packages for quality of life and enhancing nixOS
 *** podman.nix
+Podman service - **not needed on most machines
 *** security.nix
+GPG/age and password-store
 *** system-tools.nix
-
+system tooling
 
 ** Desktop
 *** default.nix
