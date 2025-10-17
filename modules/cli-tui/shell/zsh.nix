@@ -16,9 +16,6 @@
     autosuggestions.enable = true;
     syntaxHighlighting.enable = true;
 
-    # Remove this line - it doesn't exist
-    # enableFzfIntegration = true;
-
     # Optional: Add some aliases
     shellAliases = {
       ll = "ls -l";

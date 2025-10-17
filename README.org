@@ -1376,12 +1376,29 @@ Emacs configuration using DOOM emacs.
 *** default.nix
 Imports all cli-tui utilities for daily drivers.
 *** shell
-**** zsh.nix
 **** tmux.nix
-*** tmux.nix
 Tmux setup for servers/desktops
-*** zsh.nix
+***** Packages
+- tmux
+- tmuxifier
+**** zsh.nix
 ZSH setup. Used across all machines
+***** Packages
+- starship
+- fzf
+- fd
+- ripgrep
+***** Notes
+I will keep the aliases in my .zshrc as it is portable across systems rather than nixifying the aliases etc.
+*** core-utils.nix
+*** git.nix
+*** neovim.nix
+*** network.nix
+*** nix.nix
+*** podman.nix
+*** security.nix
+*** system-tools.nix
+
 
 ** Desktop
 *** default.nix
