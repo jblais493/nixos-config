@@ -1982,7 +1982,7 @@ WHERE tablename = '%s';" table-name)))
       (message "Password not found"))))
 
 (setq erc-autojoin-channels-alist
-      '(("libera" "#technicalrenaissance" "#emacs" "#go-nuts" "#systemcrafters" "nixos"))
+      '(("libera" "#technicalrenaissance" "#emacs" "#go-nuts" "#systemcrafters" "nixos" "librephone"))
       erc-track-shorten-start 8
       erc-kill-buffer-on-part t
       erc-auto-query 'bury)
