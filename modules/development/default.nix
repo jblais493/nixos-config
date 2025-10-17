@@ -6,8 +6,6 @@
 
   # CLI/TUI tools
   environment.systemPackages = with pkgs; [
-    # Editor
-    neovim
     hugo
     # Go toolchain
     go

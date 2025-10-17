@@ -1291,8 +1291,6 @@ Basic development packages for ease of development and deployment.
 
   # CLI/TUI tools
   environment.systemPackages = with pkgs; [
-    # Editor
-    neovim
     hugo
     # Go toolchain
     go
@@ -1408,15 +1406,21 @@ I will keep the aliases in my .zshrc as it is portable across systems rather tha
 **** notes
 
 *** git.nix
+All git related configuration
 **** packages
 - git
 - tea
 - lazygit
 **** notes
-All git configuration is done here.
+All git configuration is done here. No longer using .gitconfig
 
 *** neovim.nix
+Neovim installed
+**** packages
+- neovim
+
 *** network.nix
+Networking related CLI/TUIs
 *** nix.nix
 *** podman.nix
 *** security.nix
