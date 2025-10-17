@@ -1255,46 +1255,10 @@ programs.firefox = {
 *** default.nix
 Basic development packages for ease of development and deployment.
 
-#+begin_src nix :tangle modules/development/default.nix
-{ config, pkgs, ... }:
-{
-  imports = [
-    ./doom.nix
-  ];
-
-  # CLI/TUI tools
-  environment.systemPackages = with pkgs; [
-    # Go toolchain
-    go
-    gopls
-    godef
-    gotools
-
-    # (python313.withPackages (ps: with ps; [
-    #   tweepy
-    #   mastodon-py
-    # ]))
-    gcc
-    gh
-    glibc
-    clang
-    cmake
-    libtool
-    gnumake
-    sdbus-cpp
-    keychain
-    pciutils
-
-    # Rust related
-    rustc
-    cargo
-    rustfmt
-    rust-analyzer
-    clippy
-  ];
-}
-#+end_src
-
+*** base.nix
+*** go.nix
+*** rust.nix
+*** python.nix
 *** doom.nix
 Emacs configuration using DOOM emacs.
 #+begin_src nix :tangle modules/development/doom.nix

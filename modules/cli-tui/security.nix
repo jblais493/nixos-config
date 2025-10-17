@@ -4,6 +4,7 @@
   environment.systemPackages = with pkgs; [
     gnupg
     age
+    keychain
 
     # Password management
     (pass-wayland.withExtensions (

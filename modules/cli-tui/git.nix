@@ -66,5 +66,6 @@
     git
     lazygit
     tea
+    gh
   ];
 }
