@@ -1471,10 +1471,6 @@ Default shell utilities across machines.
   programs.tmux.enable = true;
 }
 #+end_src
-*** podman.nix
-#+begin_src nix :tangle modules/cli-tui/podman.nix
-
-#+end_src
 *** zsh.nix
 ZSH setup. TODO: enhance speed of startup and decide if we include modules from nix or just dotfiles.
 
