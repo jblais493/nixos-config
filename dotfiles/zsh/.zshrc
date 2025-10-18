@@ -347,5 +347,14 @@ eval "$(direnv hook zsh)"
 # if ! ssh-add -l 2>/dev/null | grep -q "joshua@joshuablais.com"; then
 #   ssh-add ~/.ssh/id_ed25519
 # fi
-# Attempt to add with gpg agent
-# ssh-add -q ~/.ssh/empire.key ~/.ssh/id_ed25519 2>/dev/null
+ 
+# Set SSH_AUTH_SOCK for gpg-agent
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/gnupg/S.gpg-agent.ssh"
+
+# Auto-load SSH keys once per session
+if ! ssh-add -l 2>/dev/null | grep -q "empire beginning ssh key"; then
+  ssh-add ~/.ssh/empire.key
+fi
+if ! ssh-add -l 2>/dev/null | grep -q "joshua@joshuablais.com"; then
+  ssh-add ~/.ssh/id_ed25519
+fi

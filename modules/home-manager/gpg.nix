@@ -25,4 +25,11 @@
       };
     };
   };
+
+  # Ensure SSH_AUTH_SOCK is set in shell
+  programs.zsh = {
+    initExtra = ''
+      export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/gnupg/S.gpg-agent.ssh"
+    '';
+  };
 }
