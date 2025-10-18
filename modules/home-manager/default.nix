@@ -16,6 +16,7 @@ in
     ./theming.nix
     ./firefox.nix
     ./gpg.nix
+    ./system/dotfiles.nix
   ];
 
   home.username = "joshua";
@@ -46,44 +47,6 @@ in
         "libreoffice-writer.desktop";
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" = "libreoffice-calc.desktop";
     };
-  };
-
-  # Use mkOutOfStoreSymlink for live editing
-  home.file = {
-    ".config/doom".source =
-      mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/doom";
-    ".zshrc".source =
-      mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/zsh/.zshrc";
-    ".config/starship.toml".source =
-      mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/starship/starship.toml";
-    ".config/tmux/plugins".source =
-      mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/tmux/plugins";
-    ".config/hypr".source =
-      mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/hypr";
-    ".config/kitty".source =
-      mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/kitty";
-    ".config/waybar".source =
-      mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/waybar";
-    ".config/swaync".source =
-      mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/swaync";
-    ".config/wofi".source =
-      mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/wofi";
-    ".config/nvim".source =
-      mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/nvim";
-    ".config/fastfetch".source =
-      mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/fastfetch";
-    ".config/zathura".source =
-      mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/zathura";
-    ".config/btop".source =
-      mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/btop";
-    ".config/mpd".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/mpd";
-    ".config/yt-dlp".source =
-      mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/yt-dlp";
-    ".config/mpv".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/mpv";
-    ".tridactylrc".source =
-      mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/tridactyl/tridactylrc";
-    ".tmux.conf".source =
-      mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/dotfiles/tmux/.tmux.conf";
   };
 
   services.mpd = {
