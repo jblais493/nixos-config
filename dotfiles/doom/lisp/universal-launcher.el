@@ -539,7 +539,9 @@
   "Last used search engine.")
 
 (defun universal-launcher--web-search (query)
-  "Search the web with QUERY using default browser."
+  "Search the web with QUERY using default browser.
+If QUERY looks like a URL, navigate directly to it.
+Otherwise, prompt for a search engine."
   (let* ((search-engines
           '(("Google" . "https://www.google.com/search?q=")
             ("Go documentation" . "https://pkg.go.dev/search?q=")
@@ -553,6 +555,7 @@
             ("4get" . "https://4get.ca/web?s=")
             ("Goodreads" . "https://www.goodreads.com/search?q=")
             ("Nix Packages" . "https://search.nixos.org/packages?channel=25.05&show=")
+            ("NixOS Options" . "https://search.nixos.org/options?channel=25.05&query=")
             ("DevDocs.io" . "https://devdocs.io/#q=")
             ("Doom discourse" . "https://discourse.doomemacs.org/search?q=")
             ("Doom issues" . "https://github.com/doomemacs/doomemacs/issues?q=")
@@ -569,20 +572,36 @@
             ("Wolfram Alpha" . "https://www.wolframalpha.com/input/?i=")
             ("YouTube" . "https://www.youtube.com/results?search_query=")
             ("Perplexity" . "https://www.perplexity.ai/search/new?q=")
-            ))
-         (default-engine (or universal-launcher--last-search-engine
-                             universal-launcher-default-search-engine
-                             "Google"))
-         (engine (completing-read
-                  (format "Search with (default %s): " default-engine)
-                  (mapcar #'car search-engines)
-                  nil t nil nil default-engine))
-         (url-base (cdr (assoc engine search-engines)))
-         (encoded-query (url-hexify-string query)))
-    (setq universal-launcher--last-search-engine engine)
-    (browse-url (concat url-base encoded-query))))
+            ("Hacker News" . "https://hn.algolia.com/?q=")
+            ("Lobsters" . "https://lobste.rs/search?q=")
+            ("arXiv" . "https://arxiv.org/search/?query=")
+            ("Semantic Scholar" . "https://www.semanticscholar.org/search?q=")
+            ("Google Scholar" . "https://scholar.google.com/scholar?q=")
+            ("Go Issues" . "https://github.com/golang/go/issues?q=")
+            ("Crates.io" . "https://crates.io/search?q=")
+            ("MELPA" . "https://melpa.org/#/?q=")
+            ("Man Pages" . "https://man.archlinux.org/search?q=")
+            ("Emacs Docs" . "https://www.gnu.org/software/emacs/manual/html_node/emacs/index.html?search=")
+            )))
+    ;; Check if query is a URL
+    (if (string-match-p "^\\(https?://\\|www\\.\\)" query)
+        ;; Navigate directly
+        (browse-url (if (string-prefix-p "www." query)
+                        (concat "https://" query)
+                      query))
+      ;; Otherwise, search
+      (let* ((default-engine (or universal-launcher--last-search-engine
+                                 universal-launcher-default-search-engine
+                                 "Google"))
+             (engine (completing-read
+                      (format "Search with (default %s): " default-engine)
+                      (mapcar #'car search-engines)
+                      nil t nil nil default-engine))
+             (url-base (cdr (assoc engine search-engines)))
+             (encoded-query (url-hexify-string query)))
+        (setq universal-launcher--last-search-engine engine)
+        (browse-url (concat url-base encoded-query))))));; Insert emoji function
 
-;; Insert emoji function
 (defun universal-launcher--insert-emoji (emoji)
   "Insert EMOJI at point and copy to clipboard."
   (let ((frame universal-launcher--previous-frame))
