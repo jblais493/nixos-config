@@ -497,63 +497,32 @@
 ;;Org-Roam
 ;; Org-Roam Configuration with SQLite Built-in Connector
 (use-package! org-roam
-  :defer 3
-  :custom
-  ;; Set your org-roam directory
-  (org-roam-directory "~/org/roam")
-
-  ;; Explicitly use the built-in SQLite connector
-  (org-roam-database-connector 'sqlite-builtin)
-
-  ;; Set an absolute path for the database file
-  (org-roam-db-location (expand-file-name "org-roam.db" org-roam-directory))
-
+  :commands (org-roam-node-find 
+             org-roam-node-insert
+             org-roam-dailies-goto-today
+             org-roam-buffer-toggle)
+  :init
+  ;; Don't sync on startup
+  (setq org-roam-directory "~/org/roam")
+  (setq org-roam-database-connector 'sqlite-builtin)
+  (setq org-roam-db-location (expand-file-name "org-roam.db" org-roam-directory))
+  
   :config
-  ;; Make sure the directory exists
+  ;; Only sync when explicitly opening org-roam
+  (org-roam-db-autosync-mode +1)
+  
+  ;; Create directory if needed
   (unless (file-exists-p org-roam-directory)
-    (make-directory org-roam-directory t))
+    (make-directory org-roam-directory t)))
 
-  ;; Add error handling for database operations
-  (advice-add 'org-roam-db-query :around
-              (lambda (fn &rest args)
-                (condition-case err
-                    (apply fn args)
-                  (error
-                   (message "Database error in org-roam: %S" err)
-                   nil))))
-
-  ;; Enable auto-sync mode to keep the database updated
-  (org-roam-db-autosync-mode +1))
-
-;; Org-Roam UI setup - only load after org-roam is properly initialized
-(use-package! websocket
-  :after org-roam)
-
+;; Load org-roam-ui even later
 (use-package! org-roam-ui
-  :defer t
+  :commands (org-roam-ui-mode org-roam-ui-open)
   :config
   (setq org-roam-ui-sync-theme t
         org-roam-ui-follow t
         org-roam-ui-update-on-save t
-        org-roam-ui-open-on-start t))
-
-;; org-download customizations
-(require 'org-download)
-(setq-default org-download-screenshot-method "scrot -s %s")
-
-;; Debugging function for SQLite issues
-(defun debug-org-roam-db ()
-  "Debug function to test org-roam database connection."
-  (interactive)
-  (message "Testing org-roam database...")
-  (message "Directory exists: %s" (file-exists-p org-roam-directory))
-  (message "Database path: %s" org-roam-db-location)
-  (message "Database connector: %s" org-roam-database-connector)
-  (condition-case err
-      (progn
-        (org-roam-db-sync)
-        (message "Database synced successfully!"))
-    (error (message "Database sync error: %S" err))))
+        org-roam-ui-open-on-start nil))  ; Don't auto-open!
 
 ;; Keybinds for org mode
 (with-eval-after-load 'org
@@ -1492,37 +1461,78 @@ WHERE tablename = '%s';" table-name)))
 
 ;; EMMS full configuration with Nord theme, centered layout, and swaync notifications
 (use-package! emms
-  :defer t
-  :commands (emms emms-browser emms-playlist-mode-go))
+  :commands (emms 
+             emms-browser 
+             emms-playlist-mode-go
+             emms-pause
+             emms-stop
+             emms-next
+             emms-previous
+             emms-shuffle)
+  :init
+  ;; Set these early so they're available when EMMS loads
+  (setq emms-source-file-default-directory "~/MusicOrganized"
+        emms-playlist-buffer-name "*Music*"
+        emms-info-asynchronously t
+        emms-browser-default-browse-type 'artist)
+  
+  :config
+  ;; Initialize EMMS - only runs when you actually use it
+  (emms-all)
+  (emms-default-players)
+  (emms-mode-line-mode 1)
+  (emms-playing-time-mode 1)
 
-(emms-all)
-(emms-default-players)
-(emms-mode-line-mode 1)
-(emms-playing-time-mode 1)
+  ;; Basic settings
+  (setq emms-browser-covers #'emms-browser-cache-thumbnail-async
+        emms-browser-thumbnail-small-size 64
+        emms-browser-thumbnail-medium-size 128
+        emms-source-file-directory-tree-function 'emms-source-file-directory-tree-find)
 
-;; Basic settings
-(setq emms-source-file-default-directory "~/MusicOrganized"
-      emms-browser-covers #'emms-browser-cache-thumbnail-async
-      emms-browser-thumbnail-small-size 64
-      emms-browser-thumbnail-medium-size 128
-      emms-playlist-buffer-name "*Music*"
-      emms-info-asynchronously t
-      emms-source-file-directory-tree-function 'emms-source-file-directory-tree-find)
+  ;; MPD integration - critical for your workflow
+  (require 'emms-player-mpd)
+  (setq emms-player-mpd-server-name "localhost"
+        emms-player-mpd-server-port "6600"
+        emms-player-mpd-music-directory (expand-file-name "~/MusicOrganized"))
 
-;; MPD integration
-(require 'emms-player-mpd)
-(setq emms-player-mpd-server-name "localhost")
-(setq emms-player-mpd-server-port "6600")
-(setq emms-player-mpd-music-directory (expand-file-name "~/MusicOrganized"))
+  ;; Connect to MPD and add it to player list
+  (add-to-list 'emms-player-list 'emms-player-mpd)
+  (add-to-list 'emms-info-functions 'emms-info-mpd)
+  
+  ;; Connect to MPD with slight delay to avoid blocking
+  (run-with-timer 0.1 nil #'emms-player-mpd-connect)
 
-;; Connect to MPD and add it to player list and info functions
-(add-to-list 'emms-player-list 'emms-player-mpd)
-(add-to-list 'emms-info-functions 'emms-info-mpd)
-(emms-player-mpd-connect)
+  ;; Ensure players are properly set up
+  (setq emms-player-list '(emms-player-mpd
+                           emms-player-mplayer
+                           emms-player-vlc
+                           emms-player-mpg321
+                           emms-player-ogg123))
 
+  ;; Info functions
+  (add-to-list 'emms-info-functions 'emms-info-ogginfo)
+  (add-to-list 'emms-info-functions 'emms-info-tinytag)
+
+  ;; Nord theme colors
+  (custom-set-faces
+   '(emms-browser-artist-face ((t (:foreground "#ECEFF4" :height 1.1))))
+   '(emms-browser-album-face ((t (:foreground "#88C0D0" :height 1.0))))
+   '(emms-browser-track-face ((t (:foreground "#A3BE8C" :height 1.0))))
+   '(emms-playlist-track-face ((t (:foreground "#D8DEE9" :height 1.0))))
+   '(emms-playlist-selected-face ((t (:foreground "#BF616A" :weight bold)))))
+
+  ;; Browser keybindings
+  (define-key emms-browser-mode-map (kbd "RET") 'emms-browser-add-tracks-and-play)
+  (define-key emms-browser-mode-map (kbd "SPC") 'emms-pause)
+
+  ;; Add notification hook
+  (add-hook 'emms-player-started-hook 'emms-notify-song-change-with-artwork))
+
+;; Helper functions - defined outside use-package so they're always available
 (defun my/update-emms-from-mpd ()
   "Update EMMS cache from MPD and refresh browser."
   (interactive)
+  (require 'emms)  ; Ensure EMMS is loaded
   (message "Updating EMMS cache from MPD...")
   (emms-player-mpd-connect)
   (emms-cache-set-from-mpd-all)
@@ -1531,132 +1541,95 @@ WHERE tablename = '%s';" table-name)))
     (with-current-buffer "*EMMS Browser*"
       (emms-browser-refresh))))
 
-;; Ensure players are properly set up
-(setq emms-player-list '(emms-player-mpd
-                         emms-player-mplayer
-                         emms-player-vlc
-                         emms-player-mpg321
-                         emms-player-ogg123))
-
-;; Nord theme colors
-(with-eval-after-load 'emms
-  (custom-set-faces
-   ;; Nord colors: https://www.nordtheme.com/docs/colors-and-palettes
-   '(emms-browser-artist-face ((t (:foreground "#ECEFF4" :height 1.1))))  ;; Nord Snow Storm (bright white)
-   '(emms-browser-album-face ((t (:foreground "#88C0D0" :height 1.0))))   ;; Nord Frost (blue)
-   '(emms-browser-track-face ((t (:foreground "#A3BE8C" :height 1.0))))   ;; Nord Aurora (green)
-   '(emms-playlist-track-face ((t (:foreground "#D8DEE9" :height 1.0))))  ;; Nord Snow Storm (lighter white)
-   '(emms-playlist-selected-face ((t (:foreground "#BF616A" :weight bold))))))  ;; Nord Aurora (red)
-
-;; Add margins and spacing for better layout
 (defun emms-center-buffer-in-frame ()
   "Add margins to center the EMMS buffer in the frame."
   (let* ((window-width (window-width))
-         (desired-width 80)  ;; Desired text width
+         (desired-width 80)
          (margin (max 0 (/ (- window-width desired-width) 2))))
     (setq-local left-margin-width margin)
     (setq-local right-margin-width margin)
-    ;; Add line spacing for better readability
     (setq-local line-spacing 0.2)
     (set-window-buffer (selected-window) (current-buffer))))
 
-;; Set dark Nord background and center layout
+(defun emms-cover-art-path ()
+  "Return the path of the cover art for the current track."
+  (when (bound-and-true-p emms-playlist-buffer)
+    (let* ((track (emms-playlist-current-selected-track))
+           (path (emms-track-get track 'name))
+           (dir (file-name-directory path))
+           (standard-files '("cover.jpg" "cover.png" "folder.jpg" "folder.png"
+                           "album.jpg" "album.png" "front.jpg" "front.png"))
+           (standard-cover (cl-find-if
+                           (lambda (file)
+                             (file-exists-p (expand-file-name file dir)))
+                           standard-files)))
+      (if standard-cover
+          (expand-file-name standard-cover dir)
+        (let ((cover-files (directory-files dir nil ".*\\(jpg\\|png\\|jpeg\\)$")))
+          (when cover-files
+            (expand-file-name (car cover-files) dir)))))))
 
-(add-hook 'emms-browser-mode-hook
-          (lambda ()
-            (face-remap-add-relative 'default '(:background "#2E3440"))  ;; Nord Polar Night (dark blue-gray)
-            (emms-center-buffer-in-frame)))
+(defun emms-notify-song-change-with-artwork ()
+  "Send song change notification with album artwork to swaync via libnotify."
+  (when (bound-and-true-p emms-playlist-buffer)
+    (let* ((track (emms-playlist-current-selected-track))
+           (artist (or (emms-track-get track 'info-artist) "Unknown Artist"))
+           (title (or (emms-track-get track 'info-title) "Unknown Title"))
+           (album (or (emms-track-get track 'info-album) "Unknown Album"))
+           (cover-image (emms-cover-art-path)))
+      
+      (apply #'start-process
+             "emms-notify" nil "notify-send"
+             "-a" "EMMS"
+             "-c" "music"
+             (append
+              (when cover-image
+                (list "-i" cover-image))
+              (list
+               (format "Now Playing: %s" title)
+               (format "Artist: %s\nAlbum: %s" artist album)))))))
 
-(add-hook 'emms-playlist-mode-hook
-          (lambda ()
-            (face-remap-add-relative 'default '(:background "#2E3440"))  ;; Nord Polar Night (dark blue-gray)
-            (emms-center-buffer-in-frame)))
+(defun emms-signal-waybar-mpd-update ()
+  "Signal waybar to update its MPD widget."
+  (start-process "emms-signal-waybar" nil "pkill" "-RTMIN+8" "waybar"))
 
-;; Add window resize hook to maintain centering
-(add-hook 'window-size-change-functions
-          (lambda (_)
-            (when (or (eq major-mode 'emms-browser-mode)
-                      (eq major-mode 'emms-playlist-mode))
+;; Hooks for EMMS modes - use with-eval-after-load to avoid premature loading
+(with-eval-after-load 'emms-browser
+  (add-hook 'emms-browser-mode-hook
+            (lambda ()
+              (face-remap-add-relative 'default '(:background "#2E3440"))
               (emms-center-buffer-in-frame))))
 
-;; Ensure browser functionality
-(setq emms-browser-default-browse-type 'artist)
-;; (add-to-list 'emms-info-functions 'emms-info-mp3info)
-(add-to-list 'emms-info-functions 'emms-info-ogginfo)
-;; (add-to-list 'emms-info-functions 'emms-info-metaflac)
-(add-to-list 'emms-info-functions 'emms-info-tinytag)
+(with-eval-after-load 'emms-playlist-mode
+  (add-hook 'emms-playlist-mode-hook
+            (lambda ()
+              (face-remap-add-relative 'default '(:background "#2E3440"))
+              (emms-center-buffer-in-frame))))
 
-;; Ensure tracks play when selected
-(define-key emms-browser-mode-map (kbd "RET") 'emms-browser-add-tracks-and-play)
-(define-key emms-browser-mode-map (kbd "SPC") 'emms-pause)
+;; Window resize hook - only add when EMMS is actually loaded
+(with-eval-after-load 'emms
+  (add-hook 'window-size-change-functions
+            (lambda (_)
+              (when (or (eq major-mode 'emms-browser-mode)
+                        (eq major-mode 'emms-playlist-mode))
+                (emms-center-buffer-in-frame)))))
 
-;; Your keybindings
+;; Keybindings
 (map! :leader
       (:prefix ("m" . "music/EMMS")
        :desc "Update from MPD" "u" #'my/update-emms-from-mpd
-       :desc "Play at directory tree"   "d" #'emms-play-directory-tree
-       :desc "Go to emms playlist"      "p" #'emms-playlist-mode-go
-       :desc "Shuffle"                  "h" #'emms-shuffle
-       :desc "Emms pause track"         "x" #'emms-pause
-       :desc "Emms stop track"          "s" #'emms-stop
+       :desc "Play at directory tree" "d" #'emms-play-directory-tree
+       :desc "Go to emms playlist" "p" #'emms-playlist-mode-go
+       :desc "Shuffle" "h" #'emms-shuffle
+       :desc "Emms pause track" "x" #'emms-pause
+       :desc "Emms stop track" "s" #'emms-stop
        :desc "Emms play previous track" "b" #'emms-previous
-       :desc "Emms play next track"     "n" #'emms-next
-       :desc "EMMS Browser"             "o" #'emms-browser))
+       :desc "Emms play next track" "n" #'emms-next
+       :desc "EMMS Browser" "o" #'emms-browser))
 
-;; Enhanced cover art function (used by both browser and notifications)
-(defun emms-cover-art-path ()
-  "Return the path of the cover art for the current track."
-  (let* ((track (emms-playlist-current-selected-track))
-         (path (emms-track-get track 'name))
-         (dir (file-name-directory path))
-         ;; Check standard cover filenames first
-         (standard-files '("cover.jpg" "cover.png" "folder.jpg" "folder.png"
-                         "album.jpg" "album.png" "front.jpg" "front.png"))
-         (standard-cover (cl-find-if
-                         (lambda (file)
-                           (file-exists-p (expand-file-name file dir)))
-                         standard-files)))
-    (if standard-cover
-        (expand-file-name standard-cover dir)
-      ;; If standard files aren't found, try any image in the directory
-      (let ((cover-files (directory-files dir nil ".*\\(jpg\\|png\\|jpeg\\)$")))
-        (when cover-files
-          (expand-file-name (car cover-files) dir))))))
-
-;; Swaync notification function with cover art
-(defun emms-notify-song-change-with-artwork ()
-  "Send song change notification with album artwork to swaync via libnotify"
-  (let* ((track (emms-playlist-current-selected-track))
-         (artist (or (emms-track-get track 'info-artist) "Unknown Artist"))
-         (title (or (emms-track-get track 'info-title) "Unknown Title"))
-         (album (or (emms-track-get track 'info-album) "Unknown Album"))
-         ;; Use our existing cover art function
-         (cover-image (emms-cover-art-path)))
-
-    ;; Send notification with artwork if available
-    (apply #'start-process
-           "emms-notify" nil "notify-send"
-           "-a" "EMMS"               ;; Application name
-           "-c" "music"              ;; Category
-           (append
-            ;; Add artwork if found
-            (when cover-image
-              (list "-i" cover-image))
-            ;; Summary and body
-            (list
-             (format "Now Playing: %s" title)
-             (format "Artist: %s\nAlbum: %s" artist album))))))
-
-;; Add the notification function to hook
-(add-hook 'emms-player-started-hook 'emms-notify-song-change-with-artwork)
-
-;; Waybar MPD integration helper - optional signal to waybar on track change
-(defun emms-signal-waybar-mpd-update ()
-  "Signal waybar to update its MPD widget"
-  (start-process "emms-signal-waybar" nil "pkill" "-RTMIN+8" "waybar"))
-
-;; Add the waybar signal function to hook (optional, uncomment if using waybar)
-;; (add-hook 'emms-player-started-hook 'emms-signal-waybar-mpd-update)
+;; Optional: Waybar signal hook (uncomment if using waybar)
+;; (with-eval-after-load 'emms
+;;   (add-hook 'emms-player-started-hook 'emms-signal-waybar-mpd-update))
 
 ;; Nov.el customizations and setup
 (setq nov-unzip-program (executable-find "bsdtar")
