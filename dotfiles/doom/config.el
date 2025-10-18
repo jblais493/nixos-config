@@ -497,6 +497,7 @@
 ;;Org-Roam
 ;; Org-Roam Configuration with SQLite Built-in Connector
 (use-package! org-roam
+  :defer 3
   :custom
   ;; Set your org-roam directory
   (org-roam-directory "~/org/roam")

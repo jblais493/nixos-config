@@ -88,7 +88,7 @@
        :tools
        ;;ansible
        direnv
-       docker
+       ;; docker
        ;;editorconfig      ; let someone else argue about tabs vs spaces
        ;;ein               ; tame Jupyter notebooks with emacs
        (eval +overlay)     ; run code, run (also, repls)
@@ -157,7 +157,7 @@
        (org                ; organize your plain life in plain text
         +pretty
         +journal
-        +roam2
+        +roam
         +hugo
         +noter
         +dragndrop
@@ -191,7 +191,7 @@
        calendar
        irc               ; how neckbeards socialize
        (rss +org)        ; emacs as an RSS reader
-       (everywhere +protocol)       ; leave emacs? never.
+       ;;(everywhere +protocol)       ; leave emacs? never.
 
        :config
        ;;literate
