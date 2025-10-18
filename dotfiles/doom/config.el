@@ -69,9 +69,9 @@
 (add-to-list 'default-frame-alist '(alpha . (96 . 97)))
 
 ;; Aggresssive Indent
-(use-package! aggressive-indent
-  :defer t
-  :hook (prog-mode . aggressive-indent-mode))
+;; (use-package! aggressive-indent
+;;   :defer t
+;;   :hook (prog-mode . aggressive-indent-mode))
 
 ;; Blink cursor
 (blink-cursor-mode 1)
