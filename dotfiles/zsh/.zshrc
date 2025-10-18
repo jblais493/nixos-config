@@ -347,4 +347,5 @@ eval "$(direnv hook zsh)"
 # if ! ssh-add -l 2>/dev/null | grep -q "joshua@joshuablais.com"; then
 #   ssh-add ~/.ssh/id_ed25519
 # fi
-ssh-add -q ~/.ssh/empire.key ~/.ssh/id_ed25519 2>/dev/null
+# Attempt to add with gpg agent
+# ssh-add -q ~/.ssh/empire.key ~/.ssh/id_ed25519 2>/dev/null
