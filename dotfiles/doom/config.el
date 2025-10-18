@@ -7,8 +7,33 @@
                               (time-subtract after-init-time before-init-time)))
                      gcs-done)))
 
-;; For detailed profiling, temporarily add:
-(setq use-package-verbose t)
+;; ;; For detailed profiling, temporarily add:
+;; (setq use-package-verbose t)
+
+;; Maximum GC threshold during startup - prevent collections entirely
+(setq gc-cons-threshold most-positive-fixnum
+      gc-cons-percentage 1.0)
+
+;; Restore GC after startup with idle-timer for smoother operation
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (setq gc-cons-threshold (* 256 1024 1024)  ; 256MB
+                  gc-cons-percentage 0.1)
+            ;; GC when truly idle (5 seconds of no input)
+            (run-with-idle-timer 5 t
+              (lambda ()
+                (when (not (active-minibuffer-window))
+                  (garbage-collect))))))
+
+;; Reduce startup noise
+(setq inhibit-compacting-font-caches t
+      inhibit-startup-screen t
+      initial-scratch-message nil
+      frame-inhibit-implied-resize t)  ; Critical for X11
+
+;; Make EVERY package defer by default
+(setq use-package-always-defer t
+      use-package-expand-minimally t)  ; Faster macro expansion
 
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
@@ -24,8 +49,7 @@
       auth-source-cache-expiry nil) ; default is 7200 (2h)
 
 ;; Set SSH_AUTH_SOCK from keychain
-(run-with-idle-timer
- 1 nil
+(run-with-idle-timer 10 nil
  (lambda ()
    (let ((ssh-auth-sock (string-trim
                          (shell-command-to-string
@@ -255,8 +279,8 @@
        :desc "Recent directories" "d" #'consult-dir))
 
 (after! company
-  (setq company-minimum-prefix-length 1
-        company-idle-delay 0.1
+  (setq company-minimum-prefix-length 2
+        company-idle-delay 0.2
         company-show-quick-access t
         company-tooltip-limit 20
         company-tooltip-align-annotations t)
@@ -494,35 +518,41 @@
 ;; Optional key binding if you ever need to archive manually
 (define-key org-mode-map (kbd "C-c C-x C-a") 'my/archive-done-task)
 
-;;Org-Roam
-;; Org-Roam Configuration with SQLite Built-in Connector
 (use-package! org-roam
   :commands (org-roam-node-find 
              org-roam-node-insert
              org-roam-dailies-goto-today
-             org-roam-buffer-toggle)
+             org-roam-buffer-toggle
+             org-roam-db-sync)
   :init
-  ;; Don't sync on startup
-  (setq org-roam-directory "~/org/roam")
-  (setq org-roam-database-connector 'sqlite-builtin)
-  (setq org-roam-db-location (expand-file-name "org-roam.db" org-roam-directory))
+  (setq org-roam-directory "~/org/roam"
+        org-roam-database-connector 'sqlite-builtin
+        org-roam-db-location (expand-file-name "org-roam.db" org-roam-directory)
+        org-roam-v2-ack t)  ; Suppress migration warnings
   
   :config
-  ;; Only sync when explicitly opening org-roam
-  (org-roam-db-autosync-mode +1)
+  ;; Don't sync on startup, only when explicitly needed
+  (setq org-roam-db-update-on-save nil)
   
   ;; Create directory if needed
   (unless (file-exists-p org-roam-directory)
-    (make-directory org-roam-directory t)))
+    (make-directory org-roam-directory t))
+  
+  ;; Only enable autosync AFTER first use
+  (add-hook 'org-roam-find-file-hook
+            (lambda ()
+              (unless org-roam-db-autosync-mode
+                (org-roam-db-autosync-mode 1)))))
 
-;; Load org-roam-ui even later
+;; org-roam-ui
 (use-package! org-roam-ui
   :commands (org-roam-ui-mode org-roam-ui-open)
+  :after org-roam  ; Only load after org-roam is actually used
   :config
   (setq org-roam-ui-sync-theme t
         org-roam-ui-follow t
         org-roam-ui-update-on-save t
-        org-roam-ui-open-on-start nil))  ; Don't auto-open!
+        org-roam-ui-open-on-start nil))
 
 ;; Keybinds for org mode
 (with-eval-after-load 'org
@@ -662,9 +692,11 @@ This function is designed to be called via `emacsclient -e`."
         lsp-enable-snippet nil
         lsp-enable-symbol-highlighting nil
         lsp-enable-links nil
+        lsp-auto-configure nil
+        lsp-restart 'auto-restart
         ;; Go-specific settings
-        lsp-go-hover-kind "FullDocumentation"  ; CHANGED: was "Synopsis"
-        lsp-go-analyses '((nilness . t)        ; CHANGED: removed fieldalignment
+        lsp-go-hover-kind "FullDocumentation"
+        lsp-go-analyses '((nilness . t)
                           (unusedwrite . t)
                           (unusedparams . t))
         ;; Register custom gopls settings
@@ -672,6 +704,7 @@ This function is designed to be called via `emacsclient -e`."
         lsp-gopls-staticcheck t
         lsp-gopls-analyses '((unusedparams . t)
                              (unusedwrite . t))))
+
 ;; LSP UI settings for better performance
 (after! lsp-ui
   (setq lsp-ui-doc-enable t
@@ -682,6 +715,33 @@ This function is designed to be called via `emacsclient -e`."
         lsp-ui-doc-delay 0.5
         lsp-ui-sideline-enable nil
         lsp-ui-peek-enable t))
+
+;; Go-ts-mode LSP registration - CRITICAL: After lsp-go is loaded
+(after! lsp-go
+  ;; Register language IDs
+  (add-to-list 'lsp-language-id-configuration '(go-ts-mode . "go"))
+  (add-to-list 'lsp-language-id-configuration '(go-mod-ts-mode . "go.mod"))
+  
+  ;; Method 1: Modify existing gopls client
+  (when-let ((client (gethash 'gopls lsp-clients)))
+    (setf (lsp--client-major-modes client)
+          (append (lsp--client-major-modes client)
+                  '(go-ts-mode go-mod-ts-mode))))
+  
+  ;; Method 2: Register a new client specifically for go-ts-mode (fallback)
+  (unless (gethash 'gopls lsp-clients)
+    (lsp-register-client
+     (make-lsp-client
+      :new-connection (lsp-stdio-connection "gopls")
+      :major-modes '(go-ts-mode go-mod-ts-mode)
+      :language-id "go"
+      :priority 0
+      :server-id 'gopls-ts
+      :library-folders-fn #'lsp-go--library-default-directories))))
+
+;; Hook lsp to the treesit modes
+(add-hook 'go-ts-mode-hook #'lsp-deferred)
+(add-hook 'go-mod-ts-mode-hook #'lsp-deferred)
 
 (after! project
   ;; Master project detection function - extensible for all project types
@@ -719,7 +779,6 @@ This function is designed to be called via `emacsclient -e`."
 (set-file-template! "\\.svelte$" :trigger "__svelte" :mode 'web-mode)
 
 ;; Enable Treesitter for Go in org
-;; config.el - Complete treesit setup
 (use-package! treesit
   :config
   ;; Define all language sources
@@ -744,6 +803,7 @@ This function is designed to be called via `emacsclient -e`."
           (typescript-mode . typescript-ts-mode)
           (css-mode . css-ts-mode)
           (html-mode . html-ts-mode))))
+
 
 ;; Org-babel integration with treesit
 (after! org
@@ -1441,13 +1501,6 @@ WHERE tablename = '%s';" table-name)))
 (after! projectile
   (setq projectile-enable-caching t)
   (setq projectile-indexing-method 'hybrid))
-
-;; Path completion
-(projectile-add-known-project "~/Vaults/Writing")
-(projectile-add-known-project "~/Vaults")
-(projectile-add-known-project "~/go/src/github.com/jblais493/HTMXFrontend")
-(projectile-add-known-project "~/go/src/github.com/jblais493/Citadel")
-(projectile-add-known-project "~/Development/svelte-email")
 
 ;; Trying to save workspaces
 (after! persp-mode
