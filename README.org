@@ -279,7 +279,7 @@ My testing machine, a Lenovo T430 laptop.
 
 *** configuration.nix
 This declares all imported modules and specific tweaks to the King host:
-#+begin_src nix :tangle hosts/king/configuration.nix
+#+begin_src nix hosts/king/configuration.nix
 { config, pkgs, inputs, ... }:
 {
   imports = [

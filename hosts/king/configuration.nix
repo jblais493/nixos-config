@@ -1,4 +1,9 @@
-{ config, pkgs, inputs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 {
   imports = [
     # ./hardware-configuration.nix
@@ -11,12 +16,15 @@
     ../../modules/media
   ];
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   services.openssh = {
     enable = true;
     settings = {
-      PermitRootLogin = "prohibit-password";
+      PermitRootLogin = "no";
       PasswordAuthentication = false;
     };
   };
@@ -24,7 +32,7 @@
   boot.loader.grub = {
     enable = true;
     useOSProber = true;
-    enableCryptodisk = true;  # Moved this up for clarity
+    enableCryptodisk = true; # Moved this up for clarity
   };
 
   networking.hostName = "king"; # Define your hostname.
@@ -34,10 +42,13 @@
     description = "Joshua Blais";
     group = "joshua";
     initialPassword = "changeme";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
   };
 
-  users.groups.joshua = {};
+  users.groups.joshua = { };
 
   time.timeZone = "America/Edmonton";
   i18n.defaultLocale = "en_CA.UTF-8";
