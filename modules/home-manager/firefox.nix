@@ -84,18 +84,21 @@
         }
       '';
 
-      bookmarks = [
-        {
-          name = "Toolbar";
-          toolbar = true;
-          bookmarks = [
-            {
-              name = "NixOS Manual";
-              url = "https://nixos.org/manual/nixos/stable/";
-            }
-          ];
-        }
-      ];
+      bookmarks = {
+        force = true;
+        settings = [
+          {
+            name = "Toolbar";
+            toolbar = true;
+            bookmarks = [
+              {
+                name = "NixOS Manual";
+                url = "https://nixos.org/manual/nixos/stable/";
+              }
+            ];
+          }
+        ];
+      };
     };
   };
 }
