@@ -1037,7 +1037,7 @@ in
 *** setup.nix
 Scripts to setup a new machine with directories in their correct locations.
 
-#+begin_src nix :tangle modules/home-manager/setup.nix
+#+begin_src nix modules/home-manager/setup.nix
 { config, pkgs, ... }:
 {
   # Clone repositories - skip private repos if SSH key not available
@@ -1082,7 +1082,7 @@ Scripts to setup a new machine with directories in their correct locations.
 #+end_src
 
 *** theming.nix
-#+begin_src nix :tangle modules/home-manager/theming.nix
+#+begin_src nix modules/home-manager/theming.nix
 { config, pkgs, ... }:
 {
   # Proper cursor configuration - the NixOS way
