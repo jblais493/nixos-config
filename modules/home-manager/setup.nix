@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 {
   # Clone repositories - skip private repos if SSH key not available
-  home.activation.cloneRepos = config.lib.dag.entryAfter ["writeBoundary"] ''
+  home.activation.cloneRepos = config.lib.dag.entryAfter [ "writeBoundary" ] ''
     # Check if SSH key exists and GitHub is accessible
     if ${pkgs.openssh}/bin/ssh -T git@github.com 2>&1 | grep -q "successfully authenticated"; then
       # Scripts repo (private - only if SSH works)
@@ -22,17 +22,6 @@
       ${pkgs.git}/bin/git clone https://github.com/jblais493/Kmonad-thinkpad ${config.home.homeDirectory}/.config/kmonad
     fi
   '';
-
-  programs.gpg.enable = true;
-  services.gpg-agent = {
-    enable = true;
-    enableSshSupport = true;
-    defaultCacheTtl = 86400;
-    pinentry.package = pkgs.pinentry-gtk2;
-    extraConfig = ''
-      allow-loopback-pinentry
-    '';
-  };
 
   programs.nix-index = {
     enable = true;
