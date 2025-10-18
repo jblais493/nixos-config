@@ -6,13 +6,13 @@
 This will test our emacs load time and setup. Comment out when not in use!
 #+begin_src elisp
 ;; Profile startup
-(add-hook 'emacs-startup-hook
-          (lambda ()
-            (message "*** Emacs loaded in %s with %d garbage collections."
-                     (format "%.2f seconds"
-                             (float-time
-                              (time-subtract after-init-time before-init-time)))
-                     gcs-done)))
+;; (add-hook 'emacs-startup-hook
+;;           (lambda ()
+;;             (message "*** Emacs loaded in %s with %d garbage collections."
+;;                      (format "%.2f seconds"
+;;                              (float-time
+;;                               (time-subtract after-init-time before-init-time)))
+;;                      gcs-done)))
 
 ;; ;; For detailed profiling, temporarily add:
 ;; (setq use-package-verbose t)
@@ -812,7 +812,19 @@ This function is designed to be called via `emacsclient -e`."
         lsp-gopls-completeUnimported t
         lsp-gopls-staticcheck t
         lsp-gopls-analyses '((unusedparams . t)
-                             (unusedwrite . t))))
+                             (unusedwrite . t)))
+  
+  ;; Register go-ts-mode with the gopls client
+  (add-to-list 'lsp-language-id-configuration '(go-ts-mode . "go"))
+  (add-to-list 'lsp-language-id-configuration '(go-mod-ts-mode . "go.mod"))
+  
+  ;; Modify the gopls client to support tree-sitter modes
+  (lsp-register-client
+   (make-lsp-client :new-connection (lsp-stdio-connection "gopls")
+                    :major-modes '(go-mode go-ts-mode go-dot-mod-mode go-mod-ts-mode)
+                    :priority 0
+                    :server-id 'gopls
+                    :library-folders-fn #'lsp-go--library-default-directories)))
 
 ;; LSP UI settings for better performance
 (after! lsp-ui
@@ -825,30 +837,7 @@ This function is designed to be called via `emacsclient -e`."
         lsp-ui-sideline-enable nil
         lsp-ui-peek-enable t))
 
-;; Go-ts-mode LSP registration - CRITICAL: After lsp-go is loaded
-(after! lsp-go
-  ;; Register language IDs
-  (add-to-list 'lsp-language-id-configuration '(go-ts-mode . "go"))
-  (add-to-list 'lsp-language-id-configuration '(go-mod-ts-mode . "go.mod"))
-  
-  ;; Method 1: Modify existing gopls client
-  (when-let ((client (gethash 'gopls lsp-clients)))
-    (setf (lsp--client-major-modes client)
-          (append (lsp--client-major-modes client)
-                  '(go-ts-mode go-mod-ts-mode))))
-  
-  ;; Method 2: Register a new client specifically for go-ts-mode (fallback)
-  (unless (gethash 'gopls lsp-clients)
-    (lsp-register-client
-     (make-lsp-client
-      :new-connection (lsp-stdio-connection "gopls")
-      :major-modes '(go-ts-mode go-mod-ts-mode)
-      :language-id "go"
-      :priority 0
-      :server-id 'gopls-ts
-      :library-folders-fn #'lsp-go--library-default-directories))))
-
-;; Hook lsp to the treesit modes
+;; Hook lsp to the tree-sitter modes
 (add-hook 'go-ts-mode-hook #'lsp-deferred)
 (add-hook 'go-mod-ts-mode-hook #'lsp-deferred)
 #+end_src
@@ -2316,7 +2305,6 @@ I have various functions in my lisp directory for creating pomodoros, refiling d
 (load! "lisp/org-caldav")
 ;; POSSE posting system
 (load! "lisp/posse/posse-twitter")
-(load! "lisp/posse/instagram-scheduler")
 #+end_src
 
 ** Templates
