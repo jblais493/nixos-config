@@ -67,5 +67,6 @@
     lazygit
     tea
     gh
+    git-crypt
   ];
 }

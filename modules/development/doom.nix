@@ -10,25 +10,27 @@
     wmctrl
     fd
     imagemagick
-    texlive.combined.scheme-full  # For LaTeX support
-    sqlite       # For org-roam
+    texlive.combined.scheme-full # For LaTeX support
+    sqlite # For org-roam
     aspell
     aspellDicts.en
-    aspellDicts.en-computers  # technical terms
-    aspellDicts.en-science    # scientific terms
+    aspellDicts.en-computers # technical terms
+    aspellDicts.en-science # scientific terms
 
     # Additional tools Doom might need
     git
-    git-crypt
-    tea
     curl
     wget
 
     # Additional Doom dependencies
-    nodejs  # For LSP servers
-    shellcheck  # For shell script checking
-    html-tidy  # For HTML formatting
-    stylelint  # For CSS linting
+    nodejs # For LSP servers
+    nodePackages.js-beautify
+    shellcheck # For shell script checking
+    html-tidy # For HTML formatting
+    stylelint # For CSS linting
+    ledger
+    shfmt
+    graphviz
 
     # Fonts that Doom recommends
     emacs-all-the-icons-fonts
@@ -38,6 +40,6 @@
   services.emacs = {
     enable = true;
     package = pkgs.emacs;
-    defaultEditor = true;  # Set Emacs as default editor
+    defaultEditor = true; # Set Emacs as default editor
   };
 }

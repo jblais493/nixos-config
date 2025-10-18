@@ -20,9 +20,9 @@
 ;; (package! ssh)
 ;; (package! multiple-cursors)
 ;; (package! org-super-agenda)
-(package! org-fancy-priorities)
+;; (package! org-fancy-priorities)
 ;; (package! theme-magic)
-(package! centaur-tabs)
+;; (package! centaur-tabs)
 (package! prettier-js)
 (package! templ-ts-mode)
 ;; (package! company-tabnine)
@@ -32,7 +32,7 @@
 ;; (package! dimmer)
 ;; (package! beacon)
 (package! org-auto-tangle)
-(package! aggressive-indent)
+;; (package! aggressive-indent)
 (package! powerthesaurus)
 (package! elfeed-tube)
 (package! elfeed-tube-mpv)
@@ -73,12 +73,12 @@
 (package! pg
   :recipe (:host github :repo "emarsden/pg-el"))
 
-(package! pgmacs
-  :recipe (:host github :repo "emarsden/pgmacs"
-           :files ("*.el" "*.texi" "dir"
-                   (:exclude ".dir-locals.el" "test.el" "tests.el"))))
+;; (package! pgmacs
+;;   :recipe (:host github :repo "emarsden/pgmacs"
+;;            :files ("*.el" "*.texi" "dir"
+;;                    (:exclude ".dir-locals.el" "test.el" "tests.el"))))
 
-(package! calibredb)
+;; (package! calibredb)
 (package! org-caldav)
 ;; (package! jabber)
 (package! elpher)
