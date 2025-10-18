@@ -48,8 +48,9 @@ in
     installDoomEmacs = config.lib.dag.entryAfter [ "writeBoundary" ] ''
       if [ ! -d "${config.home.homeDirectory}/.emacs.d" ]; then
         echo "Installing Doom Emacs..."
-        ${pkgs.git}/bin/git -c url."https://".insteadOf="git@github.com:" \
-          clone --depth 1 https://github.com/doomemacs/doomemacs \
+        # Completely bypass user git config by unsetting HOME temporarily
+        HOME=/tmp ${pkgs.git}/bin/git clone --depth 1 \
+          https://github.com/doomemacs/doomemacs \
           ${config.home.homeDirectory}/.emacs.d
 
         if [ -x "${config.home.homeDirectory}/.emacs.d/bin/doom" ]; then
@@ -65,7 +66,7 @@ in
       fi
     '';
 
-    # Doom sync - only if config has changed
+    # Doom sync
     syncDoomEmacs = config.lib.dag.entryAfter [ "linkGeneration" "installDoomEmacs" ] ''
       if [ -d "${config.home.homeDirectory}/.emacs.d" ] && \
          [ -d "${config.home.homeDirectory}/.config/doom" ]; then
