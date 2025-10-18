@@ -15,6 +15,7 @@ in
     ./setup.nix
     ./theming.nix
     ./firefox.nix
+    ./gpg.nix
   ];
 
   home.username = "joshua";
