@@ -6,7 +6,7 @@
     enable = true;
     enableSshSupport = true;
     defaultCacheTtl = 86400;
-    pinentryPackage = pkgs.pinentry-gtk2; # Note: newer syntax
+    pinentry.package = pkgs.pinentry-gtk2; # Note: newer syntax
     extraConfig = ''
       allow-loopback-pinentry
     '';
