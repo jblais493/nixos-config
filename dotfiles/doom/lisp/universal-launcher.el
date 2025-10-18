@@ -12,11 +12,13 @@
 
 ;; Pre-grouped category structure for aesthetic grouping
 (defvar universal-launcher--categories
-  '((:name "Active" :icon "device-desktop" :types (buffer running))
+  '((:name "Context" :icon "flash" :types (contextual custom-action))
+    (:name "Active" :icon "device-desktop" :types (buffer running))
+    (:name "Tasks" :icon "checklist" :types (agenda-task))
     (:name "Files & Apps" :icon "apps" :types (file app flatpak))
     (:name "Web" :icon "globe" :types (bookmark firefox-action))
-    (:name "System" :icon "terminal" :types (command))
-    (:name "Tools" :icon "wrench" :types (emoji calculator)))
+    (:name "System" :icon "terminal" :types (command ssh))
+    (:name "Tools" :icon "wrench" :types (emoji calculator kill-ring-item)))
   "Category definitions for the launcher.")
 
 ;; Enhanced cache system
@@ -74,6 +76,8 @@
     (puthash "Web" (all-the-icons-material "public" :face '(:foreground "#e06c75" :weight bold :height 1.0)) cache)
     (puthash "System" (all-the-icons-material "settings_applications" :face '(:foreground "#98c379" :weight bold :height 1.0)) cache)
     (puthash "Tools" (all-the-icons-material "build" :face '(:foreground "#d19a66" :weight bold :height 1.0)) cache)
+    (puthash "Context" (all-the-icons-material "flash_on" :face '(:foreground "#e5c07b" :weight bold :height 1.0)) cache)
+    (puthash "Tasks" (all-the-icons-octicon "checklist" :face '(:foreground "#61afef" :weight bold :height 1.0)) cache)
     cache)
   "Pre-loaded icon cache with consistent styling.")
 
@@ -126,7 +130,7 @@
   (let ((candidates '())
         (category-handlers (make-hash-table :test 'eq)))
 
-    ;; Define handlers for each type
+    ;; Define ALL handlers FIRST - before processing categories
     (puthash 'buffer
              (lambda ()
                (mapcar (lambda (buffer)
@@ -211,7 +215,6 @@
                        (universal-launcher--get-system-commands)))
              category-handlers)
 
-    ;; Add emoji handler
     (puthash 'emoji
              (lambda ()
                (mapcar (lambda (emoji)
@@ -230,8 +233,28 @@
                            (list 'calculator 'ready))))
              category-handlers)
 
+    ;; NEW HANDLERS - Add these BEFORE processing categories
+    (puthash 'contextual
+             #'universal-launcher--get-contextual-actions
+             category-handlers)
 
-    ;; Process categories
+    (puthash 'ssh
+             #'universal-launcher--get-ssh-hosts
+             category-handlers)
+
+    (puthash 'agenda-task
+             #'universal-launcher--get-agenda-tasks
+             category-handlers)
+
+    (puthash 'kill-ring-item
+             #'universal-launcher--get-kill-ring
+             category-handlers)
+
+    (puthash 'custom-action
+             #'universal-launcher--get-custom-actions
+             category-handlers)
+
+    ;; NOW process categories - handlers are all defined above
     (dolist (category universal-launcher--categories)
       (let* ((cat-name (plist-get category :name))
              (cat-icon (gethash cat-name universal-launcher--icon-cache))
@@ -517,6 +540,18 @@
      (call-process "wmctrl" nil nil nil "-a" "Firefox"))
     ('new-tab
      (call-process "firefox" nil nil nil "--new-tab" "about:newtab"))
+    ('org-task 
+     (universal-launcher--jump-to-task item))
+    ('ssh 
+     (universal-launcher--ssh-connect item))
+    ('kill-ring 
+     (universal-launcher--yank-from-ring item))
+    ('custom-action 
+     (universal-launcher--execute-custom-action item))
+    ('async-shell
+     (let ((default-directory (or (locate-dominating-file default-directory ".git")
+                                  default-directory)))
+       (async-shell-command item)))
     ('open-url
      (let ((url (cadr action)))
        (call-process "firefox" nil nil nil "--new-tab" url)))))
@@ -610,6 +645,340 @@ Otherwise, prompt for a search engine."
     (gui-set-selection 'CLIPBOARD emoji)
     (message "Emoji '%s' copied to clipboard" emoji)))
 
+
+;; ============================================================================
+;; FRECENCY SYSTEM - The Foundation of Intelligence
+;; ============================================================================
+
+(defvar universal-launcher--history-file
+  (expand-file-name "universal-launcher-history" user-emacs-directory)
+  "File to persist launch history.")
+
+(defvar universal-launcher--launch-history nil
+  "Alist of (item . (count . last-time)).")
+
+(defun universal-launcher--load-history ()
+  "Load launch history from disk."
+  (when (file-exists-p universal-launcher--history-file)
+    (condition-case nil
+        (with-temp-buffer
+          (insert-file-contents universal-launcher--history-file)
+          (setq universal-launcher--launch-history (read (current-buffer))))
+      (error 
+       (setq universal-launcher--launch-history nil)
+       (message "Warning: Could not load launcher history")))))
+
+(defun universal-launcher--save-history ()
+  "Save launch history to disk."
+  (condition-case nil
+      (with-temp-buffer
+        (prin1 universal-launcher--launch-history (current-buffer))
+        (write-region (point-min) (point-max) universal-launcher--history-file nil 'silent))
+    (error (message "Warning: Could not save launcher history"))))
+
+(defun universal-launcher--record-launch (selection)
+  "Record SELECTION in history with frecency scoring."
+  (let* ((entry (assoc selection universal-launcher--launch-history))
+         (count (if entry (car (cdr entry)) 0))
+         (now (float-time)))
+    (setf (alist-get selection universal-launcher--launch-history nil nil #'equal)
+          (cons (1+ count) now))
+    (run-with-idle-timer 1 nil #'universal-launcher--save-history)))
+
+(defun universal-launcher--frecency-score (item-text)
+  "Calculate frecency score for ITEM-TEXT.
+Combines frequency (usage count) with recency (time decay)."
+  (if-let ((data (alist-get item-text universal-launcher--launch-history nil nil #'equal)))
+      (let* ((count (car data))
+             (last-time (cdr data))
+             (age-days (/ (- (float-time) last-time) 86400.0))
+             ;; Exponential decay: half-life of 7 days
+             (recency-factor (exp (/ (- age-days) 7.0))))
+        (* count recency-factor))
+    0))
+
+;; ============================================================================
+;; CONTEXTUAL ACTIONS - Mode-Aware Intelligence
+;; ============================================================================
+
+(defun universal-launcher--get-contextual-actions ()
+  "Get actions relevant to current buffer's major mode and project."
+  (when (and universal-launcher--previous-frame
+             (frame-live-p universal-launcher--previous-frame))
+    (with-selected-frame universal-launcher--previous-frame
+      (let ((actions '())
+            (icon (all-the-icons-material "flash_on" :face '(:foreground "#e5c07b" :height 0.9))))
+        
+        ;; Universal org-capture (always available)
+        (when (fboundp 'org-capture)
+          (push (cons (format "%s Capture: Quick note" icon)
+                      (list 'function #'org-capture))
+                actions))
+        
+        ;; Mode-specific actions
+        (pcase major-mode
+          ;; Org Mode
+          ('org-mode
+           (when (fboundp 'org-agenda)
+             (push (cons (format "%s Org: Open Agenda" icon)
+                         (list 'function #'org-agenda))
+                   actions))
+           (push (cons (format "%s Org: Refile" icon)
+                       (list 'function #'org-refile))
+                 actions)
+           (push (cons (format "%s Org: Archive subtree" icon)
+                       (list 'function #'org-archive-subtree))
+                 actions)
+           (when (fboundp 'org-set-tags-command)
+             (push (cons (format "%s Org: Set tags" icon)
+                         (list 'function #'org-set-tags-command))
+                   actions)))
+          
+          ;; Go Mode
+          ('go-mode
+           (let ((default-directory (or (locate-dominating-file default-directory "go.mod")
+                                        default-directory)))
+             (push (cons (format "%s Go: Run tests" icon)
+                         (list 'async-shell "go test -v ./..."))
+                   actions)
+             (push (cons (format "%s Go: Build" icon)
+                         (list 'async-shell "go build"))
+                   actions)
+             (push (cons (format "%s Go: Run main" icon)
+                         (list 'async-shell "go run ."))
+                   actions)
+             (push (cons (format "%s Go: Tidy modules" icon)
+                         (list 'async-shell "go mod tidy"))
+                   actions)
+             (push (cons (format "%s Go: Format code" icon)
+                         (list 'function #'gofmt))
+                   actions)))
+          
+          ;; Rust Mode
+          ('rust-mode
+           (let ((default-directory (or (locate-dominating-file default-directory "Cargo.toml")
+                                        default-directory)))
+             (push (cons (format "%s Rust: Build" icon)
+                         (list 'async-shell "cargo build"))
+                   actions)
+             (push (cons (format "%s Rust: Run tests" icon)
+                         (list 'async-shell "cargo test"))
+                   actions)
+             (push (cons (format "%s Rust: Run" icon)
+                         (list 'async-shell "cargo run"))
+                   actions)
+             (push (cons (format "%s Rust: Check" icon)
+                         (list 'async-shell "cargo check"))
+                   actions)))
+          
+          ;; Emacs Lisp Mode
+          ('emacs-lisp-mode
+           (push (cons (format "%s Elisp: Eval buffer" icon)
+                       (list 'function #'eval-buffer))
+                 actions)
+           (push (cons (format "%s Elisp: Eval defun" icon)
+                       (list 'function #'eval-defun))
+                 actions)
+           (push (cons (format "%s Elisp: Load file" icon)
+                       (list 'function #'load-file))
+                 actions))
+          
+          ;; Nix Mode
+          ('nix-mode
+           (push (cons (format "%s Nix: Rebuild switch" icon)
+                       (list 'async-shell "sudo nixos-rebuild switch"))
+                 actions)
+           (push (cons (format "%s Nix: Rebuild test" icon)
+                       (list 'async-shell "sudo nixos-rebuild test"))
+                 actions)
+           (push (cons (format "%s Nix: Update flake" icon)
+                       (list 'async-shell "nix flake update"))
+                 actions))
+          
+          ;; Markdown Mode
+          ('markdown-mode
+           (when (fboundp 'markdown-preview)
+             (push (cons (format "%s Markdown: Preview" icon)
+                         (list 'function #'markdown-preview))
+                   actions))
+           (push (cons (format "%s Markdown: Export to HTML" icon)
+                       (list 'function #'markdown-export))
+                 actions)))
+        
+        (nreverse actions)))))
+
+;; ============================================================================
+;; SSH HOST LAUNCHER
+;; ============================================================================
+
+(defun universal-launcher--get-ssh-hosts ()
+  "Get SSH hosts from ~/.ssh/config."
+  (let ((hosts '())
+        (config (expand-file-name "~/.ssh/config"))
+        (icon (all-the-icons-faicon "server" :face '(:foreground "#98c379" :height 0.9))))
+    (when (file-exists-p config)
+      (with-temp-buffer
+        (insert-file-contents config)
+        (goto-char (point-min))
+        (while (re-search-forward "^Host \\(.+\\)$" nil t)
+          (let ((host (string-trim (match-string 1))))
+            ;; Skip wildcards and comments
+            (unless (or (string-match-p "[*?]" host)
+                        (string-prefix-p "#" host))
+              (push (cons (format "%s SSH: %s" icon host)
+                          (list 'ssh host))
+                    hosts))))))
+    (nreverse hosts)))
+
+(defun universal-launcher--ssh-connect (host)
+  "Connect to SSH HOST using best available terminal."
+  (cond
+   ;; Prefer vterm if available
+   ((fboundp 'vterm)
+    (let* ((buffer-name (format "*ssh-%s*" host))
+           (existing-buffer (get-buffer buffer-name)))
+      (if existing-buffer
+          (progn
+            (switch-to-buffer existing-buffer)
+            (delete-other-windows))
+        ;; Create new vterm and send SSH command
+        (let ((buf (vterm buffer-name)))
+          (with-current-buffer buf
+            (vterm-send-string (format "ssh %s" host))
+            (vterm-send-return))
+          (switch-to-buffer buf)
+          (delete-other-windows)))))
+   
+   ;; Fallback to eshell
+   ((fboundp 'eshell)
+    (let ((buffer (generate-new-buffer (format "*ssh-%s*" host))))
+      (switch-to-buffer buffer)
+      (delete-other-windows)
+      (eshell-mode)
+      (insert (format "ssh %s" host))
+      (eshell-send-input)))
+   
+   ;; Last resort: shell-mode
+   (t
+    (let ((buffer (get-buffer-create (format "*ssh-%s*" host))))
+      (switch-to-buffer buffer)
+      (delete-other-windows)
+      (unless (comint-check-proc buffer)
+        (shell buffer))
+      (goto-char (point-max))
+      (insert (format "ssh %s" host))
+      (comint-send-input)))))
+
+;; ============================================================================
+;; ORG AGENDA INTEGRATION
+;; ============================================================================
+
+(defun universal-launcher--get-agenda-tasks ()
+  "Get today's agenda tasks."
+  (when (and (fboundp 'org-map-entries)
+             (bound-and-true-p org-agenda-files))
+    (let ((tasks '())
+          (icon (all-the-icons-octicon "checklist" :face '(:foreground "#61afef" :height 0.9))))
+      (org-map-entries
+       (lambda ()
+         (let* ((heading (org-get-heading t t t t))
+                (todo-state (org-get-todo-state))
+                (priority (org-get-priority (thing-at-point 'line t)))
+                (tags (org-get-tags))
+                (display (format "%s %s %s%s"
+                                 icon
+                                 (propertize (or todo-state "TODO") 
+                                             'face 'org-todo)
+                                 heading
+                                 (if tags 
+                                     (propertize (format " :%s:" (string-join tags ":"))
+                                                 'face 'org-tag)
+                                   ""))))
+           (push (cons display
+                       (list 'org-task (point-marker)))
+                 tasks)))
+       "+TODO=\"TODO\"|+TODO=\"NEXT\"|+TODO=\"STARTED\""
+       'agenda)
+      (nreverse tasks))))
+
+(defun universal-launcher--jump-to-task (marker)
+  "Jump to org task at MARKER."
+  (when (marker-buffer marker)
+    (switch-to-buffer (marker-buffer marker))
+    (goto-char marker)
+    (org-show-context)
+    (org-reveal)
+    (recenter)))
+
+;; ============================================================================
+;; KILL RING SEARCH
+;; ============================================================================
+
+(defun universal-launcher--get-kill-ring ()
+  "Get recent kill ring entries."
+  (let ((icon (all-the-icons-faicon "clipboard" :face '(:foreground "#c678dd" :height 0.9))))
+    (cl-loop for item in (seq-take kill-ring 15)
+             for idx from 1
+             when (and (stringp item) 
+                       (> (length item) 0)
+                       (not (string-match-p "^[[:space:]]*$" item)))
+             collect (cons (format "%s Clip #%d: %s" 
+                                   icon
+                                   idx
+                                   (truncate-string-to-width 
+                                    (replace-regexp-in-string "\n" "↩ " item)
+                                    60 nil nil "…"))
+                           (list 'kill-ring item)))))
+
+(defun universal-launcher--yank-from-ring (text)
+  "Insert TEXT from kill ring at point."
+  (when (and universal-launcher--previous-frame
+             (frame-live-p universal-launcher--previous-frame))
+    (with-selected-frame universal-launcher--previous-frame
+      (when (not buffer-read-only)
+        (insert text)
+        (message "Inserted from kill ring")))))
+
+;; ============================================================================
+;; CUSTOM ACTIONS/SCRIPTS
+;; ============================================================================
+
+(defcustom universal-launcher-custom-actions nil
+  "Custom actions as ((name . (type . action))).
+Type can be 'function, 'shell-command, or 'async-shell.
+
+Examples:
+  ((\"Daily Review\" . (function . my-daily-review-fn))
+   (\"Rebuild NixOS\" . (async-shell . \"sudo nixos-rebuild switch\"))
+   (\"Git Status\" . (shell-command . \"git status\")))"
+  :type '(alist :key-type string 
+          :value-type (cons symbol sexp))
+  :group 'universal-launcher)
+
+(defun universal-launcher--get-custom-actions ()
+  "Get user-defined custom actions."
+  (let ((icon (all-the-icons-material "stars" :face '(:foreground "#e5c07b" :height 0.9))))
+    (mapcar (lambda (action)
+              (cons (format "%s Custom: %s" icon (car action))
+                    (list 'custom-action (cdr action))))
+            universal-launcher-custom-actions)))
+
+(defun universal-launcher--execute-custom-action (action)
+  "Execute custom ACTION."
+  (let ((type (car action))
+        (cmd (cdr action)))
+    (pcase type
+      ('function 
+       (if (functionp cmd)
+           (funcall cmd)
+         (message "Error: Not a valid function: %s" cmd)))
+      ('shell-command 
+       (shell-command cmd))
+      ('async-shell 
+       (async-shell-command cmd))
+      (_ 
+       (message "Unknown action type: %s" type)))))
+
 (defun universal-launcher-popup ()
   "World-class launcher for Emacs."
   (interactive)
@@ -667,7 +1036,21 @@ Otherwise, prompt for a search engine."
           ('file (find-file item))
           ('command (universal-launcher--run-command item))
           ('emoji (universal-launcher--insert-emoji item))
-          ('calculator (message "🧮 Type a math expression like: 2+2, sqrt(16), sin(45)")))))
+          ('ssh (universal-launcher--ssh-connect item))
+          ('calculator (message "🧮 Type a math expression like: 2+2, sqrt(16), sin(45)"))
+          ('org-task (universal-launcher--jump-to-task item))
+          ('kill-ring (universal-launcher--yank-from-ring item))
+          ('custom-action (universal-launcher--execute-custom-action item))
+          ('function (funcall item))
+          ('async-shell 
+           (let ((default-directory (or (locate-dominating-file default-directory ".git")
+                                        default-directory)))
+             (async-shell-command item)))
+          ('shell-command
+           (let ((default-directory (or (locate-dominating-file default-directory ".git")
+                                        default-directory)))
+             (shell-command item)))
+          (_ (message "Unknown action type: %s" type)))))
 
      ;; Web search fallback - only if not a calculator expression
      ((and (not candidate)
