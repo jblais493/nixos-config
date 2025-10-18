@@ -24,27 +24,6 @@
       fi
     '';
 
-    # Doom Emacs installation
-    installDoomEmacs = config.lib.dag.entryAfter [ "writeBoundary" ] ''
-      if [ ! -d "${config.home.homeDirectory}/.emacs.d" ]; then
-        echo "Installing Doom Emacs..."
-        ${pkgs.git}/bin/git clone --depth 1 https://github.com/doomemacs/doomemacs \
-          ${config.home.homeDirectory}/.emacs.d
-
-        export PATH="${pkgs.emacs}/bin:${pkgs.git}/bin:${pkgs.ripgrep}/bin:${pkgs.fd}/bin:$PATH"
-
-        if [ -x "${config.home.homeDirectory}/.emacs.d/bin/doom" ]; then
-          echo "Running doom install..."
-          ${config.home.homeDirectory}/.emacs.d/bin/doom install --no-env --no-hooks
-        else
-          echo "Error: doom binary not found after clone"
-          exit 1
-        fi
-      else
-        echo "Doom Emacs already installed"
-      fi
-    '';
-
     # Doom sync
     syncDoomEmacs = config.lib.dag.entryAfter [ "linkGeneration" "installDoomEmacs" ] ''
       if [ -d "${config.home.homeDirectory}/.emacs.d" ] && \
