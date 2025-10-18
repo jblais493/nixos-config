@@ -1,4 +1,24 @@
 { config, pkgs, ... }:
+
+let
+  # Create a complete environment for Doom operations
+  doomEnv = pkgs.buildEnv {
+    name = "doom-env";
+    paths = with pkgs; [
+      emacs
+      git
+      ripgrep
+      fd
+      coreutils
+      findutils
+      gnutar
+      gzip
+      gnused
+      gnugrep
+      bash
+    ];
+  };
+in
 {
   home.activation = {
     # Repository cloning
@@ -45,13 +65,13 @@
       fi
     '';
 
-    # Doom sync
+    # Doom sync - only if config has changed
     syncDoomEmacs = config.lib.dag.entryAfter [ "linkGeneration" "installDoomEmacs" ] ''
       if [ -d "${config.home.homeDirectory}/.emacs.d" ] && \
          [ -d "${config.home.homeDirectory}/.config/doom" ]; then
         if [ -x "${config.home.homeDirectory}/.emacs.d/bin/doom" ]; then
           echo "Syncing Doom configuration..."
-          export PATH="${pkgs.emacs}/bin:${pkgs.git}/bin:${pkgs.ripgrep}/bin:${pkgs.fd}/bin:$PATH"
+          export PATH="${doomEnv}/bin:$PATH"
           ${config.home.homeDirectory}/.emacs.d/bin/doom sync
         else
           echo "Warning: doom binary not found, skipping sync"
