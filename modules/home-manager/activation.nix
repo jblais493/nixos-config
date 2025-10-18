@@ -28,13 +28,13 @@
     installDoomEmacs = config.lib.dag.entryAfter [ "writeBoundary" ] ''
       if [ ! -d "${config.home.homeDirectory}/.emacs.d" ]; then
         echo "Installing Doom Emacs..."
-        ${pkgs.git}/bin/git clone --depth 1 https://github.com/doomemacs/doomemacs \
+        ${pkgs.git}/bin/git -c url."https://".insteadOf="git@github.com:" \
+          clone --depth 1 https://github.com/doomemacs/doomemacs \
           ${config.home.homeDirectory}/.emacs.d
-
-        export PATH="${pkgs.emacs}/bin:${pkgs.git}/bin:${pkgs.ripgrep}/bin:${pkgs.fd}/bin:$PATH"
 
         if [ -x "${config.home.homeDirectory}/.emacs.d/bin/doom" ]; then
           echo "Running doom install..."
+          export PATH="${doomEnv}/bin:$PATH"
           ${config.home.homeDirectory}/.emacs.d/bin/doom install --no-env --no-hooks
         else
           echo "Error: doom binary not found after clone"
