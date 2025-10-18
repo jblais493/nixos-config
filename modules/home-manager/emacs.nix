@@ -13,26 +13,19 @@
       ];
   };
 
-  # Enable Emacs daemon service
   services.emacs = {
     enable = true;
-    package = config.programs.emacs.finalPackage; # Use the same package as programs.emacs
-    defaultEditor = true;
-
-    # Start daemon with graphical session (Hyprland)
+    package = config.programs.emacs.finalPackage;
+    defaultEditor = true; # This handles EDITOR/VISUAL automatically
     startWithUserSession = "graphical";
-
-    # Enable socket activation (starts daemon on-demand)
     socketActivation.enable = true;
-
-    # Additional daemon arguments
     client = {
       enable = true;
       arguments = [
         "-c"
         "-a"
         "''"
-      ]; # Default to GUI frames
+      ];
     };
   };
 
@@ -44,15 +37,13 @@
   home.sessionVariables = {
     DOOMDIR = "${config.home.homeDirectory}/.config/doom";
     DOOMLOCALDIR = "${config.home.homeDirectory}/.config/emacs/.local";
-    EDITOR = "emacsclient -t";
-    VISUAL = "emacsclient -c -a ''";
+    # EDITOR and VISUAL removed—handled by services.emacs.defaultEditor
   };
 
-  # Shell aliases for convenience
   home.shellAliases = {
-    e = "emacsclient -t -a ''"; # Terminal Emacs
-    ec = "emacsclient -c -a ''"; # GUI Emacs
-    ekill = "emacsclient -e '(kill-emacs)'"; # Kill daemon
-    erestart = "emacsclient -e '(kill-emacs)' && emacs --daemon"; # Restart daemon
+    e = "emacsclient -t -a ''";
+    ec = "emacsclient -c -a ''";
+    ekill = "emacsclient -e '(kill-emacs)'";
+    erestart = "emacsclient -e '(kill-emacs)' && emacs --daemon";
   };
 }
