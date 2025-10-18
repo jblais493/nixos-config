@@ -1004,6 +1004,8 @@ Basic development packages for ease of development and deployment.
 *** python.nix
 *** doom.nix
 Emacs configuration using DOOM emacs.
+git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.emacs.d
+~/.emacs.d/bin/doom install
 
 ** CLI/TUI
 *** default.nix

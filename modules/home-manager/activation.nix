@@ -1,30 +1,9 @@
 { config, pkgs, ... }:
-
-let
-  # Create a complete environment for Doom operations
-  doomEnv = pkgs.buildEnv {
-    name = "doom-env";
-    paths = with pkgs; [
-      emacs
-      git
-      ripgrep
-      fd
-      coreutils
-      findutils
-      gnutar
-      gzip
-      gnused
-      gnugrep
-      bash
-    ];
-  };
-in
 {
   home.activation = {
     # Repository cloning
     cloneRepos = config.lib.dag.entryAfter [ "writeBoundary" ] ''
-      # Quick SSH check with timeout
-      if timeout 5 ${pkgs.openssh}/bin/ssh -T git@github.com 2>&1 | grep -q "successfully authenticated"; then
+      if ${pkgs.openssh}/bin/ssh -T git@github.com 2>&1 | grep -q "successfully authenticated"; then
         if [ ! -d "${config.home.homeDirectory}/.config/scripts" ]; then
           echo "Cloning private scripts repo..."
           ${pkgs.git}/bin/git clone git@github.com:jblais493/scripts.git \
@@ -35,14 +14,12 @@ in
       fi
 
       if [ ! -d "${config.home.homeDirectory}/Pictures/Wallpapers" ]; then
-        GIT_CONFIG_NOSYSTEM=1 HOME=/tmp ${pkgs.git}/bin/git clone \
-          https://github.com/jblais493/Wallpapers \
+        ${pkgs.git}/bin/git clone https://github.com/jblais493/Wallpapers \
           ${config.home.homeDirectory}/Pictures/Wallpapers
       fi
 
       if [ ! -d "${config.home.homeDirectory}/.config/kmonad" ]; then
-        GIT_CONFIG_NOSYSTEM=1 HOME=/tmp ${pkgs.git}/bin/git clone \
-          https://github.com/jblais493/Kmonad-thinkpad \
+        ${pkgs.git}/bin/git clone https://github.com/jblais493/Kmonad-thinkpad \
           ${config.home.homeDirectory}/.config/kmonad
       fi
     '';
@@ -51,14 +28,13 @@ in
     installDoomEmacs = config.lib.dag.entryAfter [ "writeBoundary" ] ''
       if [ ! -d "${config.home.homeDirectory}/.emacs.d" ]; then
         echo "Installing Doom Emacs..."
-        # Ignore both user AND system git config
-        GIT_CONFIG_NOSYSTEM=1 HOME=/tmp ${pkgs.git}/bin/git clone --depth 1 \
-          https://github.com/doomemacs/doomemacs \
+        ${pkgs.git}/bin/git clone --depth 1 https://github.com/doomemacs/doomemacs \
           ${config.home.homeDirectory}/.emacs.d
+
+        export PATH="${pkgs.emacs}/bin:${pkgs.git}/bin:${pkgs.ripgrep}/bin:${pkgs.fd}/bin:$PATH"
 
         if [ -x "${config.home.homeDirectory}/.emacs.d/bin/doom" ]; then
           echo "Running doom install..."
-          export PATH="${doomEnv}/bin:$PATH"
           ${config.home.homeDirectory}/.emacs.d/bin/doom install --no-env --no-hooks
         else
           echo "Error: doom binary not found after clone"
@@ -75,7 +51,7 @@ in
          [ -d "${config.home.homeDirectory}/.config/doom" ]; then
         if [ -x "${config.home.homeDirectory}/.emacs.d/bin/doom" ]; then
           echo "Syncing Doom configuration..."
-          export PATH="${doomEnv}/bin:$PATH"
+          export PATH="${pkgs.emacs}/bin:${pkgs.git}/bin:${pkgs.ripgrep}/bin:${pkgs.fd}/bin:$PATH"
           ${config.home.homeDirectory}/.emacs.d/bin/doom sync
         else
           echo "Warning: doom binary not found, skipping sync"
