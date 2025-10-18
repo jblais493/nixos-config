@@ -23,7 +23,8 @@ in
   home.activation = {
     # Repository cloning
     cloneRepos = config.lib.dag.entryAfter [ "writeBoundary" ] ''
-      if ${pkgs.openssh}/bin/ssh -T git@github.com 2>&1 | grep -q "successfully authenticated"; then
+      # Quick SSH check with timeout
+      if timeout 5 ${pkgs.openssh}/bin/ssh -T git@github.com 2>&1 | grep -q "successfully authenticated"; then
         if [ ! -d "${config.home.homeDirectory}/.config/scripts" ]; then
           echo "Cloning private scripts repo..."
           ${pkgs.git}/bin/git clone git@github.com:jblais493/scripts.git \
@@ -34,12 +35,14 @@ in
       fi
 
       if [ ! -d "${config.home.homeDirectory}/Pictures/Wallpapers" ]; then
-        ${pkgs.git}/bin/git clone https://github.com/jblais493/Wallpapers \
+        GIT_CONFIG_NOSYSTEM=1 HOME=/tmp ${pkgs.git}/bin/git clone \
+          https://github.com/jblais493/Wallpapers \
           ${config.home.homeDirectory}/Pictures/Wallpapers
       fi
 
       if [ ! -d "${config.home.homeDirectory}/.config/kmonad" ]; then
-        ${pkgs.git}/bin/git clone https://github.com/jblais493/Kmonad-thinkpad \
+        GIT_CONFIG_NOSYSTEM=1 HOME=/tmp ${pkgs.git}/bin/git clone \
+          https://github.com/jblais493/Kmonad-thinkpad \
           ${config.home.homeDirectory}/.config/kmonad
       fi
     '';
@@ -48,8 +51,8 @@ in
     installDoomEmacs = config.lib.dag.entryAfter [ "writeBoundary" ] ''
       if [ ! -d "${config.home.homeDirectory}/.emacs.d" ]; then
         echo "Installing Doom Emacs..."
-        # Completely bypass user git config by unsetting HOME temporarily
-        HOME=/tmp ${pkgs.git}/bin/git clone --depth 1 \
+        # Ignore both user AND system git config
+        GIT_CONFIG_NOSYSTEM=1 HOME=/tmp ${pkgs.git}/bin/git clone --depth 1 \
           https://github.com/doomemacs/doomemacs \
           ${config.home.homeDirectory}/.emacs.d
 
