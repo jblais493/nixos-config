@@ -16,6 +16,7 @@ in
     ./theming.nix
     ./firefox.nix
     ./gpg.nix
+    ./core/default.nix
     ./system/dotfiles.nix
   ];
 

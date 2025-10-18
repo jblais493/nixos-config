@@ -1000,10 +1000,6 @@ in
 
   home.username = "joshua";
   home.homeDirectory = "/home/joshua";
-  home.stateVersion = "25.05";
-
-  # Let home-manager manage itself
-  programs.home-manager.enable = true;
 
    # XDG MIME associations for file types
   xdg.mimeApps = {
@@ -1072,11 +1068,6 @@ Scripts to setup a new machine with directories in their correct locations.
     extraConfig = ''
       allow-loopback-pinentry
     '';
-  };
-
-  programs.nix-index = {
-    enable = true;
-    enableBashIntegration = true;
   };
 }
 #+end_src
