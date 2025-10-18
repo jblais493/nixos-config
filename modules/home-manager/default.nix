@@ -8,14 +8,14 @@
 
 {
   imports = [
-    ./setup.nix
-    ./theming.nix
+    ./activation.nix
+    ./dotfiles.nix
+    ./emacs.nix
     ./firefox.nix
     ./gpg.nix
-    ./core/default.nix
-    ./core/xdg.nix
-    ./development/emacs.nix
-    ./system/dotfiles.nix
+    ./media.nix
+    ./theming.nix
+    ./xdg.nix
   ];
 
   home.username = "joshua";
@@ -25,8 +25,8 @@
   # Let home-manager manage itself
   programs.home-manager.enable = true;
 
-  services.mpd = {
+  programs.nix-index = {
     enable = true;
-    musicDirectory = "/home/joshua/MusicOrganized";
+    enableBashIntegration = true;
   };
 }

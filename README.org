@@ -984,126 +984,13 @@ SCRIPT
 ** Home-manager
 I use [[https://github.com/nix-community/home-manager][home-manager]] to manage all dotfiles that require customization. I don't agree with rewriting my configs when you can just symlink them using ~mkOutOfStoreSymlink~
 *** default.nix
-#+begin_src nix modules/home-manager/default.nix
-{ config, lib, pkgs, inputs, ... }:
-
-let
-  # Create a function to make out-of-store symlinks
-  mkOutOfStoreSymlink = path: config.lib.file.mkOutOfStoreSymlink path;
-in
-{
-  imports = [
-    ./setup.nix
-    ./theming.nix
-    ./browsers.nix
-  ];
-
-  home.username = "joshua";
-  home.homeDirectory = "/home/joshua";
-
-  services.mpd = {
-    enable = true;
-    musicDirectory = "/home/joshua/MusicOrganized";
-  };
-}
-#+end_src
-
-*** setup.nix
+Pulls in all modules for home-manager systems (desktops/workstations/laptops)
+*** dotfiles.nix
+Adds in MkOutOfStore for immediate update when dotfiles are edited
+*** activation.nix
 Scripts to setup a new machine with directories in their correct locations.
-
-#+begin_src nix modules/home-manager/setup.nix
-{ config, pkgs, ... }:
-{
-  # Clone repositories - skip private repos if SSH key not available
-  home.activation.cloneRepos = config.lib.dag.entryAfter ["writeBoundary"] ''
-    # Check if SSH key exists and GitHub is accessible
-    if ${pkgs.openssh}/bin/ssh -T git@github.com 2>&1 | grep -q "successfully authenticated"; then
-      # Scripts repo (private - only if SSH works)
-      if [ ! -d "${config.home.homeDirectory}/.config/scripts" ]; then
-        echo "Cloning private scripts repo..."
-        ${pkgs.git}/bin/git clone git@github.com:jblais493/scripts.git ${config.home.homeDirectory}/.config/scripts
-      fi
-    else
-      echo "SSH key not configured for GitHub, skipping private scripts repo"
-    fi
-
-    # Public repos
-    if [ ! -d "${config.home.homeDirectory}/Pictures/Wallpapers" ]; then
-      ${pkgs.git}/bin/git clone https://github.com/jblais493/Wallpapers ${config.home.homeDirectory}/Pictures/Wallpapers
-    fi
-
-    if [ ! -d "${config.home.homeDirectory}/.config/kmonad" ]; then
-      ${pkgs.git}/bin/git clone https://github.com/jblais493/Kmonad-thinkpad ${config.home.homeDirectory}/.config/kmonad
-    fi
-  '';
-
-  programs.gpg.enable = true;
-  services.gpg-agent = {
-    enable = true;
-    enableSshSupport = true;
-    defaultCacheTtl = 86400;
-    pinentry.package = pkgs.pinentry-gtk2;
-    extraConfig = ''
-      allow-loopback-pinentry
-    '';
-  };
-}
-#+end_src
-
 *** theming.nix
-#+begin_src nix modules/home-manager/theming.nix
-{ config, pkgs, ... }:
-{
-  # Proper cursor configuration - the NixOS way
-  home.pointerCursor = {
-    name = "Nordzy-cursors-white";  # This is the correct name
-    package = pkgs.nordzy-cursor-theme;
-    size = 24;
-    gtk.enable = true;
-    x11.enable = true;
-  };
-
-  gtk = {
-    enable = true;
-    theme = {
-      name = "Nordic-darker";
-      package = pkgs.nordic;
-    };
-    iconTheme = {
-      name = "Zafiro-icons-Dark";
-      package = pkgs.zafiro-icons;
-    };
-    cursorTheme = {
-      name = "Nordzy-cursors";
-      package = pkgs.nordzy-cursor-theme;
-      size = 24;
-    };
-    gtk3.extraConfig = {
-      gtk-application-prefer-dark-theme = 1;
-    };
-    gtk4.extraConfig = {
-      gtk-application-prefer-dark-theme = 1;
-    };
-  };
-
-  # Qt follows GTK - the principle of least surprise
-  qt = {
-    enable = true;
-    platformTheme.name = "gtk";
-    style = {
-      name = "gtk2";
-    };
-  };
-
-  # Hyprland-specific cursor fixes (since you're using Hyprland)
-  wayland.windowManager.hyprland.settings = {
-    exec-once = [
-      "gsettings set org.gnome.desktop.interface cursor-theme 'Nordzy-cursors-white'"
-      "gsettings set org.gnome.desktop.interface cursor-size 24"
-    ];
-  };
-}
-#+end_src
+Defines system theming for all applications
 *** firefox.nix
 This configures extensions and settings in firefox
 
