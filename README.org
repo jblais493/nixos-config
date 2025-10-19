@@ -1847,6 +1847,10 @@ services.adguardhome = {
     dns = {
       bind_hosts = [ "0.0.0.0" ];
       port = 53;
+      bootstrap_dns = [  # Required for resolving upstream DNS hostnames
+        "1.1.1.1"
+        "8.8.8.8"
+      ];
       upstream_dns = [
         "1.1.1.1"
         "8.8.8.8"
