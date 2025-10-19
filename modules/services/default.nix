@@ -169,6 +169,7 @@ in
 
 services.adguardhome = {
   enable = true;
+  mutableSettings = false;
   host = "0.0.0.0";
   port = 3001;
   openFirewall = false;
@@ -181,66 +182,64 @@ services.adguardhome = {
         "8.8.8.8"
       ];
     };
+    filters = [
+      {
+        enabled = true;
+        url = "https://adguardteam.github.io/HostlistsRegistry/assets/filter_1.txt";
+        name = "AdGuard DNS filter";
+        id = 1;
+      }
+      {
+        enabled = true;
+        url = "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts";
+        name = "Steven Black's Unified Hosts";
+        id = 2;
+      }
+      {
+        enabled = true;
+        url = "https://blocklistproject.github.io/Lists/ads.txt";
+        name = "The Block List Project - Ads";
+        id = 3;
+      }
+      {
+        enabled = true;
+        url = "https://raw.githubusercontent.com/columndeeply/hosts/main/hosts00";
+        name = "Porn block list 1";
+        id = 4;
+      }
+      {
+        enabled = true;
+        url = "https://raw.githubusercontent.com/columndeeply/hosts/main/hosts01";
+        name = "Porn block list 2";
+        id = 5;
+      }
+      {
+        enabled = true;
+        url = "https://raw.githubusercontent.com/columndeeply/hosts/main/hosts02";
+        name = "Porn block list 3";
+        id = 6;
+      }
+      {
+        enabled = true;
+        url = "https://raw.githubusercontent.com/columndeeply/hosts/main/hosts03";
+        name = "Porn block list 4";
+        id = 7;
+      }
+      {
+        enabled = true;
+        url = "https://raw.githubusercontent.com/columndeeply/hosts/main/hosts04";
+        name = "Porn block list 5";
+        id = 8;
+      }
+      {
+        enabled = true;
+        url = "https://raw.githubusercontent.com/columndeeply/hosts/main/hosts05";
+        name = "Porn block list 6";
+        id = 9;
+      }
+    ];
     filtering = {
       rewrites = dnsRewrites;
-      
-      # This is what you're after
-      filters = [
-        {
-          enabled = true;
-          url = "https://adguardteam.github.io/HostlistsRegistry/assets/filter_1.txt";
-          name = "AdGuard DNS filter";
-          id = 1;
-        }
-        {
-          enabled = true;
-          url = "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts";
-          name = "Steven Black's Unified Hosts";
-          id = 2;
-        }
-        {
-          enabled = true;
-          url = "https://blocklistproject.github.io/Lists/ads.txt";
-          name = "The Block List Project - Ads";
-          id = 3;
-        }
-        {
-          enabled = true;
-          url = "https://raw.githubusercontent.com/columndeeply/hosts/main/hosts00";
-          name = "Porn block list 1";
-          id = 4;
-        }
-        {
-          enabled = true;
-          url = "https://raw.githubusercontent.com/columndeeply/hosts/main/hosts01";
-          name = "Porn block list 2";
-          id = 5;
-        }
-        {
-          enabled = true;
-          url = "https://raw.githubusercontent.com/columndeeply/hosts/main/hosts02";
-          name = "Porn block list 3";
-          id = 6;
-        }
-        {
-          enabled = true;
-          url = "https://raw.githubusercontent.com/columndeeply/hosts/main/hosts03";
-          name = "Porn block list 4";
-          id = 7;
-        }
-        {
-          enabled = true;
-          url = "https://raw.githubusercontent.com/columndeeply/hosts/main/hosts04";
-          name = "Porn block list 5";
-          id = 8;
-        }
-        {
-          enabled = true;
-          url = "https://raw.githubusercontent.com/columndeeply/hosts/main/hosts05";  
-          name = "Porn block list 6";
-          id = 9;
-        }
-      ];
     };
   };
 };
