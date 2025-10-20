@@ -14,9 +14,9 @@
 ;; (package! calfw-org)
 ;; (package! web-beautify)
 (package! alert)
-(package! counsel)
+;; (package! counsel)
 (package! sqlite3)
-(package! impatient-mode)
+;; (package! impatient-mode)
 ;; (package! ssh)
 ;; (package! multiple-cursors)
 ;; (package! org-super-agenda)
@@ -24,6 +24,7 @@
 ;; (package! theme-magic)
 ;; (package! centaur-tabs)
 (package! prettier-js)
+(package! svelte-mode)
 (package! templ-ts-mode)
 ;; (package! company-tabnine)
 ;; (package! sublimity)
@@ -37,7 +38,6 @@
 (package! elfeed-tube)
 (package! elfeed-tube-mpv)
 (package! define-word)
-(package! svelte-mode)
 
 ;; Nix related
 (package! agenix)

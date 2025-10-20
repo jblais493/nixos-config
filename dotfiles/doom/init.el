@@ -83,13 +83,13 @@
        :checkers
        syntax              ; tasing you for every semicolon you forget
        (spell +aspell)     ; tasing you for misspelling mispelling
-       ;;grammar           ; tasing grammar mistake every you make
+       (grammar +languagetool) ; tasing grammar mistake every you make
 
        :tools
        ;;ansible
        direnv
        ;; docker
-       ;;editorconfig      ; let someone else argue about tabs vs spaces
+       editorconfig      ; let someone else argue about tabs vs spaces
        ;;ein               ; tame Jupyter notebooks with emacs
        (eval +overlay)     ; run code, run (also, repls)
        ;;gist              ; interacting with github gists
@@ -196,5 +196,5 @@
        ;;(everywhere +protocol)       ; leave emacs? never.
 
        :config
-       ;;literate
+       literate
        (default +bindings +smartparens))
