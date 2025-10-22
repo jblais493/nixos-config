@@ -1,13 +1,12 @@
 { lib, ... }:
 {
   imports = [
-    ../modules/shared
-    ../modules/media
+    ../modules/cli-tui
+    ../modules/development
     ../modules/desktop
-    ../../modules/cli-tui
-    ../modules/desktop/gaming.nix
-    ../modules/cli-tui/security.nix
-    ../modules/cli-tui/development.nix
+    ../modules/media
+    ../modules/security
+    ../modules/shared
   ];
 
   time.timeZone = lib.mkDefault "America/Edmonton";

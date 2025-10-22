@@ -1,14 +1,14 @@
-{ config, pkgs, inputs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 {
   imports = [
     ./hardware-configuration.nix
     ./hardware-overrides.nix
-    ../../modules/desktop
-    ../../modules/shared
-    ../../modules/cli-tui
-    ../../modules/development
-    ../../modules/media
-    ../../modules/security
+    ../../profiles/workstation.nix
     ../../modules/secrets-joshua.nix
   ];
 
@@ -24,11 +24,14 @@
     isNormalUser = true;
     description = "Joshua Blais";
     group = "joshua";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
   };
 
   # Create the user group
-  users.groups.joshua = {};
+  users.groups.joshua = { };
 
   # Basic system configuration
   time.timeZone = "America/Edmonton";
