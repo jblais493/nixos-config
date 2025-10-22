@@ -5,11 +5,6 @@
     xfce.thunar
     xfce.tumbler
 
-    # Communication
-    signal-desktop
-    telegram-desktop
-    thunderbird
-
     # Graphics and image optimizations
     gimp3-with-plugins
     libwebp
@@ -44,13 +39,13 @@
 
   # Android tooling
   programs.adb.enable = true;
-  users.users.joshua.extraGroups = ["adbusers"];
+  users.users.joshua.extraGroups = [ "adbusers" ];
 
   services.resolved.enable = true;
   services.mullvad-vpn.enable = true;
   programs.kdeconnect.enable = true;
 
-systemd.user.services.kdeconnect = {
+  systemd.user.services.kdeconnect = {
     description = "KDE Connect daemon";
     wantedBy = [ "default.target" ];
     after = [ "graphical-session.target" ];
@@ -66,8 +61,18 @@ systemd.user.services.kdeconnect = {
   };
 
   networking.firewall = {
-    allowedTCPPortRanges = [ { from = 1714; to = 1764; } ];
-    allowedUDPPortRanges = [ { from = 1714; to = 1764; } ];
+    allowedTCPPortRanges = [
+      {
+        from = 1714;
+        to = 1764;
+      }
+    ];
+    allowedUDPPortRanges = [
+      {
+        from = 1714;
+        to = 1764;
+      }
+    ];
   };
 
   # Enable flatpak
@@ -75,28 +80,29 @@ systemd.user.services.kdeconnect = {
 
   # Syncthing for laptop to phone synchronization
   services.syncthing = {
-  enable = true;
-  user = "joshua";
-  dataDir = "/home/joshua/.syncthing";
-  configDir = "/home/joshua/.config/syncthing";
-  # Can declaratively set this later:
-  # overrideDevices = true;
-  # overrideFolders = true;
+    enable = true;
+    user = "joshua";
+    dataDir = "/home/joshua/.syncthing";
+    configDir = "/home/joshua/.config/syncthing";
+    # Can declaratively set this later:
+    # overrideDevices = true;
+    # overrideFolders = true;
 
-  settings = {
-    devices = {
-      "phone" = { id = "TTUKVRU-FEJGUXM-SERMOTN-TJNRQKV-7QP2N5J-V3ESDBE-5WTKB4K-2LCGDA3"; };
+    settings = {
+      devices = {
+        "phone" = {
+          id = "TTUKVRU-FEJGUXM-SERMOTN-TJNRQKV-7QP2N5J-V3ESDBE-5WTKB4K-2LCGDA3";
+        };
+      };
     };
   };
- };
-
 
   # Radicale testing for server calendar/VCard sync
   services.radicale = {
     enable = true;
     settings = {
       server = {
-        hosts = [ "0.0.0.0:5232" ];  # Localhost only for testing
+        hosts = [ "0.0.0.0:5232" ]; # Localhost only for testing
       };
       auth = {
         type = "htpasswd";
@@ -107,7 +113,7 @@ systemd.user.services.kdeconnect = {
         filesystem_folder = "/var/lib/radicale/collections";
       };
       logging = {
-        level = "info";  # Helpful for debugging during testing
+        level = "info"; # Helpful for debugging during testing
       };
     };
   };

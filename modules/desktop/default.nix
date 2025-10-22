@@ -1,20 +1,21 @@
 { config, pkgs, ... }:
 {
   imports = [
-    ./hyprland.nix
-    ./kmonad.nix
-    ./fonts.nix
+    ./applications.nix
     ./audio.nix
     ./bluetooth.nix
-    ./printing.nix
+    ./boot.nix
     ./browsers.nix
-    ./applications.nix
-    ./email.nix
-    ./gaming.nix
+    ./communication.nix
     ./display-manager.nix
+    ./email.nix
+    ./fonts.nix
+    ./gaming.nix
+    ./hyprland.nix
+    ./kmonad.nix
+    ./power.nix
+    ./printing.nix
     ./storage.nix
     ./theming.nix
-    ./boot.nix
-    ./power.nix
   ];
 }
