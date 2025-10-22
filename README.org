@@ -2363,94 +2363,7 @@ services.adguardhome = {
 #+end_src
 ** Media
 *** default.nix
-#+begin_src nix :tangle modules/media/default.nix
-{ config, pkgs, ... }:
-{
-  imports = [
-    ./music.nix
-    ./video.nix
-    ./pdf.nix
-  ];
-
-  # Common media packages
-  environment.systemPackages = with pkgs; [
-    # Image viewers
-    feh
-    imv
-
-    # Audio tools
-    alsa-utils
-
-    # Document viewers
-    zathura
-    evince
-  ];
-}
-#+end_src
 *** music.nix
-#+begin_src nix :tangle modules/media/music.nix
-{ config, pkgs, ... }:
-{
-  environment.systemPackages = with pkgs; [
-    # Music players
-    mpc
-    ncmpcpp
-    spotify
-    spotdl
-    # Audio tools
-    audacity
-    # Audio codecs
-    ffmpeg-full
-    flac
-    lame
-  ];
-
-  # Ensure users can access audio devices
-  users.groups.audio = {};
-}
-#+end_src
-*** video.nix
-#+begin_src nix :tangle modules/media/video.nix
-{ config, pkgs, ... }:
-{
-  environment.systemPackages = with pkgs; [
-    # Video players
-    mpv
-    vlc
-
-    # Video editing
-    obs-studio
-    shotcut
-
-    # Anime CLI:
-    ani-cli
-
-    # Video tools
-    ffmpeg
-    yt-dlp
-  ];
-}
-#+end_src
-*** pdf.nix
-#+begin_src nix :tangle modules/media/pdf.nix
-{ config, pkgs, ... }:
-{
-  environment.systemPackages = with pkgs; [
-    # PDF viewers
-    zathura
-    evince
-    kdePackages.okular
-
-    # PDF tools
-    poppler_utils
-    pdftk
-
-    # Document conversion
-    pandoc
-    texlive.combined.scheme-full
-  ];
-}
-#+end_src
 ** Secrets
 This will define secrets decryption for desktops
 
@@ -2521,7 +2434,6 @@ let
 
   # Groups for convenience
   users = [ joshua ];
-  # desktops = [ king theologica ];
   servers = [ empirica ];
   allSystems = users ++ servers;
 in
@@ -2631,10 +2543,4 @@ in
 }
 #+end_src
 
-* Fixes
 
-* DONE
-** DONE Persistence of git login
-** DONE Addin battery optimizations for laptop
-** DONE speed of zsh shell opening
-** DONE Get mu4e working

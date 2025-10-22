@@ -7,7 +7,6 @@ let
 
   # Groups for convenience
   users = [ joshua ];
-  # desktops = [ king theologica ];
   servers = [ empirica ];
   allSystems = users ++ servers;
 in
