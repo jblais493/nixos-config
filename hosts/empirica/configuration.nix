@@ -1,11 +1,16 @@
-{ config, pkgs, inputs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 {
   imports = [
     ./hardware-configuration.nix
     ../../modules/cli-tui
     ../../modules/shared
     ../../modules/security
-    ../../modules/services
+    ../../modules/services/empirica
     ../../modules/secrets-empirica.nix
   ];
 
@@ -16,19 +21,22 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  users.groups.joshua = {};
+  users.groups.joshua = { };
 
   users.users.joshua = {
     isNormalUser = true;
     description = "Joshua Blais";
     group = "joshua";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
   };
 
   users.users.immich = {
     isSystemUser = true;
     group = "immich";
-    extraGroups = [ "joshua" ];  # Add to joshua's group
+    extraGroups = [ "joshua" ]; # Add to joshua's group
     description = "Immich photo management service";
   };
 
@@ -57,7 +65,7 @@
     hybrid-sleep.enable = false;
   };
 
-# Configure systemd-logind to ignore power events
+  # Configure systemd-logind to ignore power events
   services.logind.settings = {
     Login = {
       HandlePowerKey = "ignore";
@@ -67,7 +75,7 @@
 
   # Prevent automatic suspension
   powerManagement = {
-    enable = false;  # Disable NixOS power management entirely
+    enable = false; # Disable NixOS power management entirely
   };
 
   system.stateVersion = "25.05";

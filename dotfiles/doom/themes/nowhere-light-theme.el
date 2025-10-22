@@ -1,7 +1,7 @@
 ;;; doom-spacegrey-theme.el --- I'm sure you've heard of it -*- lexical-binding: t; no-byte-compile: t; -*-
 ;;
-;; Added: December 31, 2017 (#129)
-;; Author: teesloane <https://github.com/teesloane>
+;; Added: October 20, 2025
+;; Author: joshuablais <https://github.com/jblais493>
 ;; Maintainer:
 ;; Source: http://kkga.github.io/spacegray/
 ;;
@@ -46,36 +46,36 @@ determine the exact padding."
 ;;
 ;;; Theme definition
 
-(def-doom-theme nowhere
-    "The Nowhere colorscheme"
+(def-doom-theme nowhere-light
+    "The Nowhere Light colorscheme"
 
   ;; name        default   256       16
-  ((bg         '("#1a1d21" nil       nil            ))
-   (bg-alt     '("#22262b" nil       nil            ))
-   (base0      '("#0f1114" "black"   "black"        ))
-   (base1      '("#171a1e" "#1e1e1e" "brightblack"  ))
-   (base2      '("#1f2228" "#2e2e2e" "brightblack"  ))
-   (base3      '("#282c34" "#2F3237" "brightblack"  ))
-   (base4      '("#3d424a" "#4f5b66" "brightblack"  ))
-   (base5      '("#515761" "#65737E" "brightblack"  ))
-   (base6      '("#676d77" "#6b6b6b" "brightblack"  ))
-   (base7      '("#8b919a" "#979797" "brightblack"  ))
-   (base8      '("#e8e4dc" "#dfdfdf" "white"        ))
-   (fg         '("#f5f2eb" "#c0c5ce" "brightwhite"  ))  ; brighter cream - high contrast
-   (fg-alt     '("#c8c5bf" "#c0c5ce" "white"        ))  ; brighter secondary
+  ((bg         '("#ebe9e6" nil       nil            ))  ; warm off-white, like aged paper
+   (bg-alt     '("#e0deda" nil       nil            ))  ; slightly warmer panels
+   (base0      '("#f5f4f2" "white"   "white"        ))  ; pure light
+   (base1      '("#efeeed" "#e4e4e4" "white"        ))
+   (base2      '("#e5e3e0" "#d0d0d0" "brightwhite"  ))
+   (base3      '("#d8d6d3" "#c6c6c6" "brightwhite"  ))
+   (base4      '("#b8b5b0" "#b2b2b2" "brightwhite"  ))
+   (base5      '("#9a9791" "#979797" "brightblack"  ))
+   (base6      '("#7d7a75" "#6b6b6b" "brightblack"  ))
+   (base7      '("#5f5c58" "#525252" "brightblack"  ))
+   (base8      '("#2d2a27" "#1e1e1e" "black"        ))
+   (fg         '("#3d3a36" "#2d2d2d" "black"        ))  ; warm charcoal
+   (fg-alt     '("#5a5754" "#4e4e4e" "brightblack"  ))
 
    (grey       base4)
-   (red        '("#c5b3b3" "#BF616A" "red"          ))  ; boosted grey-rose
-   (orange     '("#c5bcb3" "#D08770" "brightred"    ))  ; boosted grey-sand  
-   (green      '("#afb8af" "#A3BE8C" "green"        ))  ; boosted strings
-   (blue       '("#b8c0c5" "#8FA1B3" "brightblue"   ))  ; boosted steel
-   (yellow     '("#c5c3b8" "#ECBE7B" "yellow"       ))  ; boosted functions
-   (violet     '("#c5c0bd" "#b48ead" "brightmagenta"))  ; boosted grey-lavender
-   (teal       '("#b3c5c0" "#44b9b1" "brightgreen"  ))  ; boosted grey-seafoam
-   (dark-blue  '("#9aa5b3" "#2257A0" "blue"         ))  ; boosted deep grey-blue
-   (magenta    '("#bdb8c0" "#c678dd" "magenta"      ))  ; boosted grey-purple
-   (cyan       '("#b3bdc5" "#46D9FF" "brightcyan"   ))  ; boosted grey-ice
-   (dark-cyan  '("#9faab3" "#5699AF" "cyan"         ))  ; boosted grey-water
+   (red        '("#8a7575" "#8a7575" "red"          ))  ; muted dusty rose
+   (orange     '("#9a8b70" "#9a8b70" "brightred"    ))  ; warm earth - like that link color
+   (green      '("#758270" "#758270" "green"        ))  ; muted olive
+   (blue       '("#707a85" "#707a85" "brightblue"   ))  ; cool grey-blue
+   (yellow     '("#9a8f75" "#9a8f75" "yellow"       ))  ; warm sand - for highlights
+   (violet     '("#857d7a" "#857d7a" "brightmagenta"))  ; barely lavender
+   (teal       '("#758580" "#758580" "brightgreen"  ))  ; sage grey
+   (dark-blue  '("#5a6570" "#5a6570" "blue"         ))
+   (magenta    '("#7d757d" "#7d757d" "magenta"      ))
+   (cyan       '("#707d85" "#707d85" "brightcyan"   ))
+   (dark-cyan  '("#5f6a70" "#5f6a70" "cyan"         ))
 
    ;; face categories -- required for all themes
    (highlight      orange)
@@ -177,3 +177,5 @@ determine the exact padding."
   )
 
 ;;; doom-spacegrey-theme.el ends here
+
+
