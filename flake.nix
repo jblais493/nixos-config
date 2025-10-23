@@ -12,6 +12,7 @@
     home-manager.url = "github:nix-community/home-manager";
     deploy-rs.url = "github:serokell/deploy-rs";
     agenix.url = "github:ryantm/agenix";
+    impermanence.url = "github:nix-community/impermanence";
 
     # Custom modules
     supernote-tools.url = "github:jblais493/supernote";
@@ -24,7 +25,8 @@
     supernote-tools.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, ... }@inputs:
+  outputs =
+    { self, nixpkgs, ... }@inputs:
     let
       lib = nixpkgs.lib;
 
@@ -47,7 +49,8 @@
       ];
 
       # Build a NixOS system configuration
-      mkHost = hostname: modules:
+      mkHost =
+        hostname: modules:
         lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = { inherit inputs; };
@@ -56,39 +59,43 @@
 
       # Build a deploy-rs deployment target
       mkDeploy = hostname: cfg: {
-      hostname = cfg.hostname;  # Use the hostname from cfg, not the parameter
-      profiles.system = {
+        hostname = cfg.hostname; # Use the hostname from cfg, not the parameter
+        profiles.system = {
           user = "root";
           sshUser = cfg.sshUser or "root";
-          path = inputs.deploy-rs.lib.x86_64-linux.activate.nixos
-          self.nixosConfigurations.${hostname};  # Use hostname for config lookup
+          path = inputs.deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.${hostname}; # Use hostname for config lookup
         };
       };
 
-    in {
+    in
+    {
       # System configurations
       nixosConfigurations = {
         # Personal machines (desktop environment)
         theologica = mkHost "theologica" desktop;
-        king       = mkHost "king"       desktop;
-        axios      = mkHost "axios"      desktop;
+        king = mkHost "king" desktop;
+        axios = mkHost "axios" desktop;
 
         # Server infrastructure (headless)
-        empirica   = mkHost "empirica"   base;
+        empirica = mkHost "empirica" base;
         alexandria = mkHost "alexandria" base;
-        empire     = mkHost "empire"     base;
+        empire = mkHost "empire" base;
       };
 
       # Remote deployment targets
       deploy.nodes = {
-        empirica   = mkDeploy "empirica"   { sshUser = "joshua"; hostname = "192.168.0.28"; };
+        empirica = mkDeploy "empirica" {
+          sshUser = "joshua";
+          hostname = "192.168.0.28";
+        };
         alexandria = mkDeploy "alexandria" { hostname = "alexandria.your-domain.com"; };
-        # empire   = mkDeploy "empire"     { hostname = "empire.your-domain.com"; };
+        empire = mkDeploy "empire" {
+          hostname = "5.78.159.158";
+          sshUser = "root";
+        };
       };
 
       # Deployment validation checks
-      checks = builtins.mapAttrs
-        (_: deployLib: deployLib.deployChecks self.deploy)
-        inputs.deploy-rs.lib;
+      checks = builtins.mapAttrs (_: deployLib: deployLib.deployChecks self.deploy) inputs.deploy-rs.lib;
     };
 }

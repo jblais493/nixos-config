@@ -1,16 +1,15 @@
 { config, pkgs, ... }:
 
 {
-    imports = [
-        ./core-utils.nix
-        ./nix.nix
-        ./git.nix
-        ./system-tools.nix
-        ./security.nix
-        ./network.nix
-        ./neovim.nix
-        ./podman.nix
-        ./shell/zsh.nix
-        ./shell/tmux.nix
-    ];
+  imports = [
+    ./core-utils.nix
+    ./nix.nix
+    ./git.nix
+    ./system-tools.nix
+    ./security.nix
+    ./network.nix
+    ./neovim.nix
+    ./podman.nix
+    ./shell
+  ];
 }

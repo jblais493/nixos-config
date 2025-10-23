@@ -1,8 +1,7 @@
 { lib, ... }:
 {
   imports = [
-    ../modules/shared
-    # NO desktop modules
+    # ../modules/cli-tui/shell
     # NO audio modules
   ];
 
@@ -16,6 +15,13 @@
     dates = "daily";
     options = "--delete-older-than 7d";
   };
+
+  # Disable ALL documentation
+  documentation.enable = lib.mkForce false;
+  documentation.nixos.enable = lib.mkForce false;
+  documentation.man.enable = lib.mkForce false;
+  documentation.info.enable = lib.mkForce false;
+  documentation.doc.enable = lib.mkForce false;
 
   boot.loader.systemd-boot.configurationLimit = 5;
 

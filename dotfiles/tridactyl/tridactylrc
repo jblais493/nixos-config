@@ -1,3 +1,4 @@
 set editorcmd emacsclient -c
 bind --mode=ex <ArrowDown> ex.next_completion
 bind --mode=ex <ArrowUp> ex.prev_completion
+blacklistadd console.hetzner.com
