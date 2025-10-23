@@ -361,3 +361,6 @@ fi
 if ! ssh-add -l 2>/dev/null | grep -q "joshua@joshuablais.com"; then
   ssh-add ~/.ssh/id_ed25519
 fi
+if ! ssh-add -l 2>/dev/null | grep -q "josh@joshuablais.com"; then
+  ssh-add ~/.ssh/id_ed25519_new
+fi
