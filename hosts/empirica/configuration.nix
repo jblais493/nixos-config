@@ -10,7 +10,7 @@
     ../../modules/cli-tui
     ../../modules/shared
     ../../modules/security
-    ../../modules/services/empirica
+    ../../services/empirica
     ../../modules/secrets-empirica.nix
   ];
 

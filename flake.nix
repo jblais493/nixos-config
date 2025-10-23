@@ -78,8 +78,6 @@
 
         # Server infrastructure (headless)
         empirica = mkHost "empirica" base;
-        alexandria = mkHost "alexandria" base;
-        empire = mkHost "empire" base;
       };
 
       # Remote deployment targets
@@ -87,11 +85,6 @@
         empirica = mkDeploy "empirica" {
           sshUser = "joshua";
           hostname = "192.168.0.28";
-        };
-        alexandria = mkDeploy "alexandria" { hostname = "alexandria.your-domain.com"; };
-        empire = mkDeploy "empire" {
-          hostname = "5.78.159.158";
-          sshUser = "root";
         };
       };
 

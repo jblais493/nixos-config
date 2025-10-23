@@ -1465,8 +1465,8 @@ WHERE tablename = '%s';" table-name)))
                       (evil-window-increase-height 2))))
 
 
-;; (map! :n "<C-tab>"   #'centaur-tabs-forward    ; normal mode only
-;;       :n "<C-iso-lefttab>" #'centaur-tabs-backward)  ; normal mode only
+(map! :n "<C-tab>"   #'centaur-tabs-forward    ; normal mode only
+      :n "<C-iso-lefttab>" #'centaur-tabs-backward)  ; normal mode only
 
 (define-key evil-normal-state-map "f" 'avy-goto-char-2)
 (define-key evil-normal-state-map "F" 'avy-goto-char-2)
