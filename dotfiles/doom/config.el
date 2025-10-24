@@ -1294,6 +1294,11 @@ WHERE tablename = '%s';" table-name)))
 (setq docker-command "podman")
 (setq docker-compose-command "podman-compose")
 
+(after! nix-mode
+  (setq nix-nixfmt-bin "nixfmt")
+  (setq lsp-nix-server "nixd")
+)
+
 (use-package! agenix
   :config
   (setq agenix-secrets-file "~/nixos-config/secrets.nix")

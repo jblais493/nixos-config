@@ -1450,6 +1450,13 @@ go install github.com/sqls-server/sqls@latest
 #+end_src
 
 * Nix
+** Nix LSP
+#+begin_src elisp
+(after! nix-mode
+  (setq nix-nixfmt-bin "nixfmt")
+  (setq lsp-nix-server "nixd")
+)
+#+end_src
 ** Agenix
 #+begin_src elisp
 (use-package! agenix
