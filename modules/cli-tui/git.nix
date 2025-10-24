@@ -7,7 +7,10 @@
       user = {
         name = "Joshua Blais";
         email = "josh@joshblais.com";
+        signingkey = "289A94348DB64DFC";
       };
+      commit.gpgsign = true;
+      tag.gpgsign = true;
       core = {
         editor = "nvim";
         autocrlf = "input";

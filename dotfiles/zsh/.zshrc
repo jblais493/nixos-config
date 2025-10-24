@@ -358,9 +358,6 @@ export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/gnupg/S.gpg-agent.ssh"
 if ! ssh-add -l 2>/dev/null | grep -q "empire beginning ssh key"; then
   ssh-add ~/.ssh/empire.key
 fi
-if ! ssh-add -l 2>/dev/null | grep -q "joshua@joshuablais.com"; then
-  ssh-add ~/.ssh/id_ed25519
-fi
 if ! ssh-add -l 2>/dev/null | grep -q "josh@joshuablais.com"; then
-  ssh-add ~/.ssh/id_ed25519_new
+  ssh-add ~/.ssh/id_ed25519
 fi
