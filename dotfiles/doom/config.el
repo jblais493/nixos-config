@@ -1294,10 +1294,16 @@ WHERE tablename = '%s';" table-name)))
 (setq docker-command "podman")
 (setq docker-compose-command "podman-compose")
 
+(after! lsp-mode
+  (lsp-register-client
+   (make-lsp-client
+    :new-connection (lsp-stdio-connection '("nixd"))
+    :major-modes '(nix-mode nix-ts-mode)
+    :server-id 'nixd
+    :priority 1)))
+
 (after! nix-mode
-  (setq nix-nixfmt-bin "nixfmt")
-  (setq lsp-nix-server "nixd")
-)
+  (setq nix-nixfmt-bin "nixfmt"))
 
 (use-package! agenix
   :config
