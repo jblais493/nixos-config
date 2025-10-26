@@ -16,6 +16,7 @@
     ./power.nix
     ./printing.nix
     ./storage.nix
+    ./networking.nix
     ./theming.nix
   ];
 }
