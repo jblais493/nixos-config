@@ -252,6 +252,7 @@ alias work="arttime --nolearn -a eye -t 'For I consider that the sufferings of t
 alias search-email='~/.config/scripts/email_search'
 alias deployapp="~/.config/scripts/Development/deploy"
 alias blogdeploy="deployapp blogrevamp joshblais.com auto"
+alias deployato="deployapp acetheosce acetheosce.com auto"
 alias lh="~/.config/scripts/Development/lighthouse.sh"
 
 # Docker commands migrated to podman

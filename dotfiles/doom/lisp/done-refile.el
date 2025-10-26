@@ -19,8 +19,12 @@
       (goto-char (point-min))
       ;; Find or create today's heading
       (unless (re-search-forward (concat "^" (regexp-quote today-heading) "$") nil t)
-        (goto-char (point-max))
-        (unless (bolp) (insert "\n"))
+        (goto-char (point-min))
+        ;; Skip past file-level preamble until we hit a heading
+        (while (and (not (eobp))
+                    (not (looking-at "^\\*")))
+          (forward-line 1))
+        ;; We're now positioned at the first heading (or end of buffer)
         (insert today-heading "\n")
         (save-buffer)))
 
