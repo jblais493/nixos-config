@@ -1,5 +1,10 @@
 # Hardware-specific overrides that don't belong in auto-generated hardware-configuration.nix
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 {
   # AMD Radeon 680M (Rembrandt) Graphics Configuration
   hardware.graphics = {
@@ -7,20 +12,20 @@
     enable32Bit = true;
 
     extraPackages = with pkgs; [
-      amdvlk              # AMD Vulkan driver
-      libva               # Video acceleration API
-      vaapiVdpau          # VDPAU backend for VAAPI
-      libvdpau-va-gl      # VDPAU driver
+      # amdvlk              # AMD Vulkan driver
+      libva # Video acceleration API
+      vaapiVdpau # VDPAU backend for VAAPI
+      libvdpau-va-gl # VDPAU driver
     ];
 
     extraPackages32 = with pkgs.pkgsi686Linux; [
-      amdvlk              # 32-bit Vulkan for compatibility
+      # amdvlk              # 32-bit Vulkan for compatibility
     ];
   };
 
   # AMD-specific environment variables
   environment.variables = {
-    AMD_VULKAN_ICD = "RADV";           # Use open-source RADV driver
-    LIBVA_DRIVER_NAME = "radeonsi";    # Video acceleration driver
+    AMD_VULKAN_ICD = "RADV"; # Use open-source RADV driver
+    LIBVA_DRIVER_NAME = "radeonsi"; # Video acceleration driver
   };
 }

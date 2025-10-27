@@ -191,7 +191,7 @@ This declares all imported modules and specific tweaks to the Theologica host:
 #+end_src
 *** Hardware Overrides
 Adds in vulcan support for builtin AMD GPU
-#+begin_src nix :tangle hosts/theologica/hardware-overrides.nix
+#+begin_src nix hosts/theologica/hardware-overrides.nix
 # Hardware-specific overrides that don't belong in auto-generated hardware-configuration.nix
 { config, pkgs, lib, ... }:
 {

@@ -9,6 +9,7 @@
   environment.systemPackages = with pkgs; [
     # Nix workflow
     nixd # Nix LSP
+    nvd # Nix/NixOS package version diff tool
     nh # nix helper
     nixfmt # nix formatting
     deploy-rs # deployment
