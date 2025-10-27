@@ -11,6 +11,18 @@
 
   time.timeZone = lib.mkDefault "America/Edmonton";
   i18n.defaultLocale = "en_CA.UTF-8";
-  nix.gc.options = "--delete-older-than 30d";
   boot.loader.systemd-boot.configurationLimit = 20;
+
+  # Optimizations
+  nix = {
+    # Auto-optimize store daily (deduplicates files)
+    settings.auto-optimise-store = true;
+
+    # Auto garbage-collect weekly
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 14d"; # Keep last 2 weeks of builds
+    };
+  };
 }
