@@ -3,6 +3,7 @@
   imports = [
     ./applications.nix
     ./audio.nix
+    ./backup.nix
     ./bluetooth.nix
     ./boot.nix
     ./browsers.nix
@@ -13,10 +14,10 @@
     ./gaming.nix
     ./hyprland.nix
     ./kmonad.nix
+    ./networking.nix
     ./power.nix
     ./printing.nix
     ./storage.nix
-    ./networking.nix
     ./theming.nix
   ];
 }

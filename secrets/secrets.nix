@@ -14,5 +14,7 @@ in
   "canlock.age".publicKeys = users;
   "gnus-name.age".publicKeys = users;
   "gnus-email.age".publicKeys = users;
+  "restic-password.age".publicKeys = users;
+  "storagebox.age".publicKeys = users;
   "miniflux-admin.age".publicKeys = servers;
 }
