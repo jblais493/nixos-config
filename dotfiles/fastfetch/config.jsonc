@@ -1,13 +1,13 @@
 {
     "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
     "logo": {
-        "source": "~/.config/fastfetch/logo.png",
-        "type": "auto",
-        "width": 35,
-        "height": 20,
+        "source": "~/.config/fastfetch/michaelemacs.jpg",
+        "type": "builtin",
+        "width": 20,
+        "height": 10,
         "padding": {
             "left": 2,
-            "right": 4,
+            "right": 1,
             "top": 1
         }
     },
@@ -143,7 +143,7 @@
         },
         {
             "type": "colors",
-            "paddingLeft": 2,
+            "paddingLeft": 1,
             "symbol": "circle"
         }
     ]

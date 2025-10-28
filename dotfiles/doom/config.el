@@ -135,7 +135,7 @@
 
 ;; Setup custom splashscreen
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
-(setq fancy-splash-image "~/Pictures/Wallpapers/michael.jpg")
+(setq fancy-splash-image "~/Pictures/Wallpapers/michaelemacs.jpg")
 (add-hook! '+doom-dashboard-functions :append
   (insert "\n" (+doom-dashboard--center +doom-dashboard--width "Welcome Home, Joshua.")))
 
