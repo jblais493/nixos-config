@@ -1,11 +1,11 @@
 ;; Profile startup
-;; (add-hook 'emacs-startup-hook
-;;           (lambda ()
-;;             (message "*** Emacs loaded in %s with %d garbage collections."
-;;                      (format "%.2f seconds"
-;;                              (float-time
-;;                               (time-subtract after-init-time before-init-time)))
-;;                      gcs-done)))
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (message "*** Emacs loaded in %s with %d garbage collections."
+                     (format "%.2f seconds"
+                             (float-time
+                              (time-subtract after-init-time before-init-time)))
+                     gcs-done)))
 
 ;; ;; For detailed profiling, temporarily add:
 ;; (setq use-package-verbose t)
@@ -133,6 +133,8 @@
 (add-hook! '+doom-dashboard-functions :append
   (insert "\n" (+doom-dashboard--center +doom-dashboard--width "Welcome Home, Joshua.")))
 
+;; (setq initial-buffer-choice 'vterm)
+
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
 ;; - `load!' for loading external *.el files relative to this one
@@ -146,7 +148,7 @@
 
 ;; set specific browser to open links
 ;;(setq browse-url-browser-function 'browse-url-firefox)
-;; set browser to zen-browser
+;; set browser to firefox
 (setq browse-url-browser-function 'browse-url-generic)
 (setq browse-url-generic-program "firefox")  ; replace with actual executable name
 
@@ -162,7 +164,7 @@
       completion-ignore-case t)
 ;; Use the familiar C-x C-f interface for directory completion
 (map! :map minibuffer-mode-map
-      :when (featurep! :completion vertico)
+      :when (modulep! :completion vertico)
       "C-x C-f" #'find-file)
 
 ;; Save minibuffer history - enables command history in M-x
@@ -958,6 +960,7 @@ This function is designed to be called via `emacsclient -e`."
     (magit-run-git "push" "origin" (magit-get-current-branch))))
 
 (after! dap-mode
+  :defer t
   (require 'dap-dlv-go)
 
   ;; Remove problematic hooks
@@ -966,6 +969,7 @@ This function is designed to be called via `emacsclient -e`."
 
 ;;;; TRAMP optimizations
 (after! tramp
+  :defer t
   (setq tramp-default-method "ssh"          ; Use SSH by default
         tramp-verbose 1                      ; Reduce verbosity
         tramp-use-ssh-controlmaster-options nil  ; Don't use control master
@@ -1011,6 +1015,7 @@ This function is designed to be called via `emacsclient -e`."
 ;; PGmacs setup
 (use-package pgmacs
   :after pg
+  :defer t
   :commands (pgmacs pgmacs-open-string pgmacs-open-uri)
   :config
   ;; Define a function to quickly connect to your development database
@@ -1306,6 +1311,7 @@ WHERE tablename = '%s';" table-name)))
   (setq nix-nixfmt-bin "nixfmt"))
 
 (use-package! agenix
+  :defer t
   :config
   (setq agenix-secrets-file "~/nixos-config/secrets.nix")
 
@@ -1499,18 +1505,18 @@ WHERE tablename = '%s';" table-name)))
   (setq projectile-enable-caching t)
   (setq projectile-indexing-method 'hybrid))
 
-;; Trying to save workspaces
 (after! persp-mode
-  ;; Auto-save workspaces when Emacs exits
-  (setq persp-auto-save-opt 1)
-  ;; Save all workspace info including window configurations
+  (setq persp-auto-save-opt 1)  ; Still save on exit
+  (setq persp-auto-resume-time 0)  ; Don't auto-restore
   (setq persp-set-last-persp-for-new-frames nil)
-  (setq persp-reset-windows-on-nil-window-conf nil)
-  ;; Load workspaces automatically on startup
-  (setq persp-auto-resume-time -1))
+  (setq persp-reset-windows-on-nil-window-conf nil))
+
+;; Manually restore when ready
+;; M-x persp-load-state-from-file
 
 ;; EMMS full configuration with Nord theme, centered layout, and swaync notifications
 (use-package! emms
+:defer t
   :commands (emms 
              emms-browser 
              emms-playlist-mode-go
@@ -1688,6 +1694,7 @@ WHERE tablename = '%s';" table-name)))
 
 ;; In config.el
 (use-package! calibredb
+:defer t
   :commands calibredb
   :config
   (setq calibredb-root-dir "~/Library"
@@ -1722,7 +1729,9 @@ WHERE tablename = '%s';" table-name)))
   (load (expand-file-name "private/mu4e-config.el" doom-private-dir)))
 
 ;; Load elfeed-download package
-(load! "lisp/elfeed-download")
+(after! elfeed
+  (load! "lisp/elfeed-download")
+  (elfeed-download-setup))
 
 (make-directory "~/.elfeed" t)
 
@@ -1848,9 +1857,6 @@ WHERE tablename = '%s';" table-name)))
     '(gnus-summary-normal-unread :inherit font-lock-keyword-face)
     '(gnus-summary-selected :inherit (bold highlight))))
 
-;; Load private org-gcal credentials if the file exists
-;; (load! "lisp/org-gcal-credentials")
-
 ;; Open dirvish
 (map! :leader
       :desc "Open dirvish" "o d" #'dirvish)
@@ -1957,43 +1963,43 @@ WHERE tablename = '%s';" table-name)))
       (set-window-dedicated-p (selected-window) t))))
 
 ;; Load private IRC configuration
-(load! "private/irc-config" nil t)
+;; (load! "private/irc-config" nil t)
 
-(after! circe
+;; (after! circe
 
-  ;; Rest of your configuration remains the same
-  (setq circe-format-self-say "{nick}: {body}")
-  (setq circe-format-server-topic "*** Topic: {topic-diff}")
-  (setq circe-use-cycle-completion t)
-  (setq circe-reduce-lurker-spam t)
+;;   ;; Rest of your configuration remains the same
+;;   (setq circe-format-self-say "{nick}: {body}")
+;;   (setq circe-format-server-topic "*** Topic: {topic-diff}")
+;;   (setq circe-use-cycle-completion t)
+;;   (setq circe-reduce-lurker-spam t)
 
-  (setq lui-max-buffer-size 30000)
-  (enable-lui-autopaste)
-  (enable-lui-irc-colors)
+;;   (setq lui-max-buffer-size 30000)
+;;   (enable-lui-autopaste)
+;;   (enable-lui-irc-colors)
 
-  (tracking-mode 1)
-  (setq tracking-faces-priorities '(circe-highlight-nick-face))
-  (setq tracking-ignored-buffers '("*circe-network-Rizon*"))
+;;   (tracking-mode 1)
+;;   (setq tracking-faces-priorities '(circe-highlight-nick-face))
+;;   (setq tracking-ignored-buffers '("*circe-network-Rizon*"))
 
-  (setq circe-highlight-nick-type 'all)
+;;   (setq circe-highlight-nick-type 'all)
 
-  (setq circe-directory "~/.doom.d/circe-logs")
-  (setq lui-logging-directory "~/.doom.d/circe-logs")
-  (setq lui-logging-file-format "{buffer}/%Y-%m-%d.txt")
-  (setq lui-logging-format "[%H:%M:%S] {text}")
-  (enable-lui-logging-globally)
+;;   (setq circe-directory "~/.doom.d/circe-logs")
+;;   (setq lui-logging-directory "~/.doom.d/circe-logs")
+;;   (setq lui-logging-file-format "{buffer}/%Y-%m-%d.txt")
+;;   (setq lui-logging-format "[%H:%M:%S] {text}")
+;;   (enable-lui-logging-globally)
 
-  (unless (file-exists-p "~/.doom.d/circe-logs")
-    (make-directory "~/.doom.d/circe-logs" t)))
+;;   (unless (file-exists-p "~/.doom.d/circe-logs")
+;;     (make-directory "~/.doom.d/circe-logs" t)))
 
-(defun my/irc-connect-rizon ()
-  "Connect to Rizon IRC."
-  (interactive)
-  (circe "Rizon"))
+;; (defun my/irc-connect-rizon ()
+;;   "Connect to Rizon IRC."
+;;   (interactive)
+;;   (circe "Rizon"))
 
-(map! :leader
-      (:prefix ("o" . "open")
-       :desc "Connect to Rizon IRC" "i" #'my/irc-connect-rizon))
+;; (map! :leader
+;;       (:prefix ("o" . "open")
+;;        :desc "Connect to Rizon IRC" "i" #'my/irc-connect-rizon))
 
 (defun my/erc-connect ()
   (interactive)
