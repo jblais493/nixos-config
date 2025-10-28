@@ -50,8 +50,8 @@ determine the exact padding."
     "The Nowhere colorscheme"
 
   ;; name        default   256       16
-  ((bg         '("#1a1d21" nil       nil            ))
-   (bg-alt     '("#22262b" nil       nil            ))
+  ((bg         '("#1a1d21" nil       nil            ))  ; cool slate, the stone walls
+   (bg-alt     '("#22262b" nil       nil            ))  ; slightly lighter panels
    (base0      '("#0f1114" "black"   "black"        ))
    (base1      '("#171a1e" "#1e1e1e" "brightblack"  ))
    (base2      '("#1f2228" "#2e2e2e" "brightblack"  ))
@@ -60,22 +60,22 @@ determine the exact padding."
    (base5      '("#515761" "#65737E" "brightblack"  ))
    (base6      '("#676d77" "#6b6b6b" "brightblack"  ))
    (base7      '("#8b919a" "#979797" "brightblack"  ))
-   (base8      '("#e8e4dc" "#dfdfdf" "white"        ))
-   (fg         '("#f5f2eb" "#c0c5ce" "brightwhite"  ))  ; brighter cream - high contrast
-   (fg-alt     '("#c8c5bf" "#c0c5ce" "white"        ))  ; brighter secondary
+   (base8      '("#e0dcd4" "#dfdfdf" "white"        ))
+   (fg         '("#e0dcd4" "#c0c5ce" "brightwhite"  ))  ; warm parchment, easier on eyes
+   (fg-alt     '("#c0bdb8" "#a0a0a0" "white"        ))  ; muted secondary
 
    (grey       base4)
-   (red        '("#c5b3b3" "#BF616A" "red"          ))  ; boosted grey-rose
-   (orange     '("#c5bcb3" "#D08770" "brightred"    ))  ; boosted grey-sand  
-   (green      '("#afb8af" "#A3BE8C" "green"        ))  ; boosted strings
-   (blue       '("#b8c0c5" "#8FA1B3" "brightblue"   ))  ; boosted steel
-   (yellow     '("#c5c3b8" "#ECBE7B" "yellow"       ))  ; boosted functions
-   (violet     '("#c5c0bd" "#b48ead" "brightmagenta"))  ; boosted grey-lavender
-   (teal       '("#b3c5c0" "#44b9b1" "brightgreen"  ))  ; boosted grey-seafoam
-   (dark-blue  '("#9aa5b3" "#2257A0" "blue"         ))  ; boosted deep grey-blue
-   (magenta    '("#bdb8c0" "#c678dd" "magenta"      ))  ; boosted grey-purple
-   (cyan       '("#b3bdc5" "#46D9FF" "brightcyan"   ))  ; boosted grey-ice
-   (dark-cyan  '("#9faab3" "#5699AF" "cyan"         ))  ; boosted grey-water
+   (red        '("#c8beb8" "#BF616A" "red"          ))  ; warm ash-rose      L=78%
+   (orange     '("#c8c0b0" "#D08770" "brightred"    ))  ; warm sand-stone    L=79%
+   (green      '("#b4beb4" "#A3BE8C" "green"        ))  ; neutral sage       L=76%
+   (blue       '("#b4bec8" "#8FA1B3" "brightblue"   ))  ; cool-lean steel    L=77%
+   (yellow     '("#ccc4b0" "#ECBE7B" "yellow"       ))  ; warm wheat-gold    L=80%
+   (violet     '("#c4beb8" "#b48ead" "brightmagenta"))  ; warm dust-lavender L=78%
+   (teal       '("#b0c0b8" "#44b9b1" "brightgreen"  ))  ; cool-lean seafoam  L=77%
+   (dark-blue  '("#9ca8b4" "#2257A0" "blue"         ))  ; deep grey-slate    L=68%
+   (magenta    '("#c0b8bc" "#c678dd" "magenta"      ))  ; warm grey-mauve    L=76%
+   (cyan       '("#b0bcc8" "#46D9FF" "brightcyan"   ))  ; cool-lean ice      L=77%
+   (dark-cyan  '("#9ca8b0" "#5699AF" "cyan"         ))  ; deep grey-water    L=68%
 
    ;; face categories -- required for all themes
    (highlight      orange)

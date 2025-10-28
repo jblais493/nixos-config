@@ -50,9 +50,9 @@ determine the exact padding."
     "The Nowhere Light colorscheme"
 
   ;; name        default   256       16
-  ((bg         '("#ebe9e6" nil       nil            ))  ; warm off-white, like aged paper
-   (bg-alt     '("#e0deda" nil       nil            ))  ; slightly warmer panels
-   (base0      '("#f5f4f2" "white"   "white"        ))  ; pure light
+  ((bg         '("#ebe9e6" nil       nil            ))  ; aged vellum - perfect
+   (bg-alt     '("#e0deda" nil       nil            ))  ; slightly darker panels
+   (base0      '("#f5f4f2" "white"   "white"        ))
    (base1      '("#efeeed" "#e4e4e4" "white"        ))
    (base2      '("#e5e3e0" "#d0d0d0" "brightwhite"  ))
    (base3      '("#d8d6d3" "#c6c6c6" "brightwhite"  ))
@@ -61,21 +61,22 @@ determine the exact padding."
    (base6      '("#7d7a75" "#6b6b6b" "brightblack"  ))
    (base7      '("#5f5c58" "#525252" "brightblack"  ))
    (base8      '("#2d2a27" "#1e1e1e" "black"        ))
-   (fg         '("#3d3a36" "#2d2d2d" "black"        ))  ; warm charcoal
+   (fg         '("#3d3a36" "#2d2d2d" "black"        ))  ; warm charcoal - perfect
    (fg-alt     '("#5a5754" "#4e4e4e" "brightblack"  ))
-
    (grey       base4)
-   (red        '("#8a7575" "#8a7575" "red"          ))  ; muted dusty rose
-   (orange     '("#9a8b70" "#9a8b70" "brightred"    ))  ; warm earth - like that link color
-   (green      '("#758270" "#758270" "green"        ))  ; muted olive
-   (blue       '("#707a85" "#707a85" "brightblue"   ))  ; cool grey-blue
-   (yellow     '("#9a8f75" "#9a8f75" "yellow"       ))  ; warm sand - for highlights
-   (violet     '("#857d7a" "#857d7a" "brightmagenta"))  ; barely lavender
-   (teal       '("#758580" "#758580" "brightgreen"  ))  ; sage grey
-   (dark-blue  '("#5a6570" "#5a6570" "blue"         ))
-   (magenta    '("#7d757d" "#7d757d" "magenta"      ))
-   (cyan       '("#707d85" "#707d85" "brightcyan"   ))
-   (dark-cyan  '("#5f6a70" "#5f6a70" "cyan"         ))
+   
+   ;; REFINED: Slightly more saturation for instant recognition
+   (red        '("#8a6e6e" "#BF616A" "red"          ))  ; deeper dusty rose
+   (orange     '("#c8c0b0" "#A2957C" "brightred"    ))  ; richer earth-clay
+   (green      '("#6e7d64" "#6e7d64" "green"        ))  ; stronger olive
+   (blue       '("#64717d" "#64717d" "brightblue"   ))  ; deeper slate-blue
+   (yellow     '("#A2957C" "#A2957C" "yellow"       ))  ; richer sand-gold
+   (violet     '("#7d7470" "#7d7470" "brightmagenta"))  ; warmer dust-mauve
+   (teal       '("#6e7d75" "#6e7d75" "brightgreen"  ))  ; deeper sage-grey
+   (dark-blue  '("#546070" "#546070" "blue"         ))  ; deep charcoal-slate
+   (magenta    '("#756e75" "#756e75" "magenta"      ))  ; deeper grey-plum
+   (cyan       '("#64757d" "#64757d" "brightcyan"   ))  ; deeper grey-water
+   (dark-cyan  '("#546470" "#546470" "cyan"         ))  ; deep grey-storm
 
    ;; face categories -- required for all themes
    (highlight      orange)
