@@ -2002,7 +2002,7 @@ I have various functions in my lisp directory for creating pomodoros, refiling d
 ** Functions
 #+begin_src elisp
 ;; Universal Launcher
-(autoload 'universal-launcher "lisp/universal-launcher" nil t)
+(load! "lisp/universal-launcher")
 
 ;; Mu4e
 (after! mu4e

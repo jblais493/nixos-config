@@ -1767,7 +1767,7 @@ This function is designed to be called via `emacsclient -e`."
   (set-popup-rule! "^\\*eww\\*" :ignore t))
 
 ;; Universal Launcher
-(autoload 'universal-launcher "lisp/universal-launcher" nil t)
+(load! "lisp/universal-launcher")
 
 ;; Mu4e
 (after! mu4e
