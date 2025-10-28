@@ -1,14 +1,17 @@
 ;; Profile startup
-(add-hook 'emacs-startup-hook
-          (lambda ()
-            (message "*** Emacs loaded in %s with %d garbage collections."
-                     (format "%.2f seconds"
-                             (float-time
-                              (time-subtract after-init-time before-init-time)))
-                     gcs-done)))
+;; (add-hook 'emacs-startup-hook
+;;           (lambda ()
+;;             (message "*** Emacs loaded in %s with %d garbage collections."
+;;                      (format "%.2f seconds"
+;;                              (float-time
+;;                               (time-subtract after-init-time before-init-time)))
+;;                      gcs-done)))
 
 ;; ;; For detailed profiling, temporarily add:
 ;; (setq use-package-verbose t)
+
+;; Seeing cost of startup modules
+(setq doom-debug-p t)
 
 ;; Maximum GC threshold during startup - prevent collections entirely
 (setq gc-cons-threshold most-positive-fixnum
@@ -34,6 +37,9 @@
 ;; Make EVERY package defer by default
 (setq use-package-always-defer t
       use-package-expand-minimally t)  ; Faster macro expansion
+
+(setq doom-incremental-idle-timer 10.0)  ; Increase from default 1.0
+(setq doom-incremental-first-idle-timer 5.0)  ; Increase from default 0.5
 
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
@@ -324,7 +330,7 @@
 (setq org-directory "~/org")
 
 (use-package org
-  :ensure nil
+  :defer t 
   :custom (org-modules '(org-habit)))
 
 (after! org
@@ -351,14 +357,6 @@
 (add-hook 'org-after-todo-state-change-hook 'my/org-clock-in-if-starting)
 (add-hook 'org-after-todo-state-change-hook 'my/org-clock-out-if-not-starting)
 
-;; Show habits in agenda
-(setq org-habit-show-all-today t)
-(setq org-habit-graph-column 1)
-(add-hook 'org-agenda-mode-hook
-          (lambda ()
-            (visual-line-mode -1)
-            (setq truncate-lines 1)))
-
 ;; (after! org
 ;;   (use-package! org-fancy-priorities
 ;;     :hook
@@ -375,10 +373,6 @@
   :hook (org-mode . org-auto-tangle-mode)
   :config
   (setq org-auto-tangle-default t))
-
-;; Load org-habit module
-(require 'org-habit)
-(add-to-list 'org-modules 'org-habit)
 
 ;; Configure habit graph display
 (setq org-habit-show-habits-only-for-today t)  ; or nil to show all days
@@ -515,9 +509,13 @@
 ;;               (my/archive-done-task))))
 
 ;; Optional key binding if you ever need to archive manually
-(define-key org-mode-map (kbd "C-c C-x C-a") 'my/archive-done-task)
+(after! org
+  (map! :map org-mode-map
+        :localleader
+        "a" #'my/archive-done-task))
 
 (use-package! org-roam
+  :defer t
   :commands (org-roam-node-find 
              org-roam-node-insert
              org-roam-dailies-goto-today
@@ -569,24 +567,24 @@
       (insert (format "[[file:%s]]\n" selected-file))
       (org-display-inline-images))))
 
-(after! org
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((go . t)))
+;; (after! org
+;;   (org-babel-do-load-languages
+;;    'org-babel-load-languages
+;;    '((go . t)))
 
-  (setq org-src-fontify-natively t
-        org-src-preserve-indentation t
-        org-src-tab-acts-natively t
-        ;; Don't save source edits in temp files
-        org-src-window-setup 'current-window))
+;;   (setq org-src-fontify-natively t
+;;         org-src-preserve-indentation t
+;;         org-src-tab-acts-natively t
+;;         ;; Don't save source edits in temp files
+;;         org-src-window-setup 'current-window))
 
-;; Specifically for go-mode literate programming
-(defun org-babel-edit-prep:go (babel-info)
-  (when-let ((tangled-file (->> babel-info caddr (alist-get :tangle))))
-    (let ((full-path (expand-file-name tangled-file)))
-      ;; Don't actually create/modify the tangled file
-      (setq-local buffer-file-name full-path)
-      (lsp-deferred))))
+;; ;; Specifically for go-mode literate programming
+;; (defun org-babel-edit-prep:go (babel-info)
+;;   (when-let ((tangled-file (->> babel-info caddr (alist-get :tangle))))
+;;     (let ((full-path (expand-file-name tangled-file)))
+;;       ;; Don't actually create/modify the tangled file
+;;       (setq-local buffer-file-name full-path)
+;;       (lsp-deferred))))
 
 ;; Evil-escape sequence
 (setq-default evil-escape-key-sequence "kj")
@@ -780,10 +778,15 @@ This function is designed to be called via `emacsclient -e`."
           (css "https://github.com/tree-sitter/tree-sitter-css" "master" "src")
           (templ "https://github.com/vrischmann/tree-sitter-templ" "master" "src")))
 
-  ;; Auto-install missing grammars
+;; Manual grammar installation command (invoke when needed)
+(defun jb/install-treesit-grammars ()
+  "Install missing tree-sitter grammars."
+  (interactive)
   (dolist (lang '(go gomod javascript typescript tsx html css templ))
     (unless (treesit-language-available-p lang)
+      (message "Installing grammar for %s..." lang)
       (treesit-install-language-grammar lang)))
+  (message "Tree-sitter grammar installation complete!"))
 
   ;; Mode associations - prefer -ts-mode variants
   (setq major-mode-remap-alist
@@ -878,18 +881,18 @@ This function is designed to be called via `emacsclient -e`."
             (lambda ()
               (yas-activate-extra-mode 'html-mode))))
 
+;; Svelte mode
 (use-package! svelte-mode
-  :mode "\\.svelte\\'"
+  :mode "\\.svelte\\'"  ; :defer t is implicit
+  :hook (svelte-mode . prettier-js-mode)  ; Correct hook placement
   :config
   (setq svelte-basic-offset 2)
-  ;; Disable automatic reformatting
-  (setq svelte-format-on-save nil)
-  ;; Use prettier instead
-  (add-hook 'svelte-mode-hook 'prettier-js-mode))
+  (setq svelte-format-on-save nil))
 
-;; Configure prettier
+;; Prettier configuration
 (use-package! prettier-js
-  :config
+  :defer t
+  :init  ; Use :init to set variables before package loads
   (setq prettier-js-args
         '("--parser" "svelte"
           "--tab-width" "2"
@@ -960,13 +963,14 @@ This function is designed to be called via `emacsclient -e`."
 (map! :leader
       :desc "Aider menu" "a" #'aider-transient-menu)
 
-(defun my/magit-stage-commit-push ()
-  "Stage all, commit with quick message, and push with no questions"
-  (interactive)
-  (magit-stage-modified)
-  (let ((msg (read-string "Commit message: ")))
-    (magit-commit-create (list "-m" msg))
-    (magit-run-git "push" "origin" (magit-get-current-branch))))
+(after! magit
+  (defun my/magit-stage-commit-push ()
+    "Stage all, commit with quick message, and push with no questions"
+    (interactive)
+    (magit-stage-modified)
+    (let ((msg (read-string "Commit message: ")))
+      (magit-commit-create (list "-m" msg))
+      (magit-run-git "push" "origin" (magit-get-current-branch)))))
 
 (after! dap-mode
   :defer t
@@ -1199,11 +1203,12 @@ This function is designed to be called via `emacsclient -e`."
 (define-key evil-normal-state-map "f" 'avy-goto-char-2)
 (define-key evil-normal-state-map "F" 'avy-goto-char-2)
 
+(after! org
 ;; Enable arrow keys in org-read-date calendar popup
 (define-key org-read-date-minibuffer-local-map (kbd "<left>") (lambda () (interactive) (org-eval-in-calendar '(calendar-backward-day 1))))
 (define-key org-read-date-minibuffer-local-map (kbd "<right>") (lambda () (interactive) (org-eval-in-calendar '(calendar-forward-day 1))))
 (define-key org-read-date-minibuffer-local-map (kbd "<up>") (lambda () (interactive) (org-eval-in-calendar '(calendar-backward-week 1))))
-(define-key org-read-date-minibuffer-local-map (kbd "<down>") (lambda () (interactive) (org-eval-in-calendar '(calendar-forward-week 1))))
+(define-key org-read-date-minibuffer-local-map (kbd "<down>") (lambda () (interactive) (org-eval-in-calendar '(calendar-forward-week 1)))))
 
 ;; Additional Consult bindings
 (map! :leader
@@ -1442,13 +1447,11 @@ This function is designed to be called via `emacsclient -e`."
 ;; Load elfeed-download package
 (after! elfeed
   (load! "lisp/elfeed-download")
+  (require 'elfeed-org)
+  (elfeed-org)
   (elfeed-download-setup))
 
 (make-directory "~/.elfeed" t)
-
-;; Force load elfeed-org
-(require 'elfeed-org)
-(elfeed-org)
 
 ;; Set org feed file
 (setq rmh-elfeed-org-files '("~/.config/doom/elfeed.org"))
@@ -1763,28 +1766,31 @@ This function is designed to be called via `emacsclient -e`."
 (after! eww
   (set-popup-rule! "^\\*eww\\*" :ignore t))
 
-;; lisp functions
-(load! "lisp/nm")
-(load! "lisp/pomodoro")
-(load! "lisp/done-refile")
-(load! "lisp/mu4e-contact")
-(load! "lisp/post-to-blog")
-(load! "lisp/popup-scratch")
-(load! "lisp/popup-dirvish-browser")
-(load! "lisp/meeting-assistant")
-(load! "lisp/create-daily")
-(load! "lisp/audio-record")
-(load! "lisp/universal-launcher")
-(load! "lisp/jitsi-meeting")
-(load! "lisp/weather")
-(load! "lisp/termux-sms")
-(load! "lisp/org-caldav")
-;; POSSE posting system
-(load! "lisp/posse/posse-twitter")
+;; Universal Launcher
+(autoload 'universal-launcher "lisp/universal-launcher" nil t)
 
-;; Load various scripts and templates
-(load! "templates/writing-template")
-(load! "templates/note-template")
+;; Mu4e
+(after! mu4e
+  (load! "lisp/mu4e-contact"))
+
+(run-with-idle-timer 10 nil
+  (lambda ()
+    (load! "lisp/pomodoro")
+    (load! "lisp/done-refile")
+    (load! "lisp/meeting-assistant")
+    (load! "lisp/jitsi-meeting")
+    (load! "lisp/post-to-blog")
+    (load! "lisp/create-daily")
+    (load! "lisp/nm")
+    (load! "lisp/popup-dirvish-browser")
+    (load! "lisp/audio-record")
+    (load! "lisp/org-caldav")
+    ;; POSSE posting system
+    (load! "lisp/posse/posse-twitter")))
+
+;; (load! "lisp/popup-scratch")
+;; (load! "lisp/termux-sms")
+;; (load! "lisp/weather")
 
 ;;;; Send a daily email to myself with the days agenda:
 ;;(defun my/send-daily-agenda ()
