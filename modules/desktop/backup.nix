@@ -26,7 +26,6 @@
         "/home/joshua/Accounting"
         "/home/joshua/Catholic"
         "/home/joshua/Documents"
-        "/home/joshua/Downloads"
         "/home/joshua/Library"
         "/home/joshua/Mail"
         "/home/joshua/Media"
@@ -36,6 +35,17 @@
         "/home/joshua/nixos-config"
         "/home/joshua/org"
         "/home/joshua/secrets"
+      ];
+
+      exclude = [
+        "/home/joshua/Downloads" # Transient data
+        "/home/joshua/.config/chromium/Default/Cache"
+        "/home/joshua/.config/*/cache"
+        "/home/joshua/.cache"
+        "*.pyc"
+        "*.o"
+        "**/node_modules"
+        "**/.git" # Already have nixos-config, don't backup .git objects
       ];
 
       repositoryFile = config.age.secrets.restic-repo.path;
@@ -48,14 +58,14 @@
       ];
 
       timerConfig = {
-        OnCalendar = "hourly";
+        OnCalendar = "daily";
         Persistent = true;
-        RandomizedDelaySec = "15min";
+        RandomizedDelaySec = "1h"; # Spread across an hour to avoid load spikes
       };
 
       pruneOpts = [
         "--keep-daily 7"
-        "--keep-weekly 4"
+        "--keep-weekly 5"
         "--keep-monthly 12"
         "--keep-yearly 7"
       ];
