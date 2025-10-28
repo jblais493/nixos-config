@@ -5,18 +5,12 @@
 }
 
 window#waybar {
-  background: rgba(
-    46,
-    52,
-    64,
-    0.02
-  ); /* Nord dark background with transparency */
-  color: #eceff4; /* Nord snow storm (light color) */
+  background: #22262b; /* Solid slate background */
+  color: #e0dcd4; /* Parchment text */
   transition-property: background-color;
   transition-duration: 0.5s;
   border-radius: 10px;
-  /* margin: 5px 0 0 0; */
-  /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); */
+  border: 1px solid ##22262b; /* Subtle border */
 }
 
 window#waybar.hidden {
@@ -30,58 +24,56 @@ button {
 }
 
 button:hover {
-  background: rgba(76, 86, 106, 0.5); /* Nord polar night lighter shade */
-  box-shadow: inset 0 -3px #88c0d0; /* Nord frost blue */
+  background: #282c34; /* Base3 on hover */
+  box-shadow: inset 0 -3px #b4bec8; /* Steel-blue underline */
 }
 
 #workspaces {
-  background: rgba(59, 66, 82, 0.8); /* Nord polar night medium shade */
-  border-radius: 10px;
-  margin: 5px;
+  background: transparent; /* No island - flows with bar */
+  border-radius: 0;
+  margin: 5px 5px 5px 10px;
   padding: 0 5px;
 }
 
 #workspaces button {
   padding: 0 5px;
   background-color: transparent;
-  color: #e5e9f0; /* Nord snow storm */
+  color: #c0bdb8; /* Muted foreground */
   min-width: 30px;
   transition: all 0.2s ease;
 }
 
 #workspaces button:hover {
-  background: rgba(136, 192, 208, 0.2); /* Nord frost blue with transparency */
+  background: #282c34; /* Subtle highlight */
+  color: #e0dcd4;
 }
 
 #workspaces button.active {
-  background: rgba(
-    59,
-    66,
-    82,
-    0.7
-  ); /* Darker background for active workspace */
-  box-shadow: inset 0 -3px #ebcb8b; /* Nord yellow underline */
-  color: #ebcb8b; /* Nord yellow for text/icon */
-  font-weight: bold; /* Makes the text/icon bolder */
+  background: #282c34; /* Active background */
+  box-shadow: inset 0 -3px #ccc4b0; /* Wheat-gold underline */
+  color: #ccc4b0; /* Wheat-gold active color */
+  font-weight: bold;
 }
 
 #workspaces button.urgent {
-  background-color: #bf616a; /* Nord aurora red */
+  background-color: #c8beb8; /* Ash-rose */
+  color: #1a1d21;
 }
 
 .modules-right {
-  background: rgba(59, 66, 82, 0.8);
-  border-radius: 10px;
-  margin: 5px;
-  padding: 0 8px;
+  background: transparent; /* No island - unified with bar */
+  border-radius: 0;
+  margin: 5px 10px 5px 5px;
+  padding: 0 5px;
 }
 
 #mode {
-  background-color: #4c566a; /* Nord polar night lightest shade */
-  border-bottom: 3px solid #88c0d0; /* Nord frost blue */
+  background-color: #3d424a; /* Base4 */
+  border-bottom: 3px solid #b4bec8; /* Steel-blue */
+  padding: 0 10px;
 }
 
-/* Adjust the right modules to match workspaces style and be closer together */
+/* All modules flow together seamlessly */
 #clock,
 #battery,
 #cpu,
@@ -94,28 +86,31 @@ button:hover {
 #wireplumber,
 #custom-media,
 #tray,
-#mode,
 #idle_inhibitor,
 #scratchpad,
 #mpd {
-  padding: 0 8px; /* Reduced padding from 10px to 8px */
-  color: #e5e9f0; /* Nord snow storm */
-  background: transparent; /* Remove individual backgrounds */
-  margin: 5px 2px; /* 5px vertical margin, 2px horizontal to bring closer */
+  padding: 0 10px;
+  color: #e0dcd4; /* Parchment */
+  background: transparent;
+  margin: 0;
+  border-left: 1px solid #282c34; /* Subtle separator */
 }
 
-/* Add negative margin to bring modules on the right closer together */
-.modules-right > widget:not(:last-child) > * {
-  margin-right: -3px; /* Negative margin to bring elements closer */
+/* First module has no left border */
+.modules-right > widget:first-child > * {
+  border-left: none;
 }
 
-/* Optional: Add a subtle hover effect for the right modules */
+/* Hover effect across all modules */
 #clock:hover,
 #battery:hover,
 #network:hover,
 #pulseaudio:hover,
-#tray:hover {
-  background: rgba(59, 66, 82, 0.5); /* Slightly darker on hover */
+#tray:hover,
+#cpu:hover,
+#memory:hover {
+  background: #282c34; /* Base3 highlight */
+  color: #e0dcd4;
 }
 
 #window,
@@ -123,29 +118,30 @@ button:hover {
   margin: 0 4px;
 }
 
-/* Module-specific styling */
+/* Module-specific semantic colors */
 #battery.charging {
-  color: #a3be8c; /* Nord aurora green */
+  color: #b4beb4; /* Sage green */
 }
 
 #battery.warning:not(.charging) {
-  color: #ebcb8b; /* Nord aurora yellow */
+  color: #ccc4b0; /* Wheat-gold */
 }
 
 #battery.critical:not(.charging) {
-  color: #bf616a; /* Nord aurora red */
+  color: #c8beb8; /* Ash-rose */
 }
 
 #network.disconnected {
-  color: #bf616a; /* Nord aurora red */
+  color: #c8beb8; /* Ash-rose */
 }
 
 #temperature.critical {
-  color: #bf616a; /* Nord aurora red */
+  color: #c8beb8; /* Ash-rose */
 }
 
 #tray {
   background: transparent;
+  border-left: none; /* No separator before tray */
 }
 
 #tray > .passive {
@@ -154,33 +150,33 @@ button:hover {
 
 #tray > .needs-attention {
   -gtk-icon-effect: highlight;
-  background-color: #bf616a; /* Nord aurora red */
+  background-color: #c8beb8; /* Ash-rose */
 }
 
 #idle_inhibitor {
-  color: #e5e9f0; /* Nord snow storm */
+  color: #c0bdb8; /* Muted */
 }
 
 #idle_inhibitor.activated {
-  color: #ebcb8b; /* Nord aurora yellow */
+  color: #ccc4b0; /* Wheat-gold */
 }
 
 #mpd {
-  color: #e5e9f0; /* Nord snow storm */
+  color: #e0dcd4; /* Parchment */
 }
 
 #mpd.disconnected {
-  color: #bf616a; /* Nord aurora red */
+  color: #c8beb8; /* Ash-rose */
 }
 
 #mpd.stopped {
-  color: #4c566a; /* Nord polar night lightest shade */
+  color: #676d77; /* Base6 - dimmed */
 }
 
 #mpd.paused {
-  color: #81a1c1; /* Nord frost medium blue */
+  color: #b4bec8; /* Steel-blue */
 }
 
 #pulseaudio.muted {
-  color: #4c566a; /* Nord polar night lightest shade */
+  color: #676d77; /* Base6 - dimmed */
 }
