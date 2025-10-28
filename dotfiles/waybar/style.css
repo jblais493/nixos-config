@@ -9,8 +9,8 @@ window#waybar {
   color: #e0dcd4; /* Parchment text */
   transition-property: background-color;
   transition-duration: 0.5s;
-  border-radius: 10px;
-  border: 1px solid ##22262b; /* Subtle border */
+  border-radius: 0px;
+  border: 1px solid #22262b; /* Subtle border */
 }
 
 window#waybar.hidden {
@@ -93,7 +93,7 @@ button:hover {
   color: #e0dcd4; /* Parchment */
   background: transparent;
   margin: 0;
-  border-left: 1px solid #282c34; /* Subtle separator */
+  /* border-left: 1px solid #282c34; /\* Subtle separator *\/ */
 }
 
 /* First module has no left border */

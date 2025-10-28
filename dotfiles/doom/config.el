@@ -76,7 +76,7 @@
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
 (add-to-list 'custom-theme-load-path "~/.config/doom/themes/")
-(load-theme 'doom-nord t)
+(load-theme 'nowhere t)
 
 ;; Maintain terminal transparency in Doom Emacs
 (after! doom-themes
@@ -135,7 +135,7 @@
 
 ;; Setup custom splashscreen
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
-(setq fancy-splash-image "~/Pictures/Wallpapers/emacsdoom.jpg")
+(setq fancy-splash-image "~/Pictures/Wallpapers/michael.jpg")
 (add-hook! '+doom-dashboard-functions :append
   (insert "\n" (+doom-dashboard--center +doom-dashboard--width "Welcome Home, Joshua.")))
 
