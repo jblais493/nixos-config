@@ -1773,20 +1773,18 @@ This function is designed to be called via `emacsclient -e`."
 (after! mu4e
   (load! "lisp/mu4e-contact"))
 
-(run-with-idle-timer 10 nil
-  (lambda ()
-    (load! "lisp/pomodoro")
-    (load! "lisp/done-refile")
-    (load! "lisp/meeting-assistant")
-    (load! "lisp/jitsi-meeting")
-    (load! "lisp/post-to-blog")
-    (load! "lisp/create-daily")
-    (load! "lisp/nm")
-    (load! "lisp/popup-dirvish-browser")
-    (load! "lisp/audio-record")
-    (load! "lisp/org-caldav")
-    ;; POSSE posting system
-    (load! "lisp/posse/posse-twitter")))
+(load! "lisp/pomodoro")
+(load! "lisp/done-refile")
+(load! "lisp/meeting-assistant")
+(load! "lisp/jitsi-meeting")
+(load! "lisp/post-to-blog")
+(load! "lisp/create-daily")
+(load! "lisp/nm")
+(load! "lisp/popup-dirvish-browser")
+(load! "lisp/audio-record")
+(load! "lisp/org-caldav")
+;; POSSE posting system
+(load! "lisp/posse/posse-twitter")
 
 ;; (load! "lisp/popup-scratch")
 ;; (load! "lisp/termux-sms")
