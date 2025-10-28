@@ -10,8 +10,8 @@
 ;; ;; For detailed profiling, temporarily add:
 ;; (setq use-package-verbose t)
 
-;; Seeing cost of startup modules
-(setq doom-debug-p t)
+;; Seeing cost of startup modules - Debug mode
+;; (setq doom-debug-p t)
 
 ;; Maximum GC threshold during startup - prevent collections entirely
 (setq gc-cons-threshold most-positive-fixnum

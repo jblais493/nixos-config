@@ -17,8 +17,8 @@ This will test our emacs load time and setup. Comment out when not in use!
 ;; ;; For detailed profiling, temporarily add:
 ;; (setq use-package-verbose t)
 
-;; Seeing cost of startup modules
-(setq doom-debug-p t)
+;; Seeing cost of startup modules - Debug mode
+;; (setq doom-debug-p t)
 #+end_src
 ** Startup Optimizations
 #+begin_src elisp
