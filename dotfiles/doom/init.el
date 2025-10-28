@@ -156,10 +156,11 @@
        ;;ocaml             ; an objective camel
        (org                ; organize your plain life in plain text
         +pretty
-        +journal
+        ;; +journal
         +roam
-        +noter
-        +pandoc)
+        ;; +noter
+        ;; +pandoc
+        )
        ;; Modules I have pulled from org mode:
        ;; +present
        ;; +hugo

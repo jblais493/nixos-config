@@ -24,7 +24,7 @@
 ;; Enhanced cache system
 (defvar universal-launcher--all-candidates nil "Pre-computed candidates.")
 (defvar universal-launcher--last-update 0 "Last time candidates were updated.")
-(defvar universal-launcher--update-interval 180 "Update interval in seconds.")
+(defvar universal-launcher--update-interval 20 "Update interval in seconds.")
 (defvar universal-launcher--previous-frame nil "The previous frame to return to.")
 
 ;; Emoji data
