@@ -70,4 +70,8 @@
     after = [ "network-online.target" ];
     wants = [ "network-online.target" ];
   };
+
+  environment.systemPackages = with pkgs; [
+    restic
+  ];
 }
