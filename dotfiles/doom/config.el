@@ -76,7 +76,7 @@
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
 (add-to-list 'custom-theme-load-path "~/.config/doom/themes/")
-(load-theme 'nowhere t)
+(load-theme 'compline t)
 
 ;; Maintain terminal transparency in Doom Emacs
 (after! doom-themes
