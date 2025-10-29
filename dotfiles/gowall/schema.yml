@@ -1,0 +1,6 @@
+schemas:
+  - name: "tes"
+    config:
+      ocr:
+        provider: "tesseract"
+        model: "tesseract"

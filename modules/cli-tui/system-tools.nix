@@ -11,5 +11,6 @@
     borgbackup # backups
 
     gowall # theming
+    tesseract # OCR image processing
   ];
 }
