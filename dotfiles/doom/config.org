@@ -1470,11 +1470,19 @@ go install github.com/sqls-server/sqls@latest
 
   ;; Nord theme colors
   (custom-set-faces
-   '(emms-browser-artist-face ((t (:foreground "#ECEFF4" :height 1.1))))
-   '(emms-browser-album-face ((t (:foreground "#88C0D0" :height 1.0))))
-   '(emms-browser-track-face ((t (:foreground "#A3BE8C" :height 1.0))))
-   '(emms-playlist-track-face ((t (:foreground "#D8DEE9" :height 1.0))))
-   '(emms-playlist-selected-face ((t (:foreground "#BF616A" :weight bold)))))
+   ;; Nord
+   ;; '(emms-browser-artist-face ((t (:foreground "#ECEFF4" :height 1.1))))
+   ;; '(emms-browser-album-face ((t (:foreground "#88C0D0" :height 1.0))))
+   ;; '(emms-browser-track-face ((t (:foreground "#A3BE8C" :height 1.0))))
+   ;; '(emms-playlist-track-face ((t (:foreground "#D8DEE9" :height 1.0))))
+   ;; '(emms-playlist-selected-face ((t (:foreground "#BF616A" :weight bold)))))
+  
+   ;; Nowhere
+'(emms-browser-artist-face ((t (:foreground "#e0dcd4" :height 1.1))))   ; Parchment - most prominent
+'(emms-browser-album-face ((t (:foreground "#b4bec8" :height 1.0))))    ; Steel-blue - secondary accent
+'(emms-browser-track-face ((t (:foreground "#b4beb4" :height 1.0))))    ; Sage-green - individual tracks
+'(emms-playlist-track-face ((t (:foreground "#c0bdb8" :height 1.0))))   ; Muted foreground - neutral
+'(emms-playlist-selected-face ((t (:foreground "#ccc4b0" :weight bold))))) ; Wheat-gold - warm selection
 
   ;; Browser keybindings
   (define-key emms-browser-mode-map (kbd "RET") 'emms-browser-add-tracks-and-play)
@@ -1552,13 +1560,13 @@ go install github.com/sqls-server/sqls@latest
 (with-eval-after-load 'emms-browser
   (add-hook 'emms-browser-mode-hook
             (lambda ()
-              (face-remap-add-relative 'default '(:background "#2E3440"))
+              (face-remap-add-relative 'default '(:background "#1a1d21"))
               (emms-center-buffer-in-frame))))
 
 (with-eval-after-load 'emms-playlist-mode
   (add-hook 'emms-playlist-mode-hook
             (lambda ()
-              (face-remap-add-relative 'default '(:background "#2E3440"))
+              (face-remap-add-relative 'default '(:background "#1a1d21"))
               (emms-center-buffer-in-frame))))
 
 ;; Window resize hook - only add when EMMS is actually loaded
