@@ -46,8 +46,8 @@ determine the exact padding."
 ;;
 ;;; Theme definition
 
-(def-doom-theme nowhere-light
-    "The Nowhere Light colorscheme"
+(def-doom-theme lauds
+    "The Lauds Light colorscheme"
 
   ;; name        default   256       16
   ((bg         '("#ebe9e6" nil       nil            ))  ; aged vellum - perfect

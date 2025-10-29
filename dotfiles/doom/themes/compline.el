@@ -46,8 +46,8 @@ determine the exact padding."
 ;;
 ;;; Theme definition
 
-(def-doom-theme nowhere
-    "The Nowhere colorscheme"
+(def-doom-theme compline
+    "The compline colorscheme"
 
   ;; name        default   256       16
   ((bg         '("#1a1d21" nil       nil            ))  ; cool slate, the stone walls
