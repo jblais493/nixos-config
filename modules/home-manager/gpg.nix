@@ -7,7 +7,7 @@
     enableSshSupport = true;
     defaultCacheTtl = 86400;
     maxCacheTtl = 86400;
-    pinentry.package = pkgs.pinentry-gtk2;
+    pinentry.package = pkgs.pinentry-gnome3;
     extraConfig = ''
       allow-loopback-pinentry
     '';
