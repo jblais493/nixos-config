@@ -9,5 +9,7 @@
     killall # process management
     ydotool # automation
     borgbackup # backups
+
+    gowall # theming
   ];
 }

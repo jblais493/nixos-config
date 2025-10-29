@@ -22,6 +22,7 @@ in
     ".config/mpd".source = mkOutOfStoreSymlink "${configDir}/mpd";
     ".config/yt-dlp".source = mkOutOfStoreSymlink "${configDir}/yt-dlp";
     ".config/mpv".source = mkOutOfStoreSymlink "${configDir}/mpv";
+    ".config/gowall".source = mkOutOfStoreSymlink "${configDir}/gowall";
     ".tridactylrc".source = mkOutOfStoreSymlink "${configDir}/tridactyl/tridactylrc";
     ".tmux.conf".source = mkOutOfStoreSymlink "${configDir}/tmux/.tmux.conf";
   };
