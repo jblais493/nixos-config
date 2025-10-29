@@ -9,16 +9,25 @@
     # ./hardware-configuration.nix
     inputs.disko.nixosModules.disko
     ./disko.nix
-    ../../modules/desktop
+    # ../../modules/desktop
     ../../modules/shared
     ../../modules/cli-tui
-    ../../modules/development
-    ../../modules/media
+    # ../../modules/development
+    # ../../modules/media
   ];
 
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
+  networking.hostName = "king"; # Define your hostname.
+
+  boot.initrd.luks.devices."cryptroot" = {
+    device = "/dev/disk/by-partlabel/disk-main-luks";
+    allowDiscards = true;
+    bypassWorkqueues = true;
+  };
+
+  boot.initrd.availableKernelModules = [
+    "virtio_pci"
+    "virtio_blk"
+    "virtio_scsi"
   ];
 
   services.openssh = {
@@ -32,10 +41,8 @@
   boot.loader.grub = {
     enable = true;
     useOSProber = true;
-    enableCryptodisk = true; # Moved this up for clarity
+    enableCryptodisk = true;
   };
-
-  networking.hostName = "king"; # Define your hostname.
 
   users.users.joshua = {
     isNormalUser = true;
@@ -51,12 +58,6 @@
   users.groups.joshua = { };
 
   time.timeZone = "America/Edmonton";
-  i18n.defaultLocale = "en_CA.UTF-8";
-
-  environment.systemPackages = with pkgs; [
-    vim
-    git
-  ];
 
   system.stateVersion = "25.05";
 }

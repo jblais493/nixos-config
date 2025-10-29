@@ -6,24 +6,10 @@
 }:
 {
   imports = [
+    ./locale.nix
     ./networking.nix
+    ./nix-settings.nix
+    ./overlays.nix
+    ./ssh.nix
   ];
-
-  # Fix NUR overlay reference
-  nixpkgs.overlays = [ inputs.nur.overlays.default ];
-
-  # Enable flakes and trusted users
-  nix.settings = {
-    experimental-features = [
-      "nix-command"
-      "flakes"
-    ];
-    trusted-users = [
-      "root"
-      "joshua"
-    ];
-  };
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
 }

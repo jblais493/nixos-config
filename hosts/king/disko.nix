@@ -1,3 +1,4 @@
+# disko.nix
 { ... }:
 {
   disko.devices = {
@@ -8,11 +9,10 @@
         content = {
           type = "gpt";
           partitions = {
-            # BIOS boot partition - critical for GPT + legacy GRUB
             bios = {
               size = "1M";
-              type = "EF02";  # BIOS boot partition type
-              priority = 1;   # Make it first
+              type = "EF02";
+              priority = 1;
             };
             boot = {
               size = "512M";
@@ -33,30 +33,40 @@
                   allowDiscards = true;
                   bypassWorkqueues = true;
                 };
-                # Password will be prompted during disko format
+                # Add this to generate boot.initrd.luks.devices automatically
+                initrdUnlock = true;
+
                 content = {
                   type = "btrfs";
                   extraArgs = [ "-f" ];
                   subvolumes = {
-                    # Root - ephemeral, wiped on boot
                     "@root" = {
                       mountpoint = "/";
-                      mountOptions = [ "compress=zstd" "noatime" ];
+                      mountOptions = [
+                        "compress=zstd"
+                        "noatime"
+                      ];
                     };
-                    # Nix store - persistent
                     "@nix" = {
                       mountpoint = "/nix";
-                      mountOptions = [ "compress=zstd" "noatime" ];
+                      mountOptions = [
+                        "compress=zstd"
+                        "noatime"
+                      ];
                     };
-                    # Persistent data - explicitly opted-in state
                     "@persist" = {
                       mountpoint = "/persist";
-                      mountOptions = [ "compress=zstd" "noatime" ];
+                      mountOptions = [
+                        "compress=zstd"
+                        "noatime"
+                      ];
                     };
-                    # Snapshots for time machine
                     "@snapshots" = {
                       mountpoint = "/snapshots";
-                      mountOptions = [ "compress=zstd" "noatime" ];
+                      mountOptions = [
+                        "compress=zstd"
+                        "noatime"
+                      ];
                     };
                   };
                 };
@@ -66,11 +76,13 @@
         };
       };
     };
-    # Tmpfs for /tmp
     nodev = {
       "/tmp" = {
         fsType = "tmpfs";
-        mountOptions = [ "size=4G" "mode=1777" ];
+        mountOptions = [
+          "size=4G"
+          "mode=1777"
+        ];
       };
     };
   };
