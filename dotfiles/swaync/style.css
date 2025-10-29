@@ -67,7 +67,7 @@
   outline: none;
   margin: 0px;
   padding: 10px;
-  border-radius: 8px;
+  border-radius: 2px;
   border: 0px solid #88c0d0;
   background: @cc-bg;
 }

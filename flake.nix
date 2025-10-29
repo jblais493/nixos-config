@@ -17,6 +17,9 @@
     # Custom modules
     supernote-tools.url = "github:jblais493/supernote";
 
+    # Styling
+    stylix.url = "github:danth/stylix";
+
     # Pin all inputs to main nixpkgs
     disko.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";

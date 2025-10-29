@@ -8,6 +8,7 @@
 
 {
   imports = [
+    inputs.stylix.homeManagerModules.stylix
     ./activation.nix
     ./dotfiles.nix
     ./emacs.nix
