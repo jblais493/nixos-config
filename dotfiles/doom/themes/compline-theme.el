@@ -69,7 +69,7 @@ determine the exact padding."
    (orange     '("#ccc4b4" "#D08770" "brightred"    ))  ; hint of sand       L=78% S=15%
    (green      '("#b8c4b8" "#A3BE8C" "green"        ))  ; whisper of sage    L=78% S=10%
    (blue       '("#b4bcc4" "#8FA1B3" "brightblue"   ))  ; cool steel-grey    L=77% S=13%
-   (yellow     '("#ccc4b4" "#ECBE7B" "yellow"       ))  ; warm parchment     L=79% S=15%
+   (yellow     '("#d4ccb4" "#ECBE7B" "yellow"       ))  ; warm parchment     L=79% S=15%
    (violet     base7)                                    ; eliminated - pure grey
    (teal       '("#b4c4bc" "#44b9b1" "brightgreen"  ))  ; cool water-grey    L=78% S=12%
    (dark-blue  '("#9ca4ac" "#2257A0" "blue"         ))  ; deep slate         L=67% S=10%
@@ -78,21 +78,21 @@ determine the exact padding."
    (dark-cyan  '("#98a4ac" "#5699AF" "cyan"         ))  ; deep water-grey    L=67% S=12%
 
    ;; face categories -- required for all themes
-   (highlight      orange)
+   (highlight      yellow)
    (vertical-bar   (doom-darken bg 0.25))
    (selection      base4)
    (builtin        cyan)
-   (comments       base5) 
-   (doc-comments   base5)
-   (constants      teal)
-   (functions      blue)
-   (keywords       base7)
-   (methods        blue)
+   (comments       base4) 
+   (doc-comments   base4)
+   (constants      base7)
+   (functions      cyan)
+   (keywords       base8)
+   (methods        dark-cyan)
    (operators      base6)
    (type           blue)
    (strings        green)
-   (variables      fg-alt)
-   (numbers        orange)
+   (variables      base8)
+   (numbers        red)
    (region         selection)
    (error          red)
    (warning        yellow)
