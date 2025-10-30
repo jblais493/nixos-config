@@ -61,8 +61,8 @@ determine the exact padding."
    (base6      '("#7d7a75" "#6b6b6b" "brightblack"  ))
    (base7      '("#5f5c58" "#525252" "brightblack"  ))
    (base8      '("#2d2a27" "#1e1e1e" "black"        ))
-   (fg         '("#3d3a36" "#2d2d2d" "black"        ))  ; warm charcoal - perfect
-   (fg-alt     '("#5a5754" "#4e4e4e" "brightblack"  ))
+   (fg         '("#1a1d21" "#2d2d2d" "black"        ))  ; warm charcoal - perfect
+   (fg-alt     '("#22262b" "#4e4e4e" "brightblack"  ))
    (grey       base4)
    
    ;; REFINED: Slightly more saturation for instant recognition
