@@ -50,8 +50,8 @@ determine the exact padding."
     "The Lauds Light colorscheme"
 
   ;; name        default   256       16
-  ((bg         '("#ebe9e6" nil       nil            ))  ; aged vellum - perfect
-   (bg-alt     '("#e0deda" nil       nil            ))  ; slightly darker panels
+  ((bg         '("#f0efeb" nil       nil            ))  ; aged vellum - perfect
+   (bg-alt     '("#ccc4b4" nil       nil            ))  ; slightly darker panels
    (base0      '("#f5f4f2" "white"   "white"        ))
    (base1      '("#efeeed" "#e4e4e4" "white"        ))
    (base2      '("#e5e3e0" "#d0d0d0" "brightwhite"  ))
@@ -66,11 +66,11 @@ determine the exact padding."
    (grey       base4)
    
    ;; REFINED: Slightly more saturation for instant recognition
-   (red        '("#8a6e6e" "#BF616A" "red"          ))  ; deeper dusty rose
+   (red        '("#D69A9F" "#BF616A" "red"          ))  ; deeper dusty rose
    (orange     '("#c8c0b0" "#A2957C" "brightred"    ))  ; richer earth-clay
    (green      '("#6e7d64" "#6e7d64" "green"        ))  ; stronger olive
    (blue       '("#64717d" "#64717d" "brightblue"   ))  ; deeper slate-blue
-   (yellow     '("#A2957C" "#A2957C" "yellow"       ))  ; richer sand-gold
+   (yellow     '("#D1B47A" "#A2957C" "yellow"       ))  ; richer sand-gold
    (violet     '("#7d7470" "#7d7470" "brightmagenta"))  ; warmer dust-mauve
    (teal       '("#6e7d75" "#6e7d75" "brightgreen"  ))  ; deeper sage-grey
    (dark-blue  '("#546070" "#546070" "blue"         ))  ; deep charcoal-slate
@@ -82,17 +82,17 @@ determine the exact padding."
    (highlight      orange)
    (vertical-bar   (doom-darken bg 0.25))
    (selection      base4)
-   (builtin        orange)
-   (comments       (if doom-spacegrey-brighter-comments dark-cyan base5))
-   (doc-comments   (doom-lighten (if doom-spacegrey-brighter-comments dark-cyan base5) 0.25))
-   (constants      orange)
+   (builtin        cyan)
+   (comments       base5) 
+   (doc-comments   base5)
+   (constants      teal)
    (functions      blue)
-   (keywords       violet)
+   (keywords       base6)
    (methods        blue)
-   (operators      fg)
-   (type           yellow)
+   (operators      base7)
+   (type           blue)
    (strings        green)
-   (variables      red)
+   (variables      fg-alt)
    (numbers        orange)
    (region         selection)
    (error          red)

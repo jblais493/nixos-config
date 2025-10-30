@@ -66,7 +66,7 @@ determine the exact padding."
 
    (grey       base4)
    (red        '("#CDACAC" "#D69A9F" "red"          ))  ; keep - perfect warmth    L=76% S=22%
-   (orange     '("#ccc0b4" "#D08770" "brightred"    ))  ; hint of sand       L=78% S=15%
+   (orange     '("#ccc4b4" "#D08770" "brightred"    ))  ; hint of sand       L=78% S=15%
    (green      '("#b8c4b8" "#A3BE8C" "green"        ))  ; whisper of sage    L=78% S=10%
    (blue       '("#b4bcc4" "#8FA1B3" "brightblue"   ))  ; cool steel-grey    L=77% S=13%
    (yellow     '("#ccc4b4" "#ECBE7B" "yellow"       ))  ; warm parchment     L=79% S=15%
@@ -86,9 +86,9 @@ determine the exact padding."
    (doc-comments   base5)
    (constants      teal)
    (functions      blue)
-   (keywords       base6)
+   (keywords       base7)
    (methods        blue)
-   (operators      base7)
+   (operators      base6)
    (type           blue)
    (strings        green)
    (variables      fg-alt)
