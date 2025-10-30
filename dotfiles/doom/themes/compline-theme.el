@@ -1,9 +1,9 @@
-;;; doom-spacegrey-theme.el --- I'm sure you've heard of it -*- lexical-binding: t; no-byte-compile: t; -*-
+;;; compline-theme.el --- I'm sure you've heard of it -*- lexical-binding: t; no-byte-compile: t; -*-
 ;;
 ;; Added: December 31, 2017 (#129)
 ;; Author: joshuablais <https://github.com/jblais493>
 ;; Maintainer:
-;; Source: http://kkga.github.io/spacegray/
+;; Source: https://compline-theme.el/
 ;;
 ;;; Commentary:
 ;;; Code:
@@ -176,4 +176,4 @@ determine the exact padding."
   ;; ()
   )
 
-;;; doom-spacegrey-theme.el ends here
+;;; compline-theme.el ends here
