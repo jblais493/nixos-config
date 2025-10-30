@@ -61,8 +61,8 @@ determine the exact padding."
    (base6      '("#676d77" "#6b6b6b" "brightblack"  ))
    (base7      '("#8b919a" "#979797" "brightblack"  ))
    (base8      '("#e0dcd4" "#dfdfdf" "white"        ))
-   (fg         '("#e0dcd4" "#c0c5ce" "brightwhite"  ))  ; warm parchment, easier on eyes
-   (fg-alt     '("#c0bdb8" "#a0a0a0" "white"        ))  ; muted secondary
+   (fg         '("#f0efeb" "#c0c5ce" "brightwhite"  ))  ; warm parchment, easier on eyes
+   (fg-alt     '("#ccc4b4" "#a0a0a0" "white"        ))  ; muted secondary
 
    (grey       base4)
    (red        '("#CDACAC" "#D69A9F" "red"          ))  ; keep - perfect warmth    L=76% S=22%
