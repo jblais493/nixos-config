@@ -65,33 +65,33 @@ determine the exact padding."
    (fg-alt     '("#c0bdb8" "#a0a0a0" "white"        ))  ; muted secondary
 
    (grey       base4)
-   (red        '("#c8beb8" "#BF616A" "red"          ))  ; warm ash-rose      L=78%
-   (orange     '("#c8c0b0" "#D08770" "brightred"    ))  ; warm sand-stone    L=79%
-   (green      '("#b4beb4" "#A3BE8C" "green"        ))  ; neutral sage       L=76%
-   (blue       '("#b4bec8" "#8FA1B3" "brightblue"   ))  ; cool-lean steel    L=77%
-   (yellow     '("#ccc4b0" "#ECBE7B" "yellow"       ))  ; warm wheat-gold    L=80%
-   (violet     '("#c4beb8" "#b48ead" "brightmagenta"))  ; warm dust-lavender L=78%
-   (teal       '("#b0c0b8" "#44b9b1" "brightgreen"  ))  ; cool-lean seafoam  L=77%
-   (dark-blue  '("#9ca8b4" "#2257A0" "blue"         ))  ; deep grey-slate    L=68%
-   (magenta    '("#c0b8bc" "#c678dd" "magenta"      ))  ; warm grey-mauve    L=76%
-   (cyan       '("#b0bcc8" "#46D9FF" "brightcyan"   ))  ; cool-lean ice      L=77%
-   (dark-cyan  '("#9ca8b0" "#5699AF" "cyan"         ))  ; deep grey-water    L=68%
+   (red        '("#c8b8b4" "#BF616A" "red"          ))  ; barely-warm ash    L=76% S=12%
+   (orange     '("#ccc0b4" "#D08770" "brightred"    ))  ; hint of sand       L=78% S=15%
+   (green      '("#b8c4b8" "#A3BE8C" "green"        ))  ; whisper of sage    L=78% S=10%
+   (blue       '("#b4bcc4" "#8FA1B3" "brightblue"   ))  ; cool steel-grey    L=77% S=13%
+   (yellow     '("#ccc4b4" "#ECBE7B" "yellow"       ))  ; warm parchment     L=79% S=15%
+   (violet     base7)                                    ; eliminated - pure grey
+   (teal       '("#b4c4bc" "#44b9b1" "brightgreen"  ))  ; cool water-grey    L=78% S=12%
+   (dark-blue  '("#9ca4ac" "#2257A0" "blue"         ))  ; deep slate         L=67% S=10%
+   (magenta    base7)                                    ; eliminated - pure grey
+   (cyan       '("#b4c0c8" "#46D9FF" "brightcyan"   ))  ; hint of ice        L=77% S=13%
+   (dark-cyan  '("#98a4ac" "#5699AF" "cyan"         ))  ; deep water-grey    L=67% S=12%
 
    ;; face categories -- required for all themes
    (highlight      orange)
    (vertical-bar   (doom-darken bg 0.25))
    (selection      base4)
-   (builtin        orange)
+   (builtin        cyan)
    (comments       (if doom-spacegrey-brighter-comments dark-cyan base5))
    (doc-comments   (doom-lighten (if doom-spacegrey-brighter-comments dark-cyan base5) 0.25))
-   (constants      orange)
+   (constants      teal)
    (functions      blue)
-   (keywords       violet)
+   (keywords       dark-blue)
    (methods        blue)
-   (operators      fg)
-   (type           yellow)
+   (operators      base7)
+   (type           blue)
    (strings        green)
-   (variables      red)
+   (variables      fg-alt)
    (numbers        orange)
    (region         selection)
    (error          red)
