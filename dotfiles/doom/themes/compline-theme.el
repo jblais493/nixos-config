@@ -65,7 +65,7 @@ determine the exact padding."
    (fg-alt     '("#c0bdb8" "#a0a0a0" "white"        ))  ; muted secondary
 
    (grey       base4)
-   (red        '("#c8b8b4" "#BF616A" "red"          ))  ; barely-warm ash    L=76% S=12%
+   (red        '("#CDACAC" "#D69A9F" "red"          ))  ; keep - perfect warmth    L=76% S=22%
    (orange     '("#ccc0b4" "#D08770" "brightred"    ))  ; hint of sand       L=78% S=15%
    (green      '("#b8c4b8" "#A3BE8C" "green"        ))  ; whisper of sage    L=78% S=10%
    (blue       '("#b4bcc4" "#8FA1B3" "brightblue"   ))  ; cool steel-grey    L=77% S=13%
