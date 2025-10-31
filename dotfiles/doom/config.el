@@ -410,6 +410,7 @@
   (org-agenda nil "d"))
 
 ;; Mark tasks with a CLOSED timestamp on DONE
+(after! org
 (setq org-log-done 'time)
 
 ;; Capture templates
@@ -484,7 +485,7 @@
          (contact (completing-read "Contact: "
                                    (mapcar #'car headlines)))
          (id (cdr (assoc contact headlines))))
-    (format "[[id:%s][%s]]" id contact)))
+    (format "[[id:%s][%s]]" id contact))))
 
 ;; Set archive location to done.org under current date
 ;; (defun my/archive-done-task ()
