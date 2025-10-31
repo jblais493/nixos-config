@@ -15,4 +15,4 @@ map <C-i> recolor
 set default-fg "#f0efeb"
 set default-bg rgba(26,29,33,0.95)
 set recolor-darkcolor "#f0efeb"
-set recolor-lightcolor rgba(39,44,54,0.0)
+set recolor-lightcolor rgba(26,29,33,0.0)
