@@ -1,0 +1,565 @@
+/* Compline Theme for Thunderbird */
+
+/* ===== COLOR VARIABLES ===== */
+:root {
+  --bg: #1a1d21 !important;
+  --bg-alt: #22262b !important;
+  --base0: #0f1114 !important;
+  --base1: #171a1e !important;
+  --base2: #1f2228 !important;
+  --base3: #282c34 !important;
+  --base4: #3d424a !important;
+  --base5: #515761 !important;
+  --base6: #676d77 !important;
+  --base7: #8b919a !important;
+  --base8: #e0dcd4 !important;
+  --fg: #f0efeb !important;
+  --fg-alt: #ccc4b4 !important;
+  
+  --red: #CDACAC !important;
+  --orange: #ccc4b4 !important;
+  --green: #b8c4b8 !important;
+  --blue: #b4bcc4 !important;
+  --cyan: #b4c0c8 !important;
+  --yellow: #d4ccb4 !important;
+  --teal: #b4c4bc !important;
+  --dark-cyan: #98a4ac !important;
+}
+
+/* ===== NUCLEAR OVERRIDES ===== */
+*[style*="#27272A"],
+*[style*="#27272a"],
+*[style*="rgb(39, 39, 42)"] {
+  background-color: var(--bg-alt) !important;
+}
+
+[style*="background"][style*="27272"],
+[style*="background-color"][style*="27272"] {
+  background-color: var(--bg-alt) !important;
+}
+
+/* ===== GLOBAL VARIABLES ===== */
+* {
+  --in-content-page-background: var(--bg) !important;
+  --in-content-page-color: var(--fg) !important;
+  --in-content-box-background: var(--base3) !important;
+  --in-content-box-border-color: var(--bg) !important;
+  --in-content-item-hover: var(--bg) !important;
+  --in-content-item-selected: var(--bg) !important;
+  --in-content-button-background: var(--bg) !important;
+  --in-content-button-background-hover: var(--base5) !important;
+  --in-content-primary-button-background: var(--blue) !important;
+  --in-content-primary-button-background-hover: var(--cyan) !important;
+  --arrowpanel-background: var(--bg-alt) !important;
+  --toolbar-bgcolor: var(--bg-alt) !important;
+  --toolbar-non-lwt-bgcolor: var(--bg-alt) !important;
+  --chrome-content-separator-color: var(--base4) !important;
+  --panel-background: var(--bg-alt) !important;
+  --panel-color: var(--fg) !important;
+  --panel-border-color: var(--bg) !important;
+}
+
+/* ===== MAIN WINDOW ===== */
+#messengerBody,
+#messengerWindow,
+window {
+  background-color: var(--bg) !important;
+  color: var(--fg) !important;
+}
+
+/* ===== TOOLBARS ===== */
+toolbar,
+#mail-toolbar-menubar2,
+#tabs-toolbar,
+#navigation-toolbox,
+#unifiedToolbar,
+#unifiedToolbarContainer,
+#unifiedToolbarContent,
+#mail-bar3,
+#mail-toolbox,
+#composeToolbar,
+#chat-view-toolbox,
+toolbox,
+toolbarpaletteitem,
+toolbaritem,
+.toolbar,
+.chromeclass-toolbar,
+.toolbaritem-combined-buttons {
+  background-color: var(--bg-alt) !important;
+  border-color: var(--base4) !important;
+  color: var(--fg) !important;
+  -moz-appearance: none !important;
+}
+
+toolbarbutton,
+.toolbarbutton-1,
+.unified-toolbar-button {
+  background-color: transparent !important;
+  color: var(--fg) !important;
+  fill: var(--fg) !important;
+}
+
+toolbarbutton:hover,
+.toolbarbutton-1:hover,
+.unified-toolbar-button:hover {
+  background-color: var(--base4) !important;
+}
+
+toolbarbutton[checked="true"] {
+  background-color: var(--base5) !important;
+}
+
+/* ===== SEARCH & INPUT FIELDS ===== */
+#searchInput,
+#quick-filter-bar-filter-text-box,
+#searchBox,
+#unifiedToolbarContainer input[type="search"],
+input[type="search"],
+input:not([type="checkbox"]):not([type="radio"]),
+textarea,
+textbox,
+html|input,
+html|textarea,
+.searchbar-textbox,
+.search-box,
+search-textbox {
+  background-color: var(--base3) !important;
+  color: var(--fg) !important;
+  border: 1px solid var(--base4) !important;
+}
+
+input:focus,
+textarea:focus,
+textbox:focus {
+  border-color: var(--cyan) !important;
+  outline: none !important;
+}
+
+/* ===== FOLDER PANE ===== */
+#folderPane,
+#folderPaneBox,
+#folderTree,
+.folderPaneBox {
+  background-color: var(--bg) !important;
+  color: var(--fg) !important;
+}
+
+#folderPaneHeader,
+#folderPaneHeaderBar,
+#folderPane-header-bar,
+#folderPaneWriteMessage,
+.folderPaneHeader {
+  background-color: var(--bg-alt) !important;
+  border-color: var(--base4) !important;
+}
+
+#folderTree treechildren::-moz-tree-row {
+  background-color: var(--bg) !important;
+  border-color: var(--base3) !important;
+  height: 24px !important;
+}
+
+#folderTree treechildren::-moz-tree-row(hover) {
+  background-color: var(--base3) !important;
+}
+
+#folderTree treechildren::-moz-tree-row(selected) {
+  background-color: var(--bg) !important;
+}
+
+#folderTree treechildren::-moz-tree-cell-text {
+  color: var(--fg) !important;
+}
+
+#folderTree treechildren::-moz-tree-cell-text(selected) {
+  color: var(--fg) !important;
+}
+
+#folderTree treechildren::-moz-tree-cell-text(hasUnreadMessages-true) {
+  color: var(--cyan) !important;
+  font-weight: bold !important;
+}
+
+#folderTree treechildren::-moz-tree-image {
+  fill: var(--fg-alt) !important;
+}
+
+/* ===== MESSAGE LIST (THREAD PANE) ===== */
+#threadTree,
+#threadPane {
+  background-color: var(--bg) !important;
+  color: var(--fg) !important;
+}
+
+#threadTree treechildren::-moz-tree-row {
+  background-color: var(--bg) !important;
+  border-color: var(--base3) !important;
+  height: 22px !important;
+}
+
+#threadTree treechildren::-moz-tree-row(odd) {
+  background-color: var(--base1) !important;
+}
+
+#threadTree treechildren::-moz-tree-row(hover) {
+  background-color: var(--base3) !important;
+}
+
+#threadTree treechildren::-moz-tree-row(selected) {
+  background-color: var(--bg) !important;
+}
+
+#threadTree treechildren::-moz-tree-row(selected, focus) {
+  background-color: var(--base5) !important;
+}
+
+#threadTree treechildren::-moz-tree-cell-text {
+  color: var(--fg) !important;
+}
+
+#threadTree treechildren::-moz-tree-cell-text(selected) {
+  color: var(--fg) !important;
+}
+
+#threadTree treechildren::-moz-tree-cell-text(unread) {
+  color: var(--cyan) !important;
+  font-weight: bold !important;
+}
+
+#threadTree treechildren::-moz-tree-cell-text(flagged) {
+  color: var(--yellow) !important;
+}
+
+#threadTree treechildren::-moz-tree-cell-text(tagged) {
+  color: var(--green) !important;
+}
+
+/* Column headers */
+#threadCols,
+#threadTree > treecols,
+treecols {
+  background-color: var(--bg-alt) !important;
+  border-color: var(--base4) !important;
+}
+
+treecol {
+  background-color: var(--bg-alt) !important;
+  color: var(--fg) !important;
+  border-color: var(--base4) !important;
+}
+
+treecol:hover {
+  background-color: var(--base4) !important;
+}
+
+treecol splitter,
+.tree-columnpicker-button {
+  background-color: var(--bg-alt) !important;
+}
+
+/* ===== MESSAGE PREVIEW PANE ===== */
+#messagepane,
+#messageBrowser,
+#messagePane,
+.browserContainer,
+browser[type="content-primary"],
+browser[type="content"] {
+  background-color: var(--bg) !important;
+}
+
+#messageHeader,
+.message-header-view {
+  background-color: var(--bg-alt) !important;
+  color: var(--fg) !important;
+  border-color: var(--bg) !important;
+}
+
+.headerValue {
+  color: var(--fg-alt) !important;
+}
+
+.headerName {
+  color: var(--base7) !important;
+}
+
+/* ===== TABS ===== */
+.tab-background,
+tab {
+  background-color: var(--bg-alt) !important;
+  color: var(--fg-alt) !important;
+}
+
+.tab-background[selected="true"],
+tab[selected="true"] {
+  background-color: var(--bg) !important;
+  color: var(--fg) !important;
+}
+
+.tab-background:hover,
+tab:hover {
+  background-color: var(--base3) !important;
+}
+
+.tab-label {
+  color: inherit !important;
+}
+
+.tab-close-button {
+  fill: var(--fg-alt) !important;
+}
+
+.tab-close-button:hover {
+  fill: var(--red) !important;
+  background-color: var(--bg) !important;
+}
+
+/* ===== SIDEBAR ===== */
+#sidebar,
+#sidebar-box {
+  background-color: var(--bg) !important;
+  border-color: var(--bg) !important;
+}
+
+#sidebarheader {
+  background-color: var(--bg-alt) !important;
+  color: var(--fg) !important;
+}
+
+/* ===== SPACES TOOLBAR ===== */
+#spacesToolbar,
+#spaces-toolbar,
+.spaces-toolbar {
+  background-color: var(--bg-alt) !important;
+  border-color: var(--base4) !important;
+}
+
+.spaces-toolbar-button,
+#spacesToolbar toolbarbutton {
+  background-color: var(--bg-alt) !important;
+  fill: var(--fg-alt) !important;
+}
+
+.spaces-toolbar-button:hover,
+#spacesToolbar toolbarbutton:hover {
+  background-color: var(--base4) !important;
+}
+
+.spaces-toolbar-button[selected="true"],
+#spacesToolbar toolbarbutton[checked="true"] {
+  background-color: var(--base5) !important;
+  fill: var(--fg) !important;
+}
+
+/* ===== COMPOSE WINDOW ===== */
+#MsgHeadersToolbar {
+  background-color: var(--bg-alt) !important;
+}
+
+#msgSubject,
+#msgIdentity,
+.address-row-input {
+  background-color: var(--base3) !important;
+  color: var(--fg) !important;
+  border: 1px solid var(--bg) !important;
+}
+
+#messageEditor {
+  background-color: var(--bg) !important;
+}
+
+/* ===== MENUS & POPUPS ===== */
+menupopup,
+popup,
+panel,
+.panel-arrowcontainer {
+  background-color: var(--bg-alt) !important;
+  color: var(--fg) !important;
+  border: 1px solid var(--bg) !important;
+}
+
+menuitem,
+menu,
+menulist {
+  color: var(--fg) !important;
+  background-color: transparent !important;
+}
+
+menuitem:hover,
+menu:hover,
+menulist:hover,
+menuitem[_moz-menuactive="true"],
+menu[_moz-menuactive="true"] {
+  background-color: var(--bg) !important;
+  color: var(--fg) !important;
+}
+
+menuseparator {
+  border-color: var(--bg) !important;
+}
+
+/* ===== BUTTONS ===== */
+button,
+.button,
+#button-newmessage,
+.button-appmenu {
+  background-color: var(--bg) !important;
+  color: var(--fg) !important;
+  border: 1px solid var(--base5) !important;
+}
+
+button:hover,
+.button:hover,
+#button-newmessage:hover {
+  background-color: var(--base5) !important;
+}
+
+button:active,
+.button:active {
+  background-color: var(--base6) !important;
+}
+
+button[default="true"],
+button[type="primary"] {
+  background-color: var(--blue) !important;
+  color: var(--base0) !important;
+}
+
+/* ===== SCROLLBARS ===== */
+scrollbar {
+  background-color: var(--bg) !important;
+}
+
+scrollbar thumb {
+  background-color: var(--bg) !important;
+  border-radius: 4px !important;
+}
+
+scrollbar thumb:hover {
+  background-color: var(--base5) !important;
+}
+
+scrollbar thumb:active {
+  background-color: var(--base6) !important;
+}
+
+/* ===== SPLITTERS ===== */
+splitter {
+  background-color: var(--bg) !important;
+  border: none !important;
+}
+
+/* ===== STATUS BAR ===== */
+#status-bar,
+#statusbar {
+  background-color: var(--bg-alt) !important;
+  color: var(--fg) !important;
+  border-top: 1px solid var(--bg) !important;
+}
+
+/* ===== NOTIFICATIONS ===== */
+.notificationbox-stack notification,
+notification {
+  background-color: var(--base3) !important;
+  color: var(--fg) !important;
+  border-color: var(--bg) !important;
+}
+
+notification[type="info"] {
+  background-color: var(--cyan) !important;
+  color: var(--base0) !important;
+}
+
+notification[type="warning"] {
+  background-color: var(--yellow) !important;
+  color: var(--base0) !important;
+}
+
+notification[type="critical"] {
+  background-color: var(--red) !important;
+  color: var(--base0) !important;
+}
+
+/* ===== CALENDAR ===== */
+#calendar-view {
+  background-color: var(--bg) !important;
+}
+
+.calendar-event-box {
+  background-color: var(--blue) !important;
+  color: var(--base0) !important;
+  border-color: var(--cyan) !important;
+}
+
+/* ===== ADDRESS BOOK ===== */
+#abResultsTree treechildren::-moz-tree-row {
+  background-color: var(--bg) !important;
+}
+
+#abResultsTree treechildren::-moz-tree-row(selected) {
+  background-color: var(--bg) !important;
+}
+
+#abResultsTree treechildren::-moz-tree-cell-text {
+  color: var(--fg) !important;
+}
+
+/* ===== SETTINGS/PREFERENCES ===== */
+#preferencesContainer {
+  background-color: var(--bg) !important;
+  color: var(--fg) !important;
+}
+
+.category {
+  color: var(--fg) !important;
+}
+
+.category[selected="true"] {
+  background-color: var(--bg) !important;
+}
+
+richlistbox {
+  background-color: var(--bg) !important;
+  color: var(--fg) !important;
+}
+
+richlistitem[selected="true"] {
+  background-color: var(--bg) !important;
+  color: var(--fg) !important;
+}
+
+/* ===== DROPDOWNS ===== */
+menulist,
+select {
+  background-color: var(--base3) !important;
+  color: var(--fg) !important;
+  border: 1px solid var(--bg) !important;
+}
+
+menulist:hover,
+select:hover {
+  background-color: var(--bg) !important;
+}
+
+/* ===== CHECKBOXES & RADIO ===== */
+checkbox,
+radio {
+  color: var(--fg) !important;
+}
+
+/* ===== LINKS ===== */
+a,
+.text-link {
+  color: var(--cyan) !important;
+}
+
+a:hover,
+.text-link:hover {
+  color: var(--blue) !important;
+}
+
+/* ===== TOOLTIPS ===== */
+tooltip {
+  background-color: var(--base3) !important;
+  color: var(--fg) !important;
+  border: 1px solid var(--base5) !important;
+}
