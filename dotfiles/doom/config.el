@@ -670,6 +670,40 @@ This function is designed to be called via `emacsclient -e`."
       ;; as it's often designed to pick up the current 'default-directory'.
       (vterm))))
 
+;; Define immediately, not wrapped in after!
+(defun my/new-frame-with-vterm ()
+  "Create a new frame and immediately open vterm in it."
+  (interactive)
+  (require 'vterm)
+  (let ((new-frame (make-frame '((explicit-vterm . t)))))
+    (select-frame new-frame)
+    (delete-other-windows)
+    ;; Force vterm to take full window
+    (let ((vterm-buffer (vterm (format "*vterm-%s*" (frame-parameter new-frame 'name)))))
+      (switch-to-buffer vterm-buffer)
+      (delete-other-windows))))  ; Nuke any splits vterm created
+
+;; Tag initial frame
+(defun my/tag-initial-frame ()
+  "Tag the first frame as main."
+  (set-frame-parameter nil 'main-frame t))
+
+(add-hook 'emacs-startup-hook #'my/tag-initial-frame)
+
+;; Vterm auto-spawn hook - skip frames we've already handled
+(after! vterm
+  (defun my/vterm-in-new-frame (frame)
+    "Open vterm only in additional frames, not the main frame or explicit frames."
+    (unless (or (frame-parameter frame 'main-frame)
+                (frame-parameter frame 'explicit-vterm))
+      (with-selected-frame frame
+        (delete-other-windows)
+        (let ((vterm-buffer (vterm (format "*vterm-%s*" (frame-parameter frame 'name)))))
+          (switch-to-buffer vterm-buffer)
+          (delete-other-windows)))))
+  
+  (add-hook 'after-make-frame-functions #'my/vterm-in-new-frame))
+
 ;; Emmet remap
 (add-hook 'sgml-mode-hook 'emmet-mode) ;; Auto-start on any markup modes
 (add-hook 'css-mode-hook  'emmet-mode) ;; enable Emmet's css abbreviation.
