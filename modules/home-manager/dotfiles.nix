@@ -6,24 +6,25 @@ let
 in
 {
   home.file = {
+    ".config/bat".source = mkOutOfStoreSymlink "${configDir}/bat";
+    ".config/btop".source = mkOutOfStoreSymlink "${configDir}/btop";
     ".config/doom".source = mkOutOfStoreSymlink "${configDir}/doom";
-    ".zshrc".source = mkOutOfStoreSymlink "${configDir}/zsh/.zshrc";
-    ".config/starship.toml".source = mkOutOfStoreSymlink "${configDir}/starship/starship.toml";
-    ".config/tmux/plugins".source = mkOutOfStoreSymlink "${configDir}/tmux/plugins";
+    ".config/fastfetch".source = mkOutOfStoreSymlink "${configDir}/fastfetch";
+    ".config/gowall".source = mkOutOfStoreSymlink "${configDir}/gowall";
     ".config/hypr".source = mkOutOfStoreSymlink "${configDir}/hypr";
     ".config/kitty".source = mkOutOfStoreSymlink "${configDir}/kitty";
-    ".config/waybar".source = mkOutOfStoreSymlink "${configDir}/waybar";
-    ".config/swaync".source = mkOutOfStoreSymlink "${configDir}/swaync";
-    ".config/wofi".source = mkOutOfStoreSymlink "${configDir}/wofi";
-    ".config/nvim".source = mkOutOfStoreSymlink "${configDir}/nvim";
-    ".config/fastfetch".source = mkOutOfStoreSymlink "${configDir}/fastfetch";
-    ".config/zathura".source = mkOutOfStoreSymlink "${configDir}/zathura";
-    ".config/btop".source = mkOutOfStoreSymlink "${configDir}/btop";
     ".config/mpd".source = mkOutOfStoreSymlink "${configDir}/mpd";
-    ".config/yt-dlp".source = mkOutOfStoreSymlink "${configDir}/yt-dlp";
     ".config/mpv".source = mkOutOfStoreSymlink "${configDir}/mpv";
-    ".config/gowall".source = mkOutOfStoreSymlink "${configDir}/gowall";
-    ".tridactylrc".source = mkOutOfStoreSymlink "${configDir}/tridactyl/tridactylrc";
+    ".config/nvim".source = mkOutOfStoreSymlink "${configDir}/nvim";
+    ".config/starship.toml".source = mkOutOfStoreSymlink "${configDir}/starship/starship.toml";
+    ".config/swaync".source = mkOutOfStoreSymlink "${configDir}/swaync";
+    ".config/tmux/plugins".source = mkOutOfStoreSymlink "${configDir}/tmux/plugins";
+    ".config/waybar".source = mkOutOfStoreSymlink "${configDir}/waybar";
+    ".config/wofi".source = mkOutOfStoreSymlink "${configDir}/wofi";
+    ".config/yt-dlp".source = mkOutOfStoreSymlink "${configDir}/yt-dlp";
+    ".config/zathura".source = mkOutOfStoreSymlink "${configDir}/zathura";
     ".tmux.conf".source = mkOutOfStoreSymlink "${configDir}/tmux/.tmux.conf";
+    ".tridactylrc".source = mkOutOfStoreSymlink "${configDir}/tridactyl/tridactylrc";
+    ".zshrc".source = mkOutOfStoreSymlink "${configDir}/zsh/.zshrc";
   };
 }

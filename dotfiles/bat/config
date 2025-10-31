@@ -1,0 +1,4 @@
+--theme="compline"
+--style="numbers,changes,header,grid"
+--italic-text=always
+--paging=never
