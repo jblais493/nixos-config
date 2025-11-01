@@ -625,12 +625,13 @@ We set the visual line wrapping and relative line numbers (then we can just go u
              org-roam-node-insert
              org-roam-dailies-goto-today
              org-roam-buffer-toggle
-             org-roam-db-sync)
+             org-roam-db-sync
+             org-roam-capture)  ; Add this
   :init
   (setq org-roam-directory "~/org/roam"
         org-roam-database-connector 'sqlite-builtin
         org-roam-db-location (expand-file-name "org-roam.db" org-roam-directory)
-        org-roam-v2-ack t)  ; Suppress migration warnings
+        org-roam-v2-ack t)
   
   :config
   ;; Don't sync on startup, only when explicitly needed
@@ -644,12 +645,64 @@ We set the visual line wrapping and relative line numbers (then we can just go u
   (add-hook 'org-roam-find-file-hook
             (lambda ()
               (unless org-roam-db-autosync-mode
-                (org-roam-db-autosync-mode 1)))))
+                (org-roam-db-autosync-mode 1))))
+  
+  ;; CAPTURE TEMPLATES - Human readable filenames
+  (setq org-roam-capture-templates
+        '(("d" "default" plain "%?"
+           :target (file+head "${slug}.org"
+                              ":PROPERTIES:\n:ID:       %(org-id-new)\n:END:\n#+title: ${title}\n#+filetags: \n\n")
+           :unnarrowed t)
+          
+          ("c" "concept" plain "%?"
+           :target (file+head "concepts/${slug}.org"
+                              ":PROPERTIES:\n:ID:       %(org-id-new)\n:END:\n#+title: ${title}\n#+filetags: :concept:\n\n")
+           :unnarrowed t)
+          
+          ("b" "book" plain "%?"
+           :target (file+head "books/${slug}.org"
+                              ":PROPERTIES:\n:ID:       %(org-id-new)\n:END:\n#+title: ${title}\n#+author: \n#+filetags: :book:\n\n* Summary\n\n* Key Ideas\n\n* Quotes\n\n* Related\n\n")
+           :unnarrowed t)
+          
+          ("p" "person" plain "%?"
+           :target (file+head "people/${slug}.org"
+                              ":PROPERTIES:\n:ID:       %(org-id-new)\n:END:\n#+title: ${title}\n#+filetags: :person:\n\n* Background\n\n* Key Ideas\n\n* Works\n\n")
+           :unnarrowed t)
+          
+          ("t" "tech" plain "%?"
+           :target (file+head "tech/${slug}.org"
+                              ":PROPERTIES:\n:ID:       %(org-id-new)\n:END:\n#+title: ${title}\n#+filetags: :tech:\n\n")
+           :unnarrowed t)
+          
+          ("T" "theology" plain "%?"
+           :target (file+head "faith/theology/${slug}.org"
+                              ":PROPERTIES:\n:ID:       %(org-id-new)\n:END:\n#+title: ${title}\n#+filetags: :theology:faith:\n\n* Doctrine\n\n* Scripture\n\n* Tradition\n\n* Application\n\n")
+           :unnarrowed t)
+          
+          ("w" "writing" plain "%?"
+           :target (file+head "writing/${slug}.org"
+                              ":PROPERTIES:\n:ID:       %(org-id-new)\n:END:\n#+title: ${title}\n#+filetags: :writing:draft:\n\n")
+           :unnarrowed t)
+          
+          ("P" "project" plain "%?"
+           :target (file+head "projects/${slug}.org"
+                              ":PROPERTIES:\n:ID:       %(org-id-new)\n:END:\n#+title: ${title}\n#+filetags: :project:private:\n\n* Overview\n\n* Goals\n\n* Status\n\n* Notes\n\n")
+           :unnarrowed t)))
+  
+  ;; DAILIES - Clean date format
+  (setq org-roam-dailies-directory "daily/"
+        org-roam-dailies-capture-templates
+        '(("d" "default" entry "* %<%H:%M>: %?"
+           :target (file+head "%<%Y-%m-%d>.org"
+                              ":PROPERTIES:\n:ID:       %(org-id-new)\n:END:\n#+title: %<%Y-%m-%d %A>\n#+filetags: :daily:\n\n"))))
+  
+  ;; Enable completion everywhere (for linking)
+  (setq org-roam-completion-everywhere t))
 
 ;; org-roam-ui
 (use-package! org-roam-ui
   :commands (org-roam-ui-mode org-roam-ui-open)
-  :after org-roam  ; Only load after org-roam is actually used
+  :after org-roam
   :config
   (setq org-roam-ui-sync-theme t
         org-roam-ui-follow t
