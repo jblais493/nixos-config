@@ -193,7 +193,7 @@ alias twit="gimp /mnt/Logos/TrueNAS/Personal/Twitter.xcf"
 alias strip="mogrify -strip"
 
 # Emacs
-alias emacs="GDK_BACKEND=x11 emacs"
+# alias emacs="GDK_BACKEND=x11 emacs"
 alias doomsync="~/.config/emacs/bin/doom sync"
 alias doomdoc="~/.config/emacs/bin/doom doctor"
 alias doompurge="~/.config/emacs/bin/doom purge"
