@@ -60,13 +60,13 @@
 (defvar universal-launcher--icon-cache
   (let ((cache (make-hash-table :test 'equal)))
     ;; Type icons with consistent styling
-    (puthash 'buffer (all-the-icons-octicon "file-code" :face '(:foreground "#61afef" :height 0.9)) cache)
-    (puthash 'running (all-the-icons-material "desktop_windows" :face '(:foreground "#98c379" :height 0.9)) cache)
-    (puthash 'app (all-the-icons-faicon "cube" :face '(:foreground "#c678dd" :height 0.9)) cache)
+    (puthash 'buffer (all-the-icons-octicon "file-code" :face '(:foreground "#3d424a" :height 0.9)) cache)
+    (puthash 'running (all-the-icons-material "desktop_windows" :face '(:foreground "#8b919a" :height 0.9)) cache)
+    (puthash 'app (all-the-icons-faicon "cube" :face '(:foreground "#e0dcd4" :height 0.9)) cache)
     (puthash 'flatpak (all-the-icons-material "layers" :face '(:foreground "#56b6c2" :height 0.9)) cache)
     (puthash 'firefox (all-the-icons-faicon "firefox" :face '(:foreground "#e06c75" :height 0.9)) cache)
-    (puthash 'bookmark (all-the-icons-octicon "bookmark" :face '(:foreground "#d19a66" :height 0.9)) cache)
-    (puthash 'file (all-the-icons-faicon "file" :face '(:foreground "#abb2bf" :height 0.9)) cache)
+    (puthash 'bookmark (all-the-icons-octicon "bookmark" :face '(:foreground "#b8c4b8" :height 0.9)) cache)
+    (puthash 'file (all-the-icons-faicon "file" :face '(:foreground "#d4ccb4" :height 0.9)) cache)
     (puthash 'command (all-the-icons-octicon "terminal" :face '(:foreground "#98c379" :height 0.9)) cache)
     (puthash 'emoji (all-the-icons-material "insert_emoticon" :face '(:foreground "#e5c07b" :height 0.9)) cache)
     (puthash 'calculator (all-the-icons-faicon "calculator" :face '(:foreground "#56b6c2" :height 0.9)) cache)

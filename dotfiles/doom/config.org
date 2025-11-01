@@ -192,7 +192,6 @@ We set the visual line wrapping and relative line numbers (then we can just go u
 (add-hook! '+doom-dashboard-functions :append
   (insert "\n" (+doom-dashboard--center +doom-dashboard--width "Welcome Home, Joshua.")))
 
-;; (setq initial-buffer-choice 'vterm)
 #+end_src
 
 ** Notes and misc
