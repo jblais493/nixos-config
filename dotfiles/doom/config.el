@@ -133,10 +133,31 @@
 (setq frame-inhibit-implied-resize t)
 (setq focus-follows-mouse nil)
 
-;; Setup custom splashscreen
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
+(remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-footer)
+
+;; Your splash image
 (setq fancy-splash-image "~/Pictures/Wallpapers/michaelemacs.jpg")
+
+;; Custom footer with Jerusalem cross
+(defun +my/dashboard-footer ()
+  (insert "\n\n")  ; Extra spacing to push it down
+  (let ((start (point)))
+    (insert (+doom-dashboard--center
+             +doom-dashboard--width
+             (propertize "✠" 
+                        'face '(:height 3 :inherit doom-dashboard-footer-icon))))
+    (make-text-button start (point)
+                      'action (lambda (_) (browse-url "https://joshblais.com"))
+                      'follow-link t
+                      'help-echo "Visit joshblais.com"
+                      'face 'doom-dashboard-footer-icon
+                      'mouse-face 'highlight))
+  (insert "\n"))
+
+;; Hook everything in order
 (add-hook! '+doom-dashboard-functions :append
+  #'+my/dashboard-footer
   (insert "\n" (+doom-dashboard--center +doom-dashboard--width "Welcome Home, Joshua.")))
 
 ;; Here are some additional functions/macros that could help you configure Doom:
