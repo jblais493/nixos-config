@@ -6,7 +6,7 @@
 
 window#waybar {
   background: #1a1d21; /* Solid slate background */
-  color: #f0efeb; /* Parchment text */
+  color: #e0dcd4; /* Parchment text */
   transition-property: background-color;
   transition-duration: 0.5s;
   border-radius: 0px;
@@ -38,7 +38,7 @@ button:hover {
 #workspaces button {
   padding: 0 5px;
   background-color: transparent;
-  color: #f0efeb;
+  color: #e0dcd4;
   min-width: 30px;
   transition: all 0.2s ease;
 }
