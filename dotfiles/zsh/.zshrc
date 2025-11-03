@@ -241,6 +241,8 @@ alias tk="tmux kill-session -a"
 # config files
 alias scripts="cd ~/.config/scripts"
 alias kmon="kmonad ~/.config/kmonad/config.kbd &"
+alias kbon="sudo echo 0 | sudo tee /sys/class/input/event0/device/inhibited"
+alias kboff="sudo echo 1 | sudo tee /sys/class/input/event0/device/inhibited"
 
 # Development
 alias secrets="nix run github:jblais493/go-secrets --"

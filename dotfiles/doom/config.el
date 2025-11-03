@@ -141,12 +141,18 @@
 
 ;; Custom footer with Jerusalem cross
 (defun +my/dashboard-footer ()
-  (insert "\n\n")  ; Extra spacing to push it down
+  (insert "\n\n")
   (let ((start (point)))
     (insert (+doom-dashboard--center
              +doom-dashboard--width
-             (propertize "✠" 
-                        'face '(:height 3 :inherit doom-dashboard-footer-icon))))
+             (or (nerd-icons-mdicon "nf-md-cross"
+                                   :face `(:foreground "#ffffff"
+                                          :height 1.3
+                                          :v-adjust -0.15))
+                 (propertize "✠" 
+                            'face '(:height 1.3 
+                                   :v-adjust -0.15
+                                   :inherit doom-dashboard-footer-icon)))))
     (make-text-button start (point)
                       'action (lambda (_) (browse-url "https://joshblais.com"))
                       'follow-link t
