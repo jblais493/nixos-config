@@ -924,11 +924,11 @@ This function is designed to be called via `emacsclient -e`."
   :mode "\\.templ\\'"
   :after treesit
   :config
-  ;; Configure the language ID
-  (add-to-list 'lsp-language-id-configuration '(templ-ts-mode . "templ"))
-
-  ;; Register multiple LSP clients for rich support
+  ;; ALL lsp-mode modifications must be inside with-eval-after-load
   (with-eval-after-load 'lsp-mode
+    ;; Configure the language ID INSIDE the eval-after-load block
+    (add-to-list 'lsp-language-id-configuration '(templ-ts-mode . "templ"))
+
     ;; Primary templ LSP
     (lsp-register-client
      (make-lsp-client
@@ -942,7 +942,7 @@ This function is designed to be called via `emacsclient -e`."
       :major-modes '(templ-ts-mode)
       :priority 10))
 
-    ;; Add HTML LSP for rich HTML completion
+    ;; HTML LSP for rich HTML completion
     (lsp-register-client
      (make-lsp-client
       :new-connection (lsp-stdio-connection "vscode-html-language-server" "--stdio")
@@ -972,11 +972,8 @@ This function is designed to be called via `emacsclient -e`."
   ;; Enable web-mode style HTML completion features
   (add-hook 'templ-ts-mode-hook
             (lambda ()
-              ;; Enable HTML-style completion
               (setq-local company-minimum-prefix-length 1)
               (setq-local company-idle-delay 0.1)
-
-              ;; Set up for HTML element completion
               (when (featurep 'company-web-html)
                 (add-to-list 'company-backends 'company-web-html))))
 
