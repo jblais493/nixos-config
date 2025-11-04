@@ -10,7 +10,6 @@
 
 (require 'doom-themes)
 
-
 ;;
 ;;; Variables
 
