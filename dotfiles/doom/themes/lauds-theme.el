@@ -51,7 +51,7 @@ determine the exact padding."
 
   ;; name        default   256       16
   ((bg         '("#f0efeb" nil       nil            ))  ; aged vellum - perfect
-   (bg-alt     '("#ccc4b4" nil       nil            ))  ; slightly darker panels
+   (bg-alt     '("#e0dcd4" nil       nil            ))  ; slightly darker panels
    (base0      '("#f5f4f2" "white"   "white"        ))
    (base1      '("#efeeed" "#e4e4e4" "white"        ))
    (base2      '("#e5e3e0" "#d0d0d0" "brightwhite"  ))
@@ -62,17 +62,17 @@ determine the exact padding."
    (base7      '("#5f5c58" "#525252" "brightblack"  ))
    (base8      '("#2d2a27" "#1e1e1e" "black"        ))
    (fg         '("#1a1d21" "#2d2d2d" "black"        ))  ; warm charcoal - perfect
-   (fg-alt     '("#22262b" "#4e4e4e" "brightblack"  ))
+   (fg-alt     '("#4A4D51" "#4e4e4e" "brightblack"  ))
    (grey       base4)
    
    ;; REFINED: Slightly more saturation for instant recognition
-   (red        '("#D69A9F" "#BF616A" "red"          ))  ; deeper dusty rose
-   (orange     '("#c8c0b0" "#A2957C" "brightred"    ))  ; richer earth-clay
-   (green      '("#6e7d64" "#6e7d64" "green"        ))  ; stronger olive
-   (blue       '("#64717d" "#64717d" "brightblue"   ))  ; deeper slate-blue
-   (yellow     '("#D1B47A" "#A2957C" "yellow"       ))  ; richer sand-gold
+   (red        '("#8B6666" "#BF616A" "red"          ))  ; deeper dusty rose
+   (orange     '("#7A6D5A" "#A2957C" "brightred"    ))  ; richer earth-clay
+   (green      '("#5A6B5A" "#6e7d64" "green"        ))  ; stronger olive
+   (blue       '("#5A6B7A" "#64717d" "brightblue"   ))  ; deeper slate-blue
+   (yellow     '("#8B7E52" "#A2957C" "yellow"       ))  ; richer sand-gold
    (violet     '("#7d7470" "#7d7470" "brightmagenta"))  ; warmer dust-mauve
-   (teal       '("#6e7d75" "#6e7d75" "brightgreen"  ))  ; deeper sage-grey
+   (teal       '("#4D6B6B" "#6e7d75" "brightgreen"  ))  ; deeper sage-grey
    (dark-blue  '("#546070" "#546070" "blue"         ))  ; deep charcoal-slate
    (magenta    '("#756e75" "#756e75" "magenta"      ))  ; deeper grey-plum
    (cyan       '("#64757d" "#64757d" "brightcyan"   ))  ; deeper grey-water
