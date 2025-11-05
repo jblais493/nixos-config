@@ -129,6 +129,7 @@ export PATH="$PATH:$HOME/go/bin"
 # Programs
 alias cat="bat"
 alias cl="clear"
+alias cd="z"
 alias ls="eza -l --icons"
 alias la="eza -TL 2 --icons"
 alias lg="lazygit"
