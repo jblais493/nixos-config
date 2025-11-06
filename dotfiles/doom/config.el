@@ -1562,6 +1562,25 @@ This function is designed to be called via `emacsclient -e`."
   (setq mu4e-update-interval (* 10 60))
   (load (expand-file-name "private/mu4e-config.el" doom-private-dir)))
 
+;; open mail links in mu4e
+(defun mu4e-compose-mailto (url)
+  "Compose from mailto: URL."
+  (require 'url-parse)
+  (require 'mu4e)
+  (let* ((parsed (url-generic-parse-url url))
+         (to (url-filename parsed))
+         (query (url-target parsed))
+         (headers (when query (url-parse-query-string query))))
+    (mu4e-compose-new)
+    (message-goto-to)
+    (insert to)
+    (when-let ((subject (cadr (assoc "subject" headers))))
+      (message-goto-subject)
+      (insert (url-unhex-string subject)))
+    (when-let ((body (cadr (assoc "body" headers))))
+      (message-goto-body)
+      (insert (url-unhex-string body)))))
+
 ;; Load elfeed-download package
 (after! elfeed
   (load! "lisp/elfeed-download")
