@@ -733,6 +733,28 @@ We set the visual line wrapping and relative line numbers (then we can just go u
            :target (file+head "concepts/${slug}.org"
                               ":PROPERTIES:\n:ID:       %(org-id-new)\n:END:\n#+title: ${title}\n#+filetags: :concept:\n\n")
            :unnarrowed t)
+
+          ("C" "Contact" plain
+          "* Contact Info
+:PROPERTIES:
+:EMAIL: %^{Email}
+:PHONE: %^{Phone}
+:BIRTHDAY: %^{Birthday (YYYY-MM-DD +1y)}t
+:LOCATION: %^{Location}
+:LAST_CONTACTED: %U
+:END:
+
+ ** Communications
+
+ ** Notes
+ %?"
+ :target (file+head "contacts/${slug}.org"
+ "#+title: ${title}
+ #+filetags: %^{Tags}
+ #+created: %U
+ ")
+ :unnarrowed t)
+          
           
           ("b" "book" plain "%?"
            :target (file+head "books/${slug}.org"
