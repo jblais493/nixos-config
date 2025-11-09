@@ -457,22 +457,23 @@
         "** [[%^{URL}][%^{Title}]]\n:PROPERTIES:\n:CREATED: %U\n:TAGS: %(org-capture-bookmark-tags)\n:END:\n\n"
         :empty-lines 0)
 
-        ("c" "Contact" entry
-         (file "~/org/contacts.org" "Inbox")
-         "* %^{Name}
-
+("c" "Contact" entry
+ (file "~/org/contacts.org")
+ "* %^{Name} %^g
 :PROPERTIES:
+:ID: %(org-id-new)
 :CREATED: %U
 :CAPTURED: %a
 :EMAIL: %^{Email}
 :PHONE: %^{Phone}
-:BIRTHDAY: %^{Birthday +1y}u
+:BIRTHDAY: %^{Birthday (use <YYYY-MM-DD +1y> format)}t
 :LOCATION: %^{Address}
 :LAST_CONTACTED: %U
 :END:
-\\ *** Communications
-\\ *** Notes
-%?")
+// ** Communications
+// ** Notes
+%?"
+ :empty-lines 1)
 
         ("n" "Note" entry
          (file+headline "~/org/notes.org" "Inbox")
@@ -1971,10 +1972,6 @@ This function is designed to be called via `emacsclient -e`."
 
 ;; Universal Launcher
 (load! "lisp/universal-launcher")
-
-;; Mu4e
-(after! mu4e
-  (load! "lisp/mu4e-contact"))
 
 (load! "lisp/pomodoro")
 (load! "lisp/done-refile")
