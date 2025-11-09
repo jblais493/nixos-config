@@ -13,6 +13,7 @@
 ;; (package! calfw)
 ;; (package! calfw-org)
 ;; (package! web-beautify)
+(package! org-contacts)
 (package! alert)
 ;; (package! counsel)
 (package! sqlite3)

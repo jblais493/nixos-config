@@ -458,7 +458,7 @@
         :empty-lines 0)
 
         ("c" "Contact" entry
-         (file+headline "~/org/contacts.org" "Inbox")
+         (file "~/org/contacts.org" "Inbox")
          "* %^{Name}
 
 :PROPERTIES:
@@ -539,6 +539,72 @@
   (map! :map org-mode-map
         :localleader
         "a" #'my/archive-done-task))
+
+;;; In config.el
+
+(use-package! org-contacts
+  :after org
+  :custom
+  (org-contacts-files '("~/org/contacts.org"))
+  (org-contacts-icon-use-gravatar nil)
+  (org-contacts-birthday-property "BIRTHDAY")
+  (org-contacts-email-property "EMAIL")
+  (org-contacts-tel-property "PHONE")
+  (org-contacts-address-property "LOCATION")
+  (org-contacts-note-property "NOTE")
+  (org-contacts-last-read-mail-property "LAST_CONTACTED")
+  
+  :config
+  ;; Add contacts to agenda for birthday tracking
+  (add-to-list 'org-agenda-files "~/org/contacts.org")
+  
+  ;; Birthday format in agenda
+  (setq org-contacts-birthday-format "Birthday: %l (%Y)")
+  
+  ;; Enable completion in message-mode
+  (add-hook 'message-mode-hook
+            (lambda ()
+              (setq-local completion-at-point-functions
+                          (cons 'org-contacts-message-complete-function
+                                completion-at-point-functions)))))
+
+;; mu4e integration - automatic contact completion
+(after! mu4e
+  (require 'org-contacts)
+  (setq mu4e-compose-complete-addresses t
+        mu4e-compose-complete-only-personal t
+        mu4e-compose-complete-only-after "2015-01-01")
+  
+  ;; org-contacts provides the completion backend automatically
+  ;; No need for custom company backends anymore
+  )
+
+;; Keybindings
+(map! :leader
+      (:prefix ("o C" . "contacts")
+       :desc "Search contacts" "c" #'org-contacts
+       :desc "New contact" "n" #'org-contacts-template
+       :desc "Insert email" "e" #'org-contacts-gnus-get-name-email
+       :desc "Visit contacts file" "v" (lambda () (interactive) (find-file "~/org/contacts.org"))))
+
+;; Optional: Auto-update LAST_CONTACTED when replying to emails
+(after! mu4e
+  (defun my/org-contacts-update-last-contacted ()
+    "Update LAST_CONTACTED property for email sender."
+    (when (derived-mode-p 'mu4e-compose-mode)
+      (let* ((msg mu4e-compose-parent-message)
+             (from (when msg (mu4e-message-field msg :from)))
+             (email (when from (cdar from))))
+        (when email
+          (save-window-excursion
+            (with-current-buffer (find-file-noselect "~/org/contacts.org")
+              (goto-char (point-min))
+              (when (re-search-forward (regexp-quote email) nil t)
+                (org-back-to-heading)
+                (org-set-property "LAST_CONTACTED" (format-time-string "[%Y-%m-%d %a %H:%M]"))
+                (save-buffer))))))))
+  
+  (add-hook 'mu4e-compose-mode-hook #'my/org-contacts-update-last-contacted))
 
 (use-package! org-roam
   :defer t
