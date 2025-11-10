@@ -210,6 +210,7 @@ alias enix="nvim ~/dotfiles/nixos/configuration.nix"
 alias ngc="sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations +3 && sudo nix-collect-garbage -d"
 alias nopt="sudo nix-store --optimise"               # Deduplicate store
 alias ndev="nix develop"
+alias backup="sudo systemctl start restic-backups-daily.service"
 
 # Tofu
 

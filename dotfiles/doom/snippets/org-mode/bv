@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: Bible Verse
+# key: bv
+# condition: t
+# --
+"${1:verse text}" (${2:John} ${3:3}:${4:16}, ${5:KJV})$0
