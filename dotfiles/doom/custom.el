@@ -11,7 +11,8 @@
      "7ea883b13485f175d3075c72fceab701b5bf76b2076f024da50dff4107d0db25" default))
  '(magit-todos-insert-after '(bottom) nil nil "Changed by setter of obsolete option `magit-todos-insert-at'")
  '(org-agenda-files
-   '("~/Projects/Writing/README.org" "/home/joshua/Projects/Personal/README.org"
+   '("~/org/roam/contacts.org" "/home/joshua/Projects/Writing/README.org"
+     "/home/joshua/Projects/Personal/README.org"
      "/home/joshua/Projects/Ace the OSCE/README.org"
      "/home/joshua/Development/infra/README.org" "/home/joshua/org/done.org"
      "/home/joshua/Projects/Holdsworth Design/StJosephs/README.org"
@@ -26,9 +27,7 @@
      "/home/joshua/org/personal.org"
      "/home/joshua/Projects/Revere Imaginative/README.org"
      "/home/joshua/Development/edifice/todo.org"
-     "/home/joshua/Projects/Youtube/README.org"
-     "/home/joshua/org/roam/personal/Fashion/wardrobe.org"
-     "/home/joshua/org/inbox.org" "/home/joshua/org/contacts.org"
+     "/home/joshua/Projects/Youtube/README.org" "/home/joshua/org/inbox.org"
      "/home/joshua/org/calendar.org"))
  '(pomodoro-break-minutes 5)
  '(pomodoro-work-minutes 25)

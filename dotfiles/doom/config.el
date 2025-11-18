@@ -446,7 +446,7 @@
 
         ("e" "Event" entry
          (file+headline "~/org/calendar.org" "Events")
-         "* %^{Event}\n%^{SCHEDULED}T\n:PROPERTIES:\n:CREATED: %U\n:CAPTURED: %a\n:CONTACT: %(org-capture-ref-link \"~/org/contacts.org\")\n:END:\n%?")
+         "* %^{Event}\n%^{SCHEDULED}T\n:PROPERTIES:\n:CREATED: %U\n:CAPTURED: %a\n:CONTACT: %(org-capture-ref-link \"~/org/roam/contacts.org\")\n:END:\n%?")
 
         ("d" "Deadline" entry
          (file+headline "~/org/calendar.org" "Deadlines")
@@ -457,9 +457,9 @@
         "** [[%^{URL}][%^{Title}]]\n:PROPERTIES:\n:CREATED: %U\n:TAGS: %(org-capture-bookmark-tags)\n:END:\n\n"
         :empty-lines 0)
 
-("c" "Contact" entry
- (file "~/org/contacts.org")
- "* %^{Name} %^g
+        ("c" "Contact" entry
+         (file "~/org/roam/contacts.org")
+"* %^{Name} %^g
 :PROPERTIES:
 :ID: %(org-id-new)
 :CREATED: %U
@@ -470,8 +470,6 @@
 :LOCATION: %^{Address}
 :LAST_CONTACTED: %U
 :END:
-// ** Communications
-// ** Notes
 %?"
  :empty-lines 1)
 
