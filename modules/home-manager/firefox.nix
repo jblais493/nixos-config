@@ -24,13 +24,9 @@
         ublock-origin
         tridactyl
         don-t-fuck-with-paste
-        decentraleyes
-        privacy-badger
-        istilldontcareaboutcookies
         violentmonkey
         wayback-machine
         leechblock-ng
-        kristofferhagen-nord-theme
         libredirect
       ];
 

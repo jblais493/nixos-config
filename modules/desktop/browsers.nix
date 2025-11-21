@@ -2,7 +2,8 @@
 {
   # System-level browser installations
   environment.systemPackages = with pkgs; [
-    brave
+    librewolf
+    ungoogled-chromium
     tor-browser
   ];
 }
