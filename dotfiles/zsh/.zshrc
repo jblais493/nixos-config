@@ -283,6 +283,7 @@ alias ff="fastfetch"
 alias ytmp3="~/.config/scripts/Media/ytmp3.sh"
 alias aa="python ~/.config/scripts/Media/albumartwork.py"
 alias mpdupdate="~/.config/scripts/Media/mpdupdate.sh"
+alias dailysites="~/.config/scripts/Misc/dailysites"
 
 bindkey -v
 bindkey -M viins 'kj' vi-cmd-mode
