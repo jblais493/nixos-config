@@ -25,4 +25,14 @@
       options = "--delete-older-than 14d"; # Keep last 2 weeks of builds
     };
   };
+
+  system.activationScripts.userAvatar = ''
+      mkdir -p /var/lib/AccountsService/{icons,users}
+      cp ${./assets/joshua.png} /var/lib/AccountsService/icons/joshua
+      chmod 644 /var/lib/AccountsService/icons/joshua
+      cat > /var/lib/AccountsService/users/joshua << 'EOF'
+    [User]
+    Icon=/var/lib/AccountsService/icons/joshua
+    EOF
+  '';
 }
