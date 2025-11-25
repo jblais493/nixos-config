@@ -24,7 +24,7 @@
   (let ((buf (get-buffer-create "*Tweet Composer*")))
     (with-current-buffer buf
       (erase-buffer)
-      (insert "# Compose your post below (280 chars for Twitter compatibility):\n\n")
+      (insert "# Compose your post below (500 chars for Twitter compatibility):\n\n")
       (insert "This will be posted to both Twitter and Mastodon.")
       (org-mode)
       (goto-char (point-max))
@@ -161,8 +161,8 @@
     (cond
      ((and (string-empty-p tweet-text) (not media))
       (message "Post must contain either text or media (or both)."))
-     ((and (not (string-empty-p tweet-text)) (> (length tweet-text) 280))
-      (message "Post exceeds 280 characters (%d). Please shorten it."
+     ((and (not (string-empty-p tweet-text)) (> (length tweet-text) 500))
+      (message "Post exceeds 500 characters (%d). Please shorten it."
                (length tweet-text)))
      ((and media (not (file-exists-p media)))
       (message "Selected media file does not exist: %s" media))
