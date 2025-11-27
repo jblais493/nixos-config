@@ -4,8 +4,10 @@
   lib,
   ...
 }:
-{
-  networking.hosts."127.0.0.1" = [
+
+let
+  # Pure data - the single source of truth
+  distractionDomains = [
     # Social media
     "reddit.com"
     "old.reddit.com"
@@ -13,12 +15,12 @@
     "www.reddit.com"
     "twitter.com"
     "x.com"
-    "studio.youtube.com"
     "www.twitter.com"
     "youtube.com"
     "www.youtube.com"
     "m.youtube.com"
     "youtu.be"
+    "studio.youtube.com"
     "facebook.com"
     "www.facebook.com"
     "instagram.com"
@@ -59,7 +61,7 @@
     "disneyplus.com"
     "www.disneyplus.com"
 
-    # Major news outlets - International
+    # Major news - International
     "cbc.ca"
     "www.cbc.ca"
     "bbc.com"
@@ -121,7 +123,7 @@
     "apple.com/news"
     "www.apple.com/news"
 
-    # Business/Financial news
+    # Business/Financial
     "bloomberg.com"
     "www.bloomberg.com"
     "reuters.com"
@@ -135,7 +137,7 @@
     "marketwatch.com"
     "www.marketwatch.com"
 
-    # Magazine sites
+    # Magazines
     "theatlantic.com"
     "www.theatlantic.com"
     "newyorker.com"
@@ -145,4 +147,88 @@
     "politico.com"
     "www.politico.com"
   ];
+
+  workHoursStart = 5; # 5:30 AM -> check at 5
+  workHoursEnd = 19; # 7:00 PM
+
+  # Generate unbound config for blocking
+  unboundBlockConfig = lib.concatMapStringsSep "\n" (domain: ''
+    local-zone: "${domain}" redirect
+    local-data: "${domain} A 127.0.0.1"
+  '') distractionDomains;
+
+in
+{
+  # Write the dynamic unbound config
+  environment.etc."unbound/blocked-domains.conf".text = unboundBlockConfig;
+
+  services.unbound = {
+    enable = true;
+    settings = {
+      server = {
+        interface = [
+          "127.0.0.1"
+          "::1"
+        ];
+        access-control = [
+          "127.0.0.0/8 allow"
+          "::1/128 allow"
+        ];
+        do-not-query-localhost = false;
+
+        # Include our blocked domains config
+        include = [ "/etc/unbound/blocked-domains.conf" ];
+      };
+
+      forward-zone = [
+        {
+          name = ".";
+          forward-addr = [
+            "1.1.1.1" # Cloudflare
+            "1.0.0.1"
+          ];
+        }
+      ];
+    };
+  };
+
+  # Time-based control service
+  systemd.services.distraction-blocker = {
+    description = "Time-aware distraction blocker via DNS";
+    after = [ "network.target" ];
+    wantedBy = [ "multi-user.target" ];
+
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = pkgs.writeShellScript "toggle-blocking" ''
+        set -euo pipefail
+
+        current_hour=$(${pkgs.coreutils}/bin/date +%H)
+
+        if [ "$current_hour" -ge ${toString workHoursStart} ] && [ "$current_hour" -lt ${toString workHoursEnd} ]; then
+          # Work hours - enable blocking via unbound
+          ${pkgs.systemd}/bin/systemctl start unbound.service || true
+          echo "Distraction blocking ENABLED (work hours)"
+        else
+          # Off hours - disable blocking
+          ${pkgs.systemd}/bin/systemctl stop unbound.service || true
+          echo "Distraction blocking DISABLED (off hours)"
+        fi
+      '';
+    };
+  };
+
+  # Check every hour on the hour
+  systemd.timers.distraction-blocker = {
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnCalendar = "hourly";
+      OnBootSec = "1min"; # Also check 1 minute after boot
+      Persistent = true;
+    };
+  };
+
+  # Ensure system DNS resolver uses our unbound instance during work hours
+  networking.nameservers = [ "127.0.0.1" ];
 }
