@@ -6,7 +6,6 @@
 }:
 
 let
-  # Pure data - the single source of truth
   distractionDomains = [
     # Social media
     "reddit.com"
@@ -110,7 +109,7 @@ let
     "independent.co.uk"
     "www.independent.co.uk"
     "thetimes.co.uk"
-    "www.thetimes.co.uk"
+    "www.timetimes.co.uk"
     "dailymail.co.uk"
     "www.dailymail.co.uk"
 
@@ -148,10 +147,9 @@ let
     "www.politico.com"
   ];
 
-  workHoursStart = 5; # 5:30 AM -> check at 5
-  workHoursEnd = 19; # 7:00 PM
+  workHoursStart = 5;
+  workHoursEnd = 19;
 
-  # Generate unbound config for blocking
   unboundBlockConfig = lib.concatMapStringsSep "\n" (domain: ''
     local-zone: "${domain}" redirect
     local-data: "${domain} A 127.0.0.1"
@@ -159,8 +157,16 @@ let
 
 in
 {
-  # Write the dynamic unbound config
   environment.etc."unbound/blocked-domains.conf".text = unboundBlockConfig;
+
+  # Disable systemd-resolved stub listener
+  services.resolved = {
+    enable = true;
+    dnssec = "false";
+    extraConfig = ''
+      DNSStubListener=no
+    '';
+  };
 
   services.unbound = {
     enable = true;
@@ -170,13 +176,17 @@ in
           "127.0.0.1"
           "::1"
         ];
+        port = 53;
         access-control = [
           "127.0.0.0/8 allow"
           "::1/128 allow"
         ];
         do-not-query-localhost = false;
+        verbosity = 1;
 
-        # Include our blocked domains config
+        # CRITICAL: Disable DNSSEC to avoid root key requirement
+        module-config = ''"iterator"'';
+
         include = [ "/etc/unbound/blocked-domains.conf" ];
       };
 
@@ -184,51 +194,46 @@ in
         {
           name = ".";
           forward-addr = [
-            "1.1.1.1" # Cloudflare
-            "1.0.0.1"
+            "1.1.1.1@53"
+            "1.0.0.1@53"
           ];
         }
       ];
     };
   };
 
-  # Time-based control service
   systemd.services.distraction-blocker = {
     description = "Time-aware distraction blocker via DNS";
     after = [ "network.target" ];
-    wantedBy = [ "multi-user.target" ];
+    # Remove wantedBy - only timer should trigger this
 
     serviceConfig = {
       Type = "oneshot";
-      RemainAfterExit = true;
+      # Remove RemainAfterExit - let it finish
       ExecStart = pkgs.writeShellScript "toggle-blocking" ''
         set -euo pipefail
 
         current_hour=$(${pkgs.coreutils}/bin/date +%H)
 
         if [ "$current_hour" -ge ${toString workHoursStart} ] && [ "$current_hour" -lt ${toString workHoursEnd} ]; then
-          # Work hours - enable blocking via unbound
           ${pkgs.systemd}/bin/systemctl start unbound.service || true
-          echo "Distraction blocking ENABLED (work hours)"
+          echo "Distraction blocking ENABLED (work hours: $current_hour)"
         else
-          # Off hours - disable blocking
           ${pkgs.systemd}/bin/systemctl stop unbound.service || true
-          echo "Distraction blocking DISABLED (off hours)"
+          echo "Distraction blocking DISABLED (off hours: $current_hour)"
         fi
       '';
     };
   };
 
-  # Check every hour on the hour
   systemd.timers.distraction-blocker = {
     wantedBy = [ "timers.target" ];
     timerConfig = {
       OnCalendar = "hourly";
-      OnBootSec = "1min"; # Also check 1 minute after boot
+      OnBootSec = "1min"; # Check state on boot
       Persistent = true;
     };
   };
 
-  # Ensure system DNS resolver uses our unbound instance during work hours
-  networking.nameservers = [ "127.0.0.1" ];
+  networking.nameservers = lib.mkForce [ "127.0.0.1" ];
 }
