@@ -28,6 +28,12 @@
     "linkedin.com"
     "www.linkedin.com"
 
+    # Games
+    "chess.com"
+    "www.chess.com"
+    "lichess.org"
+    "www.lichess.org"
+
     # Tech news/aggregators
     "news.ycombinator.com"
     "lobste.rs"
@@ -62,6 +68,10 @@
     "www.bbc.co.uk"
     "cnn.com"
     "www.cnn.com"
+    "ctvnews.ca"
+    "www.ctvnews.ca"
+    "edmontonjournal.com"
+    "www.edmontonjournal.com"
     "foxnews.com"
     "www.foxnews.com"
     "msnbc.com"
@@ -124,24 +134,6 @@
     "www.cnbc.com"
     "marketwatch.com"
     "www.marketwatch.com"
-
-    # Entertainment/Gossip
-    "tmz.com"
-    "www.tmz.com"
-    "buzzfeed.com"
-    "www.buzzfeed.com"
-    "huffpost.com"
-    "www.huffpost.com"
-    "vice.com"
-    "www.vice.com"
-
-    # Sports (distraction vector)
-    "espn.com"
-    "www.espn.com"
-    "sportsnet.ca"
-    "www.sportsnet.ca"
-    "tsn.ca"
-    "www.tsn.ca"
 
     # Magazine sites
     "theatlantic.com"
