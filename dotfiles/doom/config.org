@@ -2235,6 +2235,7 @@ I have various functions in my lisp directory for creating pomodoros, refiling d
 (load! "lisp/org-caldav")
 ;; POSSE posting system
 (load! "lisp/posse/posse-twitter")
+(load! "lisp/gimp-tweet")
 
 ;; (load! "lisp/popup-scratch")
 ;; (load! "lisp/termux-sms")
