@@ -285,6 +285,9 @@ alias aa="python ~/.config/scripts/Media/albumartwork.py"
 alias mpdupdate="~/.config/scripts/Media/mpdupdate.sh"
 alias dailysites="~/.config/scripts/Misc/dailysites"
 
+# Zig
+alias zr="zig run"
+
 bindkey -v
 bindkey -M viins 'kj' vi-cmd-mode
 # this will cd and ls at the same time.

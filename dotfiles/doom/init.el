@@ -184,6 +184,8 @@
        ;;swift             ; who asked for emoji variables?
        ;;terra             ; Earth and Moon in alignment for performance.
        (yaml +tree-sitter) ; JSON, but readable
+       (zig +tree-sitter +lsp)           ; C, but simpler 
+
 
        :email
        (mu4e)
