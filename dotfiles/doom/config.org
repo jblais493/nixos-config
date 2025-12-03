@@ -985,40 +985,32 @@ This function is designed to be called via `emacsclient -e`."
   (setq lsp-idle-delay 0.5
         lsp-log-io nil
         lsp-completion-provider :capf
+        lsp-completion-enable t              ; ADDED: explicitly enable completions
         lsp-enable-file-watchers nil
         lsp-auto-guess-root t
         lsp-enable-folding nil
         lsp-enable-text-document-color nil
         lsp-enable-on-type-formatting nil
-        lsp-enable-snippet nil
+        lsp-enable-snippet t                 ; CHANGED: was nil, must be t for completions
         lsp-enable-symbol-highlighting nil
         lsp-enable-links nil
-        lsp-auto-configure nil
+        ;; lsp-auto-configure nil            ; REMOVED: this breaks completion registration
         lsp-restart 'auto-restart
+        lsp-keep-workspace-alive nil         ; ADDED: cleanup dead workspaces
         ;; Go-specific settings
         lsp-go-hover-kind "FullDocumentation"
         lsp-go-analyses '((nilness . t)
                           (unusedwrite . t)
                           (unusedparams . t))
-        ;; Register custom gopls settings
+        ;; gopls settings
         lsp-gopls-completeUnimported t
         lsp-gopls-staticcheck t
+        lsp-gopls-use-placeholders t         ; ADDED: needed for snippet support
         lsp-gopls-analyses '((unusedparams . t)
-                             (unusedwrite . t)))
-  
-  ;; Register go-ts-mode with the gopls client
-  (add-to-list 'lsp-language-id-configuration '(go-ts-mode . "go"))
-  (add-to-list 'lsp-language-id-configuration '(go-mod-ts-mode . "go.mod"))
-  
-  ;; Modify the gopls client to support tree-sitter modes
-  (lsp-register-client
-   (make-lsp-client :new-connection (lsp-stdio-connection "gopls")
-                    :major-modes '(go-mode go-ts-mode go-dot-mod-mode go-mod-ts-mode)
-                    :priority 0
-                    :server-id 'gopls
-                    :library-folders-fn #'lsp-go--library-default-directories)))
+                             (unusedwrite . t)
+                             (nilness . t))))
 
-;; LSP UI settings for better performance
+;; LSP UI settings
 (after! lsp-ui
   (setq lsp-ui-doc-enable t
         lsp-ui-doc-position 'at-point
@@ -1029,9 +1021,25 @@ This function is designed to be called via `emacsclient -e`."
         lsp-ui-sideline-enable nil
         lsp-ui-peek-enable t))
 
-;; Hook lsp to the tree-sitter modes
+;; Hook lsp to tree-sitter modes
 (add-hook 'go-ts-mode-hook #'lsp-deferred)
 (add-hook 'go-mod-ts-mode-hook #'lsp-deferred)
+
+;; Ensure company-mode is enabled
+(add-hook 'go-ts-mode-hook #'company-mode)
+
+;; Optimize company backends for Go
+(after! company
+  (setq company-minimum-prefix-length 1
+        company-idle-delay 0.2
+        company-tooltip-align-annotations t)
+  
+  ;; Prioritize LSP completions over snippets in Go
+  (add-hook 'go-ts-mode-hook
+            (lambda ()
+              (setq-local company-backends
+                          '((company-capf :with company-yasnippet)
+                            company-files)))))
 #+end_src
 
 ** Project Detection
