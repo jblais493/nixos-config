@@ -7,6 +7,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ./hardware-overrides.nix
     ../../profiles/bishop.nix
     ../../modules/secrets-joshua.nix
   ];
