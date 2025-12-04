@@ -3,7 +3,7 @@
   imports = [
     ./applications.nix
     ./audio.nix
-    ./backup.nix
+    # ./backup.nix
     ./blocklist.nix
     ./bluetooth.nix
     ./boot.nix
