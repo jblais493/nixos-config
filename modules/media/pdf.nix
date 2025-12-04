@@ -7,7 +7,7 @@
     kdePackages.okular
 
     # PDF tools
-    poppler_utils
+    poppler-utils
     pdftk
 
     # Document conversion

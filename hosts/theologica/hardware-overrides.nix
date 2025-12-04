@@ -14,7 +14,7 @@
     extraPackages = with pkgs; [
       # amdvlk              # AMD Vulkan driver
       libva # Video acceleration API
-      vaapiVdpau # VDPAU backend for VAAPI
+      libva-vdpau-driver # VDPAU backend for VAAPI
       libvdpau-va-gl # VDPAU driver
     ];
 
