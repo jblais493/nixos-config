@@ -76,6 +76,7 @@
       nixosConfigurations = {
         # Personal machines (desktop environment)
         theologica = mkHost "theologica" desktop;
+        logos = mkHost "logos" desktop;
         king = mkHost "king" desktop;
         axios = mkHost "axios" desktop;
 
