@@ -221,6 +221,7 @@ alias nmlist="nmcli device wifi list"
 alias nmdelete="nmcli device delete"
 alias startvpn="sudo systemctl start wg-quick@wg0"
 alias stopvpn="sudo systemctl stop wg-quick@wg0"
+alias logos="mosh joshua@logos -- tmux new-session -A -s main"
 
 # Payouts
 alias letterhead="cd /mnt/nomad/TrueNAS/Revere/Revere\ LATEST/Logos\ and\ Assets/Letterhead/2022/"
