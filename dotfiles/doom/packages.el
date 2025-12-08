@@ -10,8 +10,8 @@
                                         ;(package! some-package)
 
 ;; (package! emmet-mode)
-;; (package! calfw)
-;; (package! calfw-org)
+(package! calfw)
+(package! calfw-org)
 ;; (package! web-beautify)
 (package! org-contacts)
 (package! alert)

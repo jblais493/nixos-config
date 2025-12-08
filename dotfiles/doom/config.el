@@ -539,6 +539,29 @@
         :localleader
         "a" #'my/archive-done-task))
 
+(defun +calendar/open-calendar ()
+  "Open calfw calendar with org integration."
+  (interactive)
+  (require 'calfw)
+  (require 'calfw-org)
+  
+  ;; Apply Compline faces
+  (custom-set-faces!
+   '(cfw:face-title :foreground "#e0dcd4" :weight bold :height 1.2)
+   '(cfw:face-header :foreground "#b8c4b8" :weight bold)
+   '(cfw:face-sunday :foreground "#cdacac" :weight bold)
+   '(cfw:face-saturday :foreground "#b4c0c8" :weight bold)
+   '(cfw:face-grid :foreground "#282c34")
+   '(cfw:face-today :background "#171a1e" :weight bold)
+   '(cfw:face-select :background "#282c34" :foreground "#f0efeb")
+   '(cfw:face-schedule :foreground "#b8c4b8")
+   '(cfw:face-deadline :foreground "#cdacac"))
+  
+  (calfw-org-open-calendar))
+
+;; Prevent byte-compilation of this function
+(put '+calendar/open-calendar 'byte-compile 'byte-compile-file-form-defmumble)
+
 (after! org
   (defvar my/contacts-file "~/org/roam/contacts.org")
   
