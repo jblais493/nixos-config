@@ -21,5 +21,6 @@
     pavucontrol
     playerctl
     wireplumber
+    alsa-utils
   ];
 }
