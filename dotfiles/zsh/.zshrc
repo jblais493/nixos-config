@@ -269,6 +269,10 @@ alias dc="podman compose"
 alias dps="podman ps -a"
 alias dl="podman logs"
 
+# Develoment niceties
+## Add forgejo workflow file to project
+alias adwflw="~/Development/workflows/scripts/add-workflow.sh "
+
 # Tasks for running htmx app
 alias tfmt="templ fmt"
 alias tr="go-task run"
