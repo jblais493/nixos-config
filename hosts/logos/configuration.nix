@@ -9,6 +9,7 @@
     ./hardware-configuration.nix
     ./hardware-overrides.nix
     ../../profiles/bishop.nix
+    ../../modules/media/workstation.nix
     ../../modules/secrets-joshua.nix
   ];
 
