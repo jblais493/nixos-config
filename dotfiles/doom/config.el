@@ -181,7 +181,7 @@
 ;;(setq browse-url-browser-function 'browse-url-firefox)
 ;; set browser to firefox
 (setq browse-url-browser-function 'browse-url-generic)
-(setq browse-url-generic-program "firefox")  ; replace with actual executable name
+(setq browse-url-generic-program "chromium")  ; replace with actual executable name
 
 ;; Speed of which-key popup
 (setq which-key-idle-delay 0.2)
