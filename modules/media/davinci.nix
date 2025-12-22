@@ -4,10 +4,21 @@
   pkgs,
   ...
 }:
+<<<<<<< HEAD
 {
   # Use DaVinci Resolve (already from unstable since your main input is unstable)
   environment.systemPackages = [
     pkgs.davinci-resolve
+||||||| parent of c000da7 (davinci opts)
+=======
+let
+  unstable = import <nixos-unstable> { config.allowUnfree = true; };
+in
+{
+  # Use unstable DaVinci Resolve
+  environment.systemPackages = [
+    unstable.davinci-resolve
+>>>>>>> c000da7 (davinci opts)
   ];
 
   # Increase file watchers - Resolve uses massive amounts
