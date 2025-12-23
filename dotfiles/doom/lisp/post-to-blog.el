@@ -43,7 +43,7 @@
 (defun publish-post-to-astro ()
   "Select and publish an org file from the writing directory to Astro blog."
   (interactive)
-  (let* ((writing-dir (expand-file-name "~/org/roam/writing/To Post/"))
+  (let* ((writing-dir (expand-file-name "~/Projects/writing/Editing/"))
          (astro-posts-dir (expand-file-name "~/Development/joshuablais.com/src/content/blog/"))
          (org-files (directory-files writing-dir t "\\.org$"))
          (file-names (mapcar #'file-name-nondirectory org-files))
